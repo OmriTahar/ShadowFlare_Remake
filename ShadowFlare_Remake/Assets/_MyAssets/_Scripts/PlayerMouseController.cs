@@ -3,24 +3,36 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class ClickToMove : MonoBehaviour
+public class PlayerMouseController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private int _movementSpeed = 5;
     [SerializeField] private int _rotationSpeed = 5;
     [SerializeField] private LayerMask _groundLayers;
+    [SerializeField] private LayerMask _enemyLayers;
+    [SerializeField] private LayerMask _itemLayers;
+
+    [Header("Cursors")]
+    public Texture2D MoveCursor;
+    public Texture2D AttackCursor;
+    public Texture2D ItemCursor;
+    public Texture2D MenusCursor;
 
     [Header("References")]
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private InputAction _leftMouseClickAction;
 
     private CharacterController _characterController;
-    private Coroutine _lastMoveCoroutine;
+    private Ray _currentMouseRay;
     private Vector3 _targetPos;
+    private Coroutine _lastMoveCoroutine;
 
 
     private void Awake()
     {
+        ChangeCursor(MoveCursor);
+        Cursor.lockState = CursorLockMode.Confined;
+
         _characterController = GetComponent<CharacterController>();
     }
 
@@ -36,11 +48,44 @@ public class ClickToMove : MonoBehaviour
         _leftMouseClickAction.Disable();
     }
 
+    private void Update()
+    {
+        CursorController();
+    }
+
+    private void CursorController()
+    {
+        _currentMouseRay = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(_currentMouseRay, out RaycastHit hit))
+        {
+            if (hit.collider)
+            {
+                if (((1 << hit.collider.gameObject.layer) & _groundLayers) != 0)
+                    ChangeCursor(MoveCursor);
+
+                else if (((1 << hit.collider.gameObject.layer) & _enemyLayers) != 0)
+                    ChangeCursor(AttackCursor);
+
+                else if (((1 << hit.collider.gameObject.layer) & _itemLayers) != 0)
+                    ChangeCursor(ItemCursor);
+
+                else
+                    ChangeCursor(MenusCursor);
+            }
+            else
+                ChangeCursor(MenusCursor);
+        }
+    }
+
+    private void ChangeCursor(Texture2D newCursor)
+    {
+        Cursor.SetCursor(newCursor, Vector2.zero, CursorMode.Auto);
+    }
+
     private void Move(InputAction.CallbackContext context)
     {
-        Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider)
+        if (Physics.Raycast(_currentMouseRay, out RaycastHit hit) && hit.collider)
         {
             if (((1 << hit.collider.gameObject.layer) & _groundLayers) != 0)
             {
