@@ -27,6 +27,14 @@ public class PlayerMouseController : MonoBehaviour
     private int _enemyLayer;
     private int _itemLayer;
 
+    private enum CursorIconState
+    {
+        Move,
+        Attack,
+        CollectItem,
+        Menu
+    }
+
     #region Callbacks
 
     private void Awake()
@@ -62,14 +70,6 @@ public class PlayerMouseController : MonoBehaviour
         _groundLayer = LayerMask.NameToLayer("Ground");
         _enemyLayer = LayerMask.NameToLayer("Enemy");
         _itemLayer = LayerMask.NameToLayer("Item");
-    }
-
-    private enum CursorIconState
-    {
-        Move,
-        Attack,
-        CollectItem,
-        Menu
     }
 
     private void CursorIconsInit()
