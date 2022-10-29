@@ -5,10 +5,11 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     [Header("Health & Mana")]
-    private int _currentHealth;
     [SerializeField] private int _maxHealth = 50;
-    private int _currentMana;
     [SerializeField] private int _maxMana = 20;
+
+    private int _currentHealth;
+    private int _currentMana;
 
     public int Health { get { return _currentHealth; } }
     public int Mana { get { return _currentMana; } }
