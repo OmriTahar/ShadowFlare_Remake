@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 86125035}
   - component: {fileID: 86125038}
   - component: {fileID: 86125039}
+  - component: {fileID: 86125040}
   m_Layer: 0
   m_Name: Camera Brain
   m_TagString: MainCamera
@@ -276,6 +277,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &86125040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86125034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60441abaf03cac4090b44c85fa65af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _regularCamera: {fileID: 0}
+  _inventoryCamera: {fileID: 0}
 --- !u!1 &87068475
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,12 +933,12 @@ RectTransform:
   - {fileID: 343394955}
   - {fileID: 835331701}
   m_Father: {fileID: 657828449}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -315, y: -17.5}
-  m_SizeDelta: {x: -710, y: -45}
+  m_AnchoredPosition: {x: -315.00003, y: -16.500002}
+  m_SizeDelta: {x: -710, y: -43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206484677
 MonoBehaviour:
@@ -3101,7 +3116,7 @@ GameObject:
   - component: {fileID: 657828451}
   - component: {fileID: 657828450}
   m_Layer: 5
-  m_Name: HUD_Panel
+  m_Name: Hud_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3121,10 +3136,10 @@ RectTransform:
   m_Children:
   - {fileID: 957587798}
   - {fileID: 1112624690}
-  - {fileID: 1037300922}
   - {fileID: 206484676}
-  - {fileID: 1363814215}
   - {fileID: 1503423547}
+  - {fileID: 1037300922}
+  - {fileID: 1363814215}
   - {fileID: 444316466}
   - {fileID: 1653359440}
   - {fileID: 102359540}
@@ -4402,8 +4417,9 @@ GameObject:
   - component: {fileID: 915568421}
   - component: {fileID: 915568420}
   - component: {fileID: 915568419}
+  - component: {fileID: 915568423}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4492,6 +4508,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &915568423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915568418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c10dab000fdff4b9ec4ad7aab2eb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerController: {fileID: 976263490}
+  _inventoryPanel: {fileID: 825770264}
+  _hudPanel: {fileID: 657828448}
 --- !u!1 &953515273
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,6 +4689,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &976263490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 2499510940904996581}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf81480b36e38641a05f3f11c631fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1037300921
 GameObject:
   m_ObjectHideFlags: 0
@@ -4691,7 +4734,7 @@ RectTransform:
   - {fileID: 515480987}
   - {fileID: 1931616463}
   m_Father: {fileID: 657828449}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6315,7 +6358,7 @@ RectTransform:
   - {fileID: 342266543}
   - {fileID: 732056250}
   m_Father: {fileID: 657828449}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7033,12 +7076,12 @@ RectTransform:
   m_Children:
   - {fileID: 1969848077}
   m_Father: {fileID: 657828449}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -337.5, y: 13.75}
-  m_SizeDelta: {x: -755, y: -37.5}
+  m_AnchoredPosition: {x: -337.50003, y: 15.8814}
+  m_SizeDelta: {x: -755, y: -41.7627}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1503423548
 MonoBehaviour:
@@ -9205,9 +9248,74 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
         type: 3}
+      propertyPath: _i.m_Id
+      value: 6a1cb0e7-a3d6-4e0b-8b0c-d3a0f4a526b9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _i.m_Name
+      value: I
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
       propertyPath: _mainCamera
       value: 
       objectReference: {fileID: 86125036}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _hudController
+      value: 
+      objectReference: {fileID: 915568423}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_Id
+      value: 07e7acae-cc35-4461-a5af-977b40d547d6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_Name
+      value: I Keyboard Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _i.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _i.m_SingletonActionBindings.Array.data[0].m_Id
+      value: d5009bb2-6158-41ac-963e-9582a6a70184
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _i.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Keyboard>/i
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _i.m_SingletonActionBindings.Array.data[0].m_Action
+      value: I
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_SingletonActionBindings.Array.data[0].m_Id
+      value: ba9bd03f-2556-4959-974c-b77fb14bd359
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Keyboard>/i
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: _iKeyboardClickAction.m_SingletonActionBindings.Array.data[0].m_Action
+      value: I Keyboard Click
+      objectReference: {fileID: 0}
     - target: {fileID: 7928943672792219930, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
         type: 3}
       propertyPath: m_Name

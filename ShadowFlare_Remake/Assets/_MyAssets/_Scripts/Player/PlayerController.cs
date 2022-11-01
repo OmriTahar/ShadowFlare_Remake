@@ -1,19 +1,25 @@
 using Newtonsoft.Json.Bson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMouseController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+
+    public static Action OnToggleInventory;
+
     [Header("References")]
     public Texture2D[] CursorIconsArray;
     [SerializeField] private Player _player;
     [SerializeField] private Camera _mainCamera;
+    [SerializeField] private HudController _hudController;
 
     [Header("Input Actions")]
     [SerializeField] private InputAction _leftMouseClickAction;
+    [SerializeField] private InputAction _iKeyboardClickAction;
 
     private Dictionary<CursorIconState, Texture2D> _cursorsIconsDictionary;
     private CursorIconState _currentCursorIconState;
@@ -48,12 +54,16 @@ public class PlayerMouseController : MonoBehaviour
     {
         _leftMouseClickAction.Enable();
         _leftMouseClickAction.performed += Move;
+        _iKeyboardClickAction.Enable();
+        _iKeyboardClickAction.performed += ToggleInventory;
     }
 
     private void OnDisable()
     {
         _leftMouseClickAction.performed -= Move;
         _leftMouseClickAction.Disable();
+        _iKeyboardClickAction.performed -= ToggleInventory;
+        _iKeyboardClickAction.Disable();
     }
 
     private void Update()
@@ -123,7 +133,9 @@ public class PlayerMouseController : MonoBehaviour
 
     #endregion
 
-    #region Player Movement
+    #region Player Input
+
+    #region Mouse Input
 
     private void Move(InputAction.CallbackContext context)
     {
@@ -160,6 +172,17 @@ public class PlayerMouseController : MonoBehaviour
             yield return null;
         }
     }
+
+    #endregion
+
+    #region Keyboard Input
+
+    private void ToggleInventory(InputAction.CallbackContext context)
+    {
+        OnToggleInventory?.Invoke();
+    }
+
+    #endregion
 
     #endregion
 
