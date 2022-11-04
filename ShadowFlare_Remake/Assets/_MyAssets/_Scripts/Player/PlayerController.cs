@@ -8,8 +8,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public static event Action OnInventoryPressed;
-
     [Header("References")]
     public Texture2D[] CursorIconsArray;
     [SerializeField] private Player _player;
@@ -22,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private Dictionary<CursorIconState, Texture2D> _cursorsIconsDictionary;
     private CursorIconState _currentCursorIconState;
+    private bool _isCursorOnUI = false;
 
     private CharacterController _characterController;
     private Ray _currentMouseRay;
@@ -32,12 +31,18 @@ public class PlayerController : MonoBehaviour
     private int _enemyLayer;
     private int _itemLayer;
 
+    #region Events
+
+    public static event Action OnInventoryPressed;
+
+    #endregion
+
     private enum CursorIconState
     {
         Move,
         Attack,
         CollectItem,
-        Menu
+        UI
     }
 
     #region Callbacks
@@ -51,6 +56,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        HudController.OnPointerEnteredUI += CursorEnteredUI;
+        HudController.OnPointerLeftUI += CursorLeftUI;
+
         _leftMouseClickAction.Enable();
         _leftMouseClickAction.performed += Move;
         _iKeyboardClickAction.Enable();
@@ -59,6 +67,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        HudController.OnPointerEnteredUI -= CursorEnteredUI;
+        HudController.OnPointerLeftUI -= CursorLeftUI;
+
         _leftMouseClickAction.performed -= Move;
         _leftMouseClickAction.Disable();
         _iKeyboardClickAction.performed -= ToggleInventory;
@@ -92,32 +103,34 @@ public class PlayerController : MonoBehaviour
             { CursorIconState.Move, CursorIconsArray[0] },
             { CursorIconState.Attack, CursorIconsArray[1] } ,
             { CursorIconState.CollectItem, CursorIconsArray[2] } ,
-            { CursorIconState.Menu, CursorIconsArray[3] }
+            { CursorIconState.UI, CursorIconsArray[3] }
         };
     }
 
     private void UpdateCursorIcon()
     {
-        _currentMouseRay = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(_currentMouseRay, out RaycastHit hit))
+        if (!_isCursorOnUI)
         {
-            if (hit.collider)
+            _currentMouseRay = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(_currentMouseRay, out RaycastHit hit))
             {
-                if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
-                    ChangeCursor(CursorIconState.Move);
+                if (hit.collider)
+                {
+                    if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
+                        ChangeCursor(CursorIconState.Move);
 
-                else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
-                    ChangeCursor(CursorIconState.Attack);
+                    else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
+                        ChangeCursor(CursorIconState.Attack);
 
-                else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
-                    ChangeCursor(CursorIconState.CollectItem);
-
-                else
-                    ChangeCursor(CursorIconState.Menu);
+                    else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
+                        ChangeCursor(CursorIconState.CollectItem);
+                }
             }
-            else
-                ChangeCursor(CursorIconState.Menu);
+        }
+        else
+        {
+            ChangeCursor(CursorIconState.UI);
         }
     }
 
@@ -130,6 +143,16 @@ public class PlayerController : MonoBehaviour
         _currentCursorIconState = newCursorState;
     }
 
+    private void CursorEnteredUI()
+    {
+        _isCursorOnUI = true;
+    }
+
+    private void CursorLeftUI()
+    {
+        _isCursorOnUI = false;
+    }
+
     #endregion
 
     #region Player Input
@@ -138,22 +161,25 @@ public class PlayerController : MonoBehaviour
 
     private void Move(InputAction.CallbackContext context)
     {
-        if (Physics.Raycast(_currentMouseRay, out RaycastHit hit) && hit.collider)
+        if (!_isCursorOnUI)
         {
-            if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
+            if (Physics.Raycast(_currentMouseRay, out RaycastHit hit) && hit.collider)
             {
-                if (_lastMoveCoroutine != null)
-                    StopCoroutine(_lastMoveCoroutine);
+                if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
+                {
+                    if (_lastMoveCoroutine != null)
+                        StopCoroutine(_lastMoveCoroutine);
 
-                _lastMoveCoroutine = StartCoroutine(PlayerMoveTowards(hit.point));
-                _targetPos = hit.point;
+                    _lastMoveCoroutine = StartCoroutine(PlayerMoveTowards(hit.point));
+                    _targetPos = hit.point;
+                }
+
+                else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
+                    print("Pressed on enemy!");
+
+                else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
+                    print("Pressed on Item!");
             }
-
-            else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
-                print("Pressed on enemy!");
-
-            else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
-                print("Pressed on Item!");
         }
     }
 
@@ -163,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
-            Vector3 direction = targetPos - new Vector3(transform.position.x, 0 , transform.position.z);
+            Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
             Vector3 movement = direction.normalized * _player.MovementSpeed * Time.deltaTime;
 
             _characterController.Move(movement);
@@ -179,6 +205,12 @@ public class PlayerController : MonoBehaviour
     private void ToggleInventory(InputAction.CallbackContext context)
     {
         OnInventoryPressed?.Invoke();
+    }
+
+    public void OnInventoryUIButtonPressed()
+    {
+        OnInventoryPressed?.Invoke();
+
     }
 
     #endregion

@@ -15,7 +15,7 @@ public class CamerasController : MonoBehaviour
 
     void Start()
     {
-        InitCameras();
+        CamerasInit();
     }
 
     private void OnEnable()
@@ -28,7 +28,7 @@ public class CamerasController : MonoBehaviour
         PlayerController.OnInventoryPressed -= ToggleInventoryCamera;
     }
 
-    private void InitCameras()
+    private void CamerasInit()
     {
         _centeredCamera.SetActive(true);
         _inventoryCamera.SetActive(false);

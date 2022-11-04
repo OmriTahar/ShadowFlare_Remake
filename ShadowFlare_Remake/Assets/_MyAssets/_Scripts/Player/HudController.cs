@@ -2,18 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HudController : MonoBehaviour
+public class HudController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public static event Action OnPointerEnteredUI;
+    public static event Action OnPointerLeftUI;
+
     public GameObject _inventoryPanel;
     public GameObject _hudPanel;
 
-    public bool IsInventoryOpen = false;
+    private bool _isInventoryOpen = false;
 
     private void Start()
     {
-        InitPanels();
+        PanelsInit();
     }
 
     private void OnEnable()
@@ -26,16 +30,26 @@ public class HudController : MonoBehaviour
         PlayerController.OnInventoryPressed -= ToggleInventory;
     }
 
-    private void InitPanels()
+    private void PanelsInit()
     {
         _hudPanel.SetActive(true);
         _inventoryPanel.SetActive(false);
-        IsInventoryOpen = false;
+        _isInventoryOpen = false;
     }
 
     private void ToggleInventory()
     {
-        _inventoryPanel.SetActive(!IsInventoryOpen);
-        IsInventoryOpen = !IsInventoryOpen;
+        _inventoryPanel.SetActive(!_isInventoryOpen);
+        _isInventoryOpen = !_isInventoryOpen;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnPointerEnteredUI?.Invoke();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnPointerLeftUI?.Invoke();
     }
 }
