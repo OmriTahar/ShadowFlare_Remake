@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public Texture2D[] CursorIconsArray;
     [SerializeField] private Player _player;
     [SerializeField] private Camera _mainCamera;
-    [SerializeField] private HudController _hudController;
 
     [Header("Input Actions")]
     [SerializeField] private InputAction _leftMouseClickAction;
@@ -56,8 +55,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        HudController.OnPointerEnteredUI += CursorEnteredUI;
-        HudController.OnPointerLeftUI += CursorLeftUI;
+        UIController.OnPointerEnteredUI += CursorEnteredUI;
+        UIController.OnPointerLeftUI += CursorLeftUI;
 
         _leftMouseClickAction.Enable();
         _leftMouseClickAction.performed += Move;
@@ -67,8 +66,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        HudController.OnPointerEnteredUI -= CursorEnteredUI;
-        HudController.OnPointerLeftUI -= CursorLeftUI;
+        UIController.OnPointerEnteredUI -= CursorEnteredUI;
+        UIController.OnPointerLeftUI -= CursorLeftUI;
 
         _leftMouseClickAction.performed -= Move;
         _leftMouseClickAction.Disable();

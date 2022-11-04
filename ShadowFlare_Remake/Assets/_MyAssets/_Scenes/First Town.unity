@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60441abaf03cac4090b44c85fa65af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hudController: {fileID: 915568423}
+  _uiController: {fileID: 915568423}
   _centeredCamera: {fileID: 1784043096}
   _inventoryCamera: {fileID: 663874293}
 --- !u!1 &87068475

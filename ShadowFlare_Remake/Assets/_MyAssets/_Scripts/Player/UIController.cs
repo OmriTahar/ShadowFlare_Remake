@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HudController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UIController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public static event Action OnPointerEnteredUI;
     public static event Action OnPointerLeftUI;

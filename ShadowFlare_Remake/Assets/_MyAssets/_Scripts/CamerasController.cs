@@ -5,7 +5,7 @@ using UnityEngine;
 public class CamerasController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private HudController _hudController;
+    [SerializeField] private UIController _uiController;
 
     [Header("Cameras")]
     [SerializeField] private GameObject _centeredCamera;
