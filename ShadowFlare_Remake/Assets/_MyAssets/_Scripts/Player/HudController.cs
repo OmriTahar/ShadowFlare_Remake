@@ -6,26 +6,36 @@ using UnityEngine.UI;
 
 public class HudController : MonoBehaviour
 {
-    [SerializeField] private PlayerController _playerController;
-
     public GameObject _inventoryPanel;
     public GameObject _hudPanel;
 
-
-    private bool _isInventoryOpen = false;
+    public bool IsInventoryOpen = false;
 
     private void Start()
     {
-        _hudPanel.SetActive(true);
-        _inventoryPanel.SetActive(false);
-
-        // ---------------- YOU STOPPED HERE! --------------------
-        //_playerController.OnToggleInventory += ToggleInventory;
+        InitPanels();
     }
 
-    public void ToggleInventory()
+    private void OnEnable()
     {
-        _inventoryPanel.SetActive(!_isInventoryOpen);
-        _isInventoryOpen = !_isInventoryOpen;
+        PlayerController.OnInventoryPressed += ToggleInventory;
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.OnInventoryPressed -= ToggleInventory;
+    }
+
+    private void InitPanels()
+    {
+        _hudPanel.SetActive(true);
+        _inventoryPanel.SetActive(false);
+        IsInventoryOpen = false;
+    }
+
+    private void ToggleInventory()
+    {
+        _inventoryPanel.SetActive(!IsInventoryOpen);
+        IsInventoryOpen = !IsInventoryOpen;
     }
 }

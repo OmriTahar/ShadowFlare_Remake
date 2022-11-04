@@ -4,19 +4,41 @@ using UnityEngine;
 
 public class CamerasController : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private HudController _hudController;
+
     [Header("Cameras")]
-    [SerializeField] private GameObject _regularCamera;
+    [SerializeField] private GameObject _centeredCamera;
     [SerializeField] private GameObject _inventoryCamera;
+
+    private bool _isInventoryCamera = false;
 
     void Start()
     {
-        
+        InitCameras();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        
+        PlayerController.OnInventoryPressed += ToggleInventoryCamera;
     }
 
+    private void OnDisable()
+    {
+        PlayerController.OnInventoryPressed -= ToggleInventoryCamera;
+    }
 
+    private void InitCameras()
+    {
+        _centeredCamera.SetActive(true);
+        _inventoryCamera.SetActive(false);
+        _isInventoryCamera = false;
+    }
+
+    private void ToggleInventoryCamera()
+    {
+        _inventoryCamera.SetActive(!_isInventoryCamera);
+        _centeredCamera.SetActive(_isInventoryCamera);
+        _isInventoryCamera = !_isInventoryCamera;
+    }
 }

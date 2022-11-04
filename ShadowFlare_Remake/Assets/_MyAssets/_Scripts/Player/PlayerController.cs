@@ -1,4 +1,3 @@
-using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public static Action OnToggleInventory;
+    public static event Action OnInventoryPressed;
 
     [Header("References")]
     public Texture2D[] CursorIconsArray;
@@ -179,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
     private void ToggleInventory(InputAction.CallbackContext context)
     {
-        OnToggleInventory?.Invoke();
+        OnInventoryPressed?.Invoke();
     }
 
     #endregion
