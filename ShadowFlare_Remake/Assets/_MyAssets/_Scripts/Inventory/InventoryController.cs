@@ -5,13 +5,33 @@ using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
-    [SerializeField] private ItemsGrid _selectedItemGrid;
+    public ItemsGrid CurrentHoveredItemsGrid;
+
+    //private void OnEnable()
+    //{
+    //    PlayerController.OnLeftMouseButtonPressed += leftMouseButtonWasPressed;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    PlayerController.OnLeftMouseButtonPressed += leftMouseButtonWasPressed;
+    //}
 
     private void Update()
     {
-        if (_selectedItemGrid == null)
+        if (CurrentHoveredItemsGrid == null)
             return;
 
-        Debug.Log(_selectedItemGrid.GetTileGridPosition(Mouse.current.position.ReadValue()));
+        //if ()
+        //{
+
+        //}
+
+        //print(SelectedItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue()));
     }
+
+    //private void leftMouseButtonWasPressed()
+    //{
+
+    //}
 }

@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     #region Events
 
     public static event Action OnInventoryPressed;
+    public static event Action OnLeftMouseButtonPressed;
 
     #endregion
 
@@ -60,6 +61,8 @@ public class PlayerController : MonoBehaviour
 
         _leftMouseClickAction.Enable();
         _leftMouseClickAction.performed += Move;
+        _leftMouseClickAction.performed += InvokeLeftMouseButtonEvents;
+
         _iKeyboardClickAction.Enable();
         _iKeyboardClickAction.performed += ToggleInventory;
     }
@@ -70,7 +73,9 @@ public class PlayerController : MonoBehaviour
         UIController.OnPointerLeftUI -= CursorLeftUI;
 
         _leftMouseClickAction.performed -= Move;
+        _leftMouseClickAction.performed -= InvokeLeftMouseButtonEvents;
         _leftMouseClickAction.Disable();
+
         _iKeyboardClickAction.performed -= ToggleInventory;
         _iKeyboardClickAction.Disable();
     }
@@ -156,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
     #region Player Input
 
-    #region Mouse Input
+    #region Mouse Input & Methods
 
     private void Move(InputAction.CallbackContext context)
     {
@@ -197,9 +202,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void InvokeLeftMouseButtonEvents(InputAction.CallbackContext context)
+    {
+        OnLeftMouseButtonPressed?.Invoke();
+    }
+
     #endregion
 
-    #region Keyboard Input
+    #region Keyboard Input & Methods
 
     private void ToggleInventory(InputAction.CallbackContext context)
     {
