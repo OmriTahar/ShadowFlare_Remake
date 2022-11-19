@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemsGrid : MonoBehaviour
 {
-    private const float _tileWidth = 64;
-    private const float _tileHight = 64;
+    private const float _tileWidth = 80;
+    private const float _tileHight = 80;
 
     private RectTransform _rectTransform;
     private Vector2 _mousePositionOnGrid = new Vector2();
@@ -14,7 +14,7 @@ public class ItemsGrid : MonoBehaviour
     private InventoryItem[,] _inventoryItemSlot;
 
     [Header("Settings")]
-    [SerializeField] private int gridSizeWidth = 11;
+    [SerializeField] private int gridSizeWidth = 10;
     [SerializeField] private int gridSizeHeight = 4;
 
     [Header("Debug")]
