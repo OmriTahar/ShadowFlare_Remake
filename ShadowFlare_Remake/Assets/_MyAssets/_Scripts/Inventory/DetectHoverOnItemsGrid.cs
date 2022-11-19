@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(ItemsGrid))]
 public class DetectHoverOnItemsGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
     [SerializeField] private InventoryController _inventoryController;
     private ItemsGrid _currentHovereditemsGrid;
 

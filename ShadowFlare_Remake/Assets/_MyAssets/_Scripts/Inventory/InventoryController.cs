@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
+    [Header("Debug")]
+    [Tooltip("Caches automatically through 'Detect Hover On Items Grid'")]
     public ItemsGrid CurrentHoveredItemsGrid;
 
     private void OnEnable()
