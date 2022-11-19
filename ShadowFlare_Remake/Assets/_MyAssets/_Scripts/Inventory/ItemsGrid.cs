@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemsGrid : MonoBehaviour
 {
-    private const float _tileWidth = 32;
-    private const float _tileHight = 32;
+    private const float _tileWidth = 64;
+    private const float _tileHight = 64;
 
     private RectTransform _rectTransform;
     private Vector2 _mousePositionOnGrid = new Vector2();
