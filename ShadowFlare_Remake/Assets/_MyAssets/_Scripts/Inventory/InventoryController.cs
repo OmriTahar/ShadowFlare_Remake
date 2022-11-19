@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
-    [Header("Debug")]
     [Tooltip("Caches automatically through 'Detect Hover On Items Grid'")]
     public ItemsGrid CurrentHoveredItemsGrid;
 
@@ -26,4 +25,5 @@ public class InventoryController : MonoBehaviour
 
         print(CurrentHoveredItemsGrid.name + " was pressed at: " + CurrentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue()));
     }
+
 }
