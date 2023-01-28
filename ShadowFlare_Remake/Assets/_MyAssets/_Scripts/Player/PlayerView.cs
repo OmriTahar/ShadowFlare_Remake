@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("References")]
+    public Camera MainCamera;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Mouse & Cursor")]
+    public Texture2D[] CursorIconsArray;
 }

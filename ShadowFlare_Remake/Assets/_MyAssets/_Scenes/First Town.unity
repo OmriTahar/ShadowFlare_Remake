@@ -2639,7 +2639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &825770265
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5829,6 +5829,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: MainCamera
+      value: 
+      objectReference: {fileID: 86125036}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 044ad49b35534f342af6d00d70eae1dd, type: 3}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: 11ced191b585af049981750de4f6125d, type: 3}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: 50df96a1a1ddc4b4ca4058e759481611, type: 3}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.data[3]
+      value: 
+      objectReference: {fileID: 2800000, guid: e43eb6dc9e9ce1f47bac91c53a5246fc, type: 3}
+    - target: {fileID: 4522592437974577436, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
+        type: 3}
+      propertyPath: CursorIconsArray.Array.data[4]
+      value: 
+      objectReference: {fileID: 2800000, guid: a9ae0267b06e7b24d90f188a4370cce3, type: 3}
     - target: {fileID: 4831887001429096756, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5,
         type: 3}
       propertyPath: _i.m_Id
@@ -5959,7 +5994,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5927182554307930860, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cfff9c5a96c75b54bafe0d2c2b3d98b5, type: 3}
 --- !u!1001 &5221065971735951706
 PrefabInstance:

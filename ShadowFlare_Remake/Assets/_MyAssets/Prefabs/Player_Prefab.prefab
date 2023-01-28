@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 8920086972939487680}
   - component: {fileID: 1701182847335852420}
   - component: {fileID: 4831887001429096756}
-  - component: {fileID: 5927182554307930860}
+  - component: {fileID: 4522592437974577436}
   - component: {fileID: 685825834}
   m_Layer: 0
   m_Name: Player_Prefab
@@ -247,13 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf81480b36e38641a05f3f11c631fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CursorIconsArray:
-  - {fileID: 2800000, guid: a9ae0267b06e7b24d90f188a4370cce3, type: 3}
-  - {fileID: 2800000, guid: 11ced191b585af049981750de4f6125d, type: 3}
-  - {fileID: 2800000, guid: 50df96a1a1ddc4b4ca4058e759481611, type: 3}
-  - {fileID: 2800000, guid: bb57a4c5a1ec38a41949d0975ede9ac1, type: 3}
-  _player: {fileID: 5927182554307930860}
-  _mainCamera: {fileID: 0}
+  _movementSpeed: 5
+  _rotationSpeed: 10
   _leftMouseClickAction:
     m_Name: Left Mouse Click
     m_Type: 0
@@ -271,7 +266,16 @@ MonoBehaviour:
       m_Action: Left Mouse Click
       m_Flags: 0
     m_Flags: 0
---- !u!114 &5927182554307930860
+  _iKeyboardClickAction:
+    m_Name: I Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d76a8132-fbe6-4a93-8785-e947d1cca60b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+--- !u!114 &4522592437974577436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,11 +284,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7928943672792219930}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23b8cfc56b9b9b843a9cde1351a66bbb, type: 3}
+  m_Script: {fileID: 11500000, guid: bda17273d6ec9144598a25453860aaee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 5
-  _rotationSpeed: 10
+  MainCamera: {fileID: 0}
+  CursorIconsArray: []
 --- !u!114 &685825834
 MonoBehaviour:
   m_ObjectHideFlags: 0

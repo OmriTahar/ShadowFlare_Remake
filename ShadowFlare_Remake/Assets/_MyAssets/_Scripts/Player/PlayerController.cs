@@ -7,33 +7,35 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("References")]
-    public Texture2D[] CursorIconsArray;
-    [SerializeField] private Player _player;
-    [SerializeField] private Camera _mainCamera;
+    [Header("Movement Settings")]
+    [SerializeField] private int _movementSpeed = 5;
+    [SerializeField] private int _rotationSpeed = 10;
 
     [Header("Input Actions")]
+    [Space(5)]
     [SerializeField] private InputAction _leftMouseClickAction;
+    [Space(5)]
     [SerializeField] private InputAction _iKeyboardClickAction;
+
+    private CharacterController _characterController;
+    private PlayerView _view;
+    private Unit _unit;
 
     private Dictionary<CursorIconState, Texture2D> _cursorsIconsDictionary;
     private CursorIconState _currentCursorIconState;
     private bool _isCursorOnUI = false;
 
-    private CharacterController _characterController;
+    private Coroutine _lastMoveCoroutine;
     private Ray _currentMouseRay;
     private Vector3 _targetPos;
-    private Coroutine _lastMoveCoroutine;
 
     private int _groundLayer;
     private int _enemyLayer;
     private int _itemLayer;
 
     #region Events
-
     public static event Action OnInventoryPressed;
     public static event Action OnLeftMouseButtonPressed;
-
     #endregion
 
     private enum CursorIconState
@@ -41,7 +43,8 @@ public class PlayerController : MonoBehaviour
         Move,
         Attack,
         CollectItem,
-        UI
+        UI,
+        Other
     }
 
     #region Callbacks
@@ -49,6 +52,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _view = GetComponent<PlayerView>();
+        _unit = GetComponent<Unit>();
+
         CursorIconsInit();
         LayersInit();
     }
@@ -84,10 +90,15 @@ public class PlayerController : MonoBehaviour
         UpdateCursorIcon();
     }
 
+    private void FixedUpdate()
+    {
+        if (transform.position.y > 0.1)
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+    }
+
     #endregion
 
     #region Cursor Functions
-
     private void LayersInit()
     {
         _groundLayer = LayerMask.NameToLayer("Ground");
@@ -98,15 +109,16 @@ public class PlayerController : MonoBehaviour
     private void CursorIconsInit()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        Cursor.SetCursor(CursorIconsArray[0], Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(_view.CursorIconsArray[0], Vector2.zero, CursorMode.Auto);
         _currentCursorIconState = CursorIconState.Move;
 
         _cursorsIconsDictionary = new Dictionary<CursorIconState, Texture2D>()
         {
-            { CursorIconState.Move, CursorIconsArray[0] },
-            { CursorIconState.Attack, CursorIconsArray[1] } ,
-            { CursorIconState.CollectItem, CursorIconsArray[2] } ,
-            { CursorIconState.UI, CursorIconsArray[3] }
+            { CursorIconState.Move, _view.CursorIconsArray[0] },
+            { CursorIconState.Attack, _view.CursorIconsArray[1] } ,
+            { CursorIconState.CollectItem, _view.CursorIconsArray[2] } ,
+            { CursorIconState.UI, _view.CursorIconsArray[3] },
+            { CursorIconState.Other, _view.CursorIconsArray[4] }
         };
     }
 
@@ -114,7 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!_isCursorOnUI)
         {
-            _currentMouseRay = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            _currentMouseRay = _view.MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(_currentMouseRay, out RaycastHit hit))
             {
@@ -128,6 +140,9 @@ public class PlayerController : MonoBehaviour
 
                     else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
                         ChangeCursor(CursorIconState.CollectItem);
+
+                    else
+                        ChangeCursor(CursorIconState.Other);
                 }
             }
         }
@@ -155,13 +170,11 @@ public class PlayerController : MonoBehaviour
     {
         _isCursorOnUI = false;
     }
-
     #endregion
 
     #region Player Input
 
     #region Mouse Input & Methods
-
     private void Move(InputAction.CallbackContext context)
     {
         if (!_isCursorOnUI)
@@ -193,10 +206,10 @@ public class PlayerController : MonoBehaviour
         while (Vector3.Distance(transform.position, targetPos) > 0.1f)
         {
             Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
-            Vector3 movement = direction.normalized * _player.MovementSpeed * Time.deltaTime;
+            Vector3 movement = direction.normalized * _movementSpeed * Time.deltaTime;
 
             _characterController.Move(movement);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _player.RotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
             yield return null;
         }
     }
@@ -215,10 +228,10 @@ public class PlayerController : MonoBehaviour
         OnInventoryPressed?.Invoke();
     }
 
+    // On click inspector event
     public void OnInventoryUIButtonPressed()
     {
         OnInventoryPressed?.Invoke();
-
     }
 
     #endregion
@@ -226,12 +239,10 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Debug
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(_targetPos, 0.5f);
     }
-
     #endregion
 }
