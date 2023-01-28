@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Coroutine _lastMoveCoroutine;
     private Ray _currentMouseRay;
     private Vector3 _targetPos;
+    private Vector2 _mouseOffset = new Vector2(1, 1);
 
     private int _groundLayer;
     private int _enemyLayer;
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
     #region Debug
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(_targetPos, 0.5f);
     }
     #endregion
