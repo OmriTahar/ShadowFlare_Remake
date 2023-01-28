@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-
     [Header("References")]
     public Texture2D[] CursorIconsArray;
     [SerializeField] private Player _player;
