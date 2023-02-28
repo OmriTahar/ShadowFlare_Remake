@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemsGrid : MonoBehaviour
 {
-    private const float _tileWidth = 80;
-    private const float _tileHight = 80;
+    private float _tileWidth = 80;
+    private float _tileHight = 80;
 
     private RectTransform _rectTransform;
     private Vector2 _mousePositionOnGrid = new Vector2();
@@ -27,6 +27,21 @@ public class ItemsGrid : MonoBehaviour
         //Init(gridSizeWidth, gridSizeHeight);
         //InventoryItem inventoryItem = Instantiate(_inventoryItemPrefab).GetComponent<InventoryItem>();
         //PlaceItem(inventoryItem, 3, 2);
+    }
+
+    private void OnEnable()
+    {
+        InitCellSize();
+    }
+
+    private void InitCellSize()
+    {
+        var screenResolution = Screen.currentResolution;
+        print("Current res: " + screenResolution);
+
+        var screenHeight = Screen.height;
+        var screenWidth = Screen.width;
+        print("Height: " + screenHeight + " | Width: " + screenWidth);
     }
 
     private void Init(int width, int height)

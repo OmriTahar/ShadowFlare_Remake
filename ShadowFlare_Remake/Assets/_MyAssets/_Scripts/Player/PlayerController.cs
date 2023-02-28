@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public static event Action OnLeftMouseButtonPressed;
     #endregion
 
+    private int testInt = 0;
+
     private enum CursorIconState
     {
         Move,
