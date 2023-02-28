@@ -36,12 +36,20 @@ public class ItemsGrid : MonoBehaviour
 
     private void InitCellSize()
     {
-        var screenResolution = Screen.currentResolution;
-        print("Current res: " + screenResolution);
+        _tileWidth = 80;
+        _tileHight = 80;
 
-        var screenHeight = Screen.height;
         var screenWidth = Screen.width;
-        print("Height: " + screenHeight + " | Width: " + screenWidth);
+        var screenHeight = Screen.height;
+        print("Screen Width: " + screenWidth + " | Screen Height: " + screenHeight);
+
+        float widthRatioDiff = (float)screenWidth / 1920;
+        float heightRatioDiff = (float)screenHeight / 1080;
+        print("Width Diff: " + widthRatioDiff + " | Height Diff: " + heightRatioDiff);
+
+        _tileWidth = _tileWidth * widthRatioDiff;
+        _tileHight = _tileHight * heightRatioDiff;
+        print("Tile Width: " + _tileWidth + " | Tile Height: " + _tileHight);
     }
 
     private void Init(int width, int height)
