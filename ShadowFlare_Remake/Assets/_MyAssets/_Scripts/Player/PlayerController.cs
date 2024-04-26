@@ -1,17 +1,20 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ShadowFlareRemake.Combat;
+using System;
+using System.Threading.Tasks;
 
 namespace ShadowFlareRemake.Player {
 
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : Controller {
 
+        public event Action<Attack, IUnit> OnIGotHit;
+
         [Header("References")]
-        [SerializeField] private PlayerView _playerView;
-        [SerializeField] private PlayerUnit _unit;
+        [SerializeField] private PlayerView _view;
+        [SerializeField] private Attack _meleeAttack;
 
         [Header("Movement Settings")]
         [SerializeField] private float _stepForwardDuration = 0.2f;
@@ -19,7 +22,7 @@ namespace ShadowFlareRemake.Player {
         [Header("Attack Settings")]
         [SerializeField] private float _attackDistance = 2f;
 
-        private PlayerModel _playerModel;
+        private PlayerModel _model;
         private CharacterController _characterController;
         private Coroutine _lastMoveCoroutine;
 
@@ -33,20 +36,6 @@ namespace ShadowFlareRemake.Player {
 
             base.Awake();
             CacheNulls();
-
-            _playerModel = new PlayerModel(_unit);
-            _playerView.SetModel(_playerModel);
-        }
-
-        private async void OnEnable() {
-
-            await PlayerInput.Instance.WaitForInitFinish();
-            RegisterEvents();
-        }
-
-        private void OnDisable() {
-
-            DeregisterEvents();
         }
 
         private void Update() {
@@ -65,12 +54,23 @@ namespace ShadowFlareRemake.Player {
                 transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
             }
         }
+
+        private void OnDestroy() {
+
+            DeregisterEvents();
+        }
         #endregion Unity Callbacks
 
         #region Initialization
+        public async Task InitPlayer(IUnit unit) {
 
-        public void InitPlayer(IUnit unit) {
+            _model = new PlayerModel(unit);
+            _view.SetModel(_model);
 
+            await PlayerInput.Instance.WaitForInitFinish();
+            RegisterEvents();
+
+            _meleeAttack.SetUnitStats(unit.Stats);
         }
 
         private void CacheNulls() {
@@ -78,8 +78,8 @@ namespace ShadowFlareRemake.Player {
             if(_characterController == null) {
                 _characterController = GetComponent<CharacterController>();
             }
-            if(_playerView == null) {
-                _playerView = GetComponentInChildren<PlayerView>();
+            if(_view == null) {
+                _view = GetComponentInChildren<PlayerView>();
             }
         }
 
@@ -90,16 +90,12 @@ namespace ShadowFlareRemake.Player {
 
         private void RegisterEvents() {
 
-            if(!_isInitialized) {
-                return;
-            }
-
             PlayerInput.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
             PlayerInput.Instance.RightMouseClickAction.performed += AttackAtDirection;
 
-            _playerView.OnAttackAnimationEnded += ResetAttackCooldown;
-            _playerView.OnDoStepForwardAnimationEvent += HandleStepForward;
-            _playerView.OnTriggerEnterEvent += HandleTriggerEnter;
+            _view.OnAttackAnimationEnded += ResetAttackCooldown;
+            _view.OnDoStepForwardAnimationEvent += HandleStepForward;
+            _view.OnTriggerEnterEvent += HandleTriggerEnter;
         }
 
         private void DeregisterEvents() {
@@ -107,9 +103,9 @@ namespace ShadowFlareRemake.Player {
             PlayerInput.Instance.LeftMouseClickAction.performed -= RegisterLeftClickActions;
             PlayerInput.Instance.RightMouseClickAction.performed -= AttackAtDirection;
 
-            _playerView.OnAttackAnimationEnded -= ResetAttackCooldown;
-            _playerView.OnDoStepForwardAnimationEvent -= HandleStepForward;
-            _playerView.OnTriggerEnterEvent -= HandleTriggerEnter;
+            _view.OnAttackAnimationEnded -= ResetAttackCooldown;
+            _view.OnDoStepForwardAnimationEvent -= HandleStepForward;
+            _view.OnTriggerEnterEvent -= HandleTriggerEnter;
         }
         #endregion Initialization
 
@@ -172,7 +168,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _unit.Stats.WalkingSpeed;
+            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
 
             while(Vector3.Distance(transform.position, targetPos) > 0.1f) {
 
@@ -187,7 +183,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _unit.Stats.WalkingSpeed;
+            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance) {
 
@@ -212,7 +208,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator StepForwardLogic(float timeToComplete) {
 
             float timer = 0;
-            var movementSpeed = _unit.Stats.WalkingSpeed;
+            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
 
             while(timer < timeToComplete) {
 
@@ -245,40 +241,27 @@ namespace ShadowFlareRemake.Player {
 
         private void Attack(PlayerModel.AttackType attackType) {
 
-            _playerModel.SetAttackState(true, attackType);
+            _model.SetAttackState(true, attackType);
             _isAttacking = true;
         }
 
         private void ResetAttackCooldown() {
 
-            _playerModel.SetAttackState(false);
+            _model.SetAttackState(false);
             _isAttacking = false;
         }
         #endregion Move & Attack
 
-        #region TakeDamage
+        #region Got Hit
         private void HandleTriggerEnter(Collider other) {
 
             if(other.gameObject.layer == AttackLayer) {
 
                 var attack = other.GetComponent<Attack>();
-                CombatUtils.HandleTakeDamage(attack, _unit);
+                OnIGotHit?.Invoke(attack, _model.Unit);
             }
         }
-
-        private void TakeDamage(int damage) {
-
-            //_playerModel.TakeDamage(damage);
-            //if(!_playerModel.CanTakeDamage) {
-            //    StartCoroutine(TakeDamageCooldown(_takeDamageCooldownDuration));
-            //}
-        }
-
-        //private IEnumerator TakeDamageCooldown(float cooldown) {
-        //    yield return new WaitForSeconds(cooldown);
-        //    _playerModel.SetCanTakeDamage(true);
-        //}
-        #endregion TakeDamage
+        #endregion Got Hit
     }
 }
 

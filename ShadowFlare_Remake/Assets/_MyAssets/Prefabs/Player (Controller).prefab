@@ -5398,9 +5398,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf81480b36e38641a05f3f11c631fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerView: {fileID: 2759206233626363538}
-  _allowPlayerInput: 1
-  _rotationSpeed: 10
+  _view: {fileID: 2759206233626363538}
+  _meleeAttack: {fileID: 8534146483267351118}
   _stepForwardDuration: 0.2
   _attackDistance: 2
 --- !u!1001 &7467523986651635922

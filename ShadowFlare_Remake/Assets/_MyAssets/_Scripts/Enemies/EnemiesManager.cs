@@ -30,6 +30,7 @@ namespace ShadowFlareRemake.Enemies {
 
                 if(enemyToSpawn == null) {
                     Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
+                    continue;
                 }
 
                 var spawnPoint = enemyToSpawn.transform;

@@ -16,7 +16,7 @@ namespace ShadowFlareRemake.Enemies {
         [field: SerializeField] public int MaxHP { get; private set; }
         [field: SerializeField] public int Strength { get; private set; }
         [field: SerializeField] public int Attack { get; private set; }
-        [field: SerializeField] public int Defence { get; private set; }
+        [field: SerializeField] public int Defense { get; private set; }
         [field: SerializeField] public int HitRate { get; private set; }
         [field: SerializeField] public int EvasionRate { get; private set; }
         [field: SerializeField] public int WalkingSpeed { get; private set; }

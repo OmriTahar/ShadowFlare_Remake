@@ -1,47 +1,33 @@
 using ShadowFlareRemake.Enums;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Player
-{
-    public class PlayerStats : IUnitStats
-    {
+namespace ShadowFlareRemake.Player {
+
+    [Serializable]
+    public class PlayerStats : IUnitStats {
 
         [field: SerializeField] public Vocation Vcocation { get; private set; }
         [field: SerializeField] public int CurrentExp { get; private set; }
         [field: SerializeField] public int ExpToLevelUp { get; private set; }
 
-        public string Name => throw new System.NotImplementedException();
+        [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public int Level { get; private set; }
 
-        public int Level => throw new System.NotImplementedException();
+        [field: SerializeField] public int MaxHP { get; private set; }
+        [field: SerializeField] public int Strength { get; private set; }
+        [field: SerializeField] public int Attack { get; private set; }
+        [field: SerializeField] public int Defense { get; private set; }
+        [field: SerializeField] public int HitRate { get; private set; }
+        [field: SerializeField] public int EvasionRate { get; private set; }
+        [field: SerializeField] public int WalkingSpeed { get; private set; }
+        [field: SerializeField] public int AttackSpeed { get; private set; }
 
-        public int MaxHP => throw new System.NotImplementedException();
-
-        public int Strength => throw new System.NotImplementedException();
-
-        public int Attack => throw new System.NotImplementedException();
-
-        public int Defence => throw new System.NotImplementedException();
-
-        public int HitRate => throw new System.NotImplementedException();
-
-        public int EvasionRate => throw new System.NotImplementedException();
-
-        public int WalkingSpeed => throw new System.NotImplementedException();
-
-        public int AttackSpeed => throw new System.NotImplementedException();
-
-        public int MaxMP => throw new System.NotImplementedException();
-
-        public int MagicalAttack => throw new System.NotImplementedException();
-
-        public int MagicalDefence => throw new System.NotImplementedException();
-
-        public int MagicalHitRate => throw new System.NotImplementedException();
-
-        public int MagicalEvasionRate => throw new System.NotImplementedException();
-
-        public int MagicalAttackSpeed => throw new System.NotImplementedException();
+        [field: SerializeField] public int MaxMP { get; private set; }
+        [field: SerializeField] public int MagicalAttack { get; private set; }
+        [field: SerializeField] public int MagicalDefence { get; private set; }
+        [field: SerializeField] public int MagicalHitRate { get; private set; }
+        [field: SerializeField] public int MagicalEvasionRate { get; private set; }
+        [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
     }
 }

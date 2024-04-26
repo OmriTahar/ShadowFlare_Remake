@@ -31,6 +31,7 @@ namespace ShadowFlareRemake.Player {
         }
 
         private void OnTriggerEnter(Collider other) {
+
             OnTriggerEnterEvent?.Invoke(other);
         }
 
@@ -44,18 +45,6 @@ namespace ShadowFlareRemake.Player {
             if(Model.IsAttacking) {
                 HandleAttackAnimations();
             }
-        }
-
-        private void HandleHP() {
-
-            //_healthSlider = Model.Unit.CurrentHP;
-
-            //_currentHP = hp < 0 ? 0 : hp;
-            //_healthSlider.value = _currentHP;
-
-            //if(_currentHP == 0) {
-            //    DoDeath();
-            //}
         }
 
         private void HandleAttackAnimations() {
@@ -73,23 +62,25 @@ namespace ShadowFlareRemake.Player {
         }
 
         public void DoSingleAttack() {
+
             _playerAnimator.SetTrigger("SingleAttack");
             StartCoroutine(WaitForAnimationEnd(_singleAttackAnimLength));
         }
 
         public void DoThreeStrikesAttack() {
+
             _playerAnimator.SetTrigger("ThreeStrikes");
             StartCoroutine(WaitForAnimationEnd(_threeStrikesAnimLength));
         }
 
         private IEnumerator WaitForAnimationEnd(float animDuration) {
+
             yield return new WaitForSeconds(animDuration);
             OnAttackAnimationEnded?.Invoke();
         }
 
+        public void DoStepForward() { // Gets invoked from "ThreeStrikes" animation as an animation event
 
-        // Gets invoked from "ThreeStrikes" animation as an animation event
-        public void DoStepForward() {
             OnDoStepForwardAnimationEvent?.Invoke();
         }
     }

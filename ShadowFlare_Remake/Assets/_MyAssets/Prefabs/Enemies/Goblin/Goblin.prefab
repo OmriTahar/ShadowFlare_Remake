@@ -321,7 +321,7 @@ MonoBehaviour:
   _animator: {fileID: 1715232952}
   _closeAttackAnim: {fileID: 0}
   _rangedAttackAnim: {fileID: 0}
-  _deathAnim: {fileID: 0}
+  _deathAnim: {fileID: 7400000, guid: 2831073fdfbdf54488d138066f4297c1, type: 2}
 --- !u!114 &7241244277980301422
 MonoBehaviour:
   m_ObjectHideFlags: 0

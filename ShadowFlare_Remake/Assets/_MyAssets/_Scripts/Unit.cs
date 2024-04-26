@@ -1,6 +1,5 @@
 
 namespace ShadowFlareRemake {
-
     public class Unit : IUnit {
 
         public IUnitStats Stats { get; private set; }
@@ -14,23 +13,15 @@ namespace ShadowFlareRemake {
             CurrentMP = unitStats.MaxMP;
         }
 
-        public void Init() {
-            FullHeal(false);
-        }
+        public virtual void TakeDamage(int damage) {
 
-        //protected virtual void Awake() {
-        //    FullHeal(false);
-        //}
+            CurrentHP -= damage;
+        }
 
         protected virtual void FullHeal(bool notifyUiController) {
 
             CurrentHP = Stats.MaxHP;
             CurrentMP = Stats.MaxMP;
-        }
-
-        public virtual void TakeDamage(int damage) {
-
-            CurrentHP -= damage;
         }
 
         public virtual void HealHP(int hpAmount) {

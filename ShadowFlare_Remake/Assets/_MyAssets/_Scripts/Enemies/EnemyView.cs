@@ -63,7 +63,7 @@ namespace ShadowFlareRemake.Enemies {
             }
 
             _name.text = Model.Name;
-            _meshRenderer.material.color = Model.Color; 
+            //_meshRenderer.material.color = Model.Color; 
 
             ResetHealthSliderValues();
         }

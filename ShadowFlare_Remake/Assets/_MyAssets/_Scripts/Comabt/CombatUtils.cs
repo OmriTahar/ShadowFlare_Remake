@@ -18,7 +18,7 @@ namespace ShadowFlareRemake.Combat {
 
         private static int GetPhysicalDamage(IUnitStats Attacker, IUnitStats Reciever) { // Todo: Expand this.
 
-            var damage = Attacker.Attack - Reciever.Defence;
+            var damage = Attacker.Attack - Reciever.Defense;
             return damage > 1 ? damage : 1;
         }
 
