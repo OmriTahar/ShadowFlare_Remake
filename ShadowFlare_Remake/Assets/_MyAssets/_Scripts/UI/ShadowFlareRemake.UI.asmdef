@@ -1,0 +1,19 @@
+{
+    "name": "ShadowFlareRemake.UI",
+    "rootNamespace": "ShadowFlareRemake.UI",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:d3ebd6943f6212a4baa59038dca2b668",
+        "GUID:b63d40ec02fb5d7428f15323e3f00768"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

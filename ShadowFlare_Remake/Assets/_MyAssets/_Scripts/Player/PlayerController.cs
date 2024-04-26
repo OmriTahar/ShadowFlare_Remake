@@ -1,251 +1,280 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ShadowFlareRemake.Combat;
 
-[RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
-{
-    [Header("Movement Settings")]
-    [SerializeField] private int _movementSpeed = 5;
-    [SerializeField] private int _rotationSpeed = 10;
+namespace ShadowFlareRemake.Player {
 
-    [Header("Input Actions")]
-    [Space(5)]
-    [SerializeField] private InputAction _leftMouseClickAction;
-    [Space(5)]
-    [SerializeField] private InputAction _iKeyboardClickAction;
+    [RequireComponent(typeof(CharacterController))]
+    public class PlayerController : Controller {
 
-    private CharacterController _characterController;
-    private PlayerView _view;
-    private Unit _unit;
+        [Header("References")]
+        [SerializeField] private PlayerView _playerView;
+        [SerializeField] private PlayerUnit _unit;
 
-    private Dictionary<CursorIconState, Texture2D> _cursorsIconsDictionary;
-    private CursorIconState _currentCursorIconState;
-    private bool _isCursorOnUI = false;
+        [Header("General Settings")]
+        [SerializeField] private bool _allowPlayerInput = true;
 
-    private Coroutine _lastMoveCoroutine;
-    private Ray _currentMouseRay;
-    private Vector3 _targetPos;
-    private Vector2 _mouseOffset = new Vector2(1, 1);
+        [Header("Movement Settings")]
+        [SerializeField] private int _rotationSpeed = 10;
+        [SerializeField] private float _stepForwardDuration = 0.2f;
 
-    private int _groundLayer;
-    private int _enemyLayer;
-    private int _itemLayer;
+        [Header("Attack Settings")]
+        [SerializeField] private float _attackDistance = 2f;
 
-    #region Events
-    public static event Action OnInventoryPressed;
-    public static event Action OnLeftMouseButtonPressed;
-    #endregion
+        private PlayerModel _playerModel;
+        private CharacterController _characterController;
+        private Coroutine _lastMoveCoroutine;
 
-    private int testInt = 0;
+        #region Unity Callbacks
+        protected virtual void Awake() {
 
-    private enum CursorIconState
-    {
-        Move,
-        Attack,
-        CollectItem,
-        UI,
-        Other
-    }
+            base.Init();
+            CacheNulls();
 
-    #region Callbacks
+            _playerModel = new PlayerModel(_unit);
+            _playerView.SetModel(_playerModel);
+        }
 
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-        _view = GetComponent<PlayerView>();
-        _unit = GetComponent<Unit>();
+        private async void OnEnable() {
 
-        CursorIconsInit();
-        LayersInit();
-    }
+            await AwaitPlayerInputInit();
+            RegisterEvents();
+        }
 
-    private void OnEnable()
-    {
-        UIController.OnPointerEnteredUI += CursorEnteredUI;
-        UIController.OnPointerLeftUI += CursorLeftUI;
+        private void OnDisable() {
+            DeregisterEvents();
+        }
 
-        _leftMouseClickAction.Enable();
-        _leftMouseClickAction.performed += Move;
-        _leftMouseClickAction.performed += InvokeLeftMouseButtonEvents;
+        private void Update() {
 
-        _iKeyboardClickAction.Enable();
-        _iKeyboardClickAction.performed += ToggleInventory;
-    }
+            if(PlayerInput.Instance.IsLeftMouseIsHeldDown) {
+                HandleLeftClickActions();
+            }
+        }
 
-    private void OnDisable()
-    {
-        UIController.OnPointerEnteredUI -= CursorEnteredUI;
-        UIController.OnPointerLeftUI -= CursorLeftUI;
+        private void FixedUpdate() {
 
-        _leftMouseClickAction.performed -= Move;
-        _leftMouseClickAction.performed -= InvokeLeftMouseButtonEvents;
-        _leftMouseClickAction.Disable();
+            if(transform.position.y > 0.1) {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
+            if(transform.rotation.x > 0.1) {
+                transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
+            }
+        }
+        #endregion Unity Callbacks
 
-        _iKeyboardClickAction.performed -= ToggleInventory;
-        _iKeyboardClickAction.Disable();
-    }
+        #region Initialization
+        private async Task AwaitPlayerInputInit() {
 
-    private void Update()
-    {
-        UpdateCursorIcon();
-    }
+            while(PlayerInput.Instance == null || PlayerInput.Instance.enabled == false) {
+                await Task.Delay(100);
+            }
+        }
 
-    private void FixedUpdate()
-    {
-        if (transform.position.y > 0.1)
-            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-    }
+        private void CacheNulls() {
 
-    #endregion
+            if(_characterController == null) {
+                _characterController = GetComponent<CharacterController>();
+            }
+            if(_playerView == null) {
+                _playerView = GetComponentInChildren<PlayerView>();
+            }
+        }
 
-    #region Cursor Functions
-    private void LayersInit()
-    {
-        _groundLayer = LayerMask.NameToLayer("Ground");
-        _enemyLayer = LayerMask.NameToLayer("Enemy");
-        _itemLayer = LayerMask.NameToLayer("Item");
-    }
+        private void RegisterLeftClickActions(InputAction.CallbackContext context) {
+            HandleLeftClickActions();
+        }
 
-    private void CursorIconsInit()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.SetCursor(_view.CursorIconsArray[0], Vector2.zero, CursorMode.Auto);
-        _currentCursorIconState = CursorIconState.Move;
+        private void RegisterEvents() {
 
-        _cursorsIconsDictionary = new Dictionary<CursorIconState, Texture2D>()
-        {
-            { CursorIconState.Move, _view.CursorIconsArray[0] },
-            { CursorIconState.Attack, _view.CursorIconsArray[1] } ,
-            { CursorIconState.CollectItem, _view.CursorIconsArray[2] } ,
-            { CursorIconState.UI, _view.CursorIconsArray[3] },
-            { CursorIconState.Other, _view.CursorIconsArray[4] }
-        };
-    }
+            PlayerInput.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
+            PlayerInput.Instance.RightMouseClickAction.performed += AttackAtDirection;
 
-    private void UpdateCursorIcon()
-    {
-        if (!_isCursorOnUI)
-        {
-            _currentMouseRay = _view.MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            _playerView.OnAttackAnimationEnded += ResetAttackCooldown;
+            _playerView.OnDoStepForwardAnimationEvent += HandleStepForward;
+            _playerView.OnTriggerEnterEvent += HandleTriggerEnter;
+        }
 
-            if (Physics.Raycast(_currentMouseRay, out RaycastHit hit))
-            {
-                if (hit.collider)
-                {
-                    if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
-                        ChangeCursor(CursorIconState.Move);
+        private void DeregisterEvents() {
 
-                    else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
-                        ChangeCursor(CursorIconState.Attack);
+            PlayerInput.Instance.LeftMouseClickAction.performed -= RegisterLeftClickActions;
+            PlayerInput.Instance.RightMouseClickAction.performed -= AttackAtDirection;
 
-                    else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
-                        ChangeCursor(CursorIconState.CollectItem);
+            _playerView.OnAttackAnimationEnded -= ResetAttackCooldown;
+            _playerView.OnDoStepForwardAnimationEvent -= HandleStepForward;
+            _playerView.OnTriggerEnterEvent -= HandleTriggerEnter;
+        }
+        #endregion Initialization
 
-                    else
-                        ChangeCursor(CursorIconState.Other);
+        #region Move & Attack
+        private void HandleLeftClickActions() {
+
+            if(_allowPlayerInput == false || PlayerInput.Instance.IsCursorOnUI) {
+                return;
+            }
+
+            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+
+            if(raycastHit.collider) {
+
+                var raycastLayer = raycastHit.collider.gameObject.layer;
+                var IsGroundLayer = raycastLayer.CompareTo(GroundLayer) == 0;
+                var IsEnemyLayer = raycastLayer.CompareTo(EnemyLayer) == 0;
+                var IsItemLayer = raycastLayer.CompareTo(ItemLayer) == 0;
+
+                if(IsGroundLayer) {
+                    HandleMove(raycastHit);
+
+                } else if(IsEnemyLayer) {
+                    var enemyPos = raycastHit.collider.transform.position;
+                    HandleMoveAndAttack(enemyPos);
+
+                } else if(IsItemLayer) {
+                    print("Pressed on Item - Collecting!");
+
+                } else {
+                    print("You are clicking on thin air sugerpups");
                 }
             }
         }
-        else
-        {
-            ChangeCursor(CursorIconState.UI);
+
+        private void HandleMove(RaycastHit raycastHit) {
+
+            if(_lastMoveCoroutine != null)
+                StopCoroutine(_lastMoveCoroutine);
+
+            _lastMoveCoroutine = StartCoroutine(MoveLogic(raycastHit.point));
         }
-    }
 
-    private void ChangeCursor(CursorIconState newCursorState)
-    {
-        if (_currentCursorIconState == newCursorState)
-            return;
+        private void HandleMoveAndAttack(Vector3 enemyPos) {
 
-        Cursor.SetCursor(_cursorsIconsDictionary[newCursorState], Vector2.zero, CursorMode.Auto);
-        _currentCursorIconState = newCursorState;
-    }
+            if(_lastMoveCoroutine != null)
+                StopCoroutine(_lastMoveCoroutine);
 
-    private void CursorEnteredUI()
-    {
-        _isCursorOnUI = true;
-    }
+            _lastMoveCoroutine = StartCoroutine(MoveAndAttackLogic(enemyPos));
+        }
 
-    private void CursorLeftUI()
-    {
-        _isCursorOnUI = false;
-    }
-    #endregion
+        public void HandleStepForward() {
 
-    #region Player Input
+            if(_lastMoveCoroutine != null)
+                StopCoroutine(_lastMoveCoroutine);
 
-    #region Mouse Input & Methods
-    private void Move(InputAction.CallbackContext context)
-    {
-        if (!_isCursorOnUI)
-        {
-            if (Physics.Raycast(_currentMouseRay, out RaycastHit hit) && hit.collider)
-            {
-                if (hit.collider.gameObject.layer.CompareTo(_groundLayer) == 0)
-                {
-                    if (_lastMoveCoroutine != null)
-                        StopCoroutine(_lastMoveCoroutine);
+            _lastMoveCoroutine = StartCoroutine(StepForwardLogic(_stepForwardDuration));
+        }
 
-                    _lastMoveCoroutine = StartCoroutine(PlayerMoveTowards(hit.point));
-                    _targetPos = hit.point;
-                }
+        private IEnumerator MoveLogic(Vector3 targetPos) {
 
-                else if (hit.collider.gameObject.layer.CompareTo(_enemyLayer) == 0)
-                    print("Pressed on enemy!");
+            targetPos.y = 0f;
+            var movementSpeed = _unit.Stats.WalkingSpeed;
 
-                else if (hit.collider.gameObject.layer.CompareTo(_itemLayer) == 0)
-                    print("Pressed on Item!");
+            while(Vector3.Distance(transform.position, targetPos) > 0.1f) {
+
+                Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
+                Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
+                yield return null;
             }
         }
-    }
 
-    private IEnumerator PlayerMoveTowards(Vector3 targetPos)
-    {
-        targetPos.y = 0f;
+        private IEnumerator MoveAndAttackLogic(Vector3 targetPos) {
 
-        while (Vector3.Distance(transform.position, targetPos) > 0.1f)
-        {
-            Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
-            Vector3 movement = direction.normalized * _movementSpeed * Time.deltaTime;
+            targetPos.y = 0f;
+            var movementSpeed = _unit.Stats.WalkingSpeed;
 
-            _characterController.Move(movement);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
-            yield return null;
+            if(Vector3.Distance(transform.position, targetPos) <= _attackDistance) {
+
+                var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
+                transform.LookAt(targetDirection);
+                Attack(PlayerModel.AttackType.Single);
+                yield break;
+            }
+
+            while(Vector3.Distance(transform.position, targetPos) > _attackDistance) {
+
+                Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
+                Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            Attack(PlayerModel.AttackType.Single);
         }
+
+        private IEnumerator StepForwardLogic(float timeToComplete) {
+
+            float timer = 0;
+            var movementSpeed = _unit.Stats.WalkingSpeed;
+
+            while(timer < timeToComplete) {
+
+                Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        private void AttackAtDirection(InputAction.CallbackContext context) {
+
+            if(_allowPlayerInput == false || PlayerInput.Instance.IsCursorOnUI) {
+                return;
+            }
+
+            if(_lastMoveCoroutine != null) {
+                StopCoroutine(_lastMoveCoroutine);
+            }
+
+            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+
+            if(raycastHit.collider) {
+
+                var targetDirection = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
+                transform.LookAt(targetDirection);
+                Attack(PlayerModel.AttackType.ThreeStrikes);
+            }
+        }
+
+        private void Attack(PlayerModel.AttackType attackType) {
+
+            _playerModel.SetAttackState(true, attackType);
+            _allowPlayerInput = false;
+        }
+
+        private void ResetAttackCooldown() {
+
+            _playerModel.SetAttackState(false);
+            _allowPlayerInput = true;
+        }
+        #endregion Move & Attack
+
+        #region TakeDamage
+        private void HandleTriggerEnter(Collider other) {
+
+            if(other.gameObject.layer == AttackLayer) {
+
+                var attack = other.GetComponent<Attack>();
+                CombatUtils.HandleTakeDamage(attack, _unit);
+            }
+        }
+
+        private void TakeDamage(int damage) {
+
+            //_playerModel.TakeDamage(damage);
+            //if(!_playerModel.CanTakeDamage) {
+            //    StartCoroutine(TakeDamageCooldown(_takeDamageCooldownDuration));
+            //}
+        }
+
+        //private IEnumerator TakeDamageCooldown(float cooldown) {
+        //    yield return new WaitForSeconds(cooldown);
+        //    _playerModel.SetCanTakeDamage(true);
+        //}
+        #endregion TakeDamage
     }
-
-    public void InvokeLeftMouseButtonEvents(InputAction.CallbackContext context)
-    {
-        OnLeftMouseButtonPressed?.Invoke();
-    }
-
-    #endregion
-
-    #region Keyboard Input & Methods
-
-    private void ToggleInventory(InputAction.CallbackContext context)
-    {
-        OnInventoryPressed?.Invoke();
-    }
-
-    // On click inspector event
-    public void OnInventoryUIButtonPressed()
-    {
-        OnInventoryPressed?.Invoke();
-    }
-
-    #endregion
-
-    #endregion
-
-    #region Debug
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(_targetPos, 0.5f);
-    }
-    #endregion
 }
+
+

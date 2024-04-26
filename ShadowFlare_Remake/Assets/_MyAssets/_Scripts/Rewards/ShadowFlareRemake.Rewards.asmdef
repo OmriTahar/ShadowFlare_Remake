@@ -1,0 +1,17 @@
+{
+    "name": "ShadowFlareRemake.Rewards",
+    "rootNamespace": "ShadowFlareRemake.Rewards",
+    "references": [
+        "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:5cfda05a4b29ccc4fa82470ebdb42a1e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

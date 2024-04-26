@@ -1,0 +1,14 @@
+{
+    "name": "ShadowFlareRemake.Tests",
+    "rootNamespace": "ShadowFlareRemake.Tests",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

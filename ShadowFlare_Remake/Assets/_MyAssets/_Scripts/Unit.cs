@@ -1,29 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Unit : MonoBehaviour
-{
-    [Header("Health & Mana")]
-    [SerializeField] private int _maxHealth = 50;
-    [SerializeField] private int _maxMana = 20;
+namespace ShadowFlareRemake {
 
-    private int _currentHealth;
-    private int _currentMana;
+    public class Unit : IUnit {
 
-    public int Health { get { return _currentHealth; } }
-    public int Mana { get { return _currentMana; } }
+        public UnitStats Stats { get; private set; }
+        public int CurrentHP { get; private set; }
+        public int CurrentMP { get; private set; }
 
-    public void Heal(int healthAmount = 0, int manaAmount = 0)
-    {
-        if (_currentHealth + healthAmount > _maxHealth)
-            _currentHealth = _maxHealth;
-        else
-            _currentHealth += healthAmount;
+        public Unit(IUnit iUnit) {
+            Stats = iUnit.Stats;
+        }
 
-        if (_currentMana + manaAmount > _maxMana)
-            _currentMana = _maxMana;
-        else
-            _currentMana += manaAmount;
+        public void Init() {
+            FullHeal(false);
+        }
+
+        //protected virtual void Awake() {
+        //    FullHeal(false);
+        //}
+
+        protected virtual void FullHeal(bool notifyUiController) {
+
+            CurrentHP = Stats.MaxHP;
+            CurrentMP = Stats.MaxMP;
+        }
+
+        public virtual void TakeDamage(int damage) {
+
+            CurrentHP -= damage;
+        }
+
+        public virtual void HealHP(int hpAmount) {
+
+            if(CurrentHP + hpAmount > Stats.MaxHP) {
+                CurrentHP = Stats.MaxHP;
+            } else {
+                CurrentHP += hpAmount;
+            }
+        }
+
+        public virtual void HealMP(int mpAmount) {
+
+            if(CurrentMP + mpAmount > Stats.MaxMP) {
+                CurrentMP = Stats.MaxMP;
+            } else {
+                CurrentMP += mpAmount;
+            }
+        }
     }
 }
+

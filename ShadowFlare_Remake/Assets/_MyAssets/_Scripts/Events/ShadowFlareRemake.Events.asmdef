@@ -1,0 +1,16 @@
+{
+    "name": "ShadowFlareRemake.Events",
+    "rootNamespace": "ShadowFlareRemake.Events",
+    "references": [
+        "GUID:b63d40ec02fb5d7428f15323e3f00768"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

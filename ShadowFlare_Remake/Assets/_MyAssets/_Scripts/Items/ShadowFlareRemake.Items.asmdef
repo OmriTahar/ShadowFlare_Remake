@@ -1,0 +1,16 @@
+{
+    "name": "ShadowFlareRemake.Items",
+    "rootNamespace": "ShadowFlareRemake.Items",
+    "references": [
+        "GUID:e8733038a827d4741897f7e335845f44"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
