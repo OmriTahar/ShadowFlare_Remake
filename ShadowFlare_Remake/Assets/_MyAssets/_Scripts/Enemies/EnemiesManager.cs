@@ -1,6 +1,6 @@
-using ShadowFlareRemake.Combat;
 using System.Collections.Generic;
 using UnityEngine;
+using ShadowFlareRemake.Combat;
 
 namespace ShadowFlareRemake.Enemies {
     public class EnemiesManager : MonoBehaviour {
@@ -16,6 +16,16 @@ namespace ShadowFlareRemake.Enemies {
 
         private void Awake() {
 
+            InitEnemies();
+        }
+
+        private void OnDestroy() {
+
+            DeregisterEvents();
+        }
+
+        private void InitEnemies() {
+
             foreach(var enemyToSpawn in _enemiesToSpawn) {
 
                 if(enemyToSpawn == null) {
@@ -23,14 +33,12 @@ namespace ShadowFlareRemake.Enemies {
                 }
 
                 var spawnPoint = enemyToSpawn.transform;
-                var enemy = Instantiate(enemyToSpawn.EnemyController, spawnPoint.position, spawnPoint.rotation,_enemiesParent);
+                var enemy = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
 
-                enemy.OnIGotHit += HandleEnemyGotHit;
                 _enemyControllers.Add(enemy);
+                enemy.OnIGotHit += HandleEnemyGotHit;
 
                 var newUnit = new Unit(enemyToSpawn.EnemyStats);
-
-                enemy.Init();
                 enemy.InitEnemy(newUnit, _playerTransform);
 
                 _unitsDict.Add(enemy.Unit, newUnit);
@@ -39,10 +47,9 @@ namespace ShadowFlareRemake.Enemies {
             }
         }
 
-        private void OnDestroy() {
+        private void DeregisterEvents() {
 
             foreach(var enemy in _enemyControllers) {
-
                 enemy.OnIGotHit -= HandleEnemyGotHit;
             }
         }

@@ -1,7 +1,7 @@
-using UnityEngine;
-using UnityEngine.AI;
 using ShadowFlareRemake.Combat;
 using System;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace ShadowFlareRemake.Enemies {
 
@@ -28,17 +28,13 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public override void Init() {
-
-            base.Init();
-            CacheNulls();
-            RegisterEvents();
-        }
-
-        public void InitEnemy(IUnit unit,Transform playerTransform) {
+        public void InitEnemy(IUnit unit, Transform playerTransform) {
 
             Unit = unit;
             PlayerTransform = playerTransform;
+
+            CacheNulls();
+            RegisterEvents();
             SetModel();
         }
 
@@ -108,14 +104,8 @@ namespace ShadowFlareRemake.Enemies {
             if(View == null) {
                 View = GetComponentInChildren<EnemyView>();
             }
-            //if(PlayerTransform == null) {
-            //    PlayerTransform = GameManager.Instance.PlayerTransform;
-            //}
-            //if(Unit == null) {
-            //    Unit = GetComponent<Unit>();
-            //}
         }
-     
+
         private void RegisterEvents() {
 
             View.OnCurserEntered += SelectEnemy;

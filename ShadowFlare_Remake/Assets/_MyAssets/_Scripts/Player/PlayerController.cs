@@ -13,11 +13,7 @@ namespace ShadowFlareRemake.Player {
         [SerializeField] private PlayerView _playerView;
         [SerializeField] private PlayerUnit _unit;
 
-        [Header("General Settings")]
-        [SerializeField] private bool _allowPlayerInput = true;
-
         [Header("Movement Settings")]
-        [SerializeField] private int _rotationSpeed = 10;
         [SerializeField] private float _stepForwardDuration = 0.2f;
 
         [Header("Attack Settings")]
@@ -27,10 +23,15 @@ namespace ShadowFlareRemake.Player {
         private CharacterController _characterController;
         private Coroutine _lastMoveCoroutine;
 
-        #region Unity Callbacks
-        protected virtual void Awake() {
+        private const int _rotationSpeed = 10;
 
-            base.Init();
+        private bool _isInitialized = false;
+        private bool _isAttacking = false;
+
+        #region Unity Callbacks
+        protected override void Awake() {
+
+            base.Awake();
             CacheNulls();
 
             _playerModel = new PlayerModel(_unit);
@@ -39,11 +40,12 @@ namespace ShadowFlareRemake.Player {
 
         private async void OnEnable() {
 
-            await AwaitPlayerInputInit();
+            await PlayerInput.Instance.WaitForInitFinish();
             RegisterEvents();
         }
 
         private void OnDisable() {
+
             DeregisterEvents();
         }
 
@@ -66,11 +68,9 @@ namespace ShadowFlareRemake.Player {
         #endregion Unity Callbacks
 
         #region Initialization
-        private async Task AwaitPlayerInputInit() {
 
-            while(PlayerInput.Instance == null || PlayerInput.Instance.enabled == false) {
-                await Task.Delay(100);
-            }
+        public void InitPlayer(IUnit unit) {
+
         }
 
         private void CacheNulls() {
@@ -84,10 +84,15 @@ namespace ShadowFlareRemake.Player {
         }
 
         private void RegisterLeftClickActions(InputAction.CallbackContext context) {
+
             HandleLeftClickActions();
         }
 
         private void RegisterEvents() {
+
+            if(!_isInitialized) {
+                return;
+            }
 
             PlayerInput.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
             PlayerInput.Instance.RightMouseClickAction.performed += AttackAtDirection;
@@ -111,7 +116,7 @@ namespace ShadowFlareRemake.Player {
         #region Move & Attack
         private void HandleLeftClickActions() {
 
-            if(_allowPlayerInput == false || PlayerInput.Instance.IsCursorOnUI) {
+            if(_isAttacking || PlayerInput.Instance.IsCursorOnUI) {
                 return;
             }
 
@@ -220,7 +225,7 @@ namespace ShadowFlareRemake.Player {
 
         private void AttackAtDirection(InputAction.CallbackContext context) {
 
-            if(_allowPlayerInput == false || PlayerInput.Instance.IsCursorOnUI) {
+            if(_isAttacking || PlayerInput.Instance.IsCursorOnUI) {
                 return;
             }
 
@@ -241,13 +246,13 @@ namespace ShadowFlareRemake.Player {
         private void Attack(PlayerModel.AttackType attackType) {
 
             _playerModel.SetAttackState(true, attackType);
-            _allowPlayerInput = false;
+            _isAttacking = true;
         }
 
         private void ResetAttackCooldown() {
 
             _playerModel.SetAttackState(false);
-            _allowPlayerInput = true;
+            _isAttacking = false;
         }
         #endregion Move & Attack
 

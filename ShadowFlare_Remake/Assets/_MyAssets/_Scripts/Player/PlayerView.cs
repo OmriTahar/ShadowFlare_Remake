@@ -19,6 +19,7 @@ namespace ShadowFlareRemake.Player {
         private float _threeStrikesAnimLength;
 
         protected override void Initialize() {
+
             base.Initialize();
 
             if(_playerAnimator == null) {

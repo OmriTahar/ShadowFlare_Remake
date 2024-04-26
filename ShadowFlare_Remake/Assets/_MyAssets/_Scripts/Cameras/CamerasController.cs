@@ -9,9 +9,9 @@ namespace ShadowFlareRemake.Cameras {
 
         private CamerasModel _model;
 
-        protected void Awake() {
+        protected override void Awake() {
 
-            base.Init();
+            base.Awake();
             InitModel();
             Accept<UIScreenCoverEvent>(SetCurrentScreenCover);
         }
@@ -23,6 +23,7 @@ namespace ShadowFlareRemake.Cameras {
         }
 
         private void SetCurrentScreenCover(UIScreenCoverEvent e) {
+
             _model.SetCurrentScreenCover(e.CurrentScreenCover);
         }
     }

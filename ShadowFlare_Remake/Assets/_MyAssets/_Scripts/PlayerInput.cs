@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,6 +22,7 @@ namespace ShadowFlareRemake {
         public bool IsLeftMouseIsHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
+        private bool _isFinishedInit = false;
 
         private void Awake() {
 
@@ -38,11 +40,14 @@ namespace ShadowFlareRemake {
             RightMouseClickAction.Enable();
             I_KeyboardClickAction.Enable();
             H_KeyboardClickAction.Enable();
+
+            _isFinishedInit = true;
         }
 
         private void Update() {
 
             _currentMouseRay = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
             if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
                 CurrentRaycastHit = hit;
             }
@@ -56,6 +61,16 @@ namespace ShadowFlareRemake {
             RightMouseClickAction.Disable();
             I_KeyboardClickAction.Disable();
             H_KeyboardClickAction.Disable();
+
+            _isFinishedInit = false;
+        }
+
+        public async Task WaitForInitFinish() {
+
+            while(!_isFinishedInit) {
+
+                await Task.Yield();
+            }
         }
 
         public void SetIsCursorOnUI(bool isCurserOnUI) {

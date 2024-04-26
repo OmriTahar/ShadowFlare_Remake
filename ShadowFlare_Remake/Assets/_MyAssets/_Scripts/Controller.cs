@@ -11,17 +11,19 @@ namespace ShadowFlareRemake {
 
         private AcceptBlock _acceptBlock;
 
-        public virtual void Init() {
+        protected virtual void Awake() {
 
             InitLayers();
             _acceptBlock = new AcceptBlock();
         }
 
         private void OnDestroy() {
+
             _acceptBlock.Dispose();
         }
 
         protected void Accept<T>(System.Action<T> registrant) where T : IGameEvent {
+
             _acceptBlock.AcceptEvent(registrant);
         }
 

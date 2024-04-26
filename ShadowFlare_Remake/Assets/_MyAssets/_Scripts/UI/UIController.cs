@@ -19,13 +19,14 @@ namespace ShadowFlareRemake.UI {
         private HudModel _hudModel;
         private InventoryModel _inventoryModel;
 
-        protected void Awake() {
+        protected override void Awake() {
 
-            base.Init();
+            base.Awake();
             CacheNulls();
         }
 
         private void Start() {
+
             InitModels();
         }
 
@@ -36,10 +37,12 @@ namespace ShadowFlareRemake.UI {
         }
 
         private void OnDisable() {
+
             DeregisterEvents();
         }
 
         private void Update() {
+
             HandleMouseRaycastHit();
         }
 

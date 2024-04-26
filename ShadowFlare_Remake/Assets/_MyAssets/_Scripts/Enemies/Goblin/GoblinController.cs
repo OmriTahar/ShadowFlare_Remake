@@ -23,7 +23,6 @@ namespace ShadowFlareRemake.Enemies {
                 }
 
             } else {
-
                 ChasePlayer = true;
                 Agent.isStopped = false;
             }
