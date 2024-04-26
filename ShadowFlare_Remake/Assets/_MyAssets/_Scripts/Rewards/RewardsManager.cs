@@ -8,16 +8,16 @@ namespace ShadowFlareRemake.Rewards {
 
         [Header("References")]
         [SerializeField] private UIController _uiController;
-        [SerializeField] private UnitStats _playerUnitStats;
+        [SerializeField] private IUnitStats _playerUnitStats;
 
 
         private void Awake() {
             InitSingelton();
         }
 
-        public void HandleEnemyKilledRewards(UnitStats killedEnemy) {
+        public void HandleEnemyKilledRewards(IUnitStats killedEnemy) {
 
-            HandleExpReward(killedEnemy.ExpDrop);
+            //HandleExpReward(killedEnemy.ExpDrop);
         }
 
         private void InitSingelton() {

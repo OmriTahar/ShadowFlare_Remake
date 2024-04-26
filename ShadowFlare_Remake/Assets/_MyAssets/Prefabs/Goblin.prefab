@@ -314,6 +314,7 @@ MonoBehaviour:
   _name: {fileID: 41722521982095429}
   _healthSlider: {fileID: 6540207488409775401}
   _healthSliderTransform: {fileID: 5488867904597944236}
+  _meshRenderer: {fileID: 2082077680345214970}
   _myCollider: {fileID: 7913865406941244136}
   _hitEffect: {fileID: 4912078924959047410}
   _fadingObject: {fileID: 7241244277980301422}

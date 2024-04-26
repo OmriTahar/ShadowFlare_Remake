@@ -1,15 +1,14 @@
 using System;
 using UnityEngine;
-using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake {
+namespace ShadowFlareRemake.Enemies {
 
-    [Serializable]
-    public class UnitStats {
+    [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "ScriptableObjects/Enemy Stats")]
+    public class EnemyStats : ScriptableObject , IUnitStats {
 
-        [field: SerializeField] public Vocation Vcocation { get; private set; }
-        [field: SerializeField] public int CurrentExp { get; private set; }
-        [field: SerializeField] public int ExpToLevelUp { get; private set; }
+        [field: SerializeField] public Color color { get; private set; }
+        [field: SerializeField] public int ExpDrop { get; private set; }
+        [field: SerializeField] public int CoinsDrop { get; private set; }
 
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public int Level { get; private set; }
@@ -29,9 +28,5 @@ namespace ShadowFlareRemake {
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
-
-        [field: SerializeField] public Color color { get; private set; }
-        [field: SerializeField] public int ExpDrop { get; private set; }
-        [field: SerializeField] public int CoinsDrop { get; private set; }
     }
 }

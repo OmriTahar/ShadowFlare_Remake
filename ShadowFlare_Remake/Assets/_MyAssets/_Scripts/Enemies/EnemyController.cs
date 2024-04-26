@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using ShadowFlareRemake.Combat;
-using ShadowFlareRemake.Rewards;
 using System;
 
 namespace ShadowFlareRemake.Enemies {
@@ -10,7 +9,7 @@ namespace ShadowFlareRemake.Enemies {
 
         public event Action<Attack, EnemyController> OnIGotHit;
 
-        [field: SerializeField] public IUnit Unit { get; private set; }
+        public IUnit Unit { get; private set; }
 
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
@@ -34,12 +33,13 @@ namespace ShadowFlareRemake.Enemies {
             base.Init();
             CacheNulls();
             RegisterEvents();
-            SetModel();
         }
 
-        public void InitEnemy(Transform playerTransform) {
+        public void InitEnemy(IUnit unit,Transform playerTransform) {
 
+            Unit = unit;
             PlayerTransform = playerTransform;
+            SetModel();
         }
 
         protected virtual void Update() {
@@ -108,12 +108,12 @@ namespace ShadowFlareRemake.Enemies {
             if(View == null) {
                 View = GetComponentInChildren<EnemyView>();
             }
-            if(PlayerTransform == null) {
-                PlayerTransform = GameManager.Instance.PlayerTransform;
-            }
-            if(Unit == null) {
-                Unit = GetComponent<Unit>();
-            }
+            //if(PlayerTransform == null) {
+            //    PlayerTransform = GameManager.Instance.PlayerTransform;
+            //}
+            //if(Unit == null) {
+            //    Unit = GetComponent<Unit>();
+            //}
         }
      
         private void RegisterEvents() {

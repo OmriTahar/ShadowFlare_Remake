@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
+  m_Name: RedGoblinStats
+  m_EditorClassIdentifier: 
+  <color>k__BackingField: {r: 1, g: 0, b: 0, a: 0}
+  <ExpDrop>k__BackingField: 20
+  <CoinsDrop>k__BackingField: 20
+  <Name>k__BackingField: Red Goblin
+  <Level>k__BackingField: 1
+  <MaxHP>k__BackingField: 20
+  <Strength>k__BackingField: 1
+  <Attack>k__BackingField: 1
+  <Defence>k__BackingField: 1
+  <HitRate>k__BackingField: 1
+  <EvasionRate>k__BackingField: 1
+  <WalkingSpeed>k__BackingField: 1
+  <AttackSpeed>k__BackingField: 1
+  <MaxMP>k__BackingField: 1
+  <MagicalAttack>k__BackingField: 1
+  <MagicalDefence>k__BackingField: 1
+  <MagicalHitRate>k__BackingField: 1
+  <MagicalEvasionRate>k__BackingField: 1
+  <MagicalAttackSpeed>k__BackingField: 1

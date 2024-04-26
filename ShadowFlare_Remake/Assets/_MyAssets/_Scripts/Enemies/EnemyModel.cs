@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Enums;
+using UnityEngine;
 
 namespace ShadowFlareRemake.Enemies {
     public class EnemyModel : Model {
@@ -12,10 +13,15 @@ namespace ShadowFlareRemake.Enemies {
         public bool IsAttacking { get; private set; } = false;
         public bool IsEnemyHighlighted { get; private set; } = false;
 
+        public Color Color { get; private set; }
+
         public EnemyModel(IUnit unit) {
 
             Unit = unit;
             Name = unit.Stats.Name;
+
+            var enemyStats = unit.Stats as EnemyStats;
+            Color = enemyStats.color;
         }
 
         public void UpdateIsEnemyHighlighted(bool isEnemyHighlighted) {

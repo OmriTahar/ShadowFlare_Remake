@@ -7,20 +7,35 @@ namespace ShadowFlareRemake.Enemies {
 
         [Header("References")]
         [SerializeField] private Transform _playerTransform;
-        [SerializeField] private EnemyController[] _enemyControllers;
+        [SerializeField] private Transform _enemiesParent;
+        [Space(10)]
+        [SerializeField] private EnemyToSpawn[] _enemiesToSpawn;
 
         private Dictionary<IUnit, Unit> _unitsDict = new();
+        private List<EnemyController> _enemyControllers = new();
 
         private void Awake() {
 
-            foreach(var enemy in _enemyControllers) {
+            foreach(var enemyToSpawn in _enemiesToSpawn) {
 
-                enemy.Init();
-                enemy.InitEnemy(_playerTransform);
+                if(enemyToSpawn == null) {
+                    Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
+                }
+
+                var spawnPoint = enemyToSpawn.transform;
+                var enemy = Instantiate(enemyToSpawn.EnemyController, spawnPoint.position, spawnPoint.rotation,_enemiesParent);
 
                 enemy.OnIGotHit += HandleEnemyGotHit;
+                _enemyControllers.Add(enemy);
 
-                _unitsDict.Add(enemy.Unit, new Unit(enemy.Unit));
+                var newUnit = new Unit(enemyToSpawn.EnemyStats);
+
+                enemy.Init();
+                enemy.InitEnemy(newUnit, _playerTransform);
+
+                _unitsDict.Add(enemy.Unit, newUnit);
+
+                Destroy(enemyToSpawn.gameObject);
             }
         }
 

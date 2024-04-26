@@ -23,6 +23,7 @@ namespace ShadowFlareRemake.Enemies {
         [SerializeField] private Transform _healthSliderTransform;
 
         [Header("Other")]
+        [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Collider _myCollider;
         [SerializeField] private ParticleSystem _hitEffect;
         [SerializeField] private FadingObject _fadingObject;
@@ -62,6 +63,8 @@ namespace ShadowFlareRemake.Enemies {
             }
 
             _name.text = Model.Name;
+            _meshRenderer.material.color = Model.Color; 
+
             ResetHealthSliderValues();
         }
 

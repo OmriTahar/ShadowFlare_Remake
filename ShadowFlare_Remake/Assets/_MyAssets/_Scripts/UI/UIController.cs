@@ -58,8 +58,8 @@ namespace ShadowFlareRemake.UI {
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
 
-            _hudModel = new HudModel(_playerUnit.Stats);
-            _hudView.SetModel(_hudModel);
+            //_hudModel = new HudModel(_playerUnit.Stats);
+            //_hudView.SetModel(_hudModel);
 
             _inventoryModel = new InventoryModel(false);
             _inventoryView.SetModel(_inventoryModel);
@@ -120,7 +120,7 @@ namespace ShadowFlareRemake.UI {
         }
 
         public void UpdatePlayerExp() {
-            _hudModel.SetExp(_playerUnit.Stats.CurrentExp, _playerUnit.Stats.ExpToLevelUp);
+            //_hudModel.SetExp(_playerUnit.Stats.CurrentExp, _playerUnit.Stats.ExpToLevelUp);
         }
 
         public void UpdatePlayerLevel() {

@@ -3,12 +3,15 @@ namespace ShadowFlareRemake {
 
     public class Unit : IUnit {
 
-        public UnitStats Stats { get; private set; }
+        public IUnitStats Stats { get; private set; }
         public int CurrentHP { get; private set; }
         public int CurrentMP { get; private set; }
 
-        public Unit(IUnit iUnit) {
-            Stats = iUnit.Stats;
+        public Unit(IUnitStats unitStats) {
+
+            Stats = unitStats;
+            CurrentHP = unitStats.MaxHP;
+            CurrentMP = unitStats.MaxMP;
         }
 
         public void Init() {

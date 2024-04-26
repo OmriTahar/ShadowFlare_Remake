@@ -8,10 +8,10 @@ namespace ShadowFlareRemake.Player {
         [SerializeField] private UIController _uiController;
 
         [Header("Debug")]
-        [SerializeField] private UnitStats _playerUnitStatsCopy;
+        [SerializeField] private IUnitStats _playerUnitStatsCopy;
         [SerializeField] private bool _restartUnitStats = true;
 
-        public PlayerUnit(IUnit iUnit) : base(iUnit) {
+        public PlayerUnit(PlayerStats stats) : base(stats) {
         }
 
         //protected override void Awake() {

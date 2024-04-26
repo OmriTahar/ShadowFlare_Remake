@@ -16,13 +16,13 @@ namespace ShadowFlareRemake.Combat {
             Reciever.TakeDamage(damage);
         }
 
-        private static int GetPhysicalDamage(UnitStats Attacker, UnitStats Reciever) { // Todo: Expand this.
+        private static int GetPhysicalDamage(IUnitStats Attacker, IUnitStats Reciever) { // Todo: Expand this.
 
             var damage = Attacker.Attack - Reciever.Defence;
             return damage > 1 ? damage : 1;
         }
 
-        private static int GetMagicalDamage(UnitStats Attacker, UnitStats Reciever) { // Todo: Expand this.
+        private static int GetMagicalDamage(IUnitStats Attacker, IUnitStats Reciever) { // Todo: Expand this.
 
             var damage = Attacker.MagicalAttack - Reciever.MagicalDefence;
             return damage > 1 ? damage : 1;

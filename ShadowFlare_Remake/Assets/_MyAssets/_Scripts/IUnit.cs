@@ -1,7 +1,7 @@
 namespace ShadowFlareRemake {
 
     public interface IUnit {
-        public UnitStats Stats { get; }
+        public IUnitStats Stats { get; }
         public int CurrentHP { get; }
         public int CurrentMP { get; }
     }
