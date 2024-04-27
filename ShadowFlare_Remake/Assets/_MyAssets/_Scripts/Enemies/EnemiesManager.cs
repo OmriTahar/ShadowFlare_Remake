@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ShadowFlareRemake.Combat;
+using System;
 
 namespace ShadowFlareRemake.Enemies {
     public class EnemiesManager : MonoBehaviour {
 
+        public event Action<IUnitStats> OnEnemyDied;
+
         [Header("References")]
         [SerializeField] private Transform _playerTransform;
         [SerializeField] private Transform _enemiesParent;
-        [Space(10)]
-        [SerializeField] private EnemyToSpawn[] _enemiesToSpawn;
 
         private Dictionary<IUnit, Unit> _unitsDict = new();
         private List<EnemyController> _enemyControllers = new();
@@ -26,7 +27,9 @@ namespace ShadowFlareRemake.Enemies {
 
         private void InitEnemies() {
 
-            foreach(var enemyToSpawn in _enemiesToSpawn) {
+            var enemiesToSpawn = _enemiesParent.GetComponentsInChildren<EnemyToSpawn>();
+            
+            foreach(var enemyToSpawn in enemiesToSpawn) {
 
                 if(enemyToSpawn == null) {
                     Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
@@ -36,12 +39,13 @@ namespace ShadowFlareRemake.Enemies {
                 var spawnPoint = enemyToSpawn.transform;
                 var enemy = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
 
-                _enemyControllers.Add(enemy);
                 enemy.OnIGotHit += HandleEnemyGotHit;
+                enemy.OnIGotKilled += HandleEnemyDied;
 
                 var newUnit = new Unit(enemyToSpawn.EnemyStats);
                 enemy.InitEnemy(newUnit, _playerTransform);
 
+                _enemyControllers.Add(enemy);
                 _unitsDict.Add(enemy.Unit, newUnit);
 
                 Destroy(enemyToSpawn.gameObject);
@@ -51,7 +55,9 @@ namespace ShadowFlareRemake.Enemies {
         private void DeregisterEvents() {
 
             foreach(var enemy in _enemyControllers) {
+
                 enemy.OnIGotHit -= HandleEnemyGotHit;
+                enemy.OnIGotKilled -= HandleEnemyDied;
             }
         }
 
@@ -62,6 +68,11 @@ namespace ShadowFlareRemake.Enemies {
             CombatUtils.HandleTakeDamage(attack, _unitsDict[enemyController.Unit]);
 
             enemyController.SetUnit(unit);
+        }
+
+        private void HandleEnemyDied(IUnitStats unitStats) {
+
+            OnEnemyDied.Invoke(unitStats);
         }
     }
 }

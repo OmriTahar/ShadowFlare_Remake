@@ -11,20 +11,16 @@ namespace ShadowFlareRemake.UI {
         public int ExpToLevelUp { get; private set; }
         public int Level { get; private set; }
 
-        public HudModel(IUnitStats unitStats) {
-
-            MaxHP = unitStats.MaxHP;
-            MaxMP = unitStats.MaxMP;
-
-            SetHPAndMP(MaxHP, MaxMP, false);
-            //SetExp(unitStats.CurrentExp, unitStats.ExpToLevelUp, false);
-            SetLevel(unitStats.Level, false);
+        public HudModel() {
         }
 
-        public void SetHPAndMP(int currentHP, int currentMP, bool invokeChanged = true) {
+        public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP, bool invokeChanged = true) {
 
             CurrentHP = currentHP;
+            MaxHP = maxHP;
             CurrentMP = currentMP;
+            MaxMP = maxMP;
+
             Changed();
         }
 

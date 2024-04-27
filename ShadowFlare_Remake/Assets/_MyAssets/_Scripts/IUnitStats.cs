@@ -3,14 +3,13 @@ namespace ShadowFlareRemake {
 
         public string Name { get; }
         public int Level { get; }
+        public int MovementSpeed { get; }
 
         public int MaxHP { get; }
-        public int Strength { get; }
         public int Attack { get; }
         public int Defense { get; }
         public int HitRate { get; }
         public int EvasionRate { get; }
-        public int WalkingSpeed { get; }
         public int AttackSpeed { get; }
 
         public int MaxMP { get; }

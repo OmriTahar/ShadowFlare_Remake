@@ -1,57 +1,41 @@
-using ShadowFlareRemake.UI;
+using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.PlayerStats;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Rewards {
     public class RewardsManager : MonoBehaviour {
 
-        public static RewardsManager Instance { get; private set; }
+        public void GiveRewardsToPlayer(ConcretePlayerStats playerStats, EnemyStats enemyStats) {
 
-        [Header("References")]
-        [SerializeField] private UIController _uiController;
-        [SerializeField] private IUnitStats _playerUnitStats;
-
-
-        private void Awake() {
-            InitSingelton();
-        }
-
-        public void HandleEnemyKilledRewards(IUnitStats killedEnemy) {
-
-            //HandleExpReward(killedEnemy.ExpDrop);
-        }
-
-        private void InitSingelton() {
-
-            if(Instance == null) {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-
-            } else if(this != Instance) {
-                Destroy(this);
+            if(enemyStats is not EnemyStats) {
+                Debug.LogError("Rewards manager recieved stats that are NOT enemy stats!");
+                return;
             }
+
+            HandleExpReward(playerStats, enemyStats.ExpDrop);
         }
 
-        private void HandleExpReward(int expDrop) {
+        private void HandleExpReward(ConcretePlayerStats playerStats, int expDrop) {
 
-            //    if(expDrop <= 0) {
-            //        return;
-            //    }
+            if(expDrop <= 0) {
+                return;
+            }
 
-            //    if(_playerUnitStats.CurrentExp + expDrop >= _playerUnitStats.ExpToLevelUp) {
+            if(playerStats.CurrentExp + expDrop >= playerStats.ExpToLevelUp) {
 
-            //        var newExp = _playerUnitStats.CurrentExp + expDrop;
-            //        var spareExp = newExp - _playerUnitStats.ExpToLevelUp;
+                var totalExp = playerStats.CurrentExp + expDrop;
+                var newCurrentExp = totalExp - playerStats.ExpToLevelUp;
+                var expToLevelUp = playerStats.ExpToLevelUp * 2;           // Todo: Do this better
+                var newLevel = playerStats.Level + 1;                      // Todo: Set max level
 
-            //        _playerUnitStats.Level++; // Todo: Set max level
-            //        _playerUnitStats.ExpToLevelUp *= 2; // Todo: Do this better
-            //        _playerUnitStats.CurrentExp = spareExp;
+                playerStats.SetExp(newCurrentExp, expToLevelUp);
+                playerStats.SetLevel(newLevel);
 
-            //        _uiController.UpdatePlayerLevel();
-            //    }
+            } else {
 
-            //    _playerUnitStats.CurrentExp += expDrop;
-            //    _uiController.UpdatePlayerExp();
-            //}\
+                var newCurrentExp = playerStats.CurrentExp + expDrop;
+                playerStats.SetExp(newCurrentExp, playerStats.ExpToLevelUp);
+            }
         }
     }
 }

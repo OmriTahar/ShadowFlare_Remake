@@ -48,7 +48,7 @@ namespace ShadowFlareRemake.Enemies {
         }
 
         private void Update() {
-            StabilizeHealthSlider();
+            StabilizeHpSlider();
             HandleMouseRaycastHit();
         }
 
@@ -63,7 +63,9 @@ namespace ShadowFlareRemake.Enemies {
             }
 
             _name.text = Model.Name;
-            //_meshRenderer.material.color = Model.Color; 
+
+            var color = Model.Color;
+            _meshRenderer.material.color = new Color(color.r, color.g, color.b, 1);
 
             ResetHealthSliderValues();
         }
@@ -187,6 +189,32 @@ namespace ShadowFlareRemake.Enemies {
             StartCoroutine(FadeOutLogic(_fadingObject));
         }
 
+        private void StabilizeHpSlider() {
+
+            if(_healthSlider != null) {
+                _healthSliderTransform.rotation = Quaternion.Euler(45, 45, 0);
+            }
+        }
+
+        private void CacheNulls() {
+
+            if(_myCollider == null) {
+                _myCollider = GetComponent<Collider>();
+            }
+
+            if(_closeAttackAnim != null) {
+                _closeAttackAnimLength = _closeAttackAnim.length;
+            }
+
+            if(_rangedAttackAnim != null) {
+                _rangedAttackAnimLength = _rangedAttackAnim.length;
+            }
+
+            if(_deathAnim != null) {
+                _deathAnimLength = _deathAnim.length;
+            }
+        }
+
         private IEnumerator FadeOutLogic(FadingObject fadingObject) {
 
             foreach(var material in fadingObject.Materials) {
@@ -234,32 +262,6 @@ namespace ShadowFlareRemake.Enemies {
 
             StopAllCoroutines();
             OnFinishedDeathAnimation?.Invoke();
-        }
-
-        private void StabilizeHealthSlider() {
-
-            if(_healthSlider != null) {
-                _healthSliderTransform.rotation = Quaternion.Euler(45, 45, 0);
-            }
-        }
-
-        private void CacheNulls() {
-
-            if(_myCollider == null) {
-                _myCollider = GetComponent<Collider>();
-            }
-
-            if(_closeAttackAnim != null) {
-                _closeAttackAnimLength = _closeAttackAnim.length;
-            }
-
-            if(_rangedAttackAnim != null) {
-                _rangedAttackAnimLength = _rangedAttackAnim.length;
-            }
-
-            if(_deathAnim != null) {
-                _deathAnimLength = _deathAnim.length;
-            }
         }
     }
 }

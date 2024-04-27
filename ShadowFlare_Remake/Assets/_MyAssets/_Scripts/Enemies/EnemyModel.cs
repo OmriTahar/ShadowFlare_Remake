@@ -21,7 +21,7 @@ namespace ShadowFlareRemake.Enemies {
             Name = unit.Stats.Name;
 
             var enemyStats = unit.Stats as EnemyStats;
-            Color = enemyStats.color;
+            Color = enemyStats.Color;
         }
 
         public void UpdateIsEnemyHighlighted(bool isEnemyHighlighted) {

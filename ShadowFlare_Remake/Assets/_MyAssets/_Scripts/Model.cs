@@ -6,6 +6,7 @@ namespace ShadowFlareRemake {
         public event Action OnChange;
 
         protected void Changed() {
+
             OnChange?.Invoke();
         }
     }

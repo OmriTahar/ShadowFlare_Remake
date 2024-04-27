@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Player;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,9 +13,6 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private HudView _hudView;
         [SerializeField] private InventoryView _inventoryView;
 
-        [Header("Other")]
-        [SerializeField] private Unit _playerUnit;
-
         private CurserModel _curserModel;
         private HudModel _hudModel;
         private InventoryModel _inventoryModel;
@@ -23,10 +21,6 @@ namespace ShadowFlareRemake.UI {
 
             base.Awake();
             CacheNulls();
-        }
-
-        private void Start() {
-
             InitModels();
         }
 
@@ -61,8 +55,8 @@ namespace ShadowFlareRemake.UI {
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
 
-            //_hudModel = new HudModel(_playerUnit.Stats);
-            //_hudView.SetModel(_hudModel);
+            _hudModel = new HudModel();
+            _hudView.SetModel(_hudModel);
 
             _inventoryModel = new InventoryModel(false);
             _inventoryView.SetModel(_inventoryModel);
@@ -106,10 +100,6 @@ namespace ShadowFlareRemake.UI {
             Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
         }
 
-        //private void HurtPlayer(InputAction.CallbackContext context) {
-        //    _hudModel.UpdatePlayerStats(_hudModel.MaxHealth, _hudModel.CurrentHealth - 10);
-        //}
-
         public void CursorEnteredUI(PointerEventData eventData) {
             PlayerInput.Instance.SetIsCursorOnUI(true);
         }
@@ -118,17 +108,31 @@ namespace ShadowFlareRemake.UI {
         }
 
         #region Update Player Stats
-        public void UpdatePlayerHPAndMP() {
-            _hudModel.SetHPAndMP(_playerUnit.CurrentHP, _playerUnit.CurrentMP);
+
+        public void UpdatePlayerStats(IUnit unit) {
+
+            var playerStats = unit.Stats as IPlayerStats;
+
+            UpdatePlayerHpAndMp(unit.CurrentHP, playerStats.MaxHP, unit.CurrentMP, playerStats.MaxMP);
+            UpdatePlayerExp(playerStats.CurrentExp, playerStats.ExpToLevelUp);
+            UpdatePlayerLevel(playerStats.Level);
         }
 
-        public void UpdatePlayerExp() {
-            //_hudModel.SetExp(_playerUnit.Stats.CurrentExp, _playerUnit.Stats.ExpToLevelUp);
+        private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP) {
+
+            _hudModel.SetHPAndMP(currentHP, maxHP, currentMP, maxMP);
         }
 
-        public void UpdatePlayerLevel() {
-            _hudModel.SetLevel(_playerUnit.Stats.Level);
+        private void UpdatePlayerExp(int currentExp, int expToLevelUp) {
+
+            _hudModel.SetExp(currentExp, expToLevelUp);
         }
+
+        private void UpdatePlayerLevel(int level) {
+
+            _hudModel.SetLevel(level);
+        }
+
         #endregion
 
         private void RegisterEvents() {

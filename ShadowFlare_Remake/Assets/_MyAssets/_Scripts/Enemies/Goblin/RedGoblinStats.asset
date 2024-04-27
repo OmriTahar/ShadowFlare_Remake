@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
   m_Name: RedGoblinStats
   m_EditorClassIdentifier: 
-  <color>k__BackingField: {r: 1, g: 0, b: 0, a: 0}
+  ______Enemy_____: ------------------------------------
+  <Color>k__BackingField: {r: 1, g: 0, b: 0, a: 1}
   <ExpDrop>k__BackingField: 20
   <CoinsDrop>k__BackingField: 20
+  ______Base_____: ------------------------------------
   <Name>k__BackingField: Red Goblin
   <Level>k__BackingField: 1
-  <MaxHP>k__BackingField: 20
-  <Strength>k__BackingField: 1
+  <MovementSpeed>k__BackingField: 5
+  ______Physical_____: ------------------------------------
+  <MaxHP>k__BackingField: 30
   <Attack>k__BackingField: 1
-  <Defence>k__BackingField: 1
+  <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
-  <WalkingSpeed>k__BackingField: 1
   <AttackSpeed>k__BackingField: 1
+  ______Magical_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
   <MagicalDefence>k__BackingField: 1

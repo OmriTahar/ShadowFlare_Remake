@@ -8,6 +8,7 @@ namespace ShadowFlareRemake.Enemies {
     public abstract class EnemyController : Controller {
 
         public event Action<Attack, EnemyController> OnIGotHit;
+        public event Action<IUnitStats> OnIGotKilled;
 
         public IUnit Unit { get; private set; }
 
@@ -79,22 +80,27 @@ namespace ShadowFlareRemake.Enemies {
         }
 
         private void InformRewardsManager() {
-            //RewardsManager.Instance.HandleEnemyKilledRewards(Unit.UnitStats);
+
+            OnIGotKilled?.Invoke(Unit.Stats);
         }
 
         private void HandleDeath() {
+
             Destroy(gameObject);
         }
 
         private void SelectEnemy() {
+
             Model.UpdateIsEnemyHighlighted(true);
         }
 
         private void DeselectEnemy() {
+
             Model.UpdateIsEnemyHighlighted(false);
         }
 
         private void ResetAttackCooldown() {
+
             Model.UpdateAttackState(false, Enums.AttackMethod.None);
             IsAllowedToAttack = true;
         }

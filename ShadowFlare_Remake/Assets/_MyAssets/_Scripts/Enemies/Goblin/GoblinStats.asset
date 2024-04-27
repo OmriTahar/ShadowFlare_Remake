@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
   m_Name: GoblinStats
   m_EditorClassIdentifier: 
-  <color>k__BackingField: {r: 0, g: 0.3679245, b: 0.019383322, a: 0}
+  ______Enemy_____: ------------------------------------
+  <Color>k__BackingField: {r: 0.045045517, g: 0.38679248, b: 0, a: 1}
   <ExpDrop>k__BackingField: 10
   <CoinsDrop>k__BackingField: 10
+  ______Base_____: ------------------------------------
   <Name>k__BackingField: Goblin
   <Level>k__BackingField: 1
+  <MovementSpeed>k__BackingField: 5
+  ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 10
-  <Strength>k__BackingField: 1
   <Attack>k__BackingField: 1
-  <Defence>k__BackingField: 1
+  <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
-  <WalkingSpeed>k__BackingField: 1
   <AttackSpeed>k__BackingField: 1
+  ______Magical_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
   <MagicalDefence>k__BackingField: 1

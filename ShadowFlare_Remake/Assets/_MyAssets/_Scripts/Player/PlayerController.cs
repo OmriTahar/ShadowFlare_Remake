@@ -27,11 +27,10 @@ namespace ShadowFlareRemake.Player {
         private Coroutine _lastMoveCoroutine;
 
         private const int _rotationSpeed = 10;
-
-        private bool _isInitialized = false;
         private bool _isAttacking = false;
 
         #region Unity Callbacks
+
         protected override void Awake() {
 
             base.Awake();
@@ -59,9 +58,11 @@ namespace ShadowFlareRemake.Player {
 
             DeregisterEvents();
         }
-        #endregion Unity Callbacks
+
+        #endregion 
 
         #region Initialization
+
         public async Task InitPlayer(IUnit unit) {
 
             _model = new PlayerModel(unit);
@@ -107,9 +108,17 @@ namespace ShadowFlareRemake.Player {
             _view.OnDoStepForwardAnimationEvent -= HandleStepForward;
             _view.OnTriggerEnterEvent -= HandleTriggerEnter;
         }
-        #endregion Initialization
+
+        #endregion 
+
+        public void SetUnit(IUnit unit) {
+
+            _model.SetUnit(unit);
+            _meleeAttack.SetUnitStats(unit.Stats);
+        }
 
         #region Move & Attack
+
         private void HandleLeftClickActions() {
 
             if(_isAttacking || PlayerInput.Instance.IsCursorOnUI) {
@@ -168,7 +177,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
+            var movementSpeed = _model.MovementSpeed; 
 
             while(Vector3.Distance(transform.position, targetPos) > 0.1f) {
 
@@ -183,7 +192,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
+            var movementSpeed = _model.MovementSpeed;
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance) {
 
@@ -208,7 +217,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator StepForwardLogic(float timeToComplete) {
 
             float timer = 0;
-            var movementSpeed = _model.Unit.Stats.WalkingSpeed; // TODO: Think about this one
+            var movementSpeed = _model.MovementSpeed;
 
             while(timer < timeToComplete) {
 
