@@ -26,7 +26,7 @@ namespace ShadowFlareRemake.UI {
 
         private async void OnEnable() {
 
-            await AwaitPlayerInputInit();
+            await PlayerInput.Instance.WaitForInitFinish();
             RegisterEvents();
         }
 
@@ -138,7 +138,6 @@ namespace ShadowFlareRemake.UI {
         private void RegisterEvents() {
 
             //PlayerInput.Instance.I_KeyboardClickAction.performed += ToggleInventory;
-            //PlayerInput.Instance.H_KeyboardClickAction.performed += HurtPlayer;
 
             _hudView.OnCurserEnterUI += CursorEnteredUI;
             _hudView.OnCurserLeftUI += CursorLeftUI;
@@ -152,7 +151,6 @@ namespace ShadowFlareRemake.UI {
         private void DeregisterEvents() {
 
             //PlayerInput.Instance.I_KeyboardClickAction.performed -= ToggleInventory;
-            //PlayerInput.Instance.H_KeyboardClickAction.performed -= HurtPlayer;
 
             _hudView.OnCurserEnterUI -= CursorEnteredUI;
             _hudView.OnCurserLeftUI -= CursorLeftUI;
@@ -161,13 +159,6 @@ namespace ShadowFlareRemake.UI {
             _inventoryView.OnCloseClicked -= ToggleInventory;
             _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
             _inventoryView.OnCurserLeftUI -= CursorLeftUI;
-        }
-
-        private async Task AwaitPlayerInputInit() {
-
-            while(PlayerInput.Instance == null || PlayerInput.Instance.enabled == false) {
-                await Task.Delay(100);
-            }
         }
     }
 }

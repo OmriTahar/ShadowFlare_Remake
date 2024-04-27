@@ -111,12 +111,6 @@ namespace ShadowFlareRemake.Player {
 
         #endregion 
 
-        public void SetUnit(IUnit unit) {
-
-            _model.SetUnit(unit);
-            _meleeAttack.SetUnitStats(unit.Stats);
-        }
-
         #region Move & Attack
 
         private void HandleLeftClickActions() {
@@ -259,9 +253,11 @@ namespace ShadowFlareRemake.Player {
             _model.SetAttackState(false);
             _isAttacking = false;
         }
+
         #endregion Move & Attack
 
         #region Got Hit
+
         private void HandleTriggerEnter(Collider other) {
 
             if(other.gameObject.layer == AttackLayer) {
@@ -270,7 +266,8 @@ namespace ShadowFlareRemake.Player {
                 OnIGotHit?.Invoke(attack, _model.Unit);
             }
         }
-        #endregion Got Hit
+
+        #endregion
     }
 }
 

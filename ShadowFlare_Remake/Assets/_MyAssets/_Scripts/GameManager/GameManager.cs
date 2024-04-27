@@ -41,21 +41,18 @@ namespace ShadowFlareRemake.GameManager {
         private void RegisterEvents() {
 
             _playerController.OnIGotHit += HandlePlayerGotHit;
-
             _enemiesManager.OnEnemyDied += HandleEnemyDied;
         }
 
         private void DergisterEvents() {
 
             _playerController.OnIGotHit -= HandlePlayerGotHit;
-
             _enemiesManager.OnEnemyDied -= HandleEnemyDied;
         }
 
         private async Task InitPlayer() {
 
             _playerUnit = new Unit(_playerStats);
-
             await _playerController.InitPlayer(_playerUnit);
         }
 
