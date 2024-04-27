@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ______Enemy_____: ------------------------------------
   <Color>k__BackingField: {r: 0.045045517, g: 0.38679248, b: 0, a: 1}
-  <ExpDrop>k__BackingField: 10
+  <ExpDrop>k__BackingField: 8
   <CoinsDrop>k__BackingField: 10
   ______Base_____: ------------------------------------
   <Name>k__BackingField: Goblin

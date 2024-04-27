@@ -6,10 +6,10 @@ namespace ShadowFlareRemake.UI {
 
         public InventoryModel(bool isInventoryOpen) {
 
-            UpdateInventory(isInventoryOpen);
+            SetIsInventoryOpen(isInventoryOpen);
         }
 
-        public void UpdateInventory(bool isInventoryOpen) {
+        public void SetIsInventoryOpen(bool isInventoryOpen) {
 
             IsInventoryOpen = isInventoryOpen;
             Changed();

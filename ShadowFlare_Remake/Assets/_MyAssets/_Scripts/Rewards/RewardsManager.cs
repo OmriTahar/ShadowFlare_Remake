@@ -5,12 +5,9 @@ using UnityEngine;
 namespace ShadowFlareRemake.Rewards {
     public class RewardsManager : MonoBehaviour {
 
-        public void GiveRewardsToPlayer(ConcretePlayerStats playerStats, EnemyStats enemyStats) {
+        private bool _isPendingLevelUp = false;
 
-            if(enemyStats is not EnemyStats) {
-                Debug.LogError("Rewards manager recieved stats that are NOT enemy stats!");
-                return;
-            }
+        public void GiveRewardsToPlayer(ConcretePlayerStats playerStats, EnemyStats enemyStats) {
 
             HandleExpReward(playerStats, enemyStats.ExpDrop);
         }
@@ -21,7 +18,9 @@ namespace ShadowFlareRemake.Rewards {
                 return;
             }
 
-            if(playerStats.CurrentExp + expDrop >= playerStats.ExpToLevelUp) {
+            _isPendingLevelUp = playerStats.CurrentExp + expDrop >= playerStats.ExpToLevelUp;
+
+            if(_isPendingLevelUp) {
 
                 var totalExp = playerStats.CurrentExp + expDrop;
                 var newCurrentExp = totalExp - playerStats.ExpToLevelUp;
@@ -36,6 +35,11 @@ namespace ShadowFlareRemake.Rewards {
                 var newCurrentExp = playerStats.CurrentExp + expDrop;
                 playerStats.SetExp(newCurrentExp, playerStats.ExpToLevelUp);
             }
+        }
+
+        private void HandleLevelUp() {
+
+
         }
     }
 }

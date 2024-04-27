@@ -1,7 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Player;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,12 +9,14 @@ namespace ShadowFlareRemake.UI {
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
-        [SerializeField] private HudView _hudView;
         [SerializeField] private InventoryView _inventoryView;
+        [SerializeField] private StatsView _statsView;
+        [SerializeField] private HudView _hudView;
 
         private CurserModel _curserModel;
-        private HudModel _hudModel;
+        private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
+        private HudModel _hudModel;
 
         protected override void Awake() {
 
@@ -55,11 +56,14 @@ namespace ShadowFlareRemake.UI {
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
 
-            _hudModel = new HudModel();
-            _hudView.SetModel(_hudModel);
-
             _inventoryModel = new InventoryModel(false);
             _inventoryView.SetModel(_inventoryModel);
+
+            _statsModel = new StatsModel(false);
+            _statsView.SetModel(_statsModel);
+
+            _hudModel = new HudModel();
+            _hudView.SetModel(_hudModel);
         }
 
         private void HandleMouseRaycastHit() {
@@ -94,10 +98,28 @@ namespace ShadowFlareRemake.UI {
         private void ToggleInventory() {
 
             var toggledState = !_inventoryModel.IsInventoryOpen;
-            _inventoryModel.UpdateInventory(toggledState);
+            _inventoryModel.SetIsInventoryOpen(toggledState);
 
-            var screenCover = _inventoryModel.IsInventoryOpen ? UIScreenCover.RightIsCovered : UIScreenCover.None;
-            Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
+            //var screenCover = _inventoryModel.IsInventoryOpen ? UIScreenCover.RightIsCovered : UIScreenCover.None;
+            //Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
+        }
+
+        private void ToggleStats() {
+
+            var toggledState = !_statsModel.IsStatsOpen;
+            _statsModel.SetIsStatsOpen(toggledState);
+
+            //var screenCover = _statsModel.IsStatsOpen ? UIScreenCover.LeftIsCovered : UIScreenCover.None;
+            //Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
+        }
+
+        private void HandleUiScreenCover() {
+
+            if(_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+
+                // YOU STOPPED HERE!!!
+            }
+
         }
 
         public void CursorEnteredUI(PointerEventData eventData) {
