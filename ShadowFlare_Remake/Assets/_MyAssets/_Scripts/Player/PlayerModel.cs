@@ -2,7 +2,7 @@
 namespace ShadowFlareRemake.Player {
     public class PlayerModel : Model {
 
-        public IUnit Unit { get; private set; }
+        public IPlayerUnit Unit { get; private set; }
 
         public enum AttackType { None, Single, ThreeStrikes }
         public AttackType CurrentAttackType { get; private set; }
@@ -11,15 +11,15 @@ namespace ShadowFlareRemake.Player {
         public bool IsAttacking { get; private set; } = false;
         public bool CanTakeDamage { get; private set; } = true;
 
-        public PlayerModel(IUnit unit, bool isAttacking = false, AttackType attackType = AttackType.None) {
+        public PlayerModel(IPlayerUnit unit, bool isAttacking = false, AttackType attackType = AttackType.None) {
 
             Unit = unit;
-            MovementSpeed = unit.Stats.MovementSpeed;
+            MovementSpeed = unit.MovementSpeed;
             IsAttacking = isAttacking;
             CurrentAttackType = attackType;
         }
 
-        public void SetUnit(IUnit unit) {
+        public void SetUnit(IPlayerUnit unit) {
 
             Unit = unit;
             Changed();

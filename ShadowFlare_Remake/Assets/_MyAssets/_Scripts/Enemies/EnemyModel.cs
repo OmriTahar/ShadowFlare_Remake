@@ -4,8 +4,10 @@ using UnityEngine;
 namespace ShadowFlareRemake.Enemies {
     public class EnemyModel : Model {
 
+        public IEnemyUnit Unit { get; private set; }
+        public Color Color { get; private set; }
         public string Name { get; private set; }
-        public IUnit Unit { get; private set; }
+        public int CurrentHP { get; private set; }
 
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
@@ -13,15 +15,12 @@ namespace ShadowFlareRemake.Enemies {
         public bool IsAttacking { get; private set; } = false;
         public bool IsEnemyHighlighted { get; private set; } = false;
 
-        public Color Color { get; private set; }
 
-        public EnemyModel(IUnit unit) {
+        public EnemyModel(IEnemyUnit unit) {
 
             Unit = unit;
-            Name = unit.Stats.Name;
-
-            var enemyStats = unit.Stats as EnemyStats;
-            Color = enemyStats.Color;
+            Color = unit.Color;
+            Name = unit.Name;
         }
 
         public void UpdateIsEnemyHighlighted(bool isEnemyHighlighted) {

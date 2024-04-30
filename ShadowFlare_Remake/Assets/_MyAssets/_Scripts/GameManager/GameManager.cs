@@ -1,30 +1,35 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Player;
-using ShadowFlareRemake.PlayerStats;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
 using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ShadowFlareRemake.GameManager {
     public class GameManager : MonoBehaviour {
 
         [Header("General")]
-        [SerializeField] private EnemiesManager _enemiesManager;
         [SerializeField] private RewardsManager _rewardsManager;
         [SerializeField] private UIController _uiController;
 
+        [Header("Enemies")]
+        [SerializeField] private Transform _enemiesParent;
+
         [Header("Player")]
         [SerializeField] private PlayerController _playerController;
-        [SerializeField] private ConcretePlayerStats _playerStats;
+        [SerializeField] private PlayerUnit _playerUnit;
 
-        private Unit _playerUnit;
+        private Dictionary<EnemyController, EnemyUnit> _enemiesDict = new();
+
+        #region Unity Callbacks
 
         private async void Awake() {
 
             DontDestroyOnLoad(gameObject);
             await InitPlayer();
+            InitEnemies();
         }
 
         private void Start() {
@@ -38,33 +43,89 @@ namespace ShadowFlareRemake.GameManager {
             DergisterEvents();
         }
 
+        #endregion
+
+        #region Events
+
         private void RegisterEvents() {
 
             _playerController.OnIGotHit += HandlePlayerGotHit;
-            _enemiesManager.OnEnemyDied += HandleEnemyDied;
         }
 
         private void DergisterEvents() {
 
             _playerController.OnIGotHit -= HandlePlayerGotHit;
-            _enemiesManager.OnEnemyDied -= HandleEnemyDied;
+
+            foreach(var enemy in _enemiesDict.Keys) {
+
+                enemy.OnIGotHit -= HandleEnemyGotHit;
+                enemy.OnIGotKilled -= HandleEnemyDied;
+            }
         }
+
+        #endregion
+
+        #region Enemies
+
+        private void InitEnemies() {
+
+            var enemiesToSpawn = _enemiesParent.GetComponentsInChildren<EnemyToSpawn>();
+
+            foreach(var enemyToSpawn in enemiesToSpawn) {
+
+                if(enemyToSpawn == null) {
+                    Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
+                    continue;
+                }
+
+                var spawnPoint = enemyToSpawn.transform;
+                var enemyController = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
+                var enemyUnit = enemyToSpawn.EnemyUnit;
+
+                enemyController.InitEnemy(enemyUnit, _playerController.transform);
+                _enemiesDict.Add(enemyController, enemyUnit);
+
+                RegisterEnemyEvents(enemyController);
+                Destroy(enemyToSpawn.gameObject);
+            }
+        }
+
+        private void RegisterEnemyEvents(EnemyController enemyController) {
+
+            enemyController.OnIGotHit += HandleEnemyGotHit;
+            enemyController.OnIGotKilled += HandleEnemyDied;
+        }
+
+        private void HandleEnemyGotHit(Attack attack, EnemyController enemyController) {
+
+            var unit = _enemiesDict[enemyController];
+
+            CombatLogic.HandleTakeDamage(attack, unit, unit);
+
+            enemyController.SetUnit(unit);
+        }
+
+        private void HandleEnemyDied(IEnemyUnit enemyUnit) {
+
+            _rewardsManager.GiveRewardsToPlayer(_playerUnit, enemyUnit as EnemyUnit);
+            _uiController.UpdatePlayerStats(_playerUnit);
+        }
+
+        #endregion
+
+        #region Player
 
         private async Task InitPlayer() {
 
-            _playerUnit = new Unit(_playerStats);
             await _playerController.InitPlayer(_playerUnit);
         }
+
 
         private void HandlePlayerGotHit(Attack attack, IUnit unit) {
 
         }
 
-        private void HandleEnemyDied(IUnitStats unitStats) {
-
-            _rewardsManager.GiveRewardsToPlayer(_playerStats, unitStats as EnemyStats);
-            _uiController.UpdatePlayerStats(_playerUnit);
-        }
+        #endregion
     }
 }
 

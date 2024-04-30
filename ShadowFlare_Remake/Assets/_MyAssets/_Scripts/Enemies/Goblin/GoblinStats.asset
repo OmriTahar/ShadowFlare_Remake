@@ -22,6 +22,7 @@ MonoBehaviour:
   <MovementSpeed>k__BackingField: 5
   ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 10
+  <CurrentHP>k__BackingField: 10
   <Attack>k__BackingField: 1
   <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 1
@@ -29,6 +30,7 @@ MonoBehaviour:
   <AttackSpeed>k__BackingField: 1
   ______Magical_____: ------------------------------------
   <MaxMP>k__BackingField: 1
+  <CurrentMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
   <MagicalDefence>k__BackingField: 1
   <MagicalHitRate>k__BackingField: 1

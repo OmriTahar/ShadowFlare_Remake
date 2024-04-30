@@ -6,73 +6,76 @@ using System;
 namespace ShadowFlareRemake.Enemies {
     public class EnemiesManager : MonoBehaviour {
 
-        public event Action<IUnitStats> OnEnemyDied;
+        //public event Action<EnemyToSpawn[], Transform> OnSpawnEnemies;
+        //public event Action<IEnemyUnit> OnEnemyGotHit;
+        //public event Action<IEnemyUnit> OnEnemyDied;
 
-        [Header("References")]
-        [SerializeField] private Transform _playerTransform;
-        [SerializeField] private Transform _enemiesParent;
+        //[Header("References")]
+        //[SerializeField] private Transform _playerTransform;
+        //[SerializeField] private Transform _enemiesParent;
 
-        private Dictionary<IUnit, Unit> _unitsDict = new();
-        private List<EnemyController> _enemyControllers = new();
+        //private Dictionary<IEnemyUnit, Unit> _unitsDict = new();
+        //private List<EnemyController> _enemyControllers = new();
 
-        private void Awake() {
+        //private void Awake() {
 
-            InitEnemies();
-        }
+        //    InitEnemies();
+        //}
 
-        private void OnDestroy() {
+        //private void OnDestroy() {
 
-            DeregisterEvents();
-        }
+        //    DeregisterEvents();
+        //}
 
-        private void InitEnemies() {
+        //private void InitEnemies() {
 
-            var enemiesToSpawn = _enemiesParent.GetComponentsInChildren<EnemyToSpawn>();
-            
-            foreach(var enemyToSpawn in enemiesToSpawn) {
+        //    var enemiesToSpawn = _enemiesParent.GetComponentsInChildren<EnemyToSpawn>();
+        //    OnSpawnEnemies?.Invoke(enemiesToSpawn, _enemiesParent);
 
-                if(enemyToSpawn == null) {
-                    Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
-                    continue;
-                }
+        //    foreach(var enemyToSpawn in enemiesToSpawn) {
 
-                var spawnPoint = enemyToSpawn.transform;
-                var enemy = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
+        //        if(enemyToSpawn == null) {
+        //            Debug.LogError("Enemies Manager - EnemyToSpawn Null Reference!");
+        //            continue;
+        //        }
 
-                enemy.OnIGotHit += HandleEnemyGotHit;
-                enemy.OnIGotKilled += HandleEnemyDied;
+        //        var spawnPoint = enemyToSpawn.transform;
+        //        var enemy = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
 
-                var newUnit = new Unit(enemyToSpawn.EnemyStats);
-                enemy.InitEnemy(newUnit, _playerTransform);
+        //        enemy.OnIGotHit += HandleEnemyGotHit;
+        //        enemy.OnIGotKilled += HandleEnemyDied;
 
-                _enemyControllers.Add(enemy);
-                _unitsDict.Add(enemy.Unit, newUnit);
+        //        var newUnit = new Unit(enemyToSpawn.EnemyUnit);
+        //        enemy.InitEnemy(newUnit, _playerTransform);
 
-                Destroy(enemyToSpawn.gameObject);
-            }
-        }
+        //        _enemyControllers.Add(enemy);
+        //        _unitsDict.Add(enemy.Unit, newUnit);
 
-        private void DeregisterEvents() {
+        //        Destroy(enemyToSpawn.gameObject);
+        //    }
+        //}
 
-            foreach(var enemy in _enemyControllers) {
+        //private void DeregisterEvents() {
 
-                enemy.OnIGotHit -= HandleEnemyGotHit;
-                enemy.OnIGotKilled -= HandleEnemyDied;
-            }
-        }
+        //    foreach(var enemy in _enemyControllers) {
 
-        private void HandleEnemyGotHit(Attack attack, EnemyController enemyController) {
+        //        enemy.OnIGotHit -= HandleEnemyGotHit;
+        //        enemy.OnIGotKilled -= HandleEnemyDied;
+        //    }
+        //}
 
-            var unit = _unitsDict[enemyController.Unit];
+        //private void HandleEnemyGotHit(Attack attack, EnemyController enemyController) {
 
-            CombatUtils.HandleTakeDamage(attack, _unitsDict[enemyController.Unit]);
+        //    var unit = _unitsDict[enemyController.Unit];
 
-            enemyController.SetUnit(unit);
-        }
+        //    CombatUtils.HandleTakeDamage(attack, _unitsDict[enemyController.Unit]);
 
-        private void HandleEnemyDied(IUnitStats unitStats) {
+        //    enemyController.SetUnit(unit);
+        //}
 
-            OnEnemyDied.Invoke(unitStats);
-        }
+        //private void HandleEnemyDied(IUnitStats unitStats) {
+
+        //    OnEnemyDied.Invoke(unitStats);
+        //}
     }
 }

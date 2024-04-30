@@ -8,9 +8,9 @@ namespace ShadowFlareRemake.Enemies {
     public abstract class EnemyController : Controller {
 
         public event Action<Attack, EnemyController> OnIGotHit;
-        public event Action<IUnitStats> OnIGotKilled;
+        public event Action<IEnemyUnit> OnIGotKilled;
 
-        public IUnit Unit { get; private set; }
+        public IEnemyUnit Unit { get; private set; }
 
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
@@ -29,7 +29,7 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public void InitEnemy(IUnit unit, Transform playerTransform) {
+        public void InitEnemy(IEnemyUnit unit, Transform playerTransform) {
 
             Unit = unit;
             PlayerTransform = playerTransform;
@@ -56,7 +56,7 @@ namespace ShadowFlareRemake.Enemies {
             DeregisterEvents();
         }
 
-        public void SetUnit(IUnit unit) {
+        public void SetUnit(IEnemyUnit unit) {
 
             Unit = unit;
             Model.InvokeChanged();
@@ -77,11 +77,6 @@ namespace ShadowFlareRemake.Enemies {
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, this);
             }
-        }
-
-        private void InformRewardsManager() {
-
-            OnIGotKilled?.Invoke(Unit.Stats);
         }
 
         private void HandleDeath() {
@@ -117,7 +112,6 @@ namespace ShadowFlareRemake.Enemies {
             View.OnCurserEntered += SelectEnemy;
             View.OnCurserLeft += DeselectEnemy;
             View.OnTriggerEnterEvent += HandleTriggerEnter;
-            View.OnEnemyKilled += InformRewardsManager;
             View.OnFinishedDeathAnimation += HandleDeath;
             View.OnAttackAnimationEnded += ResetAttackCooldown;
         }
@@ -127,7 +121,6 @@ namespace ShadowFlareRemake.Enemies {
             View.OnCurserEntered -= SelectEnemy;
             View.OnCurserLeft -= DeselectEnemy;
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
-            View.OnEnemyKilled -= InformRewardsManager;
             View.OnFinishedDeathAnimation -= HandleDeath;
             View.OnAttackAnimationEnded -= ResetAttackCooldown;
         }

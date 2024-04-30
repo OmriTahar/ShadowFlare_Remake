@@ -43,16 +43,19 @@ namespace ShadowFlareRemake.Enemies {
         private int _lastSeenHP;
 
         protected override void Initialize() {
+
             CacheNulls();
             _closeAttackCooldown = new WaitForSeconds(_closeAttackAnimLength);
         }
 
         private void Update() {
+
             StabilizeHpSlider();
             HandleMouseRaycastHit();
         }
 
         private void OnTriggerEnter(Collider other) {
+
             OnTriggerEnterEvent?.Invoke(other);
         }
 
@@ -87,7 +90,7 @@ namespace ShadowFlareRemake.Enemies {
 
         private void ResetHealthSliderValues() {
 
-            var value = Model.Unit.Stats.MaxHP;
+            var value = Model.Unit.MaxHP;
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
         }

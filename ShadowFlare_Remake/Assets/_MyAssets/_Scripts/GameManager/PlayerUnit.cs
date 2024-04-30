@@ -3,10 +3,12 @@ using ShadowFlareRemake.Player;
 using System;
 using UnityEngine;
 
-namespace ShadowFlareRemake.PlayerStats {
+namespace ShadowFlareRemake.GameManager {
 
     [Serializable]
-    public class ConcretePlayerStats : IPlayerStats {
+    public class PlayerUnit : IPlayerUnit, IUnitHandler {
+
+        #region Fields
 
         private const string _spaceLine = "------------------------------------";
 
@@ -26,6 +28,7 @@ namespace ShadowFlareRemake.PlayerStats {
         [Space(15)]
         [SerializeField] private string ______Physical_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
+        [field: SerializeField] public int CurrentHP { get; private set; }
         [field: SerializeField] public int Attack { get; private set; }
         [field: SerializeField] public int Defense { get; private set; }
         [field: SerializeField] public int HitRate { get; private set; }
@@ -35,11 +38,19 @@ namespace ShadowFlareRemake.PlayerStats {
         [Space(15)]
         [SerializeField] private string ______Magical_____ = _spaceLine;
         [field: SerializeField] public int MaxMP { get; private set; }
+        [field: SerializeField] public int CurrentMP { get; private set; }
         [field: SerializeField] public int MagicalAttack { get; private set; }
         [field: SerializeField] public int MagicalDefence { get; private set; }
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
+
+        #endregion
+
+        public void TakeDamage(int damage) {
+
+            CurrentHP -= damage;
+        }
 
         public void SetExp(int currentExp, int expToLevelUp) {
 

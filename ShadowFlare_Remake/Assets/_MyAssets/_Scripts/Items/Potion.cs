@@ -10,11 +10,11 @@ namespace ShadowFlareRemake.Items {
         protected int HealthRestore;
         protected int ManaRestore;
 
-        public virtual void Use(Unit unit) {
-            if(unit != null) {
-                unit.HealHP(HealthRestore);
-            }
-        }
+        //public virtual void Use(Unit unit) {
+        //    if(unit != null) {
+        //        unit.HealHP(HealthRestore);
+        //    }
+        //}
     }
 }
 

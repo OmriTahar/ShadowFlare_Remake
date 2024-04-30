@@ -1,23 +1,19 @@
-
 using ShadowFlareRemake.Player;
 
 namespace ShadowFlareRemake.UI {
     public class StatsModel : Model {
 
+        public IPlayerUnit Unit { get; private set; }
         public bool IsStatsOpen { get; private set; }
-
-        public IUnit Unit { get; private set; }
-        public IPlayerStats Stats { get; private set; }
 
         public StatsModel(bool isInventoryOpen) {
 
             IsStatsOpen = isInventoryOpen;
         }
 
-        public void SetPlayerStats(IUnit unit) {
+        public void SetPlayerStats(IPlayerUnit unit) {
 
             Unit = unit;
-            Stats = unit.Stats as IPlayerStats;
             Changed();
         }
 

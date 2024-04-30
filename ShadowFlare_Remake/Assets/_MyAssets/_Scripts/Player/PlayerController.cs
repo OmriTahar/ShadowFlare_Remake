@@ -10,7 +10,7 @@ namespace ShadowFlareRemake.Player {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : Controller {
 
-        public event Action<Attack, IUnit> OnIGotHit;
+        public event Action<Attack, IPlayerUnit> OnIGotHit;
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
@@ -63,7 +63,7 @@ namespace ShadowFlareRemake.Player {
 
         #region Initialization
 
-        public async Task InitPlayer(IUnit unit) {
+        public async Task InitPlayer(IPlayerUnit unit) {
 
             _model = new PlayerModel(unit);
             _view.SetModel(_model);
@@ -71,7 +71,7 @@ namespace ShadowFlareRemake.Player {
             await PlayerInput.Instance.WaitForInitFinish();
             RegisterEvents();
 
-            _meleeAttack.SetUnitStats(unit.Stats);
+            _meleeAttack.SetUnitStats(unit);
         }
 
         private void CacheNulls() {
