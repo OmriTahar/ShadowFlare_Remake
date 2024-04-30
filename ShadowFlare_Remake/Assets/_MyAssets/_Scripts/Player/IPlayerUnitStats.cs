@@ -2,7 +2,7 @@ using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.Player {
 
-    public interface IPlayerUnit : IUnit {
+    public interface IPlayerUnitStats : IUnitStats {
 
         public Vocation Vcocation { get; }
         public int Strength { get; }

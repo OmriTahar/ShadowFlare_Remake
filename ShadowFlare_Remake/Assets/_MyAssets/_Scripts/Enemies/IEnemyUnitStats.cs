@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace ShadowFlareRemake.Enemies {
-    public interface IEnemyUnit : IUnit {
+    public interface IEnemyUnitStats : IUnitStats {
 
         public Color Color { get; }
         public int ExpDrop { get; }

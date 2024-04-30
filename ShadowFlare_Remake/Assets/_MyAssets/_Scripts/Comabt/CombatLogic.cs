@@ -1,29 +1,29 @@
 namespace ShadowFlareRemake.Combat {
     public static class CombatLogic {
 
-        public static void HandleTakeDamage(Attack attack, IUnit receiverUnit, IUnitHandler receiverUnitHandler) {
+        public static void HandleTakeDamage(Attack attack, IUnit receiverUnit) {
 
             var damage = 0;
 
             if(attack.AttackType is Enums.AttackType.Physical) {
 
-                damage = GetPhysicalDamage(attack.Unit, receiverUnit);
+                damage = GetPhysicalDamage(attack.Stats, receiverUnit.Stats);
 
             } else if(attack.AttackType is Enums.AttackType.Magical) {
 
-                damage = GetMagicalDamage(attack.Unit, receiverUnit);
+                damage = GetMagicalDamage(attack.Stats, receiverUnit.Stats);
             }
            
-            receiverUnitHandler.TakeDamage(damage);
+            receiverUnit.TakeDamage(damage);
         }
 
-        private static int GetPhysicalDamage(IUnit Attacker, IUnit receiverUnit) { // Todo: Expand this.
+        private static int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) { // Todo: Expand this.
 
-            var damage = Attacker.Attack - receiverUnit.Defense;
+            var damage = AttackerStats.Attack - receiverStats.Defense;
             return damage > 1 ? damage : 1;
         }
 
-        private static int GetMagicalDamage(IUnit Attacker, IUnit receiverUnit) {  // Todo: Expand this.
+        private static int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) {  // Todo: Expand this.
 
             var damage = Attacker.MagicalAttack - receiverUnit.MagicalDefence;
             return damage > 1 ? damage : 1;

@@ -1,18 +1,23 @@
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Player;
+using System;
 using UnityEngine;
-using ShadowFlareRemake.Enemies;
 
 namespace ShadowFlareRemake.GameManager {
 
-    [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "ScriptableObjects/Enemy Stats")]
-    public class EnemyUnit : ScriptableObject , IEnemyUnit {
+    [Serializable]
+    public class PlayerUnitStats : IPlayerUnitStats {
+
+        #region Fields
 
         private const string _spaceLine = "------------------------------------";
 
         [Space(15)]
         [SerializeField] private string ______Enemy_____ = _spaceLine;
-        [field: SerializeField] public Color Color { get; private set; }
-        [field: SerializeField] public int ExpDrop { get; private set; }
-        [field: SerializeField] public int CoinsDrop { get; private set; }
+        [field: SerializeField] public Vocation Vcocation {  get; private set; }
+        [field: SerializeField] public int Strength { get; private set; }
+        [field: SerializeField] public int CurrentExp { get; private set; }
+        [field: SerializeField] public int ExpToLevelUp { get; private set; }
 
         [Space(15)]
         [SerializeField] private string ______Base_____ = _spaceLine;
@@ -37,5 +42,18 @@ namespace ShadowFlareRemake.GameManager {
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
+
+        #endregion
+
+        public void SetExp(int currentExp, int expToLevelUp) {
+
+            CurrentExp = currentExp;
+            ExpToLevelUp = expToLevelUp;
+        }
+
+        public void SetLevel(int level) {
+
+            Level = level;
+        }
     }
 }

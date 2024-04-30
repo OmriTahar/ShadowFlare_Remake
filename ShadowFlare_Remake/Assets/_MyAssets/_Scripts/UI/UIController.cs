@@ -131,11 +131,13 @@ namespace ShadowFlareRemake.UI {
 
         #region Update Player Stats
 
-        public void UpdatePlayerStats(IPlayerUnit unit, IUnitHandler unitHandler) {
+        public void UpdatePlayerStats(IUnit unit) {
 
-            UpdatePlayerHpAndMp(unitHandler.CurrentHP, unit.MaxHP, unitHandler.CurrentMP, unit.MaxMP);
-            UpdatePlayerExp(unit.CurrentExp, unit.ExpToLevelUp);
-            UpdatePlayerLevel(unit.Level);
+            var stats = unit.Stats as IPlayerUnitStats; 
+
+            UpdatePlayerHpAndMp(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
+            UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
+            UpdatePlayerLevel(stats.Level);
         }
 
         private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP) {

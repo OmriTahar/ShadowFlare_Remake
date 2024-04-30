@@ -8,7 +8,7 @@ namespace ShadowFlareRemake.Enemies {
     public abstract class EnemyController : Controller {
 
         public event Action<Attack, EnemyController> OnIGotHit;
-        public event Action<IEnemyUnit> OnIGotKilled;
+        public event Action<IEnemyUnitStats> OnIGotKilled;
 
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
@@ -27,13 +27,13 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public void InitEnemy(IEnemyUnit unit, IUnitHandler unitHandler, Transform playerTransform) {
+        public void InitEnemy(IUnit unit, Transform playerTransform) {
 
             PlayerTransform = playerTransform;
 
             CacheNulls();
             RegisterEvents();
-            SetModel(unit, unitHandler);
+            SetModel(unit);
         }
 
         protected virtual void Update() {
@@ -53,15 +53,15 @@ namespace ShadowFlareRemake.Enemies {
             DeregisterEvents();
         }
       
-        protected virtual void SetModel(IEnemyUnit unit, IUnitHandler unitHandler) {
+        protected virtual void SetModel(IUnit unit) {
 
-            Model = new EnemyModel(unit, unitHandler);
+            Model = new EnemyModel(unit);
             View.SetModel(Model);
         }
 
-        public void SetEnemyUnitAndUnitHandler(IEnemyUnit unit, IUnitHandler unitHandler) {
+        public void SetEnemyUnitAndUnitHandler(IUnit unit) {
 
-            Model.SetEnemyUnitAndUnitHandler(unit, unitHandler);
+            Model.SetEnemyUnitAndUnitHandler(unit);
         }
 
 

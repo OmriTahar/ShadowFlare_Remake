@@ -4,8 +4,8 @@ using UnityEngine;
 namespace ShadowFlareRemake.Enemies {
     public class EnemyModel : Model {
 
-        public IEnemyUnit Unit { get; private set; }
-        public IUnitHandler UnitHandler { get; private set; }
+        public IUnit Unit { get; private set; }
+        public IEnemyUnitStats Stats { get; private set; }
 
         public Color Color { get; private set; }
         public string Name { get; private set; }
@@ -17,19 +17,19 @@ namespace ShadowFlareRemake.Enemies {
         public bool IsEnemyHighlighted { get; private set; } = false;
 
 
-        public EnemyModel(IEnemyUnit unit, IUnitHandler unitHandler) {
+        public EnemyModel(IUnit unit) {
 
             Unit = unit;
-            UnitHandler = unitHandler;
+            Stats = unit.Stats as IEnemyUnitStats;
 
-            Color = unit.Color;
-            Name = unit.Name;
+            Color = Stats.Color;
+            Name = Stats.Name;
         }
 
-        public void SetEnemyUnitAndUnitHandler(IEnemyUnit unit, IUnitHandler unitHandler) {
+        public void SetEnemyUnitAndUnitHandler(IUnit unit) {
 
             Unit = unit;
-            UnitHandler = unitHandler;
+            Stats = Unit.Stats as IEnemyUnitStats;
             Changed();
         }
 

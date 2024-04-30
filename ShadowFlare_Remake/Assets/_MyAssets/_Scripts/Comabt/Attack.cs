@@ -6,11 +6,11 @@ namespace ShadowFlareRemake.Combat {
 
         [field: SerializeField] public AttackType AttackType { get; private set; }
 
-        public IUnit Unit { get; private set; } 
+        public IUnitStats Stats { get; private set; } 
 
-        public void SetUnitStats(IUnit unit) {
+        public void SetUnitStats(IUnitStats stats) {
 
-            Unit = unit;
+            Stats = stats;
         }
     }
 }

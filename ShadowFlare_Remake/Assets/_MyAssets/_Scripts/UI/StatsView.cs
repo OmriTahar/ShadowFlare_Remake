@@ -21,10 +21,10 @@ namespace ShadowFlareRemake.UI {
                 return;
             }
 
-            _hpText.text = $"{Model.UnitHandler.CurrentHP}/{Model.Unit.MaxHP}";
-            _StrengthText.text = Model.Unit.Strength.ToString();
-            _AttackText.text = Model.Unit.Attack.ToString();
-            _DefenseText.text = Model.Unit.Defense.ToString();
+            _hpText.text = $"{Model.Unit.CurrentHP}/{Model.Stats.MaxHP}";
+            _StrengthText.text = Model.Stats.Strength.ToString();
+            _AttackText.text = Model.Stats.Attack.ToString();
+            _DefenseText.text = Model.Stats.Defense.ToString();
         }
     }
 }

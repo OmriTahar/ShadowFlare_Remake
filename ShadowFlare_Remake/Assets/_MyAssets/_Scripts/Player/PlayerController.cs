@@ -10,7 +10,7 @@ namespace ShadowFlareRemake.Player {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : Controller {
 
-        public event Action<Attack, IPlayerUnit> OnIGotHit;
+        public event Action<Attack, IUnitStats> OnIGotHit;
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
@@ -63,15 +63,15 @@ namespace ShadowFlareRemake.Player {
 
         #region Initialization
 
-        public async Task InitPlayer(IPlayerUnit unit, IUnitHandler unitHandler) {
+        public async Task InitPlayer(IUnit unit) {
 
-            _model = new PlayerModel(unit, unitHandler);
+            _model = new PlayerModel(unit);
             _view.SetModel(_model);
 
             await PlayerInput.Instance.WaitForInitFinish();
             RegisterEvents();
 
-            _meleeAttack.SetUnitStats(unit);
+            _meleeAttack.SetUnitStats(unit.Stats);
         }
 
         private void CacheNulls() {
@@ -137,9 +137,6 @@ namespace ShadowFlareRemake.Player {
 
                 } else if(IsItemLayer) {
                     print("Pressed on Item - Collecting!");
-
-                } else {
-                    print("You are clicking on thin air sugerpups");
                 }
             }
         }
@@ -171,7 +168,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _model.MovementSpeed; 
+            var movementSpeed = _model.Stats.MovementSpeed; 
 
             while(Vector3.Distance(transform.position, targetPos) > 0.1f) {
 
@@ -186,7 +183,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos) {
 
             targetPos.y = 0f;
-            var movementSpeed = _model.MovementSpeed;
+            var movementSpeed = _model.Stats.MovementSpeed;
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance) {
 
@@ -211,7 +208,7 @@ namespace ShadowFlareRemake.Player {
         private IEnumerator StepForwardLogic(float timeToComplete) {
 
             float timer = 0;
-            var movementSpeed = _model.MovementSpeed;
+            var movementSpeed = _model.Stats.MovementSpeed;
 
             while(timer < timeToComplete) {
 
@@ -263,7 +260,7 @@ namespace ShadowFlareRemake.Player {
             if(other.gameObject.layer == AttackLayer) {
 
                 var attack = other.GetComponent<Attack>();
-                OnIGotHit?.Invoke(attack, _model.Unit);
+                OnIGotHit?.Invoke(attack, _model.Stats);
             }
         }
 

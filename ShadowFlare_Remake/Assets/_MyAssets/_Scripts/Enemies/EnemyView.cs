@@ -90,7 +90,7 @@ namespace ShadowFlareRemake.Enemies {
 
         private void ResetHealthSliderValues() {
 
-            var value = Model.Unit.MaxHP;
+            var value = Model.Stats.MaxHP;
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
         }
@@ -102,7 +102,7 @@ namespace ShadowFlareRemake.Enemies {
                 return;
             }
 
-            if(_lastSeenHP > Model.UnitHandler.CurrentHP) {
+            if(_lastSeenHP > Model.Unit.CurrentHP) {
 
                 if(_hitEffect.isPlaying) {
                     _hitEffect.Stop();
@@ -113,7 +113,7 @@ namespace ShadowFlareRemake.Enemies {
 
         private void HandleHP() {
 
-            var hp = Model.UnitHandler.CurrentHP;
+            var hp = Model.Unit.CurrentHP;
             _lastSeenHP = hp < 0 ? 0 : hp;
             _healthSlider.value = _lastSeenHP;
 

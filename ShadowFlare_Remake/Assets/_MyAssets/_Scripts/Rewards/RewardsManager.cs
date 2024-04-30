@@ -6,12 +6,12 @@ namespace ShadowFlareRemake.Rewards {
 
     public class RewardsManager : MonoBehaviour {
 
-        public void GiveRewardsToPlayer(IPlayerUnit playerUnit, IEnemyUnit enemyUnit) {
+        public void GiveRewardsToPlayer(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) {
 
             HandleExpReward(playerUnit, enemyUnit.ExpDrop);
         }
 
-        private void HandleExpReward(IPlayerUnit playerUnit, int expDrop) {
+        private void HandleExpReward(IPlayerUnitStats playerUnit, int expDrop) {
 
             if(expDrop <= 0) {
                 return;

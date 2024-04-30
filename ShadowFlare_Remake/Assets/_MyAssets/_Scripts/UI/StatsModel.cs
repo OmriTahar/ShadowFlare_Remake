@@ -3,8 +3,8 @@ using ShadowFlareRemake.Player;
 namespace ShadowFlareRemake.UI {
     public class StatsModel : Model {
 
-        public IPlayerUnit Unit { get; private set; }
-        public IUnitHandler UnitHandler { get; private set; }
+        public IUnit Unit { get; private set; }
+        public IPlayerUnitStats Stats { get; private set; }
 
         public bool IsStatsOpen { get; private set; }
 
@@ -13,10 +13,10 @@ namespace ShadowFlareRemake.UI {
             IsStatsOpen = isInventoryOpen;
         }
 
-        public void SetPlayerStats(IPlayerUnit unit, IUnitHandler unitHandler) {
+        public void SetPlayerStats(IUnit unit) {
 
             Unit = unit;
-            UnitHandler = unitHandler;
+            Stats = unit.Stats as IPlayerUnitStats;
             Changed();
         }
 
