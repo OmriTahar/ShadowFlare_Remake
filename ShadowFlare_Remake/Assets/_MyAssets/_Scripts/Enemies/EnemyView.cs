@@ -102,7 +102,7 @@ namespace ShadowFlareRemake.Enemies {
                 return;
             }
 
-            if(_lastSeenHP > Model.Unit.CurrentHP) {
+            if(_lastSeenHP > Model.UnitHandler.CurrentHP) {
 
                 if(_hitEffect.isPlaying) {
                     _hitEffect.Stop();
@@ -113,7 +113,7 @@ namespace ShadowFlareRemake.Enemies {
 
         private void HandleHP() {
 
-            var hp = Model.Unit.CurrentHP;
+            var hp = Model.UnitHandler.CurrentHP;
             _lastSeenHP = hp < 0 ? 0 : hp;
             _healthSlider.value = _lastSeenHP;
 

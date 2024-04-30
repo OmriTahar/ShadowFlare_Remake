@@ -3,9 +3,9 @@ using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace ShadowFlareRemake.GameManager {
     public class GameManager : MonoBehaviour {
@@ -21,7 +21,8 @@ namespace ShadowFlareRemake.GameManager {
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnit _playerUnit;
 
-        private Dictionary<EnemyController, EnemyUnit> _enemiesDict = new();
+        private Dictionary<EnemyController, EnemyUnit> _enemyUnitsDict = new();
+        private Dictionary<EnemyController, UnitHandler> _enemyUnitHandlersDict = new();
 
         #region Unity Callbacks
 
@@ -35,7 +36,7 @@ namespace ShadowFlareRemake.GameManager {
         private void Start() {
 
             RegisterEvents();
-            _uiController.UpdatePlayerStats(_playerUnit);
+            _uiController.UpdatePlayerStats(_playerUnit, _playerUnit);
         }
 
         private void OnDestroy() {
@@ -56,7 +57,7 @@ namespace ShadowFlareRemake.GameManager {
 
             _playerController.OnIGotHit -= HandlePlayerGotHit;
 
-            foreach(var enemy in _enemiesDict.Keys) {
+            foreach(var enemy in _enemyUnitsDict.Keys) {
 
                 enemy.OnIGotHit -= HandleEnemyGotHit;
                 enemy.OnIGotKilled -= HandleEnemyDied;
@@ -80,10 +81,14 @@ namespace ShadowFlareRemake.GameManager {
 
                 var spawnPoint = enemyToSpawn.transform;
                 var enemyController = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
-                var enemyUnit = enemyToSpawn.EnemyUnit;
 
-                enemyController.InitEnemy(enemyUnit, _playerController.transform);
-                _enemiesDict.Add(enemyController, enemyUnit);
+                var enemyUnit = enemyToSpawn.EnemyUnit;
+                var enemyUnitHandler = new UnitHandler(enemyUnit.MaxHP, enemyUnit.MaxMP);
+
+                enemyController.InitEnemy(enemyUnit, enemyUnitHandler, _playerController.transform);
+
+                _enemyUnitsDict.Add(enemyController, enemyUnit);
+                _enemyUnitHandlersDict.Add(enemyController, enemyUnitHandler);
 
                 RegisterEnemyEvents(enemyController);
                 Destroy(enemyToSpawn.gameObject);
@@ -98,17 +103,18 @@ namespace ShadowFlareRemake.GameManager {
 
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController) {
 
-            var unit = _enemiesDict[enemyController];
+            var unit = _enemyUnitsDict[enemyController];
+            var unitHandler = _enemyUnitHandlersDict[enemyController];
 
-            CombatLogic.HandleTakeDamage(attack, unit, unit);
+            CombatLogic.HandleTakeDamage(attack, unit, unitHandler);
 
-            enemyController.SetUnit(unit);
+            enemyController.SetEnemyUnitAndUnitHandler(unit, unitHandler);
         }
 
         private void HandleEnemyDied(IEnemyUnit enemyUnit) {
 
             _rewardsManager.GiveRewardsToPlayer(_playerUnit, enemyUnit as EnemyUnit);
-            _uiController.UpdatePlayerStats(_playerUnit);
+            _uiController.UpdatePlayerStats(_playerUnit, _playerUnit);
         }
 
         #endregion
@@ -117,9 +123,8 @@ namespace ShadowFlareRemake.GameManager {
 
         private async Task InitPlayer() {
 
-            await _playerController.InitPlayer(_playerUnit);
+            await _playerController.InitPlayer(_playerUnit, _playerUnit);
         }
-
 
         private void HandlePlayerGotHit(Attack attack, IUnit unit) {
 

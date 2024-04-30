@@ -5,9 +5,10 @@ namespace ShadowFlareRemake.Enemies {
     public class EnemyModel : Model {
 
         public IEnemyUnit Unit { get; private set; }
+        public IUnitHandler UnitHandler { get; private set; }
+
         public Color Color { get; private set; }
         public string Name { get; private set; }
-        public int CurrentHP { get; private set; }
 
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
@@ -16,11 +17,20 @@ namespace ShadowFlareRemake.Enemies {
         public bool IsEnemyHighlighted { get; private set; } = false;
 
 
-        public EnemyModel(IEnemyUnit unit) {
+        public EnemyModel(IEnemyUnit unit, IUnitHandler unitHandler) {
 
             Unit = unit;
+            UnitHandler = unitHandler;
+
             Color = unit.Color;
             Name = unit.Name;
+        }
+
+        public void SetEnemyUnitAndUnitHandler(IEnemyUnit unit, IUnitHandler unitHandler) {
+
+            Unit = unit;
+            UnitHandler = unitHandler;
+            Changed();
         }
 
         public void UpdateIsEnemyHighlighted(bool isEnemyHighlighted) {

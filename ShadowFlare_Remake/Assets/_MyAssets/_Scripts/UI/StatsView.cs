@@ -21,7 +21,7 @@ namespace ShadowFlareRemake.UI {
                 return;
             }
 
-            _hpText.text = $"{Model.Unit.CurrentHP}/{Model.Unit.MaxHP}";
+            _hpText.text = $"{Model.UnitHandler.CurrentHP}/{Model.Unit.MaxHP}";
             _StrengthText.text = Model.Unit.Strength.ToString();
             _AttackText.text = Model.Unit.Attack.ToString();
             _DefenseText.text = Model.Unit.Defense.ToString();

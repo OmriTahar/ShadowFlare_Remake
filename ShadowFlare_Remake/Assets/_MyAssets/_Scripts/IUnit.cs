@@ -6,7 +6,6 @@ namespace ShadowFlareRemake {
         public int MovementSpeed { get; }
 
         public int MaxHP { get; }
-        public int CurrentHP { get; }
         public int Attack { get; }
         public int Defense { get; }
         public int HitRate { get; }
@@ -14,7 +13,6 @@ namespace ShadowFlareRemake {
         public int AttackSpeed { get; }
 
         public int MaxMP { get; }
-        public int CurrentMP { get; }
         public int MagicalAttack { get; }
         public int MagicalDefence { get; }
         public int MagicalHitRate { get; }

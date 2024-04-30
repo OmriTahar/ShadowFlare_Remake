@@ -10,8 +10,6 @@ namespace ShadowFlareRemake.Enemies {
         public event Action<Attack, EnemyController> OnIGotHit;
         public event Action<IEnemyUnit> OnIGotKilled;
 
-        public IEnemyUnit Unit { get; private set; }
-
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
         [SerializeField] protected NavMeshAgent Agent;
@@ -29,14 +27,13 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public void InitEnemy(IEnemyUnit unit, Transform playerTransform) {
+        public void InitEnemy(IEnemyUnit unit, IUnitHandler unitHandler, Transform playerTransform) {
 
-            Unit = unit;
             PlayerTransform = playerTransform;
 
             CacheNulls();
             RegisterEvents();
-            SetModel();
+            SetModel(unit, unitHandler);
         }
 
         protected virtual void Update() {
@@ -55,18 +52,18 @@ namespace ShadowFlareRemake.Enemies {
         private void OnDestroy() {
             DeregisterEvents();
         }
+      
+        protected virtual void SetModel(IEnemyUnit unit, IUnitHandler unitHandler) {
 
-        public void SetUnit(IEnemyUnit unit) {
-
-            Unit = unit;
-            Model.InvokeChanged();
-        }
-
-        protected virtual void SetModel() {
-
-            Model = new EnemyModel(Unit);
+            Model = new EnemyModel(unit, unitHandler);
             View.SetModel(Model);
         }
+
+        public void SetEnemyUnitAndUnitHandler(IEnemyUnit unit, IUnitHandler unitHandler) {
+
+            Model.SetEnemyUnitAndUnitHandler(unit, unitHandler);
+        }
+
 
         protected abstract void Attack();
 
@@ -123,6 +120,10 @@ namespace ShadowFlareRemake.Enemies {
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
             View.OnFinishedDeathAnimation -= HandleDeath;
             View.OnAttackAnimationEnded -= ResetAttackCooldown;
+        }
+
+        public void TakeDamage(int damage) {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7857,7 +7857,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: -3.2500114
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -7908,7 +7908,7 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 6cf5b5f511fa3134c9f1f109342081ec,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}

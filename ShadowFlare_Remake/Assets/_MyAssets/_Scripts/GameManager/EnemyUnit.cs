@@ -4,9 +4,7 @@ using ShadowFlareRemake.Enemies;
 namespace ShadowFlareRemake.GameManager {
 
     [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "ScriptableObjects/Enemy Stats")]
-    public class EnemyUnit : ScriptableObject , IEnemyUnit, IUnitHandler {
-
-        #region Fields
+    public class EnemyUnit : ScriptableObject , IEnemyUnit {
 
         private const string _spaceLine = "------------------------------------";
 
@@ -25,7 +23,6 @@ namespace ShadowFlareRemake.GameManager {
         [Space(15)]
         [SerializeField] private string ______Physical_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
-        [field: SerializeField] public int CurrentHP { get; private set; }
         [field: SerializeField] public int Attack { get; private set; }
         [field: SerializeField] public int Defense { get; private set; }
         [field: SerializeField] public int HitRate { get; private set; }
@@ -35,18 +32,10 @@ namespace ShadowFlareRemake.GameManager {
         [Space(15)]
         [SerializeField] private string ______Magical_____ = _spaceLine;
         [field: SerializeField] public int MaxMP { get; private set; }
-        [field: SerializeField] public int CurrentMP { get; private set; }
         [field: SerializeField] public int MagicalAttack { get; private set; }
         [field: SerializeField] public int MagicalDefence { get; private set; }
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
-
-        #endregion
-
-        public void TakeDamage(int damage) {
-
-            CurrentHP -= damage;
-        }
     }
 }

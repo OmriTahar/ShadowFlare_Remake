@@ -131,9 +131,9 @@ namespace ShadowFlareRemake.UI {
 
         #region Update Player Stats
 
-        public void UpdatePlayerStats(IPlayerUnit unit) {
+        public void UpdatePlayerStats(IPlayerUnit unit, IUnitHandler unitHandler) {
 
-            UpdatePlayerHpAndMp(unit.CurrentHP, unit.MaxHP, unit.CurrentMP, unit.MaxMP);
+            UpdatePlayerHpAndMp(unitHandler.CurrentHP, unit.MaxHP, unitHandler.CurrentMP, unit.MaxMP);
             UpdatePlayerExp(unit.CurrentExp, unit.ExpToLevelUp);
             UpdatePlayerLevel(unit.Level);
         }

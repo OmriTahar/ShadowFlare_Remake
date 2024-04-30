@@ -63,9 +63,9 @@ namespace ShadowFlareRemake.Player {
 
         #region Initialization
 
-        public async Task InitPlayer(IPlayerUnit unit) {
+        public async Task InitPlayer(IPlayerUnit unit, IUnitHandler unitHandler) {
 
-            _model = new PlayerModel(unit);
+            _model = new PlayerModel(unit, unitHandler);
             _view.SetModel(_model);
 
             await PlayerInput.Instance.WaitForInitFinish();
