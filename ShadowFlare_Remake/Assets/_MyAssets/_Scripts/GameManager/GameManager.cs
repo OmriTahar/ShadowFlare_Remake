@@ -37,7 +37,7 @@ namespace ShadowFlareRemake.GameManager {
             InitEnemies();
             RegisterEvents();
 
-            _uiController.UpdatePlayerStats(_playerUnit);
+            _uiController.UpdatePlayerUI(_playerUnit);
         }
 
         private void OnDestroy() {
@@ -115,7 +115,7 @@ namespace ShadowFlareRemake.GameManager {
             var expReward = _rewardsManager.GetExpReward(playerStats, enemyStats);
 
             playerStats.GiveExpReward(expReward);
-            _uiController.UpdatePlayerStats(_playerUnit);
+            _uiController.UpdatePlayerUI(_playerUnit);
         }
 
         #endregion

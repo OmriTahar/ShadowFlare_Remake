@@ -2,10 +2,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake {
-    public class PlayerInput : MonoBehaviour {
+namespace ShadowFlareRemake.PlayerInput {
+    public class InputManager : MonoBehaviour {
 
-        public static PlayerInput Instance { get; private set; }
+        public static InputManager Instance { get; private set; }
 
         // --- References ---
         [field: SerializeField] public Camera MainCamera { get; private set; }
@@ -14,6 +14,7 @@ namespace ShadowFlareRemake {
         [field: SerializeField] public InputAction LeftMouseClickAction { get; private set; }
         [field: SerializeField] public InputAction RightMouseClickAction { get; private set; }
         [field: SerializeField] public InputAction I_KeyboardClickAction { get; private set; }
+        [field: SerializeField] public InputAction S_KeyboardClickAction { get; private set; }
         [field: SerializeField] public InputAction H_KeyboardClickAction { get; private set; }
 
         // --- Variables ---
@@ -39,6 +40,7 @@ namespace ShadowFlareRemake {
             LeftMouseClickAction.Enable();
             RightMouseClickAction.Enable();
             I_KeyboardClickAction.Enable();
+            S_KeyboardClickAction.Enable();
             H_KeyboardClickAction.Enable();
 
             _isFinishedInit = true;
@@ -60,6 +62,7 @@ namespace ShadowFlareRemake {
             LeftMouseClickAction.Disable();
             RightMouseClickAction.Disable();
             I_KeyboardClickAction.Disable();
+            S_KeyboardClickAction.Disable();
             H_KeyboardClickAction.Disable();
 
             _isFinishedInit = false;

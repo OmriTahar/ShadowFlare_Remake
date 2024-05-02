@@ -7,17 +7,12 @@ namespace ShadowFlareRemake.UI {
 
         public event Action<PointerEventData> OnCurserEnterUI;
         public event Action<PointerEventData> OnCurserLeftUI;
-        public event Action OnCloseClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
 
         protected override void ModelChanged() {
             _inventoryPanel.SetActive(Model.IsInventoryOpen);
-        }
-
-        public void CloseClicked() {
-            OnCloseClicked?.Invoke();
         }
 
         public void OnPointerEnter(PointerEventData eventData) {
@@ -28,5 +23,4 @@ namespace ShadowFlareRemake.UI {
             OnCurserLeftUI?.Invoke(eventData);
         }
     }
-
 }

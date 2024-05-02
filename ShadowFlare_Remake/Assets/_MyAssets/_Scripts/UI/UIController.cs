@@ -1,8 +1,10 @@
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Events;
-using ShadowFlareRemake.Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ShadowFlareRemake.Player;
+using UnityEngine.InputSystem;
+using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.PlayerInput;
 
 namespace ShadowFlareRemake.UI {
     public class UIController : Controller {
@@ -13,10 +15,15 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private StatsView _statsView;
         [SerializeField] private HudView _hudView;
 
+        [Header("Other")]
+        [SerializeField] private GameObject _closeButton;
+
         private CurserModel _curserModel;
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
         private HudModel _hudModel;
+
+        #region Unity Callbacks
 
         protected override void Awake() {
 
@@ -27,7 +34,7 @@ namespace ShadowFlareRemake.UI {
 
         private async void Start() {
 
-            await PlayerInput.Instance.WaitForInitFinish();
+            await InputManager.Instance.WaitForInitFinish();
             RegisterEvents();
         }
 
@@ -40,6 +47,10 @@ namespace ShadowFlareRemake.UI {
 
             HandleMouseRaycastHit();
         }
+
+        #endregion
+
+        #region Initialization
 
         private void CacheNulls() {
 
@@ -66,14 +77,16 @@ namespace ShadowFlareRemake.UI {
             _hudView.SetModel(_hudModel);
         }
 
+        #endregion
+
         private void HandleMouseRaycastHit() {
 
-            if(PlayerInput.Instance.IsCursorOnUI) {
+            if(InputManager.Instance.IsCursorOnUI) {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.UI);
                 return;
             }
 
-            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+            var raycastHit = InputManager.Instance.CurrentRaycastHit;
             if(raycastHit.collider) {
 
                 if(raycastHit.collider.gameObject.layer.CompareTo(GroundLayer) == 0) {
@@ -91,53 +104,67 @@ namespace ShadowFlareRemake.UI {
             }
         }
 
-        //private void ToggleInventory(InputAction.CallbackContext context) { // For "I" Clicked
-        //    DoToggleInventory();
-        //}
+        public void CursorEnteredUI(PointerEventData eventData) {
+
+            InputManager.Instance.SetIsCursorOnUI(true);
+        }
+        public void CursorLeftUI(PointerEventData eventData) {
+
+            InputManager.Instance.SetIsCursorOnUI(false);
+        }
+
+        #region Inventory
 
         private void ToggleInventory() {
 
+            DoToggleInventory();
+        }
+
+        private void ToggleInventory(InputAction.CallbackContext context) { 
+
+            DoToggleInventory();
+        }
+
+        private void DoToggleInventory() {
+
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
-
-            //var screenCover = _inventoryModel.IsInventoryOpen ? UIScreenCover.RightIsCovered : UIScreenCover.None;
-            //Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
+            HandleUiScreenCover();
         }
+
+        #endregion
+
+        #region Stats
 
         private void ToggleStats() {
 
+            DoToggleStats();
+        }
+
+        private void ToggleStats(InputAction.CallbackContext context) {
+
+            DoToggleStats();
+        }
+
+        private void DoToggleStats() {
+
             var toggledState = !_statsModel.IsStatsOpen;
             _statsModel.SetIsStatsOpen(toggledState);
-
-            //var screenCover = _statsModel.IsStatsOpen ? UIScreenCover.LeftIsCovered : UIScreenCover.None;
-            //Dispatcher.Dispatch(new UIScreenCoverEvent(screenCover));
+            HandleUiScreenCover();
         }
 
-        private void HandleUiScreenCover() {
+        #endregion
 
-            if(_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+        #region Update Player UI
 
-                // YOU STOPPED HERE!!!
-            }
+        public void UpdatePlayerUI(IUnit unit) {
 
-        }
-
-        public void CursorEnteredUI(PointerEventData eventData) {
-            PlayerInput.Instance.SetIsCursorOnUI(true);
-        }
-        public void CursorLeftUI(PointerEventData eventData) {
-            PlayerInput.Instance.SetIsCursorOnUI(false);
-        }
-
-        #region Update Player Stats
-
-        public void UpdatePlayerStats(IUnit unit) {
-
-            var stats = unit.Stats as IPlayerUnitStats; 
+            var stats = unit.Stats as IPlayerUnitStats;
 
             UpdatePlayerHpAndMp(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             UpdatePlayerLevel(stats.Level);
+            UpdatePlayerStats(unit);
         }
 
         private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP) {
@@ -155,33 +182,75 @@ namespace ShadowFlareRemake.UI {
             _hudModel.SetLevel(level);
         }
 
+        private void UpdatePlayerStats(IUnit unit) {
+
+            _statsModel.SetPlayerStats(unit);
+        }
+
         #endregion
+
+
+        private void HandleUiScreenCover() {
+
+            if(_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+
+                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.BothAreCovered));
+                _closeButton.SetActive(true);
+
+            } else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsStatsOpen) {
+
+                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.RightIsCovered));
+                _closeButton.SetActive(true);
+
+            } else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+
+                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.LeftIsCovered));
+                _closeButton.SetActive(true);
+
+            } else {
+                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.None));
+                _closeButton.SetActive(false);
+            }
+        }
+
+        public void CloseClicked() {
+
+            _inventoryModel.SetIsInventoryOpen(false);
+            _statsModel.SetIsStatsOpen(false);
+            HandleUiScreenCover();
+        }
+
+        #region Events
 
         private void RegisterEvents() {
 
-            //PlayerInput.Instance.I_KeyboardClickAction.performed += ToggleInventory;
+            InputManager.Instance.I_KeyboardClickAction.performed += ToggleInventory;
+            InputManager.Instance.S_KeyboardClickAction.performed += ToggleStats;
 
             _hudView.OnCurserEnterUI += CursorEnteredUI;
             _hudView.OnCurserLeftUI += CursorLeftUI;
             _hudView.OnInventoryButtonClicked += ToggleInventory;
+            _hudView.OnStatsClicked += ToggleStats;
 
             _inventoryView.OnCurserEnterUI += CursorEnteredUI;
             _inventoryView.OnCurserLeftUI += CursorLeftUI;
-            _inventoryView.OnCloseClicked += ToggleInventory;
         }
 
         private void DeregisterEvents() {
 
-            //PlayerInput.Instance.I_KeyboardClickAction.performed -= ToggleInventory;
+            InputManager.Instance.I_KeyboardClickAction.performed -= ToggleInventory;
+            InputManager.Instance.S_KeyboardClickAction.performed -= ToggleStats;
 
             _hudView.OnCurserEnterUI -= CursorEnteredUI;
             _hudView.OnCurserLeftUI -= CursorLeftUI;
             _hudView.OnInventoryButtonClicked -= ToggleInventory;
+            _hudView.OnStatsClicked -= ToggleStats;
 
-            _inventoryView.OnCloseClicked -= ToggleInventory;
             _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
             _inventoryView.OnCurserLeftUI -= CursorLeftUI;
         }
+
+        #endregion
     }
 }
 

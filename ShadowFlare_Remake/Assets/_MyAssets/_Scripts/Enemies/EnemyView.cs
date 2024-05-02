@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ShadowFlareRemake.Tools;
 using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.PlayerInput;
 
 namespace ShadowFlareRemake.Enemies {
     public class EnemyView : View<EnemyModel> {
@@ -153,11 +154,11 @@ namespace ShadowFlareRemake.Enemies {
 
         private void HandleMouseRaycastHit() {
 
-            if(PlayerInput.Instance.IsCursorOnUI) {
+            if(InputManager.Instance.IsCursorOnUI) {
                 return;
             }
 
-            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+            var raycastHit = InputManager.Instance.CurrentRaycastHit;
 
             if(raycastHit.collider) {
 

@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using ShadowFlareRemake.Combat;
 using System;
 using System.Threading.Tasks;
+using ShadowFlareRemake.PlayerInput;
 
 namespace ShadowFlareRemake.Player {
 
@@ -39,7 +40,7 @@ namespace ShadowFlareRemake.Player {
 
         private void Update() {
 
-            if(PlayerInput.Instance.IsLeftMouseIsHeldDown) {
+            if(InputManager.Instance.IsLeftMouseIsHeldDown) {
                 HandleLeftClickActions();
             }
         }
@@ -68,7 +69,7 @@ namespace ShadowFlareRemake.Player {
             _model = new PlayerModel(unit);
             _view.SetModel(_model);
 
-            await PlayerInput.Instance.WaitForInitFinish();
+            await InputManager.Instance.WaitForInitFinish();
             RegisterEvents();
 
             _meleeAttack.SetUnitStats(unit.Stats);
@@ -91,8 +92,8 @@ namespace ShadowFlareRemake.Player {
 
         private void RegisterEvents() {
 
-            PlayerInput.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
-            PlayerInput.Instance.RightMouseClickAction.performed += AttackAtDirection;
+            InputManager.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
+            InputManager.Instance.RightMouseClickAction.performed += AttackAtDirection;
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleStepForward;
@@ -101,8 +102,8 @@ namespace ShadowFlareRemake.Player {
 
         private void DeregisterEvents() {
 
-            PlayerInput.Instance.LeftMouseClickAction.performed -= RegisterLeftClickActions;
-            PlayerInput.Instance.RightMouseClickAction.performed -= AttackAtDirection;
+            InputManager.Instance.LeftMouseClickAction.performed -= RegisterLeftClickActions;
+            InputManager.Instance.RightMouseClickAction.performed -= AttackAtDirection;
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleStepForward;
@@ -115,11 +116,11 @@ namespace ShadowFlareRemake.Player {
 
         private void HandleLeftClickActions() {
 
-            if(_isAttacking || PlayerInput.Instance.IsCursorOnUI) {
+            if(_isAttacking || InputManager.Instance.IsCursorOnUI) {
                 return;
             }
 
-            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+            var raycastHit = InputManager.Instance.CurrentRaycastHit;
 
             if(raycastHit.collider) {
 
@@ -221,7 +222,7 @@ namespace ShadowFlareRemake.Player {
 
         private void AttackAtDirection(InputAction.CallbackContext context) {
 
-            if(_isAttacking || PlayerInput.Instance.IsCursorOnUI) {
+            if(_isAttacking || InputManager.Instance.IsCursorOnUI) {
                 return;
             }
 
@@ -229,7 +230,7 @@ namespace ShadowFlareRemake.Player {
                 StopCoroutine(_lastMoveCoroutine);
             }
 
-            var raycastHit = PlayerInput.Instance.CurrentRaycastHit;
+            var raycastHit = InputManager.Instance.CurrentRaycastHit;
 
             if(raycastHit.collider) {
 

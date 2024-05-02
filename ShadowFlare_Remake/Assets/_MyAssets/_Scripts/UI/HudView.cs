@@ -11,6 +11,7 @@ namespace ShadowFlareRemake.UI {
         public event Action<PointerEventData> OnCurserLeftUI;
 
         public event Action OnInventoryButtonClicked;
+        public event Action OnStatsClicked;
 
         [Header("Game Objects")]
         [SerializeField] private GameObject _hudPanel;
@@ -61,7 +62,13 @@ namespace ShadowFlareRemake.UI {
         }
 
         public void InventoryClicked() {
+
             OnInventoryButtonClicked?.Invoke();
+        }
+
+        public void StatsClicked() {
+
+            OnStatsClicked?.Invoke();
         }
 
         public void OnPointerEnter(PointerEventData eventData) {

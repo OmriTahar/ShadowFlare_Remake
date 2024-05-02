@@ -1,9 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI {
     public class StatsView : View<StatsModel> {
 
+      
         [Header("References")]
         [SerializeField] private GameObject _statsPanel;
 

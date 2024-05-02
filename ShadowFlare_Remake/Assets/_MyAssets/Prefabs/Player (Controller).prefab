@@ -5159,7 +5159,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2759206233626363536}
   - component: {fileID: 2759206233626363538}
-  - component: {fileID: 609616267057221416}
   m_Layer: 8
   m_Name: View (+ Player Input)
   m_TagString: Untagged
@@ -5200,87 +5199,6 @@ MonoBehaviour:
     type: 2}
   _threeStrikesAnimation: {fileID: 7400000, guid: 0ea4ad98416df73468b76e429466fcd7,
     type: 2}
---- !u!114 &609616267057221416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2759206233626363543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4604abe96a32f04893553a74078d99a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MainCamera>k__BackingField: {fileID: 0}
-  <LeftMouseClickAction>k__BackingField:
-    m_Name: Left Mouse Click
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 44e5a61b-a52d-4e64-a6ec-9e01c3f6d745
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 764c88a5-e544-4bac-8c59-5d4a14216fd0
-      m_Path: <Mouse>/leftButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Left Mouse Click
-      m_Flags: 0
-    m_Flags: 0
-  <RightMouseClickAction>k__BackingField:
-    m_Name: Right Mouse Click
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: aa3a0c7d-fb3c-4f74-a502-2a322158ea01
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: c2492382-4188-4616-abeb-70a698f94888
-      m_Path: <Mouse>/rightButton
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Right Mouse Click
-      m_Flags: 0
-    m_Flags: 0
-  <I_KeyboardClickAction>k__BackingField:
-    m_Name: I_Keyboard Click
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1cf20358-4a88-458e-8f87-e228131f4725
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d0538edd-8930-4690-b3b4-d3589f6e9bb7
-      m_Path: <Keyboard>/i
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: I_Keyboard Click
-      m_Flags: 0
-    m_Flags: 0
-  <H_KeyboardClickAction>k__BackingField:
-    m_Name: H_Keyboard Click
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f292ffc7-9ef5-48d2-b7b5-322cc2e6a3fc
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d652c0a1-952d-4cfd-a495-a22a93ee8ba8
-      m_Path: <Keyboard>/h
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: H_Keyboard Click
-      m_Flags: 0
-    m_Flags: 0
 --- !u!1 &7945135760446752075
 GameObject:
   m_ObjectHideFlags: 0

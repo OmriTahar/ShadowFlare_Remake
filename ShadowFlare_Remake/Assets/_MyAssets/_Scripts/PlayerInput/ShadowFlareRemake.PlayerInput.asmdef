@@ -1,12 +1,9 @@
 {
-    "name": "ShadowFlareRemake.Player",
-    "rootNamespace": "ShadowFlareRemake.Player",
+    "name": "ShadowFlareRemake.PlayerInput",
+    "rootNamespace": "ShadowFlareRemake.PlayerInput",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:1838ac37eb198754bb62abb62ef1abb2",
-        "GUID:b63d40ec02fb5d7428f15323e3f00768",
-        "GUID:0428b6557ab90f949a0069287ce58e14"
+        "GUID:e8733038a827d4741897f7e335845f44"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
