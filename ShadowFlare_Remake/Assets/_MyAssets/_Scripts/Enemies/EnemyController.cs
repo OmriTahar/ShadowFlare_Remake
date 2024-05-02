@@ -1,7 +1,7 @@
-using ShadowFlareRemake.Combat;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using ShadowFlareRemake.Combat;
 
 namespace ShadowFlareRemake.Enemies {
 
@@ -76,11 +76,6 @@ namespace ShadowFlareRemake.Enemies {
             }
         }
 
-        private void HandleDeath() {
-
-            Destroy(gameObject);
-        }
-
         private void SelectEnemy() {
 
             Model.UpdateIsEnemyHighlighted(true);
@@ -89,6 +84,16 @@ namespace ShadowFlareRemake.Enemies {
         private void DeselectEnemy() {
 
             Model.UpdateIsEnemyHighlighted(false);
+        }
+
+        private void HandleDeath() {
+
+            OnIGotKilled?.Invoke(Model.Stats);
+        }
+
+        private void HandleDeathAnimationFinished() {
+
+            Destroy(gameObject);
         }
 
         private void ResetAttackCooldown() {
@@ -108,22 +113,20 @@ namespace ShadowFlareRemake.Enemies {
 
             View.OnCurserEntered += SelectEnemy;
             View.OnCurserLeft += DeselectEnemy;
-            View.OnTriggerEnterEvent += HandleTriggerEnter;
-            View.OnFinishedDeathAnimation += HandleDeath;
             View.OnAttackAnimationEnded += ResetAttackCooldown;
+            View.OnTriggerEnterEvent += HandleTriggerEnter;
+            View.OnEnemyKilled += HandleDeath;
+            View.OnFinishedDeathAnimation += HandleDeathAnimationFinished;
         }
 
         private void DeregisterEvents() {
 
             View.OnCurserEntered -= SelectEnemy;
             View.OnCurserLeft -= DeselectEnemy;
-            View.OnTriggerEnterEvent -= HandleTriggerEnter;
-            View.OnFinishedDeathAnimation -= HandleDeath;
             View.OnAttackAnimationEnded -= ResetAttackCooldown;
-        }
-
-        public void TakeDamage(int damage) {
-            throw new NotImplementedException();
+            View.OnTriggerEnterEvent -= HandleTriggerEnter;
+            View.OnEnemyKilled -= HandleDeath;
+            View.OnFinishedDeathAnimation -= HandleDeathAnimationFinished;
         }
     }
 }

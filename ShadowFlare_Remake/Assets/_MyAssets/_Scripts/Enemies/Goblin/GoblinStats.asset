@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ______Enemy_____: ------------------------------------
   <Color>k__BackingField: {r: 0.045045517, g: 0.38679248, b: 0, a: 1}
-  <ExpDrop>k__BackingField: 8
+  <ExpDrop>k__BackingField: 6
   <CoinsDrop>k__BackingField: 10
   ______Base_____: ------------------------------------
   <Name>k__BackingField: Goblin
@@ -22,7 +22,6 @@ MonoBehaviour:
   <MovementSpeed>k__BackingField: 5
   ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 10
-  <CurrentHP>k__BackingField: 10
   <Attack>k__BackingField: 1
   <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 1
@@ -30,7 +29,6 @@ MonoBehaviour:
   <AttackSpeed>k__BackingField: 1
   ______Magical_____: ------------------------------------
   <MaxMP>k__BackingField: 1
-  <CurrentMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
   <MagicalDefence>k__BackingField: 1
   <MagicalHitRate>k__BackingField: 1

@@ -1,4 +1,6 @@
 
+using ShadowFlareRemake.Rewards;
+
 namespace ShadowFlareRemake.GameManager {
     public class Unit : IUnit {
 
@@ -12,6 +14,7 @@ namespace ShadowFlareRemake.GameManager {
             CurrentHP = stats.MaxHP;
             CurrentMP = stats.MaxMP;
         }
+
 
         public void TakeDamage(int damage) {
 

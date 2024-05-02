@@ -26,16 +26,17 @@ namespace ShadowFlareRemake.GameManager {
 
         #region Unity Callbacks
 
-        private async void Awake() {
+        private  void Awake() {
 
             DontDestroyOnLoad(gameObject);
-            await InitPlayer();
-            InitEnemies();
         }
 
-        private void Start() {
+        private async void Start() {
 
+            await InitPlayer();
+            InitEnemies();
             RegisterEvents();
+
             _uiController.UpdatePlayerStats(_playerUnit);
         }
 
@@ -108,9 +109,12 @@ namespace ShadowFlareRemake.GameManager {
             enemyController.SetEnemyUnitAndUnitHandler(unit);
         }
 
-        private void HandleEnemyDied(IEnemyUnitStats enemyUnit) {
+        private void HandleEnemyDied(IEnemyUnitStats enemyStats) {
 
-            //_rewardsManager.GiveRewardsToPlayer(_playerUnit, enemyUnit as EnemyUnitStats);
+            var playerStats = _playerUnit.Stats as PlayerUnitStats;
+            var expReward = _rewardsManager.GetExpReward(playerStats, enemyStats);
+
+            playerStats.GiveExpReward(expReward);
             _uiController.UpdatePlayerStats(_playerUnit);
         }
 

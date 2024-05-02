@@ -3,7 +3,7 @@ using ShadowFlareRemake.Enemies;
 
 namespace ShadowFlareRemake.GameManager {
 
-    [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "ScriptableObjects/Enemy Stats")]
+    [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "Scriptable Objects/Create New Enemy Stats")]
     public class EnemyUnitStats : ScriptableObject , IEnemyUnitStats {
 
         private const string _spaceLine = "------------------------------------";

@@ -6,15 +6,20 @@ namespace ShadowFlareRemake.Rewards {
 
     public class RewardsManager : MonoBehaviour {
 
-        public void GiveRewardsToPlayer(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) {
+        [Header("Rewards")]
+        [SerializeField] private MercenaryLevelUpReward _mercenaryLevelUpReward;
 
-            HandleExpReward(playerUnit, enemyUnit.ExpDrop);
+        public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) {
+
+            return HandleExpRewardInternal(playerUnit, enemyUnit.ExpDrop);
         }
 
-        private void HandleExpReward(IPlayerUnitStats playerUnit, int expDrop) {
+        private ExpReward HandleExpRewardInternal(IPlayerUnitStats playerUnit, int expDrop) { // Todo: Do this better
+
+            var expReward = new ExpReward();
 
             if(expDrop <= 0) {
-                return;
+                return expReward;
             }
 
             var isPendingLevelUp = playerUnit.CurrentExp + expDrop >= playerUnit.ExpToLevelUp;
@@ -22,18 +27,19 @@ namespace ShadowFlareRemake.Rewards {
             if(isPendingLevelUp) {
 
                 var totalExp = playerUnit.CurrentExp + expDrop;
-                var newCurrentExp = totalExp - playerUnit.ExpToLevelUp;
-                var expToLevelUp = playerUnit.ExpToLevelUp * 2;           // Todo: Do this better
-                var newLevel = playerUnit.Level + 1;                      // Todo: Set max level
 
-                //playerUnit.SetExp(newCurrentExp, expToLevelUp);
-                //playerUnit.SetLevel(newLevel);
+                expReward.NewCurrentExp = totalExp - playerUnit.ExpToLevelUp;
+                expReward.NewExpToLevelUp = playerUnit.ExpToLevelUp * 2;
+                expReward.NewLevel = playerUnit.Level + 1;
 
             } else {
 
-                var newCurrentExp = playerUnit.CurrentExp + expDrop;
-                //playerUnit.SetExp(newCurrentExp, playerUnit.ExpToLevelUp);
+                expReward.NewCurrentExp = playerUnit.CurrentExp + expDrop;
+                expReward.NewExpToLevelUp = playerUnit.ExpToLevelUp;
+                expReward.NewLevel = playerUnit.Level;
             }
+
+            return expReward;
         }
 
         private void HandleLevelUp() {

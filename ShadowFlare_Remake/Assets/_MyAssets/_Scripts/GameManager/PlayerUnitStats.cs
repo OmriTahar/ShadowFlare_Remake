@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.Rewards;
 using System;
 using UnityEngine;
 
@@ -45,15 +46,11 @@ namespace ShadowFlareRemake.GameManager {
 
         #endregion
 
-        public void SetExp(int currentExp, int expToLevelUp) {
+        public void GiveExpReward(ExpReward expReward) {
 
-            CurrentExp = currentExp;
-            ExpToLevelUp = expToLevelUp;
-        }
-
-        public void SetLevel(int level) {
-
-            Level = level;
+            CurrentExp = expReward.NewCurrentExp;
+            ExpToLevelUp = expReward.NewExpToLevelUp;
+            Level = expReward.NewLevel;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ShadowFlareRemake.UI {
             InitModels();
         }
 
-        private async void OnEnable() {
+        private async void Start() {
 
             await PlayerInput.Instance.WaitForInitFinish();
             RegisterEvents();
