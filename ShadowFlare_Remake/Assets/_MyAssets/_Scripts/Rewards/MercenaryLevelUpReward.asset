@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd209d53b9016d54ab6882fef5cc4a4e, type: 3}
   m_Name: MercenaryLevelUpReward
   m_EditorClassIdentifier: 
-  <MaxHP>k__BackingField: 40
+  <HP>k__BackingField: 40
+  <MP>k__BackingField: 0
   <Strength>k__BackingField: 10
   <Attack>k__BackingField: 4
   <Defense>k__BackingField: 4

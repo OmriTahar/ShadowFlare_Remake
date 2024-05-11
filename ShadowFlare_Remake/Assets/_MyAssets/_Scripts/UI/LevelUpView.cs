@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.UI {
 
         [Header("References")]
         [SerializeField] private GameObject _levelUpPanel;
+        [SerializeField] private Animator _animator;
 
         [Header("Texts")]
         [SerializeField] private TMP_Text _levelText;
@@ -19,17 +20,22 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private TMP_Text _defenseText;
         [SerializeField] private TMP_Text _magicalAttackText;
         [SerializeField] private TMP_Text _magicalDefenseText;
-        [SerializeField] private TMP_Text _addedSpellText;
-        [SerializeField] private TMP_Text _occupationText;
+
+        // Todo:
+        //[SerializeField] private TMP_Text _addedSpellText;
+        //[SerializeField] private TMP_Text _occupationText;
+
+        private readonly int _idleAnimHash = Animator.StringToHash("Idle");
+        private readonly int _cornerAnimHash = Animator.StringToHash("Corner");
 
 
         protected override void ModelChanged() {
 
-            _levelUpPanel.SetActive(Model.IsPanelOpen);
+            SetTexts();
+            HandlePanelState();
+        }
 
-            if(!Model.IsPanelOpen) {
-                return;
-            }
+        private void SetTexts() {
 
             _levelText.text = Model.Level.ToString();
             _hpText.text = Model.HP.ToString();
@@ -40,6 +46,32 @@ namespace ShadowFlareRemake.UI {
             _defenseText.text = Model.Defense.ToString();
             _magicalAttackText.text = Model.MagicalAttack.ToString();
             _magicalDefenseText.text = Model.MagicalDefence.ToString();
+        }
+
+        private void HandlePanelState() {
+
+            switch(Model.State) {
+
+                case LevelUpModel.LevelUpPanelState.Hidden:
+
+                    _levelUpPanel.SetActive(false);
+                    _animator.SetTrigger(_idleAnimHash);
+                    break;
+
+
+                case LevelUpModel.LevelUpPanelState.Idle:
+
+                    _levelUpPanel.SetActive(true);
+                    break;
+
+                case LevelUpModel.LevelUpPanelState.Corner:
+
+                    _animator.SetTrigger(_cornerAnimHash);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void PanelClicked() {

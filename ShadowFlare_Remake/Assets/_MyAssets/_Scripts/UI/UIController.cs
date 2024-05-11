@@ -234,12 +234,29 @@ namespace ShadowFlareRemake.UI {
 
         public void ShowLevelUpPopup(int newLevel ,ILevelUpReward reward) {
 
-            _levelUpModel.SetReward(newLevel, reward, true);
+            _levelUpModel.SetReward(newLevel, reward);
         }
 
-        public void CloseLevelUpPopup() {
+        public void HandleLevelUpPanelClicked() {
 
-            _levelUpModel.SetIsPanelOpen(false);
+            switch(_levelUpModel.State) {
+
+                case LevelUpModel.LevelUpPanelState.Hidden:
+                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Idle);
+                    break;
+
+                case LevelUpModel.LevelUpPanelState.Idle:
+                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Corner);
+                    break;
+
+                case LevelUpModel.LevelUpPanelState.Corner:
+                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Hidden);
+                    break;
+
+                default:
+                    break;
+            }
+            
         }
 
         #endregion
@@ -259,7 +276,7 @@ namespace ShadowFlareRemake.UI {
             _inventoryView.OnCurserEnterUI += CursorEnteredUI;
             _inventoryView.OnCurserLeftUI += CursorLeftUI;
 
-            _levelUpView.OnPanelClicked += CloseLevelUpPopup;
+            _levelUpView.OnPanelClicked += HandleLevelUpPanelClicked;
         }
 
         private void DeregisterEvents() {
@@ -275,7 +292,7 @@ namespace ShadowFlareRemake.UI {
             _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
             _inventoryView.OnCurserLeftUI -= CursorLeftUI;
 
-            _levelUpView.OnPanelClicked -= CloseLevelUpPopup;
+            _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;
         }
 
         #endregion
