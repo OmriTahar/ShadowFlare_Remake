@@ -6,11 +6,11 @@ namespace ShadowFlareRemake.UI {
         public IUnit Unit { get; private set; }
         public IPlayerUnitStats Stats { get; private set; }
 
-        public bool IsStatsOpen { get; private set; }
+        public bool IsPanelOpen { get; private set; }
 
-        public StatsModel(bool isInventoryOpen) {
+        public StatsModel(bool isPanelOpen) {
 
-            IsStatsOpen = isInventoryOpen;
+            IsPanelOpen = isPanelOpen;
         }
 
         public void SetPlayerStats(IUnit unit) {
@@ -20,9 +20,9 @@ namespace ShadowFlareRemake.UI {
             Changed();
         }
 
-        public void SetIsStatsOpen(bool isInventoryOpen) {
+        public void SetIsStatsOpen(bool isPanelOpen) {
 
-            IsStatsOpen = isInventoryOpen;
+            IsPanelOpen = isPanelOpen;
             Changed();
         }
     }

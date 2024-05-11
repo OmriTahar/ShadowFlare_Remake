@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.PlayerInput;
+using ShadowFlareRemake.Rewards;
 
 namespace ShadowFlareRemake.UI {
     public class UIController : Controller {
@@ -14,6 +15,7 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private StatsView _statsView;
         [SerializeField] private HudView _hudView;
+        [SerializeField] private LevelUpView _levelUpView;
 
         [Header("Other")]
         [SerializeField] private GameObject _closeButton;
@@ -22,6 +24,7 @@ namespace ShadowFlareRemake.UI {
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
         private HudModel _hudModel;
+        private LevelUpModel _levelUpModel;
 
         #region Unity Callbacks
 
@@ -75,9 +78,14 @@ namespace ShadowFlareRemake.UI {
 
             _hudModel = new HudModel();
             _hudView.SetModel(_hudModel);
+
+            _levelUpModel = new LevelUpModel();
+            _levelUpView.SetModel(_levelUpModel);
         }
 
         #endregion
+
+        #region Mouse Raycast
 
         private void HandleMouseRaycastHit() {
 
@@ -108,10 +116,13 @@ namespace ShadowFlareRemake.UI {
 
             InputManager.Instance.SetIsCursorOnUI(true);
         }
+
         public void CursorLeftUI(PointerEventData eventData) {
 
             InputManager.Instance.SetIsCursorOnUI(false);
         }
+
+        #endregion
 
         #region Inventory
 
@@ -148,7 +159,7 @@ namespace ShadowFlareRemake.UI {
 
         private void DoToggleStats() {
 
-            var toggledState = !_statsModel.IsStatsOpen;
+            var toggledState = !_statsModel.IsPanelOpen;
             _statsModel.SetIsStatsOpen(toggledState);
             HandleUiScreenCover();
         }
@@ -187,22 +198,19 @@ namespace ShadowFlareRemake.UI {
             _statsModel.SetPlayerStats(unit);
         }
 
-        #endregion
-
-
         private void HandleUiScreenCover() {
 
-            if(_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+            if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen) {
 
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.BothAreCovered));
                 _closeButton.SetActive(true);
 
-            } else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsStatsOpen) {
+            } else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen) {
 
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.RightIsCovered));
                 _closeButton.SetActive(true);
 
-            } else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsStatsOpen) {
+            } else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen) {
 
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.LeftIsCovered));
                 _closeButton.SetActive(true);
@@ -220,6 +228,22 @@ namespace ShadowFlareRemake.UI {
             HandleUiScreenCover();
         }
 
+        #endregion
+
+        #region Level Up
+
+        public void ShowLevelUpPopup(int newLevel ,ILevelUpReward reward) {
+
+            _levelUpModel.SetReward(newLevel, reward, true);
+        }
+
+        public void CloseLevelUpPopup() {
+
+            _levelUpModel.SetIsPanelOpen(false);
+        }
+
+        #endregion
+
         #region Events
 
         private void RegisterEvents() {
@@ -234,6 +258,8 @@ namespace ShadowFlareRemake.UI {
 
             _inventoryView.OnCurserEnterUI += CursorEnteredUI;
             _inventoryView.OnCurserLeftUI += CursorLeftUI;
+
+            _levelUpView.OnPanelClicked += CloseLevelUpPopup;
         }
 
         private void DeregisterEvents() {
@@ -248,6 +274,8 @@ namespace ShadowFlareRemake.UI {
 
             _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
             _inventoryView.OnCurserLeftUI -= CursorLeftUI;
+
+            _levelUpView.OnPanelClicked -= CloseLevelUpPopup;
         }
 
         #endregion

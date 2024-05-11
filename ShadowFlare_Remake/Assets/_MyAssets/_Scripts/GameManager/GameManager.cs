@@ -116,6 +116,12 @@ namespace ShadowFlareRemake.GameManager {
 
             playerStats.GiveExpReward(expReward);
             _uiController.UpdatePlayerUI(_playerUnit);
+
+            if(expReward.IsPendingLevelUp) {
+
+                var levelUpReward = _rewardsManager.GetLevelUpReward(playerStats);
+                _uiController.ShowLevelUpPopup(playerStats.Level, levelUpReward);
+            }
         }
 
         #endregion

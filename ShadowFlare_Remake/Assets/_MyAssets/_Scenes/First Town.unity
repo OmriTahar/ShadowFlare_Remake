@@ -3085,6 +3085,7 @@ MonoBehaviour:
   _inventoryView: {fileID: 825770268}
   _statsView: {fileID: 2113223709}
   _hudView: {fileID: 657828452}
+  _levelUpView: {fileID: 0}
   _closeButton: {fileID: 1205873426}
 --- !u!1 &921169933
 GameObject:
@@ -7390,7 +7391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1867461020
 RectTransform:
   m_ObjectHideFlags: 0

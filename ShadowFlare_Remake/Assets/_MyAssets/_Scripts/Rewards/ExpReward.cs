@@ -4,5 +4,6 @@ namespace ShadowFlareRemake.Rewards {
         public int NewCurrentExp;
         public int NewExpToLevelUp;
         public int NewLevel;
+        public bool IsPendingLevelUp;
     }
 }

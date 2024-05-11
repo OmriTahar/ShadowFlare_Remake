@@ -1,7 +1,7 @@
 namespace ShadowFlareRemake.Rewards {
     public interface ILevelUpReward {
-        public int MaxHP { get; }
-        public int MaxMP { get; }
+        public int HP { get; }
+        public int MP { get; }
         public int Strength { get; }
         public int Attack { get; }
         public int Defense { get; }

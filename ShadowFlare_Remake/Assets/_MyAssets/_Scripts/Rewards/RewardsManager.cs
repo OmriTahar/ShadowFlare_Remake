@@ -1,6 +1,6 @@
-using UnityEngine;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Player;
+using UnityEngine;
 
 namespace ShadowFlareRemake.Rewards {
 
@@ -9,13 +9,9 @@ namespace ShadowFlareRemake.Rewards {
         [Header("Rewards")]
         [SerializeField] private MercenaryLevelUpReward _mercenaryLevelUpReward;
 
-        public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) {
+        public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) { // Todo: Do this better
 
-            return HandleExpRewardInternal(playerUnit, enemyUnit.ExpDrop);
-        }
-
-        private ExpReward HandleExpRewardInternal(IPlayerUnitStats playerUnit, int expDrop) { // Todo: Do this better
-
+            var expDrop = enemyUnit.ExpDrop;
             var expReward = new ExpReward();
 
             if(expDrop <= 0) {
@@ -23,6 +19,7 @@ namespace ShadowFlareRemake.Rewards {
             }
 
             var isPendingLevelUp = playerUnit.CurrentExp + expDrop >= playerUnit.ExpToLevelUp;
+            expReward.IsPendingLevelUp = isPendingLevelUp;
 
             if(isPendingLevelUp) {
 
@@ -42,9 +39,12 @@ namespace ShadowFlareRemake.Rewards {
             return expReward;
         }
 
-        private void HandleLevelUp() {
+        public MercenaryLevelUpReward GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
 
-
+            if(playerUnit.Level < 5) {
+                return _mercenaryLevelUpReward;
+            }
+            return null;
         }
     }
 }
