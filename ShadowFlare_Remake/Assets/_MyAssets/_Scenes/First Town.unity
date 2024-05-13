@@ -3499,7 +3499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7023,8 +7023,6 @@ GameObject:
   - component: {fileID: 1463663659}
   - component: {fileID: 1463663663}
   - component: {fileID: 1463663662}
-  - component: {fileID: 1463663661}
-  - component: {fileID: 1463663660}
   m_Layer: 5
   m_Name: Carry Panel
   m_TagString: Untagged
@@ -7052,35 +7050,6 @@ RectTransform:
   m_AnchoredPosition: {x: 80.5, y: 540}
   m_SizeDelta: {x: 800, y: 320}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1463663660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463663658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1443697eb79b0cf4ca2dd235db69a2af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inventoryController: {fileID: 86125041}
---- !u!114 &1463663661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463663658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37aefb0adb7e7c14d943406bb4dcd08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridSizeWidth: 10
-  gridSizeHeight: 4
-  _inventoryItemPrefab: {fileID: 1790465663596943901, guid: 7982fd7ed93b9ca46ad72c8622041df5,
-    type: 3}
 --- !u!114 &1463663662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10127,7 +10096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

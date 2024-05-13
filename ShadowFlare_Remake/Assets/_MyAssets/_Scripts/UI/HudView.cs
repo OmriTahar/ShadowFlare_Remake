@@ -1,14 +1,10 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ShadowFlareRemake.UI {
-    public class HudView : View<HudModel>, IPointerEnterHandler, IPointerExitHandler {
-
-        public event Action<PointerEventData> OnCurserEnterUI;
-        public event Action<PointerEventData> OnCurserLeftUI;
+    public class HudView : UIView<HudModel> {
 
         public event Action OnInventoryButtonClicked;
         public event Action OnStatsClicked;
@@ -17,7 +13,7 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private GameObject _hudPanel;
 
         [Header("Texts")]
-        [SerializeField] private TMP_Text _levelText; 
+        [SerializeField] private TMP_Text _levelText;
 
         [Header("Sliders")]
         [SerializeField] private Slider _hpSlider;
@@ -47,7 +43,7 @@ namespace ShadowFlareRemake.UI {
         private void SetMP() {
 
             _mpSlider.maxValue = Model.MaxMP;
-            _mpSlider.value = Model.CurrentMP; 
+            _mpSlider.value = Model.CurrentMP;
         }
 
         private void SetExp() {
@@ -69,14 +65,6 @@ namespace ShadowFlareRemake.UI {
         public void StatsClicked() {
 
             OnStatsClicked?.Invoke();
-        }
-
-        public void OnPointerEnter(PointerEventData eventData) {
-            OnCurserEnterUI?.Invoke(eventData);
-        }
-
-        public void OnPointerExit(PointerEventData eventData) {
-            OnCurserLeftUI?.Invoke(eventData);
         }
     }
 }
