@@ -239,8 +239,8 @@ RectTransform:
   m_Father: {fileID: 915568422}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.35, y: 0.4}
-  m_AnchorMax: {x: 0.7, y: 0.75}
+  m_AnchorMin: {x: 0.32, y: 0.4}
+  m_AnchorMax: {x: 0.68, y: 0.75}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -542,7 +542,7 @@ MonoBehaviour:
     <Vcocation>k__BackingField: 0
     <Strength>k__BackingField: 1
     <CurrentExp>k__BackingField: 0
-    <ExpToLevelUp>k__BackingField: 20
+    <ExpToLevelUp>k__BackingField: 8
     ______Base_____: ------------------------------------
     <Name>k__BackingField: Ronen
     <Level>k__BackingField: 1
@@ -2822,9 +2822,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1205873427}
   - {fileID: 1037904876}
   m_Father: {fileID: 915568422}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3202,7 +3203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.23921585, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3278,7 +3279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4402,7 +4403,6 @@ RectTransform:
   - {fileID: 71009183}
   - {fileID: 825770265}
   - {fileID: 2113223708}
-  - {fileID: 1205873427}
   - {fileID: 657828449}
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -4907,7 +4907,6 @@ GameObject:
   - component: {fileID: 1037904876}
   - component: {fileID: 1037904879}
   - component: {fileID: 1037904878}
-  - component: {fileID: 1037904877}
   m_Layer: 5
   m_Name: Hud Panel
   m_TagString: Untagged
@@ -4939,30 +4938,13 @@ RectTransform:
   - {fileID: 282894690}
   - {fileID: 1209814054}
   m_Father: {fileID: 657828449}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1037904877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1037904875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 611c9bb505d058a4abafffd0cc07c645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hudPanel: {fileID: 0}
-  _levelText: {fileID: 0}
-  _hpSlider: {fileID: 0}
-  _mpSlider: {fileID: 0}
-  _expSlider: {fileID: 0}
 --- !u!114 &1037904878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5845,12 +5827,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1481736395}
-  m_Father: {fileID: 915568422}
-  m_RootOrder: 4
+  m_Father: {fileID: 657828449}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -347.5}
+  m_AnchoredPosition: {x: 0, y: 103.00003}
   m_SizeDelta: {x: 85.2846, y: 27.3355}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205873428
@@ -8132,7 +8114,7 @@ RectTransform:
   m_GameObject: {fileID: 1584032405}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1867461020}
@@ -9913,7 +9895,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886155987}
+  - component: {fileID: 1886155990}
   - component: {fileID: 1886155988}
+  - component: {fileID: 1886155989}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -9981,7 +9965,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1169490180}
+  m_TargetGraphic: {fileID: 1886155990}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -9997,6 +9981,44 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!222 &1886155989
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886155986}
+  m_CullTransparentMesh: 1
+--- !u!114 &1886155990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886155986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1888725144
 GameObject:
   m_ObjectHideFlags: 0
@@ -10049,7 +10071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10423,7 +10445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.9716981, g: 0.14208792, b: 0.16801324, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

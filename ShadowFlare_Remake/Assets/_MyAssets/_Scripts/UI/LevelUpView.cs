@@ -1,10 +1,13 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake.UI {
-    public class LevelUpView : View<LevelUpModel> {
+    public class LevelUpView : View<LevelUpModel>, IPointerEnterHandler, IPointerExitHandler {
 
+        public event Action<PointerEventData> OnCurserEnterUI;
+        public event Action<PointerEventData> OnCurserLeftUI;
         public event Action OnPanelClicked;
 
         [Header("References")]
@@ -25,7 +28,7 @@ namespace ShadowFlareRemake.UI {
         //[SerializeField] private TMP_Text _addedSpellText;
         //[SerializeField] private TMP_Text _occupationText;
 
-        private readonly int _idleAnimHash = Animator.StringToHash("Idle");
+        private readonly int _isActiveAnimHash = Animator.StringToHash("IsActive");
         private readonly int _cornerAnimHash = Animator.StringToHash("Corner");
 
 
@@ -55,13 +58,14 @@ namespace ShadowFlareRemake.UI {
                 case LevelUpModel.LevelUpPanelState.Hidden:
 
                     _levelUpPanel.SetActive(false);
-                    _animator.SetTrigger(_idleAnimHash);
+                    _animator.SetBool(_isActiveAnimHash, false);
                     break;
 
 
                 case LevelUpModel.LevelUpPanelState.Idle:
 
                     _levelUpPanel.SetActive(true);
+                    _animator.SetBool(_isActiveAnimHash, true);
                     break;
 
                 case LevelUpModel.LevelUpPanelState.Corner:
@@ -74,8 +78,17 @@ namespace ShadowFlareRemake.UI {
             }
         }
 
+        public void OnPointerEnter(PointerEventData eventData) {
+            OnCurserEnterUI?.Invoke(eventData);
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+            OnCurserLeftUI?.Invoke(eventData);
+        }
+
         public void PanelClicked() {
 
+            print("Clciekd");
             OnPanelClicked?.Invoke();
         }
     }

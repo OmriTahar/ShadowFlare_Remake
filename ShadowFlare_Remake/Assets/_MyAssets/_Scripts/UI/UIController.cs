@@ -276,6 +276,12 @@ namespace ShadowFlareRemake.UI {
             _inventoryView.OnCurserEnterUI += CursorEnteredUI;
             _inventoryView.OnCurserLeftUI += CursorLeftUI;
 
+            _statsView.OnCurserEnterUI += CursorEnteredUI;
+            _statsView.OnCurserLeftUI += CursorLeftUI;
+
+            _levelUpView.OnCurserEnterUI += CursorEnteredUI;
+            _levelUpView.OnCurserLeftUI += CursorLeftUI;
+
             _levelUpView.OnPanelClicked += HandleLevelUpPanelClicked;
         }
 
@@ -291,6 +297,12 @@ namespace ShadowFlareRemake.UI {
 
             _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
             _inventoryView.OnCurserLeftUI -= CursorLeftUI;
+
+            _statsView.OnCurserEnterUI -= CursorEnteredUI;
+            _statsView.OnCurserLeftUI -= CursorLeftUI;
+
+            _levelUpView.OnCurserEnterUI -= CursorEnteredUI;
+            _levelUpView.OnCurserLeftUI -= CursorLeftUI;
 
             _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;
         }

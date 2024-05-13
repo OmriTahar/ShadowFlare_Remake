@@ -1,8 +1,13 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake.UI {
-    public class StatsView : View<StatsModel> {
+    public class StatsView : View<StatsModel>, IPointerEnterHandler, IPointerExitHandler {
+
+        public event Action<PointerEventData> OnCurserEnterUI;
+        public event Action<PointerEventData> OnCurserLeftUI;
 
         [Header("References")]
         [SerializeField] private GameObject _statsPanel;
@@ -37,6 +42,14 @@ namespace ShadowFlareRemake.UI {
             _mpText.text = Model.Stats.MaxMP.ToString();
             _magicalAttackText.text = Model.Stats.MagicalAttack.ToString();
             _magicalDefenseText.text = Model.Stats.MagicalDefence.ToString();
+        }
+
+        public void OnPointerEnter(PointerEventData eventData) {
+            OnCurserEnterUI?.Invoke(eventData);
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+            OnCurserLeftUI?.Invoke(eventData);
         }
     }
 }

@@ -111,17 +111,18 @@ namespace ShadowFlareRemake.GameManager {
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats) {
 
-            var playerStats = _playerUnit.Stats as PlayerUnitStats;
-            var expReward = _rewardsManager.GetExpReward(playerStats, enemyStats);
-
-            playerStats.GiveExpReward(expReward);
-            _uiController.UpdatePlayerUI(_playerUnit);
+            var expReward = _rewardsManager.GetExpReward(_playerUnitStats, enemyStats);
+            _playerUnitStats.GiveExpReward(expReward);
 
             if(expReward.IsPendingLevelUp) {
 
-                var levelUpReward = _rewardsManager.GetLevelUpReward(playerStats);
-                _uiController.ShowLevelUpPopup(playerStats.Level, levelUpReward);
+                var levelUpReward = _rewardsManager.GetLevelUpReward(_playerUnitStats);
+                _playerUnitStats.GiveLevelUpReward(levelUpReward);
+                _playerUnit.FullHeal();
+                _uiController.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
+
+            _uiController.UpdatePlayerUI(_playerUnit);
         }
 
         #endregion

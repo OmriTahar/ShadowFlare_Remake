@@ -46,11 +46,22 @@ namespace ShadowFlareRemake.GameManager {
 
         #endregion
 
-        public void GiveExpReward(ExpReward expReward) {
+        public void GiveExpReward(ExpReward reward) {
 
-            CurrentExp = expReward.NewCurrentExp;
-            ExpToLevelUp = expReward.NewExpToLevelUp;
-            Level = expReward.NewLevel;
+            CurrentExp = reward.NewCurrentExp;
+            ExpToLevelUp = reward.NewExpToLevelUp;
+            Level = reward.NewLevel;
+        }
+
+        public void GiveLevelUpReward(ILevelUpReward reward) {
+
+            MaxHP += reward.HP;
+            MaxMP += reward.MP;
+            Strength += Strength += reward.Strength;
+            Attack += reward.Attack;
+            Defense += reward.Defense;
+            MagicalAttack += reward.MagicalAttack;
+            MagicalDefence += reward.MagicalDefence;
         }
     }
 }
