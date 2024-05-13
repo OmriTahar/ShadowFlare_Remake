@@ -48,13 +48,13 @@ namespace ShadowFlareRemake.PlayerInput {
 
         private void Update() {
 
+            IsLeftMouseIsHeldDown = LeftMouseClickAction.IsPressed();
+
             _currentMouseRay = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
                 CurrentRaycastHit = hit;
             }
-
-            IsLeftMouseIsHeldDown = LeftMouseClickAction.IsPressed();
         }
 
         private void OnDisable() {
