@@ -25,6 +25,7 @@ namespace ShadowFlareRemake.Player {
 
         private PlayerModel _model;
         private CharacterController _characterController;
+        private InputManager _inputManager;
         private Coroutine _lastMoveCoroutine;
 
         private const int _rotationSpeed = 10;
@@ -40,7 +41,7 @@ namespace ShadowFlareRemake.Player {
 
         private void Update() {
 
-            if(InputManager.Instance.IsLeftMouseIsHeldDown) {
+            if(_inputManager.IsLeftMouseIsHeldDown) {
                 HandleLeftClickActions();
             }
         }
@@ -69,7 +70,8 @@ namespace ShadowFlareRemake.Player {
             _model = new PlayerModel(unit);
             _view.SetModel(_model);
 
-            await InputManager.Instance.WaitForInitFinish();
+            _inputManager = InputManager.Instance;
+            await _inputManager.WaitForInitFinish();
             RegisterEvents();
 
             _meleeAttack.SetUnitStats(unit.Stats);
@@ -92,8 +94,8 @@ namespace ShadowFlareRemake.Player {
 
         private void RegisterEvents() {
 
-            InputManager.Instance.LeftMouseClickAction.performed += RegisterLeftClickActions;
-            InputManager.Instance.RightMouseClickAction.performed += AttackAtDirection;
+            _inputManager.LeftMouseClickAction.performed += RegisterLeftClickActions;
+            _inputManager.RightMouseClickAction.performed += AttackAtDirection;
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleStepForward;
@@ -102,8 +104,8 @@ namespace ShadowFlareRemake.Player {
 
         private void DeregisterEvents() {
 
-            InputManager.Instance.LeftMouseClickAction.performed -= RegisterLeftClickActions;
-            InputManager.Instance.RightMouseClickAction.performed -= AttackAtDirection;
+            _inputManager.LeftMouseClickAction.performed -= RegisterLeftClickActions;
+            _inputManager.RightMouseClickAction.performed -= AttackAtDirection;
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleStepForward;
@@ -116,27 +118,22 @@ namespace ShadowFlareRemake.Player {
 
         private void HandleLeftClickActions() {
 
-            if(_isAttacking || InputManager.Instance.IsCursorOnUI) {
+            if(_isAttacking || _inputManager.IsCursorOnUI) {
                 return;
             }
 
-            var raycastHit = InputManager.Instance.CurrentRaycastHit;
+            var raycastHit = _inputManager.CurrentRaycastHit;
 
             if(raycastHit.collider) {
 
-                var raycastLayer = raycastHit.collider.gameObject.layer;
-                var IsGroundLayer = raycastLayer.CompareTo(GroundLayer) == 0;
-                var IsEnemyLayer = raycastLayer.CompareTo(EnemyLayer) == 0;
-                var IsItemLayer = raycastLayer.CompareTo(ItemLayer) == 0;
-
-                if(IsGroundLayer) {
+                if(_inputManager.IsCursorOnGround) {
                     HandleMove(raycastHit);
 
-                } else if(IsEnemyLayer) {
+                } else if(_inputManager.IsCursorOnEnemy) {
                     var enemyPos = raycastHit.collider.transform.position;
                     HandleMoveAndAttack(enemyPos);
 
-                } else if(IsItemLayer) {
+                } else if(_inputManager.IsCursorOnItem) {
                     print("Pressed on Item - Collecting!");
                 }
             }
@@ -222,7 +219,7 @@ namespace ShadowFlareRemake.Player {
 
         private void AttackAtDirection(InputAction.CallbackContext context) {
 
-            if(_isAttacking || InputManager.Instance.IsCursorOnUI) {
+            if(_isAttacking || _inputManager.IsCursorOnUI) {
                 return;
             }
 
@@ -230,7 +227,7 @@ namespace ShadowFlareRemake.Player {
                 StopCoroutine(_lastMoveCoroutine);
             }
 
-            var raycastHit = InputManager.Instance.CurrentRaycastHit;
+            var raycastHit = _inputManager.CurrentRaycastHit;
 
             if(raycastHit.collider) {
 

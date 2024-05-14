@@ -1,11 +1,11 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
-using ShadowFlareRemake.Player;
-using UnityEngine.InputSystem;
-using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI {
     public class UIController : Controller {
@@ -26,6 +26,8 @@ namespace ShadowFlareRemake.UI {
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
 
+        private InputManager _inputManager;
+
         #region Unity Callbacks
 
         protected override void Awake() {
@@ -37,6 +39,7 @@ namespace ShadowFlareRemake.UI {
 
         private async void Start() {
 
+            _inputManager = InputManager.Instance;
             await InputManager.Instance.WaitForInitFinish();
             RegisterEvents();
         }
@@ -89,37 +92,31 @@ namespace ShadowFlareRemake.UI {
 
         private void HandleMouseRaycastHit() {
 
-            if(InputManager.Instance.IsCursorOnUI) {
+            if(_inputManager.IsCursorOnUI) {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.UI);
-                return;
-            }
 
-            var raycastHit = InputManager.Instance.CurrentRaycastHit;
-            if(raycastHit.collider) {
+            } else if(_inputManager.IsCursorOnGround) {
+                _curserModel.UpdateCurser(CurserModel.CursorIconState.Move);
 
-                if(raycastHit.collider.gameObject.layer.CompareTo(GroundLayer) == 0) {
-                    _curserModel.UpdateCurser(CurserModel.CursorIconState.Move);
+            } else if(_inputManager.IsCursorOnEnemy) {
+                _curserModel.UpdateCurser(CurserModel.CursorIconState.Attack);
 
-                } else if(raycastHit.collider.gameObject.layer.CompareTo(EnemyLayer) == 0) {
-                    _curserModel.UpdateCurser(CurserModel.CursorIconState.Attack);
+            } else if(_inputManager.IsCursorOnItem) {
+                _curserModel.UpdateCurser(CurserModel.CursorIconState.PickUp);
 
-                } else if(raycastHit.collider.gameObject.layer.CompareTo(ItemLayer) == 0) {
-                    _curserModel.UpdateCurser(CurserModel.CursorIconState.PickUp);
-
-                } else {
-                    _curserModel.UpdateCurser(CurserModel.CursorIconState.Other);
-                }
+            } else {
+                _curserModel.UpdateCurser(CurserModel.CursorIconState.Other);
             }
         }
 
         public void CursorEnteredUI(PointerEventData eventData) {
 
-            InputManager.Instance.SetIsCursorOnUI(true);
+            _inputManager.SetIsCursorOnUI(true);
         }
 
         public void CursorLeftUI(PointerEventData eventData) {
 
-            InputManager.Instance.SetIsCursorOnUI(false);
+            _inputManager.SetIsCursorOnUI(false);
         }
 
         #endregion
@@ -131,7 +128,7 @@ namespace ShadowFlareRemake.UI {
             DoToggleInventory();
         }
 
-        private void ToggleInventory(InputAction.CallbackContext context) { 
+        private void ToggleInventory(InputAction.CallbackContext context) {
 
             DoToggleInventory();
         }
@@ -232,7 +229,7 @@ namespace ShadowFlareRemake.UI {
 
         #region Level Up
 
-        public void ShowLevelUpPopup(int newLevel ,ILevelUpReward reward) {
+        public void ShowLevelUpPopup(int newLevel, ILevelUpReward reward) {
 
             _levelUpModel.SetReward(newLevel, reward);
         }
@@ -256,7 +253,7 @@ namespace ShadowFlareRemake.UI {
                 default:
                     break;
             }
-            
+
         }
 
         #endregion
@@ -265,8 +262,8 @@ namespace ShadowFlareRemake.UI {
 
         private void RegisterEvents() {
 
-            InputManager.Instance.I_KeyboardClickAction.performed += ToggleInventory;
-            InputManager.Instance.S_KeyboardClickAction.performed += ToggleStats;
+            _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
+            _inputManager.S_KeyboardClickAction.performed += ToggleStats;
 
             _hudView.OnCurserEnterUI += CursorEnteredUI;
             _hudView.OnCurserLeftUI += CursorLeftUI;
@@ -287,8 +284,8 @@ namespace ShadowFlareRemake.UI {
 
         private void DeregisterEvents() {
 
-            InputManager.Instance.I_KeyboardClickAction.performed -= ToggleInventory;
-            InputManager.Instance.S_KeyboardClickAction.performed -= ToggleStats;
+            _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
+            _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
 
             _hudView.OnCurserEnterUI -= CursorEnteredUI;
             _hudView.OnCurserLeftUI -= CursorLeftUI;

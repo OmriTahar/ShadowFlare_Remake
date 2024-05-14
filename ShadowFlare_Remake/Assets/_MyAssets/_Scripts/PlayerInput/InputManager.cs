@@ -19,8 +19,11 @@ namespace ShadowFlareRemake.PlayerInput {
 
         // --- Variables ---
         public RaycastHit CurrentRaycastHit { get; private set; }
-        public bool IsCursorOnUI { get; private set; }
+
+        public bool IsCursorOnGround { get; private set; }
         public bool IsCursorOnEnemy { get; private set; }
+        public bool IsCursorOnItem { get; private set; }
+        public bool IsCursorOnUI { get; private set; }
         public bool IsLeftMouseIsHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
@@ -93,7 +96,9 @@ namespace ShadowFlareRemake.PlayerInput {
 
                 var raycastLayer = hit.collider.gameObject.layer;
 
+                IsCursorOnGround = raycastLayer.CompareTo(GroundLayer) == 0;
                 IsCursorOnEnemy = raycastLayer.CompareTo(EnemyLayer) == 0;
+                IsCursorOnItem = raycastLayer.CompareTo(ItemLayer) == 0;
             }
         }
     }

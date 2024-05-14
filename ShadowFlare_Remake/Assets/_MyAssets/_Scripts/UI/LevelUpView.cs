@@ -1,13 +1,10 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake.UI {
-    public class LevelUpView : View<LevelUpModel>, IPointerEnterHandler, IPointerExitHandler {
+    public class LevelUpView : UIView<LevelUpModel> {
 
-        public event Action<PointerEventData> OnCurserEnterUI;
-        public event Action<PointerEventData> OnCurserLeftUI;
         public event Action OnPanelClicked;
 
         [Header("References")]
@@ -78,17 +75,8 @@ namespace ShadowFlareRemake.UI {
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData) {
-            OnCurserEnterUI?.Invoke(eventData);
-        }
-
-        public void OnPointerExit(PointerEventData eventData) {
-            OnCurserLeftUI?.Invoke(eventData);
-        }
-
         public void PanelClicked() {
 
-            print("Clciekd");
             OnPanelClicked?.Invoke();
         }
     }

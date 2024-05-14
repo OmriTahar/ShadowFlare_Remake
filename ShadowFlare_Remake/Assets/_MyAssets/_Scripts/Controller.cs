@@ -8,6 +8,7 @@ namespace ShadowFlareRemake {
         protected int EnemyLayer;
         protected int ItemLayer;
         protected int AttackLayer;
+        protected int UILayer;
 
         private AcceptBlock _acceptBlock;
 
@@ -33,6 +34,7 @@ namespace ShadowFlareRemake {
             EnemyLayer = LayerMask.NameToLayer("Enemy");
             ItemLayer = LayerMask.NameToLayer("Item");
             AttackLayer = LayerMask.NameToLayer("Attack");
+            UILayer = LayerMask.NameToLayer("UI");
         }
     }
 }

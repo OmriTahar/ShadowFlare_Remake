@@ -27,6 +27,8 @@ namespace ShadowFlareRemake.GameManager {
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
         private EnemyModel _lastHighlightedEnemy;
 
+        private InputManager _inputManager;
+
         #region Unity Callbacks
 
         private void Awake() {
@@ -39,6 +41,9 @@ namespace ShadowFlareRemake.GameManager {
             await InitPlayer();
             InitEnemies();
             RegisterEvents();
+
+            _inputManager = InputManager.Instance;
+            await _inputManager.WaitForInitFinish();
 
             _uiController.UpdatePlayerUI(_playerUnit);
         }
@@ -118,9 +123,9 @@ namespace ShadowFlareRemake.GameManager {
 
         private void HandleHighlightEnemies() {
 
-            if(InputManager.Instance.IsCursorOnEnemy) {
+            if(_inputManager.IsCursorOnEnemy) {
 
-                var raycastHit = InputManager.Instance.CurrentRaycastHit;
+                var raycastHit = _inputManager.CurrentRaycastHit;
                 _enemiesCollidersDict.TryGetValue(raycastHit.collider, out var enemyModel);
 
                 if(_lastHighlightedEnemy != null && enemyModel != _lastHighlightedEnemy) {

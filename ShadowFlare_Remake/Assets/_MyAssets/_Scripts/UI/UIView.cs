@@ -11,13 +11,11 @@ namespace ShadowFlareRemake.UI {
 
         public void OnPointerEnter(PointerEventData eventData) {
 
-            print("Enter UI. Name: " + name);
             OnCurserEnterUI?.Invoke(eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData) {
 
-            print("Left UI. Name: " + name);
             OnCurserLeftUI?.Invoke(eventData);
         }
     }
