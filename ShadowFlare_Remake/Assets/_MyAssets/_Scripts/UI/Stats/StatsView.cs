@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Stats {
     public class StatsView : UIView<StatsModel> {
 
         [Header("References")]

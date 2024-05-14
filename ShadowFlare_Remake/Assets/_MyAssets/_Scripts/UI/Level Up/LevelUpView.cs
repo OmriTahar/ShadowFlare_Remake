@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.LevelUp {
     public class LevelUpView : UIView<LevelUpModel> {
 
         public event Action OnPanelClicked;

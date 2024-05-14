@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Inventory {
     public class InventoryItem : MonoBehaviour {
 
         public int sizeWidth = 1;

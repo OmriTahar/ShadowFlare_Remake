@@ -1,5 +1,5 @@
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Inventory {
     public class InventoryModel : Model {
 
         public bool IsInventoryOpen { get; private set; }

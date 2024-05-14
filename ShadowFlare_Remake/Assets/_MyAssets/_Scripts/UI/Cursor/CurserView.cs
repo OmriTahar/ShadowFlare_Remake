@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Cursor {
     public class CurserView : View<CurserModel> {
 
         [Header("Curser Icons")]
@@ -11,12 +11,14 @@ namespace ShadowFlareRemake.UI {
         [SerializeField] private Texture2D Other;
 
         protected override void ModelChanged() {
+
             UpdateCurser(Model.CurrentCursorIconState);
         }
 
         private void UpdateCurser(CurserModel.CursorIconState newCurserIconState) {
+
             var newIcon = GetCurserIcon(newCurserIconState);
-            Cursor.SetCursor(newIcon, Vector2.zero, CursorMode.Auto);
+            UnityEngine.Cursor.SetCursor(newIcon, Vector2.zero, CursorMode.Auto);
         }
 
         private Texture2D GetCurserIcon(CurserModel.CursorIconState cursorIconState) {

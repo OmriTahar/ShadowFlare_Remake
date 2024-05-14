@@ -1,6 +1,6 @@
 using ShadowFlareRemake.Rewards;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.LevelUp {
     public class LevelUpModel : Model {
 
         public enum LevelUpPanelState { Hidden, Idle, Corner }

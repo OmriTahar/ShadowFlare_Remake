@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Inventory {
 
     [RequireComponent(typeof(ItemsGrid))]
     public class DetectHoverOnItemsGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {

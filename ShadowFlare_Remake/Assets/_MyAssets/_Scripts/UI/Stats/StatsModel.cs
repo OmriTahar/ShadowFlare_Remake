@@ -1,6 +1,6 @@
 using ShadowFlareRemake.Player;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Stats {
     public class StatsModel : Model {
 
         public IUnit Unit { get; private set; }

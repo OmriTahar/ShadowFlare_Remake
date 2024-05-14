@@ -1,5 +1,5 @@
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Hud {
     public class HudModel : Model {
 
         public int CurrentHP { get; private set; }

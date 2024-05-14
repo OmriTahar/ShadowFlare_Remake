@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Hud {
     public class HudView : UIView<HudModel> {
 
         public event Action OnInventoryButtonClicked;

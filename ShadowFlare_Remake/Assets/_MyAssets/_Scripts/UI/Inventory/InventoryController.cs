@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI {
+namespace ShadowFlareRemake.UI.Inventory {
     public class InventoryController : MonoBehaviour {
 
         //[Header("References")]

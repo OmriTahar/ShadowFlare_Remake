@@ -1,11 +1,16 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using ShadowFlareRemake.UI.Cursor;
+using ShadowFlareRemake.UI.Hud;
+using ShadowFlareRemake.UI.Inventory;
+using ShadowFlareRemake.UI.LevelUp;
+using ShadowFlareRemake.UI.Stats;
 
 namespace ShadowFlareRemake.UI {
     public class UIController : Controller {
