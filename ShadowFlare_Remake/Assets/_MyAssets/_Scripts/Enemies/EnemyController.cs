@@ -27,13 +27,15 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public void InitEnemy(IUnit unit, Transform playerTransform) {
+        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform) {
 
             PlayerTransform = playerTransform;
 
             CacheNulls();
             RegisterEvents();
             SetModel(unit);
+
+            return Model;
         }
 
         protected virtual void Update() {
@@ -64,6 +66,10 @@ namespace ShadowFlareRemake.Enemies {
             Model.SetEnemyUnitAndUnitHandler(unit);
         }
 
+        public Collider GetEnemyCollider() {
+
+            return View.GetEnemyCollider();
+        }
 
         protected abstract void Attack();
 
@@ -74,16 +80,6 @@ namespace ShadowFlareRemake.Enemies {
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, this);
             }
-        }
-
-        private void SelectEnemy() {
-
-            Model.UpdateIsEnemyHighlighted(true);
-        }
-
-        private void DeselectEnemy() {
-
-            Model.UpdateIsEnemyHighlighted(false);
         }
 
         private void HandleDeath() {
@@ -111,8 +107,6 @@ namespace ShadowFlareRemake.Enemies {
 
         private void RegisterEvents() {
 
-            View.OnCurserEntered += SelectEnemy;
-            View.OnCurserLeft += DeselectEnemy;
             View.OnAttackAnimationEnded += ResetAttackCooldown;
             View.OnTriggerEnterEvent += HandleTriggerEnter;
             View.OnEnemyKilled += HandleDeath;
@@ -121,8 +115,6 @@ namespace ShadowFlareRemake.Enemies {
 
         private void DeregisterEvents() {
 
-            View.OnCurserEntered -= SelectEnemy;
-            View.OnCurserLeft -= DeselectEnemy;
             View.OnAttackAnimationEnded -= ResetAttackCooldown;
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
             View.OnEnemyKilled -= HandleDeath;

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.PlayerInput {
-    public class InputManager : MonoBehaviour {
+    public class InputManager : Controller {
 
         public static InputManager Instance { get; private set; }
 
@@ -20,19 +20,16 @@ namespace ShadowFlareRemake.PlayerInput {
         // --- Variables ---
         public RaycastHit CurrentRaycastHit { get; private set; }
         public bool IsCursorOnUI { get; private set; }
+        public bool IsCursorOnEnemy { get; private set; }
         public bool IsLeftMouseIsHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
         private bool _isFinishedInit = false;
 
-        private void Awake() {
+        protected override void Awake() {
 
-            if(Instance == null) {
-                Instance = this;
-
-            } else if(this != Instance) {
-                Destroy(this);
-            }
+            base.Awake();
+            InitSingleton();
         }
 
         private void OnEnable() {
@@ -49,12 +46,7 @@ namespace ShadowFlareRemake.PlayerInput {
         private void Update() {
 
             IsLeftMouseIsHeldDown = LeftMouseClickAction.IsPressed();
-
-            _currentMouseRay = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
-                CurrentRaycastHit = hit;
-            }
+            HandleRaycastHit();
         }
 
         private void OnDisable() {
@@ -79,6 +71,30 @@ namespace ShadowFlareRemake.PlayerInput {
         public void SetIsCursorOnUI(bool isCurserOnUI) {
 
             IsCursorOnUI = isCurserOnUI;
+        }
+
+        private void InitSingleton() {
+
+            if(Instance == null) {
+                Instance = this;
+
+            } else if(this != Instance) {
+                Destroy(this);
+            }
+        }
+
+        private void HandleRaycastHit() {
+
+            _currentMouseRay = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
+
+                CurrentRaycastHit = hit;
+
+                var raycastLayer = hit.collider.gameObject.layer;
+
+                IsCursorOnEnemy = raycastLayer.CompareTo(EnemyLayer) == 0;
+            }
         }
     }
 }

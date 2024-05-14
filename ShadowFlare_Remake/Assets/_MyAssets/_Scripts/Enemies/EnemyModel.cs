@@ -33,7 +33,7 @@ namespace ShadowFlareRemake.Enemies {
             Changed();
         }
 
-        public void UpdateIsEnemyHighlighted(bool isEnemyHighlighted) {
+        public void SetIsEnemyHighlighted(bool isEnemyHighlighted) {
 
             if(IsEnemyHighlighted == isEnemyHighlighted) {
                 return;

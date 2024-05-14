@@ -6,13 +6,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using ShadowFlareRemake.Tools;
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.PlayerInput;
 
 namespace ShadowFlareRemake.Enemies {
     public class EnemyView : View<EnemyModel> {
 
-        public event Action OnCurserEntered;
-        public event Action OnCurserLeft;
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;
         public event Action OnEnemyKilled;
@@ -52,7 +49,6 @@ namespace ShadowFlareRemake.Enemies {
         private void Update() {
 
             StabilizeHpSlider();
-            HandleMouseRaycastHit();
         }
 
         private void OnTriggerEnter(Collider other) {
@@ -87,6 +83,11 @@ namespace ShadowFlareRemake.Enemies {
             if(Model.IsAttacking) {
                 HandleAttackAnimations();
             }
+        }
+
+        public Collider GetEnemyCollider() {
+
+            return _myCollider;
         }
 
         private void ResetHealthSliderValues() {
@@ -150,27 +151,6 @@ namespace ShadowFlareRemake.Enemies {
             await Task.Delay((int)_deathAnimLength * 1000);
 
             FadeOut();
-        }
-
-        private void HandleMouseRaycastHit() {
-
-            if(InputManager.Instance.IsCursorOnUI) {
-                return;
-            }
-
-            var raycastHit = InputManager.Instance.CurrentRaycastHit;
-
-            if(raycastHit.collider) {
-
-                bool isRaycastHitMe = raycastHit.collider == _myCollider;
-
-                if(!isRaycastHitMe && Model.IsEnemyHighlighted) {
-                    OnCurserLeft?.Invoke();
-
-                } else if(isRaycastHitMe && !Model.IsEnemyHighlighted) {
-                    OnCurserEntered?.Invoke();
-                }
-            }
         }
 
         private IEnumerator WaitForAnimationEnd(AttackMethod attackMethod) {
