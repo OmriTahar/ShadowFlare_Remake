@@ -25,9 +25,12 @@ namespace ShadowFlareRemake.UI {
         [Header("Other")]
         [SerializeField] private GameObject _closeButton;
 
-        [Header("Debug")]
-        [Tooltip("Caches automatically through 'Detect Hover On Items Grid'")]
-        public ItemsGrid CurrentHoveredItemsGrid;
+        [Header("Invetory")]
+        [SerializeField] private ItemsGridView _currentHoveredItemsGrid;
+        [SerializeField] private InventoryItem _inventoryItemPrefab;
+
+        [Header("Items Grid")]
+        [SerializeField] private ItemsGridView _carryPanel;
 
         private CurserModel _curserModel;
         private StatsModel _statsModel;
@@ -149,12 +152,21 @@ namespace ShadowFlareRemake.UI {
             HandleUiScreenCover();
         }
 
+        private void SetCurrentHoveredItemsGrid(ItemsGridView itemsGrid, bool isCursorOn) {
+
+            _currentHoveredItemsGrid = itemsGrid;
+        }
+
         private void SetCurrentHoveredItemsGrid(InputAction.CallbackContext context) {
 
-            if(CurrentHoveredItemsGrid == null)
+            if(_currentHoveredItemsGrid == null) {
                 return;
+            }
 
-            print(CurrentHoveredItemsGrid.name + " was pressed at: " + CurrentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue()));
+            var pos = _currentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue());
+            print(_currentHoveredItemsGrid.name + " was pressed at: " + pos);
+
+            _currentHoveredItemsGrid.PlaceItem(_inventoryItemPrefab, pos.x, pos.y);
         }
 
         #endregion
@@ -279,48 +291,90 @@ namespace ShadowFlareRemake.UI {
 
         private void RegisterEvents() {
 
-            _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
-            _inputManager.S_KeyboardClickAction.performed += ToggleStats;
-            _inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
-
-            _hudView.OnCurserEnterUI += CursorEnteredUI;
-            _hudView.OnCurserLeftUI += CursorLeftUI;
-            _hudView.OnInventoryButtonClicked += ToggleInventory;
-            _hudView.OnStatsClicked += ToggleStats;
-
-            _inventoryView.OnCurserEnterUI += CursorEnteredUI;
-            _inventoryView.OnCurserLeftUI += CursorLeftUI;
-
-            _statsView.OnCurserEnterUI += CursorEnteredUI;
-            _statsView.OnCurserLeftUI += CursorLeftUI;
-
-            _levelUpView.OnCurserEnterUI += CursorEnteredUI;
-            _levelUpView.OnCurserLeftUI += CursorLeftUI;
-
-            _levelUpView.OnPanelClicked += HandleLevelUpPanelClicked;
+            InputManagerEvents(true);
+            HudEvents(true);
+            InventoryEvents(true);
+            StatsEvents(true);
+            LevelUpEvents(true);
         }
 
         private void DeregisterEvents() {
 
-            _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
-            _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
-            _inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
+            InputManagerEvents(false);
+            HudEvents(false);
+            InventoryEvents(false);
+            StatsEvents(false);
+            LevelUpEvents(false);
+        }
 
-            _hudView.OnCurserEnterUI -= CursorEnteredUI;
-            _hudView.OnCurserLeftUI -= CursorLeftUI;
-            _hudView.OnInventoryButtonClicked -= ToggleInventory;
-            _hudView.OnStatsClicked -= ToggleStats;
+        private void InputManagerEvents(bool isRegister) {
 
-            _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
-            _inventoryView.OnCurserLeftUI -= CursorLeftUI;
+            if(isRegister) {
+                _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
+                _inputManager.S_KeyboardClickAction.performed += ToggleStats;
+                _inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
 
-            _statsView.OnCurserEnterUI -= CursorEnteredUI;
-            _statsView.OnCurserLeftUI -= CursorLeftUI;
+            } else {
+                _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
+                _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
+                _inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
+            }
+        }
 
-            _levelUpView.OnCurserEnterUI -= CursorEnteredUI;
-            _levelUpView.OnCurserLeftUI -= CursorLeftUI;
+        private void HudEvents(bool isRegister) {
 
-            _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;
+            if(isRegister) {
+                _hudView.OnCurserEnterUI += CursorEnteredUI;
+                _hudView.OnCurserLeftUI += CursorLeftUI;
+                _hudView.OnInventoryButtonClicked += ToggleInventory;
+                _hudView.OnStatsClicked += ToggleStats;
+
+            } else {
+                _hudView.OnCurserEnterUI -= CursorEnteredUI;
+                _hudView.OnCurserLeftUI -= CursorLeftUI;
+                _hudView.OnInventoryButtonClicked -= ToggleInventory;
+                _hudView.OnStatsClicked -= ToggleStats;
+            }
+        }
+
+        private void InventoryEvents(bool isRegister) {
+
+            if(isRegister) {
+                _inventoryView.OnCurserEnterUI += CursorEnteredUI;
+                _inventoryView.OnCurserLeftUI += CursorLeftUI;
+                _carryPanel.OnCursorChangeSomething += SetCurrentHoveredItemsGrid;
+
+            } else {
+                _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
+                _inventoryView.OnCurserLeftUI -= CursorLeftUI;
+                _carryPanel.OnCursorChangeSomething -= SetCurrentHoveredItemsGrid;
+            }
+        }
+
+        private void StatsEvents(bool isRegister) {
+
+            if(isRegister) {
+                _statsView.OnCurserEnterUI += CursorEnteredUI;
+                _statsView.OnCurserLeftUI += CursorLeftUI;
+
+            } else {
+                _statsView.OnCurserEnterUI -= CursorEnteredUI;
+                _statsView.OnCurserLeftUI -= CursorLeftUI;
+            }
+        }
+
+        private void LevelUpEvents(bool isRegister) {
+
+            if(isRegister) {
+                _levelUpView.OnCurserEnterUI += CursorEnteredUI;
+                _levelUpView.OnCurserLeftUI += CursorLeftUI;
+                _levelUpView.OnPanelClicked += HandleLevelUpPanelClicked;
+
+            } else {
+                _levelUpView.OnCurserEnterUI -= CursorEnteredUI;
+                _levelUpView.OnCurserLeftUI -= CursorLeftUI;
+                _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;
+            }
         }
 
         #endregion

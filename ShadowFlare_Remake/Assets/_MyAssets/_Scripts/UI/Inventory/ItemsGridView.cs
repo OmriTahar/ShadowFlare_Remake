@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake.UI.Inventory {
-    public class ItemsGrid : MonoBehaviour {
+    public class ItemsGridView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
+        public event Action<ItemsGridView, bool> OnCursorChangeSomething;
         public event Action<int,int> OnTileClicked;
 
         private float _tileWidth = 80;
@@ -18,9 +20,6 @@ namespace ShadowFlareRemake.UI.Inventory {
         [Header("Settings")]
         [SerializeField] private int gridSizeWidth = 10;
         [SerializeField] private int gridSizeHeight = 4;
-
-        [Header("Debug")]
-        [SerializeField] private GameObject _inventoryItemPrefab;
 
         private void Start() {
 
@@ -74,14 +73,28 @@ namespace ShadowFlareRemake.UI.Inventory {
 
             RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
             rectTransform.SetParent(_rectTransform);
-            _inventoryItemSlot[posX, posY] = inventoryItem;
+            //_inventoryItemSlot[posX, posY] = inventoryItem;
 
             Vector2 position = new Vector2();
-            position.x = posX * gridSizeWidth + gridSizeWidth / 2;
-            position.y = -(posY * gridSizeHeight + gridSizeHeight / 2);
+            //position.x = posX * gridSizeWidth + gridSizeWidth / 2;
+            //position.y = -(posY * gridSizeHeight + gridSizeHeight / 2);
+
+            position.x = posX;
+            position.y = posY;
 
             rectTransform.localPosition = position;
         }
+
+        public void OnPointerEnter(PointerEventData eventData) {
+
+            OnCursorChangeSomething?.Invoke(this, true);
+        }
+
+        public void OnPointerExit(PointerEventData eventData) {
+
+            OnCursorChangeSomething?.Invoke(this, false);
+        }
+
     }
 }
 
