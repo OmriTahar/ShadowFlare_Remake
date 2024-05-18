@@ -6,19 +6,24 @@ namespace ShadowFlareRemake.UI.Inventory {
     [RequireComponent(typeof(ItemsGrid))]
     public class DetectHoverOnItemsGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
-        [SerializeField] private InventoryController _inventoryController;
+        [Header("References")]
+        [SerializeField] private UIController _uiController;
+
         private ItemsGrid _currentHovereditemsGrid;
 
         private void Awake() {
+
             _currentHovereditemsGrid = GetComponent<ItemsGrid>();
         }
 
         public void OnPointerEnter(PointerEventData eventData) {
-            _inventoryController.CurrentHoveredItemsGrid = _currentHovereditemsGrid;
+
+            _uiController.CurrentHoveredItemsGrid = _currentHovereditemsGrid;
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            _inventoryController.CurrentHoveredItemsGrid = null;
+
+            _uiController.CurrentHoveredItemsGrid = null;
         }
     }
 }

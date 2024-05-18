@@ -25,6 +25,10 @@ namespace ShadowFlareRemake.UI {
         [Header("Other")]
         [SerializeField] private GameObject _closeButton;
 
+        [Header("Debug")]
+        [Tooltip("Caches automatically through 'Detect Hover On Items Grid'")]
+        public ItemsGrid CurrentHoveredItemsGrid;
+
         private CurserModel _curserModel;
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
@@ -143,6 +147,14 @@ namespace ShadowFlareRemake.UI {
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
             HandleUiScreenCover();
+        }
+
+        private void SetCurrentHoveredItemsGrid(InputAction.CallbackContext context) {
+
+            if(CurrentHoveredItemsGrid == null)
+                return;
+
+            print(CurrentHoveredItemsGrid.name + " was pressed at: " + CurrentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue()));
         }
 
         #endregion
@@ -269,6 +281,7 @@ namespace ShadowFlareRemake.UI {
 
             _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
             _inputManager.S_KeyboardClickAction.performed += ToggleStats;
+            _inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
 
             _hudView.OnCurserEnterUI += CursorEnteredUI;
             _hudView.OnCurserLeftUI += CursorLeftUI;
@@ -291,6 +304,7 @@ namespace ShadowFlareRemake.UI {
 
             _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
             _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
+            _inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
 
             _hudView.OnCurserEnterUI -= CursorEnteredUI;
             _hudView.OnCurserLeftUI -= CursorLeftUI;

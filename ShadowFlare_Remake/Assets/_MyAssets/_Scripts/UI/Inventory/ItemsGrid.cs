@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory {
     public class ItemsGrid : MonoBehaviour {
+
+        public event Action<int,int> OnTileClicked;
 
         private float _tileWidth = 80;
         private float _tileHight = 80;
