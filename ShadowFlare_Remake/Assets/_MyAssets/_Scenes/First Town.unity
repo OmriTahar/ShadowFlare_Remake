@@ -468,7 +468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c3c6b90a1fa024990701b94866360c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentHoveredItemsGrid: {fileID: 0}
 --- !u!114 &86125042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3638,6 +3637,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventoryPanel: {fileID: 1903344054}
+  <_inventoryItemPrefab>k__BackingField: {fileID: 534107677}
+  _carryPanelView: {fileID: 1463663664}
 --- !u!1001 &832369355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4448,9 +4449,6 @@ MonoBehaviour:
   _hudView: {fileID: 657828452}
   _levelUpView: {fileID: 71009184}
   _closeButton: {fileID: 1205873426}
-  CurrentHoveredItemsGrid: {fileID: 0}
-  _inventoryItemPrefab: {fileID: 534107677}
-  _carryPanel: {fileID: 1463663664}
 --- !u!224 &921169934 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5333997295841694864, guid: bd16a1d93787a6b478adaa3b47813dd4,
@@ -7123,8 +7121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37aefb0adb7e7c14d943406bb4dcd08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSizeWidth: 10
-  gridSizeHeight: 4
+  _rectTransform: {fileID: 1463663659}
 --- !u!1 &1466019910
 GameObject:
   m_ObjectHideFlags: 0

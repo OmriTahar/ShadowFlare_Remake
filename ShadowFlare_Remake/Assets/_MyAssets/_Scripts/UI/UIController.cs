@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Player;
@@ -11,6 +8,9 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI {
     public class UIController : Controller {
@@ -24,13 +24,6 @@ namespace ShadowFlareRemake.UI {
 
         [Header("Other")]
         [SerializeField] private GameObject _closeButton;
-
-        [Header("Invetory")]
-        [SerializeField] private ItemsGridView _currentHoveredItemsGrid;
-        [SerializeField] private InventoryItem _inventoryItemPrefab;
-
-        [Header("Items Grid")]
-        [SerializeField] private ItemsGridView _carryPanel;
 
         private CurserModel _curserModel;
         private StatsModel _statsModel;
@@ -152,22 +145,29 @@ namespace ShadowFlareRemake.UI {
             HandleUiScreenCover();
         }
 
-        private void SetCurrentHoveredItemsGrid(ItemsGridView itemsGrid, bool isCursorOn) {
+        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn) {
 
-            _currentHoveredItemsGrid = itemsGrid;
-        }
-
-        private void SetCurrentHoveredItemsGrid(InputAction.CallbackContext context) {
-
-            if(_currentHoveredItemsGrid == null) {
+            if(!isCursorOn) {
+                _inventoryModel.SetCurrentHoveredItemsGrid(null);
                 return;
             }
 
-            var pos = _currentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue());
-            print(_currentHoveredItemsGrid.name + " was pressed at: " + pos);
-
-            _currentHoveredItemsGrid.PlaceItem(_inventoryItemPrefab, pos.x, pos.y);
+            _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
+
+        //private void SetCurrentHoveredItemsGrid(InputAction.CallbackContext context) {
+
+        //    var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
+
+        //    if(currentHoveredItemsGrid == null) {
+        //        return;
+        //    }
+
+        //    var tileIndex = currentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue());
+        //    print(currentHoveredItemsGrid.name + " was clicked at tile index: " + tileIndex);
+
+        //    currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex.x, tileIndex.y);
+        //}
 
         #endregion
 
@@ -312,12 +312,12 @@ namespace ShadowFlareRemake.UI {
             if(isRegister) {
                 _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed += ToggleStats;
-                _inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
+                //_inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
 
             } else {
                 _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
-                _inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
+                //_inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
             }
         }
 
@@ -342,12 +342,12 @@ namespace ShadowFlareRemake.UI {
             if(isRegister) {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
-                _carryPanel.OnCursorChangeSomething += SetCurrentHoveredItemsGrid;
+                //_inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
 
             } else {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
-                _carryPanel.OnCursorChangeSomething -= SetCurrentHoveredItemsGrid;
+                //_inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
             }
         }
 

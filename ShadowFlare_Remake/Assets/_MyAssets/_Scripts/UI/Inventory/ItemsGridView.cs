@@ -1,70 +1,44 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI.Inventory {
-    public class ItemsGridView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+    public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler {
 
-        public event Action<ItemsGridView, bool> OnCursorChangeSomething;
-        public event Action<int,int> OnTileClicked;
+        public event Action<ItemsGridView, bool> OnCursorChangedHoverOverGrid;
+        public event Action<Vector2Int> OnTileClicked;
 
-        private float _tileWidth = 80;
-        private float _tileHight = 80;
+        [Header("References")]
+        [SerializeField] private RectTransform _rectTransform;
 
-        private RectTransform _rectTransform;
         private Vector2 _mousePositionOnGrid = new Vector2();
         private Vector2Int _tileGridPosition = new Vector2Int();
 
         private InventoryItem[,] _inventoryItemSlot;
 
-        [Header("Settings")]
-        [SerializeField] private int gridSizeWidth = 10;
-        [SerializeField] private int gridSizeHeight = 4;
+        protected override void Initialize() {
 
-        private void Start() {
-
-            _rectTransform = GetComponent<RectTransform>();
-
-            //Init(gridSizeWidth, gridSizeHeight);
-            //InventoryItem inventoryItem = Instantiate(_inventoryItemPrefab).GetComponent<InventoryItem>();
-            //PlaceItem(inventoryItem, 3, 2);
+            CacheNulls();
         }
 
-        private void OnEnable() {
-            InitCellSize();
+        protected override void ModelChanged() {
+
         }
 
-        private void InitCellSize() {
+        public void TileClicked() {
 
-            _tileWidth = 80;
-            _tileHight = 80;
-
-            var screenWidth = Screen.width;
-            var screenHeight = Screen.height;
-
-            float widthRatioDiff = (float)screenWidth / 1920;
-            float heightRatioDiff = (float)screenHeight / 1080;
-
-            _tileWidth = _tileWidth * widthRatioDiff;
-            _tileHight = _tileHight * heightRatioDiff;
+            var clickedTile = GetTileGridPosition(Mouse.current.position.ReadValue());
+            OnTileClicked?.Invoke(clickedTile);
         }
 
-        private void Init(int width, int height) {
-
-            _inventoryItemSlot = new InventoryItem[width, height];
-            Vector2 size = new Vector2(width * _tileWidth, height * _tileHight);
-            _rectTransform.sizeDelta = size;
-        }
-
-        public Vector2Int GetTileGridPosition(Vector2 mousePosition) {
+        private Vector2Int GetTileGridPosition(Vector2 mousePosition) {
 
             _mousePositionOnGrid.x = mousePosition.x - _rectTransform.position.x;
             _mousePositionOnGrid.y = _rectTransform.position.y - mousePosition.y;
 
-            print("Mouse position on grid: " + _mousePositionOnGrid);
-
-            _tileGridPosition.x = (int)(_mousePositionOnGrid.x / _tileWidth);
-            _tileGridPosition.y = (int)(_mousePositionOnGrid.y / _tileHight);
+            _tileGridPosition.x = (int)(_mousePositionOnGrid.x / Model.TileWidth);
+            _tileGridPosition.y = (int)(_mousePositionOnGrid.y / Model.TileHight);
 
             return _tileGridPosition;
         }
@@ -85,16 +59,22 @@ namespace ShadowFlareRemake.UI.Inventory {
             rectTransform.localPosition = position;
         }
 
+        private void CacheNulls() {
+
+            if(_rectTransform == null) {
+                _rectTransform = GetComponent<RectTransform>();
+            }
+        }
+
         public void OnPointerEnter(PointerEventData eventData) {
 
-            OnCursorChangeSomething?.Invoke(this, true);
+            OnCursorChangedHoverOverGrid?.Invoke(this, true);
         }
 
         public void OnPointerExit(PointerEventData eventData) {
 
-            OnCursorChangeSomething?.Invoke(this, false);
+            OnCursorChangedHoverOverGrid?.Invoke(this, false);
         }
-
     }
 }
 

@@ -11,7 +11,9 @@ namespace ShadowFlareRemake {
 
         public void SetModel(IModel model) {
 
-            if(model == Model) { return; }
+            if(model == Model) { 
+                return;
+            }
 
             if(Model != null) {
                 Model.OnChange -= ModelChanged;
