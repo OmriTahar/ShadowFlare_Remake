@@ -15,8 +15,6 @@ namespace ShadowFlareRemake.UI.Inventory {
         private Vector2 _mousePositionOnGrid = new Vector2();
         private Vector2Int _tileGridPosition = new Vector2Int();
 
-        private InventoryItem[,] _inventoryItemSlot;
-
         protected override void Initialize() {
 
             CacheNulls();
@@ -24,6 +22,7 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         protected override void ModelChanged() {
 
+            PlaceItems();
         }
 
         public void TileClicked() {
@@ -41,6 +40,16 @@ namespace ShadowFlareRemake.UI.Inventory {
             _tileGridPosition.y = (int)(_mousePositionOnGrid.y / Model.TileHight);
 
             return _tileGridPosition;
+        }
+
+        private void PlaceItems() {
+
+            foreach(var item in Model.ItemsDict) {
+
+                var pos = GetTileGridPosition(item.Key);
+                var rect = item.Value.GetComponent<RectTransform>();
+                rect.position = new Vector3(pos.x, pos.y, 0);
+            }
         }
 
         public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {

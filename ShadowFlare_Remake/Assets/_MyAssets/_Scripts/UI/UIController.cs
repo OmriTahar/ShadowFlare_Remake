@@ -164,7 +164,7 @@ namespace ShadowFlareRemake.UI {
             }
 
             print(currentHoveredItemsGrid.Name + " was clicked at tile index: " + tileIndex);
-            currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex.x, tileIndex.y);
+            currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex);
         }
 
         #endregion

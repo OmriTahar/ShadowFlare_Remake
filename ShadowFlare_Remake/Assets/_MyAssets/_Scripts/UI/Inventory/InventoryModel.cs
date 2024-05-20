@@ -1,4 +1,6 @@
 
+using System.Numerics;
+
 namespace ShadowFlareRemake.UI.Inventory {
     public class InventoryModel : Model {
 
@@ -19,11 +21,6 @@ namespace ShadowFlareRemake.UI.Inventory {
         public void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel) {
 
             CurrentHoveredItemsGridModel = itemsGridModel;
-        }
-
-        public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {
-
-            CurrentHoveredItemsGridModel.PlaceItem(inventoryItem, posX, posY);
         }
     }
 }
