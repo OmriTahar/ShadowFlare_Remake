@@ -4,11 +4,13 @@ using UnityEngine;
 namespace ShadowFlareRemake.UI {
     public class ItemsGridModel : Model {
 
+        public string Name { get; private set; }
         public float TileWidth { get; private set; }
         public float TileHight { get; private set; }
 
-        public ItemsGridModel(float tileWidth, float tileHight) {
+        public ItemsGridModel(string name ,float tileWidth, float tileHight) {
 
+            Name = name;
             InitCellSize(tileWidth, tileHight);
         }
 

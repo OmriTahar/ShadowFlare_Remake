@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ShadowFlareRemake.UI.Inventory {
     public class InventoryView : UIView<InventoryModel> {
 
-        public event Action<ItemsGridView, bool> OnCursorChangedHoverOverGrid;
+        public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<Vector2Int> OnTileClicked;
 
         [Header("References")]
@@ -29,7 +29,7 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         private void SetCarryPanelModel() {
 
-            _carryPanelModel = new ItemsGridModel(80, 80);
+            _carryPanelModel = new ItemsGridModel("Carry Panel", 80, 80);
             _carryPanelView.SetModel(_carryPanelModel);
         }
 
@@ -50,14 +50,14 @@ namespace ShadowFlareRemake.UI.Inventory {
             _carryPanelView.OnTileClicked -= TileClicked;
         }
 
-        private void InvokeCursorChangedHoverOverGrid(ItemsGridView itemsGrid, bool isCursorOn) {
+        private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn) {
 
-            OnCursorChangedHoverOverGrid?.Invoke(itemsGrid, isCursorOn);
+            OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(Vector2Int tileClicked) {
+        public void TileClicked(Vector2Int tileIndex) {
 
-            OnTileClicked?.Invoke(tileClicked);
+            OnTileClicked?.Invoke(tileIndex);
         }
     }
 }

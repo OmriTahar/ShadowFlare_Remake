@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace ShadowFlareRemake.UI.Inventory {
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler {
 
-        public event Action<ItemsGridView, bool> OnCursorChangedHoverOverGrid;
+        public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<Vector2Int> OnTileClicked;
 
         [Header("References")]
@@ -68,12 +68,12 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         public void OnPointerEnter(PointerEventData eventData) {
 
-            OnCursorChangedHoverOverGrid?.Invoke(this, true);
+            OnCursorChangedHoverOverGrid?.Invoke(Model, true);
         }
 
         public void OnPointerExit(PointerEventData eventData) {
 
-            OnCursorChangedHoverOverGrid?.Invoke(this, false);
+            OnCursorChangedHoverOverGrid?.Invoke(Model, false);
         }
     }
 }

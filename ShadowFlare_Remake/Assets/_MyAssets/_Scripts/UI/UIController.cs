@@ -155,19 +155,17 @@ namespace ShadowFlareRemake.UI {
             _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        //private void SetCurrentHoveredItemsGrid(InputAction.CallbackContext context) {
+        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex) {
 
-        //    var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
+            var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
 
-        //    if(currentHoveredItemsGrid == null) {
-        //        return;
-        //    }
+            if(currentHoveredItemsGrid == null) {
+                return;
+            }
 
-        //    var tileIndex = currentHoveredItemsGrid.GetTileGridPosition(Mouse.current.position.ReadValue());
-        //    print(currentHoveredItemsGrid.name + " was clicked at tile index: " + tileIndex);
-
-        //    currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex.x, tileIndex.y);
-        //}
+            print(currentHoveredItemsGrid.Name + " was clicked at tile index: " + tileIndex);
+            currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex.x, tileIndex.y);
+        }
 
         #endregion
 
@@ -312,12 +310,10 @@ namespace ShadowFlareRemake.UI {
             if(isRegister) {
                 _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed += ToggleStats;
-                //_inputManager.LeftMouseClickAction.performed += SetCurrentHoveredItemsGrid;
 
             } else {
                 _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
-                //_inputManager.LeftMouseClickAction.performed -= SetCurrentHoveredItemsGrid;
             }
         }
 
@@ -342,12 +338,14 @@ namespace ShadowFlareRemake.UI {
             if(isRegister) {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
-                //_inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
+                _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
+                _inventoryView.OnTileClicked += HandleInventoryItemsGridClicked;
 
             } else {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
-                //_inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
+                _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
+                _inventoryView.OnTileClicked -= HandleInventoryItemsGridClicked;
             }
         }
 
