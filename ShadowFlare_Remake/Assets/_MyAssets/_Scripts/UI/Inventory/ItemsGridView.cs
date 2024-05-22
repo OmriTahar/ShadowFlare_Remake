@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -12,8 +13,13 @@ namespace ShadowFlareRemake.UI.Inventory {
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
 
+        [Header("Grid Tiles")]
+        [SerializeField] private GridTileView[] _gridTilesViews;
+
         private Vector2 _mousePositionOnGrid = new Vector2();
         private Vector2Int _tileGridPosition = new Vector2Int();
+
+        private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
 
         protected override void Initialize() {
 
@@ -46,9 +52,9 @@ namespace ShadowFlareRemake.UI.Inventory {
 
             foreach(var item in Model.ItemsDict) {
 
-                var pos = GetTileGridPosition(item.Key);
-                var rect = item.Value.GetComponent<RectTransform>();
-                rect.position = new Vector3(pos.x, pos.y, 0);
+                var viewTransform = _gridTilesDict[item.Key].transform;
+                var rect = item.Value.transform;
+                rect.SetParent(viewTransform);
             }
         }
 
@@ -72,6 +78,13 @@ namespace ShadowFlareRemake.UI.Inventory {
 
             if(_rectTransform == null) {
                 _rectTransform = GetComponent<RectTransform>();
+            }
+        }
+
+        private void InitGridTilesDict() {
+
+            foreach (var tile in _gridTilesViews) {
+                
             }
         }
 
