@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI.Inventory {
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler {
@@ -14,13 +13,10 @@ namespace ShadowFlareRemake.UI.Inventory {
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
 
-        [Header("Grid Tiles")]
-        [SerializeField] private GridTileView[] _gridTilesViews;
+        private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
 
         private Vector2 _mousePositionOnGrid = new Vector2();
         private Vector2Int _tileGridPosition = new Vector2Int();
-
-        private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
 
         protected override void Initialize() {
 
@@ -65,8 +61,8 @@ namespace ShadowFlareRemake.UI.Inventory {
 
                 var viewTransform = _gridTilesDict[item.Key].transform;
                 var rect = item.Value.transform;
+                rect.SetParent(viewTransform);
                 rect.localPosition = Vector3.zero;
-                rect.SetParent(viewTransform, true);
             }
 
             OnItemsPlaced?.Invoke();
@@ -97,10 +93,12 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         private void InitGridTilesDict() {
 
-            foreach (var tileView in _gridTilesViews) {
+            var tileViews = GetComponentsInChildren<GridTileView>();
 
-                _gridTilesDict.Add(tileView.Index, tileView);
-                tileView.OnTileClicked += InovkeTileClicked;
+            foreach (var view in tileViews) {
+
+                _gridTilesDict.Add(view.Index, view);
+                view.OnTileClicked += InovkeTileClicked;
             }
         }
 
@@ -121,7 +119,7 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         private void DeregisterEvents() {
 
-            foreach(var tileView in _gridTilesViews) {
+            foreach(var tileView in _gridTilesDict.Values) {
 
                 tileView.OnTileClicked -= InovkeTileClicked;
             }
