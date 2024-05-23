@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<Vector2Int> OnTileClicked;
+        public event Action OnItemsPlaced;
 
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
@@ -24,6 +25,7 @@ namespace ShadowFlareRemake.UI.Inventory {
         protected override void Initialize() {
 
             CacheNulls();
+            InitGridTilesDict();
         }
 
         protected override void ModelChanged() {
@@ -31,31 +33,43 @@ namespace ShadowFlareRemake.UI.Inventory {
             PlaceItems();
         }
 
-        public void TileClicked() {
+        protected override void Clean() {
 
-            var clickedTile = GetTileGridPosition(Mouse.current.position.ReadValue());
-            OnTileClicked?.Invoke(clickedTile);
+            DeregisterEvents();
         }
 
-        private Vector2Int GetTileGridPosition(Vector2 mousePosition) {
+        //public void TileClicked() {
 
-            _mousePositionOnGrid.x = mousePosition.x - _rectTransform.position.x;
-            _mousePositionOnGrid.y = _rectTransform.position.y - mousePosition.y;
+        //    var clickedTile = GetTileGridPosition(Mouse.current.position.ReadValue());
+        //    OnTileClicked?.Invoke(clickedTile);
+        //}
 
-            _tileGridPosition.x = (int)(_mousePositionOnGrid.x / Model.TileWidth);
-            _tileGridPosition.y = (int)(_mousePositionOnGrid.y / Model.TileHight);
+        //private Vector2Int GetTileGridPosition(Vector2 mousePosition) {
 
-            return _tileGridPosition;
-        }
+        //    _mousePositionOnGrid.x = mousePosition.x - _rectTransform.position.x;
+        //    _mousePositionOnGrid.y = _rectTransform.position.y - mousePosition.y;
+
+        //    _tileGridPosition.x = (int)(_mousePositionOnGrid.x / Model.TileWidth);
+        //    _tileGridPosition.y = (int)(_mousePositionOnGrid.y / Model.TileHight);
+
+        //    return _tileGridPosition;
+        //}
 
         private void PlaceItems() {
 
             foreach(var item in Model.ItemsDict) {
 
+                if(item.Value == null) {
+                    continue;
+                }
+
                 var viewTransform = _gridTilesDict[item.Key].transform;
                 var rect = item.Value.transform;
-                rect.SetParent(viewTransform);
+                rect.localPosition = Vector3.zero;
+                rect.SetParent(viewTransform, true);
             }
+
+            OnItemsPlaced?.Invoke();
         }
 
         public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {
@@ -83,9 +97,16 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         private void InitGridTilesDict() {
 
-            foreach (var tile in _gridTilesViews) {
-                
+            foreach (var tileView in _gridTilesViews) {
+
+                _gridTilesDict.Add(tileView.Index, tileView);
+                tileView.OnTileClicked += InovkeTileClicked;
             }
+        }
+
+        private void InovkeTileClicked(Vector2Int index) {
+
+             OnTileClicked?.Invoke(index);
         }
 
         public void OnPointerEnter(PointerEventData eventData) {
@@ -96,6 +117,14 @@ namespace ShadowFlareRemake.UI.Inventory {
         public void OnPointerExit(PointerEventData eventData) {
 
             OnCursorChangedHoverOverGrid?.Invoke(Model, false);
+        }
+
+        private void DeregisterEvents() {
+
+            foreach(var tileView in _gridTilesViews) {
+
+                tileView.OnTileClicked -= InovkeTileClicked;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ShadowFlareRemake.UI {
         public ItemsGridModel(string name, int tileWidth, int tileHight) {
 
             Name = name;
-            InitCellSize(tileWidth, tileHight);
+            HandleInitTiles(tileWidth, tileHight);
         }
 
         public void PlaceItem(InventoryItem item, Vector2Int tileIndex) {
@@ -22,25 +22,42 @@ namespace ShadowFlareRemake.UI {
                 return;
             }
 
-            var isIndexTaken = ItemsDict.TryGetValue(tileIndex, out var carriedItem);
+            ItemsDict[tileIndex] = item;
 
-            if(!isIndexTaken) {
-                ItemsDict.Add(tileIndex, item);
-            }
+            //var isIndexTaken = ItemsDict.TryGetValue(tileIndex, out var carriedItem);
+
+            //if(!isIndexTaken) {
+            //    ItemsDict.Add(tileIndex, item);
+
+            //} else {
+            //    ItemsDict[tileIndex] = item;
+            //}
 
             Changed();
         }
 
         private bool IsValidPlacement(InventoryItem inventoryItem, Vector2Int tileIndex) {
 
+            bool isValid;
+
             if(inventoryItem == null) {
-                return false;
+                isValid = false;
+            } else {
+                isValid = true;
+
             }
 
-            return true;
+            Debug.Log($"Inventory: Is Valid Placement: {isValid}");
+            return isValid;
         }
 
-        private void InitCellSize(float tileWidth, float tileHight) {
+        private void HandleInitTiles(float tileWidth, float tileHight) {
+
+            InitTileSize(tileWidth, tileHight);
+            InitItemsDict();
+        }
+
+        private void InitTileSize(float tileWidth, float tileHight) {
 
             var screenWidth = Screen.width;
             var screenHeight = Screen.height;
@@ -50,6 +67,17 @@ namespace ShadowFlareRemake.UI {
 
             TileWidth = (int)(tileWidth * widthRatioDiff);
             TileHight = (int)(tileHight * heightRatioDiff);
+        }
+
+        private void InitItemsDict() {
+
+            for(int x = 0; x < TileWidth; x++) {
+
+                for(int y = 0; y < TileWidth; y++) {
+
+                    ItemsDict.Add(new Vector2Int(x, y), null);
+                }
+            }
         }
     }
 }
