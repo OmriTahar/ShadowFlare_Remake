@@ -6,11 +6,11 @@ namespace ShadowFlareRemake.UI.Inventory
     public class InventoryView : UIView<InventoryModel>
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int, InventoryItem> OnTileClicked;
+        public event Action<Vector2Int, Item> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
-        [field: SerializeField] public InventoryItem _inventoryItemPrefab { get; private set; }
+        [field: SerializeField] public Item _inventoryItemPrefab { get; private set; }
 
         [Header("Items Grid")]
         [SerializeField] private ItemsGridView _carryPanelView;
@@ -30,8 +30,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetCarryPanelModel()
         {
-            _carryPanelModel = new ItemsGridModel("Carry Panel", 80, 80);
-            _carryPanelView.SetModel(_carryPanelModel);
+            _carryPanelView.SetModel(Model.CarryPanelModel);
         }
 
         protected override void Clean()
@@ -56,7 +55,7 @@ namespace ShadowFlareRemake.UI.Inventory
             OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(Vector2Int tileIndex, InventoryItem item)
+        public void TileClicked(Vector2Int tileIndex, Item item)
         {
             OnTileClicked?.Invoke(tileIndex, item);
         }

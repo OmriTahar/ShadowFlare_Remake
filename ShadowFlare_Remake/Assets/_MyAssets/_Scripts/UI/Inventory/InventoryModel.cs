@@ -4,15 +4,18 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
-        public InventoryItem PickedItem { get; private set; }
+        public Item PickedItem { get; private set; }
         public Transform PickedItemTransform { get; private set; }
-
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
+
+        public ItemsGridModel CarryPanelModel { get; private set; }
+
         public bool IsInventoryOpen { get; private set; }
 
         public InventoryModel(bool isInventoryOpen)
         {
             SetIsInventoryOpen(isInventoryOpen);
+            CarryPanelModel = new ItemsGridModel("Carry Panel", 80, 80);
         }
 
         public void SetIsInventoryOpen(bool isInventoryOpen)
@@ -26,7 +29,7 @@ namespace ShadowFlareRemake.UI.Inventory
             CurrentHoveredItemsGridModel = itemsGridModel;
         }
 
-        public void PickUpItem(Vector2Int tileIndex, InventoryItem item)
+        public void PickUpItem(Vector2Int tileIndex, Item item)
         {
             PickedItem = item;
 
@@ -40,7 +43,7 @@ namespace ShadowFlareRemake.UI.Inventory
             CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
         }
 
-        public void PlaceItem(Vector2Int tileIndex, InventoryItem item)
+        public void PlaceItem(Vector2Int tileIndex, Item item)
         {
             CurrentHoveredItemsGridModel.PlaceItemOnGrid(tileIndex, item);
 

@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.Rewards {
 
-    [CreateAssetMenu(fileName = "NewMercenaryLevelUpReward", menuName = "Scriptable Objects/Create New Mercenary Level Up Reward")]
-    public class MercenaryLevelUpReward : ScriptableObject, ILevelUpReward {
+    [CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "Scriptable Objects/Create New Level Up Reward")]
+    public class LevelUpReward_ScriptableObject : ScriptableObject, ILevelUpReward {
          
         [field: SerializeField] public int HP { get; private set; }
         [field: SerializeField] public int MP { get; private set; }

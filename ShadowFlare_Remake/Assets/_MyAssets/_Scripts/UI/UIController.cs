@@ -165,7 +165,7 @@ namespace ShadowFlareRemake.UI
             _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, InventoryItem item)
+        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, Item item)
         {
             var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
 

@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.Rewards {
     public class RewardsManager : MonoBehaviour {
 
         [Header("Rewards")]
-        [SerializeField] private MercenaryLevelUpReward _mercenaryLevelUpReward;
+        [SerializeField] private LevelUpReward_ScriptableObject _mercenaryLevelUpReward;
 
         public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) { // Todo: Do this better
 
@@ -39,7 +39,7 @@ namespace ShadowFlareRemake.Rewards {
             return expReward;
         }
 
-        public MercenaryLevelUpReward GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
+        public LevelUpReward_ScriptableObject GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
 
             if(playerUnit.Level < 5) {
                 return _mercenaryLevelUpReward;

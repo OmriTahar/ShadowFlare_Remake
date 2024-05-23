@@ -6,7 +6,7 @@ namespace ShadowFlareRemake.UI
 {
     public class ItemsGridModel : Model
     {
-        public Dictionary<Vector2Int, InventoryItem> ItemsDict { get; private set; } = new();
+        public Dictionary<Vector2Int, Item> ItemsDict { get; private set; } = new();
 
         public string Name { get; private set; }
         public int TileWidth { get; private set; }
@@ -18,7 +18,7 @@ namespace ShadowFlareRemake.UI
             HandleInitTiles(tileWidth, tileHight);
         }
 
-        public void PlaceItemOnGrid(Vector2Int tileIndex, InventoryItem item)
+        public void PlaceItemOnGrid(Vector2Int tileIndex, Item item)
         {
             ItemsDict[tileIndex] = item;
             Changed();
@@ -44,7 +44,7 @@ namespace ShadowFlareRemake.UI
             ItemsDict[tileIndex] = null;
         }
 
-        private bool IsValidPlacement(InventoryItem inventoryItem, Vector2Int tileIndex)
+        private bool IsValidPlacement(Item inventoryItem, Vector2Int tileIndex)
         {
             bool isValid;
 
