@@ -12,9 +12,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.UI {
-    public class UIController : Controller {
-
+namespace ShadowFlareRemake.UI
+{
+    public class UIController : Controller
+    {
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
         [SerializeField] private InventoryView _inventoryView;
@@ -35,46 +36,49 @@ namespace ShadowFlareRemake.UI {
 
         #region Unity Callbacks
 
-        protected override void Awake() {
-
+        protected override void Awake()
+        {
             base.Awake();
             CacheNulls();
             InitModels();
         }
 
-        private async void Start() {
-
+        private async void Start()
+        {
             _inputManager = InputManager.Instance;
             await InputManager.Instance.WaitForInitFinish();
             RegisterEvents();
         }
 
-        private void OnDisable() {
-
+        private void OnDisable()
+        {
             DeregisterEvents();
         }
 
-        private void Update() {
-
+        private void Update()
+        {
             HandleMouseRaycastHit();
+            HandlePickedItem();
         }
 
         #endregion
 
         #region Initialization
 
-        private void CacheNulls() {
-
-            if(_inventoryView == null) {
+        private void CacheNulls()
+        {
+            if(_inventoryView == null)
+            {
                 _inventoryView = GetComponentInChildren<InventoryView>();
             }
-            if(_hudView == null) {
+            if(_hudView == null)
+            {
                 _hudView = GetComponentInChildren<HudView>();
             }
         }
 
-        private void InitModels() {
-
+        private void InitModels()
+        {
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
 
@@ -95,32 +99,37 @@ namespace ShadowFlareRemake.UI {
 
         #region Mouse Raycast
 
-        private void HandleMouseRaycastHit() {
-
-            if(_inputManager.IsCursorOnUI) {
+        private void HandleMouseRaycastHit()
+        {
+            if(_inputManager.IsCursorOnUI)
+            {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.UI);
-
-            } else if(_inputManager.IsCursorOnGround) {
+            }
+            else if(_inputManager.IsCursorOnGround)
+            {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.Move);
-
-            } else if(_inputManager.IsCursorOnEnemy) {
+            }
+            else if(_inputManager.IsCursorOnEnemy)
+            {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.Attack);
-
-            } else if(_inputManager.IsCursorOnItem) {
+            }
+            else if(_inputManager.IsCursorOnItem)
+            {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.PickUp);
-
-            } else {
+            }
+            else
+            {
                 _curserModel.UpdateCurser(CurserModel.CursorIconState.Other);
             }
         }
 
-        public void CursorEnteredUI(PointerEventData eventData) {
-
+        public void CursorEnteredUI(PointerEventData eventData)
+        {
             _inputManager.SetIsCursorOnUI(true);
         }
 
-        public void CursorLeftUI(PointerEventData eventData) {
-
+        public void CursorLeftUI(PointerEventData eventData)
+        {
             _inputManager.SetIsCursorOnUI(false);
         }
 
@@ -128,26 +137,27 @@ namespace ShadowFlareRemake.UI {
 
         #region Inventory
 
-        private void ToggleInventory() {
-
+        private void ToggleInventory()
+        {
             DoToggleInventory();
         }
 
-        private void ToggleInventory(InputAction.CallbackContext context) {
-
+        private void ToggleInventory(InputAction.CallbackContext context)
+        {
             DoToggleInventory();
         }
 
-        private void DoToggleInventory() {
-
+        private void DoToggleInventory()
+        {
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
             HandleUiScreenCover();
         }
 
-        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn) {
-
-            if(!isCursorOn) {
+        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
+            if(!isCursorOn)
+            {
                 _inventoryModel.SetCurrentHoveredItemsGrid(null);
                 return;
             }
@@ -155,34 +165,50 @@ namespace ShadowFlareRemake.UI {
             _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex) {
-
+        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, InventoryItem item)
+        {
             var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
 
-            if(currentHoveredItemsGrid == null) {
+            if(currentHoveredItemsGrid == null)
                 return;
-            }
 
-            print(currentHoveredItemsGrid.Name + " was clicked at tile index: " + tileIndex);
-            currentHoveredItemsGrid.PlaceItem(_inventoryView._inventoryItemPrefab, tileIndex);
+            print($"{ currentHoveredItemsGrid.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {item != null}");
+
+            if(_inventoryModel.PickedItem == null && item != null)
+            {
+                _inventoryModel.PickUpItem(tileIndex, item);
+            }
+            else if(_inventoryModel.PickedItem != null)
+            {
+                _inventoryModel.PlaceItem(tileIndex, item);
+            }
         }
+
+        private void HandlePickedItem()
+        {
+            if(_inventoryModel.PickedItemTransform == null)
+                return;
+
+            _inventoryModel.PickedItemTransform.position = _inputManager.CurrentMousePosition;
+        }
+
 
         #endregion
 
         #region Stats
 
-        private void ToggleStats() {
-
+        private void ToggleStats()
+        {
             DoToggleStats();
         }
 
-        private void ToggleStats(InputAction.CallbackContext context) {
-
+        private void ToggleStats(InputAction.CallbackContext context)
+        {
             DoToggleStats();
         }
 
-        private void DoToggleStats() {
-
+        private void DoToggleStats()
+        {
             var toggledState = !_statsModel.IsPanelOpen;
             _statsModel.SetIsStatsOpen(toggledState);
             HandleUiScreenCover();
@@ -192,8 +218,8 @@ namespace ShadowFlareRemake.UI {
 
         #region Update Player UI
 
-        public void UpdatePlayerUI(IUnit unit) {
-
+        public void UpdatePlayerUI(IUnit unit)
+        {
             var stats = unit.Stats as IPlayerUnitStats;
 
             UpdatePlayerHpAndMp(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
@@ -202,51 +228,52 @@ namespace ShadowFlareRemake.UI {
             UpdatePlayerStats(unit);
         }
 
-        private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP) {
-
+        private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP)
+        {
             _hudModel.SetHPAndMP(currentHP, maxHP, currentMP, maxMP);
         }
 
-        private void UpdatePlayerExp(int currentExp, int expToLevelUp) {
-
+        private void UpdatePlayerExp(int currentExp, int expToLevelUp)
+        {
             _hudModel.SetExp(currentExp, expToLevelUp);
         }
 
-        private void UpdatePlayerLevel(int level) {
-
+        private void UpdatePlayerLevel(int level)
+        {
             _hudModel.SetLevel(level);
         }
 
-        private void UpdatePlayerStats(IUnit unit) {
-
+        private void UpdatePlayerStats(IUnit unit)
+        {
             _statsModel.SetPlayerStats(unit);
         }
 
-        private void HandleUiScreenCover() {
-
-            if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen) {
-
+        private void HandleUiScreenCover()
+        {
+            if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
+            {
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.BothAreCovered));
                 _closeButton.SetActive(true);
-
-            } else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen) {
-
+            }
+            else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
+            {
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.RightIsCovered));
                 _closeButton.SetActive(true);
-
-            } else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen) {
-
+            }
+            else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
+            {
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.LeftIsCovered));
                 _closeButton.SetActive(true);
-
-            } else {
+            }
+            else
+            {
                 Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.None));
                 _closeButton.SetActive(false);
             }
         }
 
-        public void CloseClicked() {
-
+        public void CloseClicked()
+        {
             _inventoryModel.SetIsInventoryOpen(false);
             _statsModel.SetIsStatsOpen(false);
             HandleUiScreenCover();
@@ -256,15 +283,15 @@ namespace ShadowFlareRemake.UI {
 
         #region Level Up
 
-        public void ShowLevelUpPopup(int newLevel, ILevelUpReward reward) {
-
+        public void ShowLevelUpPopup(int newLevel, ILevelUpReward reward)
+        {
             _levelUpModel.SetReward(newLevel, reward);
         }
 
-        public void HandleLevelUpPanelClicked() {
-
-            switch(_levelUpModel.State) {
-
+        public void HandleLevelUpPanelClicked()
+        {
+            switch(_levelUpModel.State)
+            {
                 case LevelUpModel.LevelUpPanelState.Hidden:
                     _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Idle);
                     break;
@@ -287,8 +314,8 @@ namespace ShadowFlareRemake.UI {
 
         #region Events
 
-        private void RegisterEvents() {
-
+        private void RegisterEvents()
+        {
             InputManagerEvents(true);
             HudEvents(true);
             InventoryEvents(true);
@@ -296,8 +323,8 @@ namespace ShadowFlareRemake.UI {
             LevelUpEvents(true);
         }
 
-        private void DeregisterEvents() {
-
+        private void DeregisterEvents()
+        {
             InputManagerEvents(false);
             HudEvents(false);
             InventoryEvents(false);
@@ -305,27 +332,31 @@ namespace ShadowFlareRemake.UI {
             LevelUpEvents(false);
         }
 
-        private void InputManagerEvents(bool isRegister) {
-
-            if(isRegister) {
+        private void InputManagerEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
                 _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed += ToggleStats;
-
-            } else {
+            }
+            else
+            {
                 _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
             }
         }
 
-        private void HudEvents(bool isRegister) {
-
-            if(isRegister) {
+        private void HudEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
                 _hudView.OnCurserEnterUI += CursorEnteredUI;
                 _hudView.OnCurserLeftUI += CursorLeftUI;
                 _hudView.OnInventoryButtonClicked += ToggleInventory;
                 _hudView.OnStatsClicked += ToggleStats;
-
-            } else {
+            }
+            else
+            {
                 _hudView.OnCurserEnterUI -= CursorEnteredUI;
                 _hudView.OnCurserLeftUI -= CursorLeftUI;
                 _hudView.OnInventoryButtonClicked -= ToggleInventory;
@@ -333,15 +364,17 @@ namespace ShadowFlareRemake.UI {
             }
         }
 
-        private void InventoryEvents(bool isRegister) {
-
-            if(isRegister) {
+        private void InventoryEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileClicked += HandleInventoryItemsGridClicked;
-
-            } else {
+            }
+            else
+            {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
@@ -349,26 +382,30 @@ namespace ShadowFlareRemake.UI {
             }
         }
 
-        private void StatsEvents(bool isRegister) {
-
-            if(isRegister) {
+        private void StatsEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
                 _statsView.OnCurserEnterUI += CursorEnteredUI;
                 _statsView.OnCurserLeftUI += CursorLeftUI;
-
-            } else {
+            }
+            else
+            {
                 _statsView.OnCurserEnterUI -= CursorEnteredUI;
                 _statsView.OnCurserLeftUI -= CursorLeftUI;
             }
         }
 
-        private void LevelUpEvents(bool isRegister) {
-
-            if(isRegister) {
+        private void LevelUpEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
                 _levelUpView.OnCurserEnterUI += CursorEnteredUI;
                 _levelUpView.OnCurserLeftUI += CursorLeftUI;
                 _levelUpView.OnPanelClicked += HandleLevelUpPanelClicked;
-
-            } else {
+            }
+            else
+            {
                 _levelUpView.OnCurserEnterUI -= CursorEnteredUI;
                 _levelUpView.OnCurserLeftUI -= CursorLeftUI;
                 _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;

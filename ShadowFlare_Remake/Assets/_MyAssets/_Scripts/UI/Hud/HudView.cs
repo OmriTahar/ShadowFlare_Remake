@@ -3,9 +3,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShadowFlareRemake.UI.Hud {
-    public class HudView : UIView<HudModel> {
-
+namespace ShadowFlareRemake.UI.Hud
+{
+    public class HudView : UIView<HudModel>
+    {
         public event Action OnInventoryButtonClicked;
         public event Action OnStatsClicked;
 
@@ -20,50 +21,50 @@ namespace ShadowFlareRemake.UI.Hud {
         [SerializeField] private Slider _mpSlider;
         [SerializeField] private Slider _expSlider;
 
-        protected override void ModelReplaced() {
-
+        protected override void ModelReplaced()
+        {
             base.ModelReplaced();
             _hudPanel.SetActive(true);
         }
 
-        protected override void ModelChanged() {
-
+        protected override void ModelChanged()
+        {
             SetHP();
             SetMP();
             SetExp();
             SetLevel();
         }
 
-        private void SetHP() {
-
+        private void SetHP()
+        {
             _hpSlider.maxValue = Model.MaxHP;
             _hpSlider.value = Model.CurrentHP;
         }
 
-        private void SetMP() {
-
+        private void SetMP()
+        {
             _mpSlider.maxValue = Model.MaxMP;
             _mpSlider.value = Model.CurrentMP;
         }
 
-        private void SetExp() {
-
+        private void SetExp()
+        {
             _expSlider.maxValue = Model.ExpToLevelUp;
             _expSlider.value = Model.CurrentExp;
         }
 
-        private void SetLevel() {
-
+        private void SetLevel()
+        {
             _levelText.text = Model.Level.ToString();
         }
 
-        public void InventoryClicked() {
-
+        public void InventoryClicked()
+        {
             OnInventoryButtonClicked?.Invoke();
         }
 
-        public void StatsClicked() {
-
+        public void StatsClicked()
+        {
             OnStatsClicked?.Invoke();
         }
     }

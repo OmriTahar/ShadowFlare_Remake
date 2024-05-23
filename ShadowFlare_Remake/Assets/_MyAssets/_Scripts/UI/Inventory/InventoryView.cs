@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI.Inventory {
-    public class InventoryView : UIView<InventoryModel> {
-
+namespace ShadowFlareRemake.UI.Inventory
+{
+    public class InventoryView : UIView<InventoryModel>
+    {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int> OnTileClicked;
+        public event Action<Vector2Int, InventoryItem> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
@@ -16,48 +17,48 @@ namespace ShadowFlareRemake.UI.Inventory {
 
         private ItemsGridModel _carryPanelModel;
 
-        protected override void Initialize() {
-
+        protected override void Initialize()
+        {
             RegisterEvents();
             SetCarryPanelModel();
         }
 
-        protected override void ModelChanged() {
-
+        protected override void ModelChanged()
+        {
             _inventoryPanel.SetActive(Model.IsInventoryOpen);
         }
 
-        private void SetCarryPanelModel() {
-
+        private void SetCarryPanelModel()
+        {
             _carryPanelModel = new ItemsGridModel("Carry Panel", 80, 80);
             _carryPanelView.SetModel(_carryPanelModel);
         }
 
-        protected override void Clean() {
-
+        protected override void Clean()
+        {
             DeregisterEvents();
         }
 
-        private void RegisterEvents() {
-
+        private void RegisterEvents()
+        {
             _carryPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
             _carryPanelView.OnTileClicked += TileClicked;
         }
 
-        private void DeregisterEvents() {
-
+        private void DeregisterEvents()
+        {
             _carryPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
             _carryPanelView.OnTileClicked -= TileClicked;
         }
 
-        private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn) {
-
+        private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
             OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(Vector2Int tileIndex) {
-
-            OnTileClicked?.Invoke(tileIndex);
+        public void TileClicked(Vector2Int tileIndex, InventoryItem item)
+        {
+            OnTileClicked?.Invoke(tileIndex, item);
         }
     }
 }

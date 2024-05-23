@@ -19,6 +19,7 @@ namespace ShadowFlareRemake.PlayerInput {
 
         // --- Variables ---
         public RaycastHit CurrentRaycastHit { get; private set; }
+        public Vector3 CurrentMousePosition { get; private set; }
 
         public bool IsCursorOnGround { get; private set; }
         public bool IsCursorOnEnemy { get; private set; }
@@ -88,7 +89,10 @@ namespace ShadowFlareRemake.PlayerInput {
 
         private void HandleRaycastHit() {
 
-            _currentMouseRay = MainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var mousePos = Mouse.current.position.ReadValue();
+
+            CurrentMousePosition = mousePos;
+            _currentMouseRay = MainCamera.ScreenPointToRay(mousePos);
 
             if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
 
