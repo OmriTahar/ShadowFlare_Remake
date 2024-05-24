@@ -35,9 +35,8 @@ namespace ShadowFlareRemake.GameManager
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
-        private GameObject _lastHighlightedObject;
-        private IHighlightable _lastHighlightable;
-
+        private GameObject _lastHighlighted_GameObject;
+        private HighlightableObject _lastHighlightable;
         private const string _highlightableTag = "Highlightable";
 
         #region Unity Callbacks
@@ -51,11 +50,9 @@ namespace ShadowFlareRemake.GameManager
         {
             await InitPlayer();
             InitEnemies();
+            await InitInputManager();
+
             RegisterEvents();
-
-            _inputManager = InputManager.Instance;
-            await _inputManager.WaitForInitFinish();
-
             _uiController.UpdatePlayerUI(_playerUnit);
 
             TestSpawnLoot();
@@ -69,6 +66,16 @@ namespace ShadowFlareRemake.GameManager
         private void OnDestroy()
         {
             DergisterEvents();
+        }
+
+        #endregion
+
+        #region Initialization
+
+        private async Task InitInputManager()
+        {
+            _inputManager = InputManager.Instance;
+            await _inputManager.WaitForInitFinish();
         }
 
         #endregion
@@ -103,16 +110,16 @@ namespace ShadowFlareRemake.GameManager
             {
                 var newObject = hitCollider.gameObject;
 
-                if(newObject == _lastHighlightedObject && _lastHighlightable.IsHighlighted)
+                if(newObject == _lastHighlighted_GameObject && _lastHighlightable.IsHighlighted)
                     return;
 
                 if(_lastHighlightable != null)
                     _lastHighlightable.SetIsHighlighted(false);
 
-                var newHighlightable = newObject.GetComponent<IHighlightable>();
+                var newHighlightable = newObject.GetComponent<HighlightableObject>();
                 newHighlightable.SetIsHighlighted(true);
 
-                _lastHighlightedObject = newObject;
+                _lastHighlighted_GameObject = newObject;
                 _lastHighlightable = newHighlightable;
                 return;
             }

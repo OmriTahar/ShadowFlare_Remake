@@ -1,22 +1,20 @@
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Tools;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Tools;
 
 namespace ShadowFlareRemake.Enemies
 {
-    public class EnemyView : View<EnemyModel>, IHighlightable
+    public class EnemyView : View<EnemyModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;
         public event Action OnEnemyKilled;
         public event Action OnFinishedDeathAnimation;
-
-        public bool IsHighlighted { get; private set; } = false;
 
         [Header("Health Slider")]
         [SerializeField] private TMP_Text _name;
@@ -75,7 +73,6 @@ namespace ShadowFlareRemake.Enemies
             if(Model == null)
                 return;
 
-            HandleIsHighlighted();
             HandleHitEffect();
             HandleHP();
 
@@ -90,28 +87,13 @@ namespace ShadowFlareRemake.Enemies
             return _myCollider;
         }
 
-        public void SetIsHighlighted(bool isHighlighted)
-        {
-            if(IsHighlighted == isHighlighted)
-                return;
-
-            IsHighlighted = isHighlighted;
-            HandleIsHighlighted();
-        }
-
-        private void HandleIsHighlighted()
-        {
-            _healthSlider.gameObject.SetActive(IsHighlighted);
-            _meshRenderer.material.color = IsHighlighted ? Model.HighlightColor : Model.Color;
-        }
-
         private void ResetHealthSliderValues()
         {
             var value = Model.Stats.MaxHP;
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
         }
-       
+
         private void HandleHitEffect()
         {
             if(_hitEffect == null)
@@ -193,13 +175,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void StabilizeHpSlider()
         {
-            if(!IsHighlighted)
-                return;
-
-            if(_healthSlider != null)
-            {
-                _healthSliderTransform.rotation = Quaternion.Euler(40, 40, 0);
-            }
+            _healthSliderTransform.rotation = Quaternion.Euler(40, 40, 0);
         }
 
         private void CacheNulls()

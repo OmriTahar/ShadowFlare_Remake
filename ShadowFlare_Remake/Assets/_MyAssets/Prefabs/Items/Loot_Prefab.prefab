@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 5221065971185454564}
   - component: {fileID: 5221065971185454567}
   - component: {fileID: 5551808528943191686}
+  - component: {fileID: 420056791961906650}
   m_Layer: 7
   m_Name: Mesh
   m_TagString: Highlightable
@@ -425,6 +426,21 @@ MonoBehaviour:
   _meshRenderer: {fileID: 5221065971185454564}
   _nameHolder: {fileID: 9197321906997652547}
   _nameText: {fileID: 1738042203073190429}
+--- !u!114 &420056791961906650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221065971185454561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 5221065971185454564}
+  _nameHolder: {fileID: 9197321906997652547}
+  _highlightIntensity: 0.2
 --- !u!1 &5221065971394155767
 GameObject:
   m_ObjectHideFlags: 0

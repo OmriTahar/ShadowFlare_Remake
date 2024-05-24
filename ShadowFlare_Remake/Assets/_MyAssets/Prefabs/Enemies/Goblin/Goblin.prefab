@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 3335301316221575875}
   - component: {fileID: 1851195650646610384}
   - component: {fileID: 7241244277980301422}
+  - component: {fileID: 506816732338728714}
   m_Layer: 6
   m_Name: View (Mesh)
   m_TagString: Highlightable
@@ -338,6 +339,21 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Materials: []
   InitialAlpha: 0
+--- !u!114 &506816732338728714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082077680345214968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 2082077680345214970}
+  _nameHolder: {fileID: 5388307940072675350}
+  _highlightIntensity: 0.2
 --- !u!1 &2082077680484402667
 GameObject:
   m_ObjectHideFlags: 0

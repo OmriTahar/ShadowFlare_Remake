@@ -8,9 +8,8 @@ namespace ShadowFlareRemake.Enemies
         public IUnit Unit { get; private set; }
         public IEnemyUnitStats Stats { get; private set; }
 
-        public Color Color { get; private set; }
-        public Color HighlightColor { get; private set; }
         public string Name { get; private set; }
+        public Color Color { get; private set; }
 
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
@@ -22,38 +21,16 @@ namespace ShadowFlareRemake.Enemies
             Unit = unit;
             Stats = unit.Stats as IEnemyUnitStats;
 
-            Color = new Color(Stats.Color.r, Stats.Color.g, Stats.Color.b, 1);
-            HighlightColor = new Color(Color.r + 0.2f, Color.g + 0.2f, Color.b + 0.2f, 1);
-
             Name = Stats.Name;
+            Color = new Color(Stats.Color.r, Stats.Color.g, Stats.Color.b, 1);
         }
 
         public void SetEnemyUnitAndUnitHandler(IUnit unit)
         {
-
             Unit = unit;
             Stats = Unit.Stats as IEnemyUnitStats;
             Changed();
         }
-
-        //public void SetIsEnemyHighlighted(bool isEnemyHighlighted) {
-
-        //    if(IsEnemyHighlighted == isEnemyHighlighted) {
-        //        return;
-        //    }
-
-        //    IsEnemyHighlighted = isEnemyHighlighted;
-        //    Changed();
-        //}
-
-        //public void SetIsHighlighted(bool isHighlighted)
-        //{
-        //    if(IsHighlighted == isHighlighted)
-        //        return;
-
-        //    IsHighlighted = isHighlighted;
-        //    Changed();
-        //}
 
         public void UpdateAttackState(bool isAttacking, AttackMethod attackMethod)
         {
