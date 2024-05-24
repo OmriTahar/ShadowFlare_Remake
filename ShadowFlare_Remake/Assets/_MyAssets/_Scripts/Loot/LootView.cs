@@ -21,6 +21,7 @@ namespace ShadowFlareRemake.Loot
         {
             SetData();
             SetText();
+            HandleIsHighlighted();
         }
 
         private void SetData()
@@ -52,6 +53,9 @@ namespace ShadowFlareRemake.Loot
 
             IsHighlighted = isHighlighted;
             HandleIsHighlighted();
+
+            var isModelNull = Model == null;
+            print("Is loot model null: " + isModelNull);
         }
 
         private void HandleIsHighlighted()
@@ -62,7 +66,6 @@ namespace ShadowFlareRemake.Loot
             _nameHolder.SetActive(IsHighlighted);
             _meshRenderer.material.color = IsHighlighted ? Model.HighlightColor : Model.Color;
         }
-
     }
 }
 

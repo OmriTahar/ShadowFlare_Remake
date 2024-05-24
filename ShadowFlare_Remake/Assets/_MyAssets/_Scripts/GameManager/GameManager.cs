@@ -213,8 +213,11 @@ namespace ShadowFlareRemake.GameManager
         private void TestSpawnLoot()
         {
             var lootModel = new LootModel(_testLootData);
-            Instantiate(_testLootPrefab, _testLootParent);
-            var lootView = _testLootPrefab.GetComponentInChildren<LootView>();
+
+            var fuckme = Instantiate(_testLootPrefab, _testLootParent);
+
+            var lootView = fuckme.GetComponentInChildren<LootView>();
+
             lootView.SetModel(lootModel);
         }
 

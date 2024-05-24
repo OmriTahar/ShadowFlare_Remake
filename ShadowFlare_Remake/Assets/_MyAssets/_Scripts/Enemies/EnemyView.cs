@@ -193,9 +193,12 @@ namespace ShadowFlareRemake.Enemies
 
         private void StabilizeHpSlider()
         {
+            if(!IsHighlighted)
+                return;
+
             if(_healthSlider != null)
             {
-                _healthSliderTransform.rotation = Quaternion.Euler(45, 45, 0);
+                _healthSliderTransform.rotation = Quaternion.Euler(40, 40, 0);
             }
         }
 

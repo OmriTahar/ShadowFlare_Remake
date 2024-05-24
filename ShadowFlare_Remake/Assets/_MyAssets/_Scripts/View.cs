@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake {
     public abstract class View : MonoBehaviour {
