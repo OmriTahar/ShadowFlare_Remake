@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Loot;
 using System;
 using UnityEngine;
 
@@ -6,11 +7,11 @@ namespace ShadowFlareRemake.UI.Inventory
     public class InventoryView : UIView<InventoryModel>
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int, Item> OnTileClicked;
+        public event Action<Vector2Int, LootView> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
-        [field: SerializeField] public Item _inventoryItemPrefab { get; private set; }
+        [field: SerializeField] public LootView _testLootPrefab { get; private set; }
 
         [Header("Items Grid")]
         [SerializeField] private ItemsGridView _carryPanelView;
@@ -55,9 +56,9 @@ namespace ShadowFlareRemake.UI.Inventory
             OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(Vector2Int tileIndex, Item item)
+        public void TileClicked(Vector2Int tileIndex, LootView lootView)
         {
-            OnTileClicked?.Invoke(tileIndex, item);
+            OnTileClicked?.Invoke(tileIndex, lootView);
         }
     }
 }

@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace ShadowFlareRemake.UI
 {
     public class ItemsGridModel : Model
     {
-        public Dictionary<Vector2Int, Item> ItemsDict { get; private set; } = new();
+        public Dictionary<Vector2Int, LootView> HeldLootDict { get; private set; } = new();
 
         public string Name { get; private set; }
         public int TileWidth { get; private set; }
@@ -18,9 +19,9 @@ namespace ShadowFlareRemake.UI
             HandleInitTiles(tileWidth, tileHight);
         }
 
-        public void PlaceItemOnGrid(Vector2Int tileIndex, Item item)
+        public void PlaceLootOnGrid(Vector2Int tileIndex, LootView item)
         {
-            ItemsDict[tileIndex] = item;
+            HeldLootDict[tileIndex] = item;
             Changed();
 
             //if(!IsValidPlacement(PickedItem, tileIndex))
@@ -41,10 +42,10 @@ namespace ShadowFlareRemake.UI
 
         public void RemoveItemFromGrid(Vector2Int tileIndex)
         {
-            ItemsDict[tileIndex] = null;
+            HeldLootDict[tileIndex] = null;
         }
 
-        private bool IsValidPlacement(Item inventoryItem, Vector2Int tileIndex)
+        private bool IsValidPlacement(LootView inventoryItem, Vector2Int tileIndex)
         {
             bool isValid;
 
@@ -86,7 +87,7 @@ namespace ShadowFlareRemake.UI
             {
                 for(int y = 0; y < TileWidth; y++)
                 {
-                    ItemsDict.Add(new Vector2Int(x, y), null);
+                    HeldLootDict.Add(new Vector2Int(x, y), null);
                 }
             }
         }

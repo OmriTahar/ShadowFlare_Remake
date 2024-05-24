@@ -3435,18 +3435,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531715127}
   m_CullTransparentMesh: 1
---- !u!114 &534107677 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1790465663596944097, guid: 7982fd7ed93b9ca46ad72c8622041df5,
-    type: 3}
-  m_PrefabInstance: {fileID: 4662878521058699381}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 680f40f3407022249b960d56051187f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &536971925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5733,7 +5721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventoryPanel: {fileID: 1903344054}
-  <_inventoryItemPrefab>k__BackingField: {fileID: 534107677}
+  <_testLootPrefab>k__BackingField: {fileID: 0}
   _carryPanelView: {fileID: 1463663664}
 --- !u!1001 &827348403
 PrefabInstance:
@@ -18180,9 +18168,25 @@ PrefabInstance:
     - target: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
         type: 3}
       propertyPath: m_Name
-      value: Health Potion
+      value: Loot_Prefab
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622573799034912421, guid: 42f5cda6e9e1423459b29605d7a55b9e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622573799034912421, guid: 42f5cda6e9e1423459b29605d7a55b9e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5221065971394155765, guid: 42f5cda6e9e1423459b29605d7a55b9e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 42f5cda6e9e1423459b29605d7a55b9e, type: 3}
 --- !u!1001 &5333997295604999326
 PrefabInstance:

@@ -1,11 +1,12 @@
+using ShadowFlareRemake.Loot;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
-        public Item PickedItem { get; private set; }
-        public Transform PickedItemTransform { get; private set; }
+        public LootView PickedLoot { get; private set; }
+        public Transform PickedLootTransform { get; private set; }
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
 
         public ItemsGridModel CarryPanelModel { get; private set; }
@@ -29,26 +30,26 @@ namespace ShadowFlareRemake.UI.Inventory
             CurrentHoveredItemsGridModel = itemsGridModel;
         }
 
-        public void PickUpItem(Vector2Int tileIndex, Item item)
+        public void PickUpLoot(Vector2Int tileIndex, LootView lootView)
         {
-            PickedItem = item;
+            PickedLoot = lootView;
 
-            if(item == null)
+            if(lootView == null)
             {
-                PickedItemTransform = null;
+                PickedLootTransform = null;
                 return;
             }
 
-            PickedItemTransform = item.transform;
+            PickedLootTransform = lootView.transform;
             CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
         }
 
-        public void PlaceItem(Vector2Int tileIndex, Item item)
+        public void PlaceLootOnGrid(Vector2Int tileIndex, LootView lootView)
         {
-            CurrentHoveredItemsGridModel.PlaceItemOnGrid(tileIndex, item);
+            CurrentHoveredItemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
 
-            PickedItem = null;
-            PickedItemTransform = null;
+            PickedLoot = null;
+            PickedLootTransform = null;
         }
 
         //public void PlaceItem(Vector2Int tileIndex)

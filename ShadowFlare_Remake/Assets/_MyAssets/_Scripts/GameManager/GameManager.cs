@@ -8,9 +8,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager {
-    public class GameManager : MonoBehaviour {
-
+namespace ShadowFlareRemake.GameManager
+{
+    public class GameManager : MonoBehaviour
+    {
         [Header("General")]
         [SerializeField] private RewardsManager _rewardsManager;
         [SerializeField] private UIController _uiController;
@@ -25,19 +26,23 @@ namespace ShadowFlareRemake.GameManager {
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
-        private EnemyModel _lastHighlightedEnemy;
 
         private InputManager _inputManager;
 
+        private GameObject _lastHighlightedObject;
+        private IHighlightable _lastHighlightable;
+
+        private const string _highlightableTag = "Highlightable";
+
         #region Unity Callbacks
 
-        private void Awake() {
-
+        private void Awake()
+        {
             DontDestroyOnLoad(gameObject);
         }
 
-        private async void Start() {
-
+        private async void Start()
+        {
             await InitPlayer();
             InitEnemies();
             RegisterEvents();
@@ -48,13 +53,13 @@ namespace ShadowFlareRemake.GameManager {
             _uiController.UpdatePlayerUI(_playerUnit);
         }
 
-        private void Update() {
-
-            HandleHighlightEnemies();
+        private void Update()
+        {
+            HandleHighlightObjectOnCursorFocus();
         }
 
-        private void OnDestroy() {
-
+        private void OnDestroy()
+        {
             DergisterEvents();
         }
 
@@ -62,17 +67,17 @@ namespace ShadowFlareRemake.GameManager {
 
         #region Events
 
-        private void RegisterEvents() {
-
+        private void RegisterEvents()
+        {
             _playerController.OnIGotHit += HandlePlayerGotHit;
         }
 
-        private void DergisterEvents() {
-
+        private void DergisterEvents()
+        {
             _playerController.OnIGotHit -= HandlePlayerGotHit;
 
-            foreach(var enemy in _enemyUnitsDict.Keys) {
-
+            foreach(var enemy in _enemyUnitsDict.Keys)
+            {
                 enemy.OnIGotHit -= HandleEnemyGotHit;
                 enemy.OnIGotKilled -= HandleEnemyDied;
             }
@@ -80,21 +85,53 @@ namespace ShadowFlareRemake.GameManager {
 
         #endregion
 
+        #region General
+
+        private void HandleHighlightObjectOnCursorFocus()
+        {
+            var hitCollider = _inputManager.CurrentRaycastHit.collider;
+
+            if(hitCollider != null && hitCollider.gameObject.tag == _highlightableTag)
+            {
+                var newObject = hitCollider.gameObject;
+
+                if(newObject == _lastHighlightedObject && _lastHighlightable.IsHighlighted)
+                    return;
+
+                if(_lastHighlightable != null)
+                    _lastHighlightable.SetIsHighlighted(false);
+
+                var newHighlightable = newObject.GetComponent<IHighlightable>();
+                newHighlightable.SetIsHighlighted(true);
+
+                _lastHighlightedObject = newObject;
+                _lastHighlightable = newHighlightable;
+                return;
+            }
+
+            if(_lastHighlightable != null)
+                _lastHighlightable.SetIsHighlighted(false);
+        }
+
+        #endregion
+
         #region Enemies
 
-        private void InitEnemies() {
-
+        private void InitEnemies()
+        {
             var enemiesToSpawn = _enemiesParent.GetComponentsInChildren<EnemyToSpawn>();
 
-            foreach(var enemyToSpawn in enemiesToSpawn) {
+            foreach(var enemyToSpawn in enemiesToSpawn)
+            {
 
                 InitEnemyLogic(enemyToSpawn);
             }
         }
 
-        private void InitEnemyLogic(EnemyToSpawn enemyToSpawn) {
-
-            if(enemyToSpawn == null) {
+        private void InitEnemyLogic(EnemyToSpawn enemyToSpawn)
+        {
+            if(enemyToSpawn == null)
+            {
                 Debug.LogError("EnemyToSpawn Null Reference!");
                 return;
             }
@@ -115,36 +152,14 @@ namespace ShadowFlareRemake.GameManager {
             Destroy(enemyToSpawn.gameObject);
         }
 
-        private void RegisterEnemyEvents(EnemyController enemyController) {
-
+        private void RegisterEnemyEvents(EnemyController enemyController)
+        {
             enemyController.OnIGotHit += HandleEnemyGotHit;
             enemyController.OnIGotKilled += HandleEnemyDied;
         }
 
-        private void HandleHighlightEnemies() {
-
-            if(_inputManager.IsCursorOnEnemy) {
-
-                var raycastHit = _inputManager.CurrentRaycastHit;
-                _enemiesCollidersDict.TryGetValue(raycastHit.collider, out var enemyModel);
-
-                if(_lastHighlightedEnemy != null && enemyModel != _lastHighlightedEnemy) {
-                    _lastHighlightedEnemy.SetIsEnemyHighlighted(false);
-                }
-
-                enemyModel.SetIsEnemyHighlighted(true);
-                _lastHighlightedEnemy = enemyModel;
-                return;
-
-            }
-
-            if(_lastHighlightedEnemy != null) {
-                _lastHighlightedEnemy.SetIsEnemyHighlighted(false);
-            }
-        }
-
-        private void HandleEnemyGotHit(Attack attack, EnemyController enemyController) {
-
+        private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)
+        {
             var unit = _enemyUnitsDict[enemyController];
 
             CombatLogic.HandleTakeDamage(attack, unit);
@@ -152,12 +167,13 @@ namespace ShadowFlareRemake.GameManager {
             enemyController.SetEnemyUnitAndUnitHandler(unit);
         }
 
-        private void HandleEnemyDied(IEnemyUnitStats enemyStats) {
-
+        private void HandleEnemyDied(IEnemyUnitStats enemyStats)
+        {
             var expReward = _rewardsManager.GetExpReward(_playerUnitStats, enemyStats);
             _playerUnitStats.GiveExpReward(expReward);
 
-            if(expReward.IsPendingLevelUp) {
+            if(expReward.IsPendingLevelUp)
+            {
 
                 var levelUpReward = _rewardsManager.GetLevelUpReward(_playerUnitStats);
                 _playerUnitStats.GiveLevelUpReward(levelUpReward);
@@ -172,13 +188,14 @@ namespace ShadowFlareRemake.GameManager {
 
         #region Player
 
-        private async Task InitPlayer() {
-
+        private async Task InitPlayer()
+        {
             _playerUnit = new Unit(_playerUnitStats);
             await _playerController.InitPlayer(_playerUnit);
         }
 
-        private void HandlePlayerGotHit(Attack attack, IUnitStats unit) {
+        private void HandlePlayerGotHit(Attack attack, IUnitStats unit)
+        {
 
         }
 

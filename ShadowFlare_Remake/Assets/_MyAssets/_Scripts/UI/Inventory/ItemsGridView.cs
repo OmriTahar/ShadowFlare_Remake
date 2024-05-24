@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Loot;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace ShadowFlareRemake.UI.Inventory
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int, Item> OnTileClicked;
+        public event Action<Vector2Int, LootView> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
@@ -53,7 +54,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void PlaceItems()
         {
-            foreach(var keyValuePair in Model.ItemsDict)
+            foreach(var keyValuePair in Model.HeldLootDict)
             {
                 var index = keyValuePair.Key;
                 var item = keyValuePair.Value;
@@ -70,7 +71,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void InovkeTileClicked(Vector2Int index)
         {
-            OnTileClicked?.Invoke(index, Model.ItemsDict[index]);
+            OnTileClicked?.Invoke(index, Model.HeldLootDict[index]);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

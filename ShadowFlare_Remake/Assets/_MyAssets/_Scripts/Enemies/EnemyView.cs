@@ -1,19 +1,22 @@
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Tools;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using ShadowFlareRemake.Tools;
-using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake.Enemies {
-    public class EnemyView : View<EnemyModel> {
-
+namespace ShadowFlareRemake.Enemies
+{
+    public class EnemyView : View<EnemyModel>, IHighlightable
+    {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;
         public event Action OnEnemyKilled;
         public event Action OnFinishedDeathAnimation;
+
+        public bool IsHighlighted { get; private set; } = false;
 
         [Header("Health Slider")]
         [SerializeField] private TMP_Text _name;
@@ -40,110 +43,124 @@ namespace ShadowFlareRemake.Enemies {
 
         private int _lastSeenHP;
 
-        protected override void Initialize() {
-
+        protected override void Initialize()
+        {
             CacheNulls();
             _closeAttackCooldown = new WaitForSeconds(_closeAttackAnimLength);
         }
 
-        private void Update() {
-
+        private void Update()
+        {
             StabilizeHpSlider();
         }
 
-        private void OnTriggerEnter(Collider other) {
-
+        private void OnTriggerEnter(Collider other)
+        {
             OnTriggerEnterEvent?.Invoke(other);
         }
 
-        protected override void ModelReplaced() {
-
-            if(Model == null) {
+        protected override void ModelReplaced()
+        {
+            if(Model == null)
                 return;
-            }
 
             _name.text = Model.Name;
-
-            var color = Model.Color;
-            _meshRenderer.material.color = new Color(color.r, color.g, color.b, 1);
+            _meshRenderer.material.color = Model.Color;
 
             ResetHealthSliderValues();
         }
 
-        protected override void ModelChanged() {
-
+        protected override void ModelChanged()
+        {
             if(Model == null)
                 return;
 
-            _healthSlider.gameObject.SetActive(Model.IsEnemyHighlighted);
-
+            HandleIsHighlighted();
             HandleHitEffect();
             HandleHP();
 
-            if(Model.IsAttacking) {
+            if(Model.IsAttacking)
+            {
                 HandleAttackAnimations();
             }
         }
 
-        public Collider GetEnemyCollider() {
-
+        public Collider GetEnemyCollider()
+        {
             return _myCollider;
         }
 
-        private void ResetHealthSliderValues() {
+        public void SetIsHighlighted(bool isHighlighted)
+        {
+            if(IsHighlighted == isHighlighted)
+                return;
 
+            IsHighlighted = isHighlighted;
+            HandleIsHighlighted();
+        }
+
+        private void ResetHealthSliderValues()
+        {
             var value = Model.Stats.MaxHP;
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
         }
 
-        private void HandleHitEffect() {
+        private void HandleIsHighlighted()
+        {
+            _healthSlider.gameObject.SetActive(IsHighlighted);
+            _meshRenderer.material.color = IsHighlighted ? Model.HighlightColor : Model.Color;
+        }
 
-            if(_hitEffect == null) {
+        private void HandleHitEffect()
+        {
+            if(_hitEffect == null)
+            {
                 Debug.LogError("Hit effect is null");
                 return;
             }
 
-            if(_lastSeenHP > Model.Unit.CurrentHP) {
-
-                if(_hitEffect.isPlaying) {
+            if(_lastSeenHP > Model.Unit.CurrentHP)
+            {
+                if(_hitEffect.isPlaying)
+                {
                     _hitEffect.Stop();
                 }
                 _hitEffect.Play();
             }
         }
 
-        private void HandleHP() {
-
+        private void HandleHP()
+        {
             var hp = Model.Unit.CurrentHP;
             _lastSeenHP = hp < 0 ? 0 : hp;
             _healthSlider.value = _lastSeenHP;
 
-            if(_lastSeenHP == 0) {
-
+            if(_lastSeenHP == 0)
+            {
                 OnEnemyKilled?.Invoke();
                 HandleDeathAnimation();
             }
         }
 
-        public void HandleAttackAnimations() {
-
-            switch(Model.CurrentAttackMethod) {
-
+        public void HandleAttackAnimations()
+        {
+            switch(Model.CurrentAttackMethod)
+            {
                 case AttackMethod.Close:
                     DoCloseAttack();
                     break;
             }
         }
 
-        private void DoCloseAttack() {
-
+        private void DoCloseAttack()
+        {
             _animator.SetTrigger("CloseAttack");
             StartCoroutine(WaitForAnimationEnd(Model.CurrentAttackMethod));
         }
 
-        private async void HandleDeathAnimation() {
-
+        private async void HandleDeathAnimation()
+        {
             print($"{Model.Name} was killed!");
 
             _animator.SetTrigger("Die");
@@ -153,10 +170,10 @@ namespace ShadowFlareRemake.Enemies {
             FadeOut();
         }
 
-        private IEnumerator WaitForAnimationEnd(AttackMethod attackMethod) {
-
-            switch(attackMethod) {
-
+        private IEnumerator WaitForAnimationEnd(AttackMethod attackMethod)
+        {
+            switch(attackMethod)
+            {
                 case AttackMethod.Close:
                     yield return _closeAttackCooldown;
                     break;
@@ -169,40 +186,46 @@ namespace ShadowFlareRemake.Enemies {
             OnAttackAnimationEnded?.Invoke();
         }
 
-        private void FadeOut() {
+        private void FadeOut()
+        {
             StartCoroutine(FadeOutLogic(_fadingObject));
         }
 
-        private void StabilizeHpSlider() {
-
-            if(_healthSlider != null) {
+        private void StabilizeHpSlider()
+        {
+            if(_healthSlider != null)
+            {
                 _healthSliderTransform.rotation = Quaternion.Euler(45, 45, 0);
             }
         }
 
-        private void CacheNulls() {
-
-            if(_myCollider == null) {
+        private void CacheNulls()
+        {
+            if(_myCollider == null)
+            {
                 _myCollider = GetComponent<Collider>();
             }
 
-            if(_closeAttackAnim != null) {
+            if(_closeAttackAnim != null)
+            {
                 _closeAttackAnimLength = _closeAttackAnim.length;
             }
 
-            if(_rangedAttackAnim != null) {
+            if(_rangedAttackAnim != null)
+            {
                 _rangedAttackAnimLength = _rangedAttackAnim.length;
             }
 
-            if(_deathAnim != null) {
+            if(_deathAnim != null)
+            {
                 _deathAnimLength = _deathAnim.length;
             }
         }
 
-        private IEnumerator FadeOutLogic(FadingObject fadingObject) {
-
-            foreach(var material in fadingObject.Materials) {
-
+        private IEnumerator FadeOutLogic(FadingObject fadingObject)
+        {
+            foreach(var material in fadingObject.Materials)
+            {
                 material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
                 material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                 material.SetInt("_ZWrite", 0);
@@ -221,15 +244,17 @@ namespace ShadowFlareRemake.Enemies {
 
             float time = 0;
 
-            if(fadingObject == null || fadingObject.Materials == null) {
+            if(fadingObject == null || fadingObject.Materials == null)
+            {
                 yield break;
             }
 
-            while(fadingObject.Materials[0].color.a > 0) {
-
-                foreach(var material in fadingObject.Materials) {
-
-                    if(material.HasProperty("_BaseColor")) {
+            while(fadingObject.Materials[0].color.a > 0)
+            {
+                foreach(var material in fadingObject.Materials)
+                {
+                    if(material.HasProperty("_BaseColor"))
+                    {
 
                         material.color = new Color(
                             material.color.r,

@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI.Items
+namespace ShadowFlareRemake.Loot
 {
     [CreateAssetMenu(fileName = "NewItem", menuName = "Scriptable Objects/Create New Item")]
-    public class Item_ScriptableObject : ScriptableObject
+    public class Loot_ScriptableObject : ScriptableObject
     {
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public Texture2D Icon { get; private set; }

@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
@@ -165,31 +166,31 @@ namespace ShadowFlareRemake.UI
             _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, Item item)
+        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, LootView lootView)
         {
             var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
 
             if(currentHoveredItemsGrid == null)
                 return;
 
-            print($"{ currentHoveredItemsGrid.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {item != null}");
+            print($"{ currentHoveredItemsGrid.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {lootView != null}");
 
-            if(_inventoryModel.PickedItem == null && item != null)
+            if(_inventoryModel.PickedLoot == null && lootView != null)
             {
-                _inventoryModel.PickUpItem(tileIndex, item);
+                _inventoryModel.PickUpLoot(tileIndex, lootView);
             }
-            else if(_inventoryModel.PickedItem != null)
+            else if(_inventoryModel.PickedLoot != null)
             {
-                _inventoryModel.PlaceItem(tileIndex, item);
+                _inventoryModel.PlaceLootOnGrid(tileIndex, lootView);
             }
         }
 
         private void HandlePickedItem()
         {
-            if(_inventoryModel.PickedItemTransform == null)
+            if(_inventoryModel.PickedLootTransform == null)
                 return;
 
-            _inventoryModel.PickedItemTransform.position = _inputManager.CurrentMousePosition;
+            _inventoryModel.PickedLootTransform.position = _inputManager.CurrentMousePosition;
         }
 
 

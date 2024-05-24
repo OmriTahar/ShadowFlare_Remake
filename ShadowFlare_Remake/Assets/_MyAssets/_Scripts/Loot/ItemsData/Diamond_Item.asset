@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cef976a76d54627488846906d08e1715, type: 3}
   m_Name: Diamond_Item
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 0
-  <Icon>k__BackingField: {fileID: 0}
-  <Width>k__BackingField: 0
-  <Hight>k__BackingField: 0
+  <Name>k__BackingField: Diamond
+  <Icon>k__BackingField: {fileID: 2800000, guid: 668836f0e38c55f458290b9accbc54d2,
+    type: 3}
+  <Width>k__BackingField: 1
+  <Height>k__BackingField: 0

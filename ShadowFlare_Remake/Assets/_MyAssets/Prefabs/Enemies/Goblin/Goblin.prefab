@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 7241244277980301422}
   m_Layer: 6
   m_Name: View (Mesh)
-  m_TagString: Untagged
+  m_TagString: Highlightable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
