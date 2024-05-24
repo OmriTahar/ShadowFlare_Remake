@@ -49,12 +49,12 @@ namespace ShadowFlareRemake.GameManager
         private async void Start()
         {
             await InitPlayer();
-            InitEnemies();
             await InitInputManager();
 
+            InitEnemies();
             RegisterEvents();
-            _uiController.UpdatePlayerUI(_playerUnit);
 
+            _uiController.UpdatePlayerUI(_playerUnit);
             TestSpawnLoot();
         }
 
@@ -104,7 +104,7 @@ namespace ShadowFlareRemake.GameManager
 
         private void HandleHighlightObjectOnCursorFocus()
         {
-            var hitCollider = _inputManager.CurrentRaycastHit.collider;
+            var hitCollider = _inputManager.CurrentRaycastHitCollider;
 
             if(hitCollider != null && hitCollider.gameObject.tag == _highlightableTag)
             {

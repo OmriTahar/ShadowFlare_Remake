@@ -47,7 +47,7 @@ namespace ShadowFlareRemake.Enemies
             _closeAttackCooldown = new WaitForSeconds(_closeAttackAnimLength);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             StabilizeHpSlider();
         }

@@ -18,6 +18,7 @@ namespace ShadowFlareRemake.PlayerInput {
         [field: SerializeField] public InputAction H_KeyboardClickAction { get; private set; }
 
         // --- Variables ---
+        public Collider CurrentRaycastHitCollider { get; private set; }
         public RaycastHit CurrentRaycastHit { get; private set; }
         public Vector3 CurrentMousePosition { get; private set; }
 
@@ -97,6 +98,7 @@ namespace ShadowFlareRemake.PlayerInput {
             if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
 
                 CurrentRaycastHit = hit;
+                CurrentRaycastHitCollider = hit.collider;
 
                 var raycastLayer = hit.collider.gameObject.layer;
 
