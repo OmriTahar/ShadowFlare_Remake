@@ -99,19 +99,19 @@ namespace ShadowFlareRemake.Enemies
             HandleIsHighlighted();
         }
 
-        private void ResetHealthSliderValues()
-        {
-            var value = Model.Stats.MaxHP;
-            _healthSlider.maxValue = value;
-            _healthSlider.value = value;
-        }
-
         private void HandleIsHighlighted()
         {
             _healthSlider.gameObject.SetActive(IsHighlighted);
             _meshRenderer.material.color = IsHighlighted ? Model.HighlightColor : Model.Color;
         }
 
+        private void ResetHealthSliderValues()
+        {
+            var value = Model.Stats.MaxHP;
+            _healthSlider.maxValue = value;
+            _healthSlider.value = value;
+        }
+       
         private void HandleHitEffect()
         {
             if(_hitEffect == null)

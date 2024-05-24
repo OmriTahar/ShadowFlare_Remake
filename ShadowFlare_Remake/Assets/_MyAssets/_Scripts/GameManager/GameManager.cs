@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
@@ -23,11 +24,16 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
+        [Header("Loot")]
+        [SerializeField] private Transform _testLootParent; 
+        [SerializeField] private GameObject _testLootPrefab; 
+        [SerializeField] private Loot_ScriptableObject _testLootData; 
+
+        private InputManager _inputManager;
+
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
-
-        private InputManager _inputManager;
 
         private GameObject _lastHighlightedObject;
         private IHighlightable _lastHighlightable;
@@ -51,6 +57,8 @@ namespace ShadowFlareRemake.GameManager
             await _inputManager.WaitForInitFinish();
 
             _uiController.UpdatePlayerUI(_playerUnit);
+
+            TestSpawnLoot();
         }
 
         private void Update()
@@ -123,7 +131,6 @@ namespace ShadowFlareRemake.GameManager
 
             foreach(var enemyToSpawn in enemiesToSpawn)
             {
-
                 InitEnemyLogic(enemyToSpawn);
             }
         }
@@ -197,6 +204,18 @@ namespace ShadowFlareRemake.GameManager
         private void HandlePlayerGotHit(Attack attack, IUnitStats unit)
         {
 
+        }
+
+        #endregion
+
+        #region Loot
+
+        private void TestSpawnLoot()
+        {
+            var lootModel = new LootModel(_testLootData);
+            Instantiate(_testLootPrefab, _testLootParent);
+            var lootView = _testLootPrefab.GetComponentInChildren<LootView>();
+            lootView.SetModel(lootModel);
         }
 
         #endregion

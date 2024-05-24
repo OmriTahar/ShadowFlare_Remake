@@ -193,7 +193,6 @@ namespace ShadowFlareRemake.UI
             _inventoryModel.PickedLootTransform.position = _inputManager.CurrentMousePosition;
         }
 
-
         #endregion
 
         #region Stats
