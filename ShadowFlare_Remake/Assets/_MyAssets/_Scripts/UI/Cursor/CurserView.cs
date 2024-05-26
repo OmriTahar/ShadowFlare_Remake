@@ -30,14 +30,13 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void HandlePickedUpLootView()
         {
-            _pickedUpLootView.SetModel(Model.PickedUpLootModel);
-
             if(Model.PickedUpLootModel == null)
             {
                 _pickedUpLootView.gameObject.SetActive(false);
                 return;
             }
 
+            _pickedUpLootView.SetModel(Model.PickedUpLootModel);
             _pickedUpLootView.gameObject.SetActive(true);
         }
 

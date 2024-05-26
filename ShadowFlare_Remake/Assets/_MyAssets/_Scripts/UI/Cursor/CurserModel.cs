@@ -6,9 +6,7 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
-        public LootView PickedUpLootView { get; private set; }
         public LootModel PickedUpLootModel { get; private set; }
-        public Transform PickedLootUpTransform { get; private set; }
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
 
         public CursorIconState CurrentCursorIconState { get; private set; }
@@ -32,45 +30,36 @@ namespace ShadowFlareRemake.UI.Cursor
             CurrentHoveredItemsGridModel = itemsGridModel;
         }
 
-        public void PickUpLootFromGround(LootView lootView)
+        public void PickUpLootFromGround(LootModel lootModel)
         {
-            PickUpLootLogic(lootView);
+            PickUpLootLogic(lootModel);
             Changed();
         }
 
-        public void PickUpLootFromGrid(Vector2Int tileIndex, LootView lootView, ItemsGridModel itemsGridModel)
+        public void PickUpLootFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            PickUpLootLogic(lootView);
+            PickUpLootLogic(lootModel);
             CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
             Changed();
         }
 
-        private void PickUpLootLogic(LootView lootView)
+        private void PickUpLootLogic(LootModel lootModel)
         {
-            PickedUpLootView = lootView;
-
-            if(lootView == null)
-            {
-                PickedLootUpTransform = null;
-                return;
-            }
-
-            PickedLootUpTransform = lootView.transform;
+            PickedUpLootModel = lootModel;
         }
 
         private void DropLootLogic()
         {
             PickedUpLootModel = null;
-            PickedLootUpTransform = null;
         }
 
-        public void DropLootOnGrid(Vector2Int tileIndex, LootView lootView, ItemsGridModel itemsGridModel)
+        public void DropLootOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            itemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
+            itemsGridModel.PlaceLootOnGrid(tileIndex, lootModel);
             DropLootLogic();
         }
 
-        public void DropLootOnGround(LootView lootView)
+        public void DropLootOnGround()
         {
             DropLootLogic();
         }

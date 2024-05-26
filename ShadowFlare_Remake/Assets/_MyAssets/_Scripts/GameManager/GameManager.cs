@@ -39,7 +39,7 @@ namespace ShadowFlareRemake.GameManager
         private HighlightableObject _lastHighlightable;
         private const string _highlightableTag = "Highlightable";
 
-        private LootView _lastPickedUpLoot;
+        private LootView _lastPickedUpLootView;
 
         #region Unity Callbacks
 
@@ -87,13 +87,13 @@ namespace ShadowFlareRemake.GameManager
         private void RegisterEvents()
         {
             _playerController.OnIGotHit += HandlePlayerGotHit;
-            _playerController.OnPickedLoot += HandlePlayerPickedUpLootFromGround;
+            _playerController.OnPickedLoot += HandlePlayerPickedUpLootFromTheGround;
         }
 
         private void DergisterEvents()
         {
             _playerController.OnIGotHit -= HandlePlayerGotHit;
-            _playerController.OnPickedLoot -= HandlePlayerPickedUpLootFromGround;
+            _playerController.OnPickedLoot -= HandlePlayerPickedUpLootFromTheGround;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -217,10 +217,18 @@ namespace ShadowFlareRemake.GameManager
 
         }
 
-        private void HandlePlayerPickedUpLootFromGround(Collider lootCollider)
+        private void HandlePlayerPickedUpLootFromTheGround(Collider lootCollider)
         {
-            _lastPickedUpLoot = lootCollider.GetComponent<LootView>();
-            _uiController.PickUpLootFromGround(_lastPickedUpLoot);
+            _lastPickedUpLootView = lootCollider.GetComponent<LootView>();
+            var lootModel = _lastPickedUpLootView.GetLootModel();
+            _lastPickedUpLootView.gameObject.SetActive(false);
+
+            _uiController.PickUpLootFromTheGround(lootModel);
+        }
+
+        private void HandlePlayerDroppedLootToTheGround()
+        {
+            _lastPickedUpLootView.gameObject.SetActive(true);
         }
 
         #endregion

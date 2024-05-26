@@ -7,21 +7,26 @@ namespace ShadowFlareRemake.UI
 {
     public class ItemsGridModel : Model
     {
-        public Dictionary<Vector2Int, LootView> HeldLootDict { get; private set; } = new();
+        public Dictionary<Vector2Int, GridTileModel> GridTileModelsDict { get; private set; } = new();
+        public Dictionary<Vector2Int, LootModel> HeldLootDict { get; private set; } = new();
 
         public string Name { get; private set; }
-        public int TileWidth { get; private set; }
-        public int TileHight { get; private set; }
+        public int GridWidth { get; private set; }
+        public int GridHeight { get; private set; }
+        //public int TileWidth { get; private set; }
+        //public int TileHight { get; private set; }
 
-        public ItemsGridModel(string name, int tileWidth, int tileHight)
+        public ItemsGridModel(string name, int gridWidth, int gridHeight /*,int tileWidth, int tileHight*/)
         {
             Name = name;
-            HandleInitTiles(tileWidth, tileHight);
+            //InitTileSize(tileWidth, tileHight);
+            InitIGridTilesAndLootDicts(gridWidth,gridHeight);
         }
 
-        public void PlaceLootOnGrid(Vector2Int tileIndex, LootView item)
+        public void PlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
-            HeldLootDict[tileIndex] = item;
+            //HeldLootDict[tileIndex] = lootModel;
+            GridTileModelsDict[tileIndex].SetLootModel(lootModel);
             Changed();
 
             //if(!IsValidPlacement(PickedItem, tileIndex))
@@ -63,31 +68,30 @@ namespace ShadowFlareRemake.UI
             return isValid;
         }
 
-        private void HandleInitTiles(float tileWidth, float tileHight)
+        //private void InitTileSize(float tileWidth, float tileHight)
+        //{
+        //    var screenWidth = Screen.width;
+        //    var screenHeight = Screen.height;
+
+        //    float widthRatioDiff = (float)screenWidth / 1920;
+        //    float heightRatioDiff = (float)screenHeight / 1080;
+
+        //    TileWidth = (int)(tileWidth * widthRatioDiff);
+        //    TileHight = (int)(tileHight * heightRatioDiff);
+        //}
+
+        private void InitIGridTilesAndLootDicts(int gridWidth, int gridHight)
         {
-            InitTileSize(tileWidth, tileHight);
-            InitItemsDict();
-        }
+            GridWidth = gridWidth;
+            GridHeight = gridHight;
 
-        private void InitTileSize(float tileWidth, float tileHight)
-        {
-            var screenWidth = Screen.width;
-            var screenHeight = Screen.height;
-
-            float widthRatioDiff = (float)screenWidth / 1920;
-            float heightRatioDiff = (float)screenHeight / 1080;
-
-            TileWidth = (int)(tileWidth * widthRatioDiff);
-            TileHight = (int)(tileHight * heightRatioDiff);
-        }
-
-        private void InitItemsDict()
-        {
-            for(int x = 0; x < TileWidth; x++)
+            for(int x = 0; x < gridWidth; x++)
             {
-                for(int y = 0; y < TileWidth; y++)
+                for(int y = 0; y < gridHight; y++)
                 {
-                    HeldLootDict.Add(new Vector2Int(x, y), null);
+                    var tileIndex = new Vector2Int(x, y);
+                    GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex));
+                    HeldLootDict.Add(tileIndex, null);
                 }
             }
         }

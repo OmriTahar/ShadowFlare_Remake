@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.UI.Inventory
         public InventoryModel(bool isInventoryOpen)
         {
             SetIsInventoryOpen(isInventoryOpen);
-            CarryPanelModel = new ItemsGridModel("Carry Panel", 80, 80);
+            CarryPanelModel = new ItemsGridModel("Carry Panel", 10, 4);
         }
 
         public void SetIsInventoryOpen(bool isInventoryOpen)

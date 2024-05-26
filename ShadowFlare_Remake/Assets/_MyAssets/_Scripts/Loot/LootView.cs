@@ -1,24 +1,36 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShadowFlareRemake.Loot
 {
     public class LootView : View<LootModel>
     {
         public string Name { get; private set; }
-        public Texture2D Icon { get; private set; }
+        public Sprite Sprite { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
 
         [Header("Refernces")]
+        [SerializeField] private RectTransform _rect;
+        [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
+
+        [Header("Settings")]
+        [SerializeField] private int _spriteSizeMultiplier = 60;
 
         protected override void ModelChanged()
         {
             SetData();
-            SetText();
+            SetName();
+            SetSprite();
         }
 
+        public LootModel GetLootModel()
+        {
+            return Model;
+        }
+     
         private void SetData()
         {
             if(Model.LootData == null)
@@ -28,17 +40,26 @@ namespace ShadowFlareRemake.Loot
             }
 
             Name = Model.LootData.Name;
-            Icon = Model.LootData.Icon;
+            Sprite = Model.LootData.Sprite;
             Width = Model.LootData.Width;
             Height = Model.LootData.Height;
         }
 
-        private void SetText()
+        private void SetName()
         {
             if(_nameText != null)
-            {
                 _nameText.text = Name;
-            }
+        }
+
+        private void SetSprite()
+        {
+            if(_image == null)
+                return;
+
+            _image.sprite = Sprite;
+            _image.preserveAspect = true;
+
+            _rect.sizeDelta = new Vector2(Width * _spriteSizeMultiplier, Height * _spriteSizeMultiplier);
         }
     }
 }

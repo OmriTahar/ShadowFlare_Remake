@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.UI.Inventory
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<ItemsGridModel, Vector2Int, LootView> OnTileClicked;
+        public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
@@ -46,26 +46,30 @@ namespace ShadowFlareRemake.UI.Inventory
 
             foreach(var view in tileViews)
             {
-
                 _gridTilesDict.Add(view.Index, view);
+                view.SetModel(Model.GridTileModelsDict[view.Index]);
                 view.OnTileClicked += InovkeTileClicked;
             }
         }
 
         private void PlaceItems()
         {
-            foreach(var keyValuePair in Model.HeldLootDict)
+            foreach(var keyValuePair in Model.GridTileModelsDict)
             {
                 var index = keyValuePair.Key;
-                var item = keyValuePair.Value;
+                var gridTileModel = keyValuePair.Value;
+                var lootModel = gridTileModel.LootModel;
 
-                if(item == null)
+                if(lootModel == null)
                     continue;
 
-                var tileView = _gridTilesDict[index].transform;
-                var itemRect = item.transform;
-                itemRect.SetParent(tileView);
-                itemRect.localPosition = Vector3.zero;
+                //var tileView = _gridTilesDict[index].transform;
+                //var itemRect = loot.transform;
+                //itemRect.SetParent(tileView);
+                //itemRect.localPosition = Vector3.zero;
+
+                var gridTileView = _gridTilesDict[index];
+                gridTileView.SetModel(gridTileModel);
             }
         }
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1790465663596944099}
   - component: {fileID: 1790465663596944097}
   m_Layer: 5
-  m_Name: UI_Loot
+  m_Name: Loot_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,5 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680f40f3407022249b960d56051187f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeWidth: 1
-  sizeHeight: 1
+  _rect: {fileID: 1790465663596943900}
+  _image: {fileID: 1790465663596944099}
+  _nameText: {fileID: 0}

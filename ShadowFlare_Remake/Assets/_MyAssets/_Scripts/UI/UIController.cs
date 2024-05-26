@@ -24,6 +24,9 @@ namespace ShadowFlareRemake.UI
         [SerializeField] private HudView _hudView;
         [SerializeField] private LevelUpView _levelUpView;
 
+        [Header("Loot")]
+        [SerializeField] private Transform _pickedUpLootTranform;
+
         [Header("Other")]
         [SerializeField] private GameObject _closeButton;
 
@@ -59,7 +62,7 @@ namespace ShadowFlareRemake.UI
         private void Update()
         {
             HandleMouseRaycastHit();
-            HandlePickedLoot();
+            SetPickedUpLootPosition();
         }
 
         #endregion
@@ -138,21 +141,19 @@ namespace ShadowFlareRemake.UI
 
         #region Item Grids & Loot
 
-        public void PickUpLootFromGround(LootView lootView)
+        public void PickUpLootFromTheGround(LootModel lootModel)
         {
-            _curserModel.PickUpLootFromGround(lootView);
+            _curserModel.PickUpLootFromGround(lootModel);
         }
 
-        private void HandlePickedLoot()
+        public void DropLootToTheGround()
         {
-            if(_curserModel.PickedLootUpTransform == null)
-            {
-                print("1");
-                return;
-            }
+            _curserModel.DropLootOnGround();
+        }
 
-            _curserModel.PickedLootUpTransform.position = _inputManager.CurrentMousePosition;
-            print("2");
+        private void SetPickedUpLootPosition()
+        {
+            _pickedUpLootTranform.position = _inputManager.CurrentMousePosition;
         }
 
         private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
@@ -166,20 +167,31 @@ namespace ShadowFlareRemake.UI
             _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel ,Vector2Int tileIndex, LootView lootView)
+        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel gridLootModel)
         {
             if(itemsGridModel == null)
                 return;
 
-            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {lootView != null}");
+            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {gridLootModel != null}");
 
-            if(_curserModel.PickedUpLootModel == null && lootView != null)
+            var cursorLootModel = _curserModel.PickedUpLootModel;
+
+            if(cursorLootModel == null && gridLootModel == null)
+                return;
+
+            if(cursorLootModel != null && gridLootModel == null)
             {
-                itemsGridModel.RemoveItemFromGrid(tileIndex);
+                //itemsGridModel.PlaceLootOnGrid(tileIndex, lootModel);
+                _curserModel.DropLootOnGrid(itemsGridModel, tileIndex, cursorLootModel);
             }
-            else if(_curserModel.PickedUpLootModel != null)
+            else if(cursorLootModel == null && gridLootModel != null)
             {
-                itemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
+                //itemsGridModel.RemoveItemFromGrid(tileIndex);
+                _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, gridLootModel);
+            }
+            else if(cursorLootModel != null && gridLootModel != null)
+            {
+                // Handle switch
             }
         }
 
