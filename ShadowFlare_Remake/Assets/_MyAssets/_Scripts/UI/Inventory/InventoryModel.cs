@@ -1,14 +1,7 @@
-using ShadowFlareRemake.Loot;
-using UnityEngine;
-
 namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
-        public LootView PickedLoot { get; private set; }
-        public Transform PickedLootTransform { get; private set; }
-        public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
-
         public ItemsGridModel CarryPanelModel { get; private set; }
 
         public bool IsInventoryOpen { get; private set; }
@@ -25,32 +18,32 @@ namespace ShadowFlareRemake.UI.Inventory
             Changed();
         }
 
-        public void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel)
-        {
-            CurrentHoveredItemsGridModel = itemsGridModel;
-        }
+        //public void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel)
+        //{
+        //    CurrentHoveredItemsGridModel = itemsGridModel;
+        //}
 
-        public void PickUpLoot(Vector2Int tileIndex, LootView lootView)
-        {
-            PickedLoot = lootView;
+        //public void PickUpLoot(Vector2Int tileIndex, LootView lootView)
+        //{
+        //    PickedLoot = lootView;
 
-            if(lootView == null)
-            {
-                PickedLootTransform = null;
-                return;
-            }
+        //    if(lootView == null)
+        //    {
+        //        PickedLootTransform = null;
+        //        return;
+        //    }
 
-            PickedLootTransform = lootView.transform;
-            CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
-        }
+        //    PickedLootTransform = lootView.transform;
+        //    CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
+        //}
 
-        public void PlaceLootOnGrid(Vector2Int tileIndex, LootView lootView)
-        {
-            CurrentHoveredItemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
+        //public void PlaceLootOnGrid(Vector2Int tileIndex, LootView lootView)
+        //{
+        //    CurrentHoveredItemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
 
-            PickedLoot = null;
-            PickedLootTransform = null;
-        }
+        //    PickedLoot = null;
+        //    PickedLootTransform = null;
+        //}
 
         //public void PlaceItem(Vector2Int tileIndex)
         //{

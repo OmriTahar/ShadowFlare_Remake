@@ -1,9 +1,14 @@
 using UnityEngine;
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserView : View<CurserModel>
     {
+        [Header("Loot")]
+        [SerializeField] private LootView _pickedUpLootView;
+
         [Header("Curser Icons")]
         [SerializeField] private Texture2D Move;
         [SerializeField] private Texture2D Attack;
@@ -13,32 +18,46 @@ namespace ShadowFlareRemake.UI.Cursor
 
         protected override void ModelChanged()
         {
-            UpdateCurser(Model.CurrentCursorIconState);
+            HandleCurserIcon(Model.CurrentCursorIconState);
+            HandlePickedUpLootView();
         }
 
-        private void UpdateCurser(CurserModel.CursorIconState newCurserIconState)
+        private void HandleCurserIcon(CursorIconState newCurserIconState)
         {
             var newIcon = GetCurserIcon(newCurserIconState);
             UnityEngine.Cursor.SetCursor(newIcon, Vector2.zero, CursorMode.Auto);
         }
 
-        private Texture2D GetCurserIcon(CurserModel.CursorIconState cursorIconState)
+        private void HandlePickedUpLootView()
+        {
+            _pickedUpLootView.SetModel(Model.PickedUpLootModel);
+
+            if(Model.PickedUpLootModel == null)
+            {
+                _pickedUpLootView.gameObject.SetActive(false);
+                return;
+            }
+
+            _pickedUpLootView.gameObject.SetActive(true);
+        }
+
+        private Texture2D GetCurserIcon(CursorIconState cursorIconState)
         {
             switch(cursorIconState)
             {
-                case CurserModel.CursorIconState.Move:
+                case CursorIconState.Move:
                     return Move;
 
-                case CurserModel.CursorIconState.Attack:
+                case CursorIconState.Attack:
                     return Attack;
 
-                case CurserModel.CursorIconState.PickUp:
+                case CursorIconState.PickUp:
                     return PickUp;
 
-                case CurserModel.CursorIconState.UI:
+                case CursorIconState.UI:
                     return UI;
 
-                case CurserModel.CursorIconState.Other:
+                case CursorIconState.Other:
                     return Other;
             }
             return Other;

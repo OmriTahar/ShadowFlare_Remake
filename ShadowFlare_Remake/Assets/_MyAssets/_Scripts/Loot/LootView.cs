@@ -35,7 +35,7 @@ namespace ShadowFlareRemake.Loot
 
         private void SetText()
         {
-            if(!string.IsNullOrEmpty(Name))
+            if(_nameText != null)
             {
                 _nameText.text = Name;
             }

@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.UI.Inventory
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int, LootView> OnTileClicked;
+        public event Action<ItemsGridModel, Vector2Int, LootView> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private RectTransform _rectTransform;
@@ -61,7 +61,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
                 if(item == null)
                     continue;
-                
+
                 var tileView = _gridTilesDict[index].transform;
                 var itemRect = item.transform;
                 itemRect.SetParent(tileView);
@@ -71,7 +71,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void InovkeTileClicked(Vector2Int index)
         {
-            OnTileClicked?.Invoke(index, Model.HeldLootDict[index]);
+            OnTileClicked?.Invoke(Model, index, Model.HeldLootDict[index]);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

@@ -39,6 +39,8 @@ namespace ShadowFlareRemake.GameManager
         private HighlightableObject _lastHighlightable;
         private const string _highlightableTag = "Highlightable";
 
+        private LootView _lastPickedUpLoot;
+
         #region Unity Callbacks
 
         private void Awake()
@@ -85,11 +87,13 @@ namespace ShadowFlareRemake.GameManager
         private void RegisterEvents()
         {
             _playerController.OnIGotHit += HandlePlayerGotHit;
+            _playerController.OnPickedLoot += HandlePlayerPickedUpLootFromGround;
         }
 
         private void DergisterEvents()
         {
             _playerController.OnIGotHit -= HandlePlayerGotHit;
+            _playerController.OnPickedLoot -= HandlePlayerPickedUpLootFromGround;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -211,6 +215,12 @@ namespace ShadowFlareRemake.GameManager
         private void HandlePlayerGotHit(Attack attack, IUnitStats unit)
         {
 
+        }
+
+        private void HandlePlayerPickedUpLootFromGround(Collider lootCollider)
+        {
+            _lastPickedUpLoot = lootCollider.GetComponent<LootView>();
+            _uiController.PickUpLootFromGround(_lastPickedUpLoot);
         }
 
         #endregion

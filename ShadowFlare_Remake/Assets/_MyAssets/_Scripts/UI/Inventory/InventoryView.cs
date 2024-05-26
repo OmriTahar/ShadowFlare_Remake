@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.UI.Inventory
     public class InventoryView : UIView<InventoryModel>
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
-        public event Action<Vector2Int, LootView> OnTileClicked;
+        public event Action<ItemsGridModel, Vector2Int, LootView> OnTileClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
@@ -56,9 +56,9 @@ namespace ShadowFlareRemake.UI.Inventory
             OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(Vector2Int tileIndex, LootView lootView)
+        public void TileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootView lootView)
         {
-            OnTileClicked?.Invoke(tileIndex, lootView);
+            OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootView);
         }
     }
 }

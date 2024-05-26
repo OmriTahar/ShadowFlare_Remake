@@ -59,7 +59,7 @@ namespace ShadowFlareRemake.UI
         private void Update()
         {
             HandleMouseRaycastHit();
-            HandlePickedItem();
+            HandlePickedLoot();
         }
 
         #endregion
@@ -98,29 +98,29 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region Mouse Raycast
+        #region Cursor
 
         private void HandleMouseRaycastHit()
         {
             if(_inputManager.IsCursorOnUI)
             {
-                _curserModel.UpdateCurser(CurserModel.CursorIconState.UI);
+                _curserModel.SetCursorIconState(CursorIconState.UI);
             }
             else if(_inputManager.IsCursorOnGround)
             {
-                _curserModel.UpdateCurser(CurserModel.CursorIconState.Move);
+                _curserModel.SetCursorIconState(CursorIconState.Move);
             }
             else if(_inputManager.IsCursorOnEnemy)
             {
-                _curserModel.UpdateCurser(CurserModel.CursorIconState.Attack);
+                _curserModel.SetCursorIconState(CursorIconState.Attack);
             }
             else if(_inputManager.IsCursorOnItem)
             {
-                _curserModel.UpdateCurser(CurserModel.CursorIconState.PickUp);
+                _curserModel.SetCursorIconState(CursorIconState.PickUp);
             }
             else
             {
-                _curserModel.UpdateCurser(CurserModel.CursorIconState.Other);
+                _curserModel.SetCursorIconState(CursorIconState.Other);
             }
         }
 
@@ -132,6 +132,55 @@ namespace ShadowFlareRemake.UI
         public void CursorLeftUI(PointerEventData eventData)
         {
             _inputManager.SetIsCursorOnUI(false);
+        }
+
+        #endregion
+
+        #region Item Grids & Loot
+
+        public void PickUpLootFromGround(LootView lootView)
+        {
+            _curserModel.PickUpLootFromGround(lootView);
+        }
+
+        private void HandlePickedLoot()
+        {
+            if(_curserModel.PickedLootUpTransform == null)
+            {
+                print("1");
+                return;
+            }
+
+            _curserModel.PickedLootUpTransform.position = _inputManager.CurrentMousePosition;
+            print("2");
+        }
+
+        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
+            if(!isCursorOn)
+            {
+                _curserModel.SetCurrentHoveredItemsGrid(null);
+                return;
+            }
+
+            _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
+        }
+
+        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel ,Vector2Int tileIndex, LootView lootView)
+        {
+            if(itemsGridModel == null)
+                return;
+
+            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {lootView != null}");
+
+            if(_curserModel.PickedUpLootModel == null && lootView != null)
+            {
+                itemsGridModel.RemoveItemFromGrid(tileIndex);
+            }
+            else if(_curserModel.PickedUpLootModel != null)
+            {
+                itemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
+            }
         }
 
         #endregion
@@ -153,44 +202,6 @@ namespace ShadowFlareRemake.UI
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
             HandleUiScreenCover();
-        }
-
-        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
-        {
-            if(!isCursorOn)
-            {
-                _inventoryModel.SetCurrentHoveredItemsGrid(null);
-                return;
-            }
-
-            _inventoryModel.SetCurrentHoveredItemsGrid(itemsGridModel);
-        }
-
-        private void HandleInventoryItemsGridClicked(Vector2Int tileIndex, LootView lootView)
-        {
-            var currentHoveredItemsGrid = _inventoryModel.CurrentHoveredItemsGridModel;
-
-            if(currentHoveredItemsGrid == null)
-                return;
-
-            print($"{ currentHoveredItemsGrid.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {lootView != null}");
-
-            if(_inventoryModel.PickedLoot == null && lootView != null)
-            {
-                _inventoryModel.PickUpLoot(tileIndex, lootView);
-            }
-            else if(_inventoryModel.PickedLoot != null)
-            {
-                _inventoryModel.PlaceLootOnGrid(tileIndex, lootView);
-            }
-        }
-
-        private void HandlePickedItem()
-        {
-            if(_inventoryModel.PickedLootTransform == null)
-                return;
-
-            _inventoryModel.PickedLootTransform.position = _inputManager.CurrentMousePosition;
         }
 
         #endregion
@@ -371,14 +382,14 @@ namespace ShadowFlareRemake.UI
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileClicked += HandleInventoryItemsGridClicked;
+                _inventoryView.OnTileClicked += HandleItemsGridClicked;
             }
             else
             {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileClicked -= HandleInventoryItemsGridClicked;
+                _inventoryView.OnTileClicked -= HandleItemsGridClicked;
             }
         }
 
