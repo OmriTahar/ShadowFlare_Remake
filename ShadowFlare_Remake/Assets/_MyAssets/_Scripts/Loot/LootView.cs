@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,8 @@ namespace ShadowFlareRemake.Loot
 {
     public class LootView : View<LootModel>
     {
+        public event Action OnLootViewClicked;
+
         public string Name { get; private set; }
         public Sprite Sprite { get; private set; }
         public int Width { get; private set; }
@@ -60,6 +63,11 @@ namespace ShadowFlareRemake.Loot
             _image.preserveAspect = true;
 
             _rect.sizeDelta = new Vector2(Width * _spriteSizeMultiplier, Height * _spriteSizeMultiplier);
+        }
+
+        public void UILootViewClicked()
+        {
+            OnLootViewClicked?.Invoke();
         }
     }
 }

@@ -6,11 +6,22 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class GridTileView : View<GridTileModel>
     {
-        public event Action<Vector2Int> OnTileClicked;
+        public event Action<Vector2Int, LootModel> OnTileClicked;
+
+        [field: SerializeField] public Vector2Int Index { get; private set; }
 
         [Header("References")]
-        [SerializeField] private LootView LootView;
-        [field: SerializeField] public Vector2Int Index { get; private set; }
+        [SerializeField] private LootView _lootView;
+
+        protected override void Initialize()
+        {
+            _lootView.OnLootViewClicked += TileClicked;
+        }
+
+        protected override void Clean()
+        {
+            _lootView.OnLootViewClicked -= TileClicked;
+        }
 
         protected override void ModelChanged()
         {
@@ -21,17 +32,17 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             if(Model.LootModel == null)
             {
-                LootView.gameObject.SetActive(false);
+                _lootView.gameObject.SetActive(false);
                 return;
             }
 
-            LootView.gameObject.SetActive(true);
-            LootView.SetModel(Model.LootModel);
+            _lootView.gameObject.SetActive(true);
+            _lootView.SetModel(Model.LootModel);
         }
 
         public void TileClicked()
         {
-            OnTileClicked?.Invoke(Index);
+            OnTileClicked?.Invoke(Index, Model.LootModel);
         }
     }
 }

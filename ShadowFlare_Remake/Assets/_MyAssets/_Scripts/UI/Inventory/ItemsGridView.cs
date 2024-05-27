@@ -73,9 +73,9 @@ namespace ShadowFlareRemake.UI.Inventory
             }
         }
 
-        private void InovkeTileClicked(Vector2Int index)
+        private void InovkeTileClicked(Vector2Int index, LootModel lootModel)
         {
-            OnTileClicked?.Invoke(Model, index, Model.HeldLootDict[index]);
+            OnTileClicked?.Invoke(Model, index, lootModel);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
