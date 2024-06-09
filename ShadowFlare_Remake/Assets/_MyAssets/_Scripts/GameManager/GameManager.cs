@@ -27,7 +27,7 @@ namespace ShadowFlareRemake.GameManager
         [Header("Loot")]
         [SerializeField] private Transform _testLootParent; 
         [SerializeField] private GameObject _testLootPrefab; 
-        [SerializeField] private Loot_ScriptableObject _testLootData; 
+        [SerializeField] private List<Loot_ScriptableObject> _testLootData; 
 
         private InputManager _inputManager;
 
@@ -57,7 +57,13 @@ namespace ShadowFlareRemake.GameManager
             RegisterEvents();
 
             _uiController.UpdatePlayerUI(_playerUnit);
-            TestSpawnLoot();
+
+            int spawnPosX = 0;
+            foreach(var lootData in _testLootData)
+            {
+                TestSpawnLoot(lootData, spawnPosX);
+                spawnPosX += 3;
+            }
         }
 
         private void Update()
@@ -235,11 +241,13 @@ namespace ShadowFlareRemake.GameManager
 
         #region Loot
 
-        private void TestSpawnLoot()
+        private void TestSpawnLoot(Loot_ScriptableObject lootData, int posX)
         {
-            var lootModel = new LootModel(_testLootData);
+            var lootModel = new LootModel(lootData);
 
             var fuckme = Instantiate(_testLootPrefab, _testLootParent);
+            var pos = fuckme.transform.position;
+            fuckme.transform.position = new Vector3(posX, pos.y, pos.z);
 
             var lootView = fuckme.GetComponentInChildren<LootView>();
 

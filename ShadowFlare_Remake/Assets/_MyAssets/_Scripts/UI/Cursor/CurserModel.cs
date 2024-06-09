@@ -6,7 +6,7 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
-        public LootModel PickedUpLootModel { get; private set; }
+        public LootModel HeldLootModel { get; private set; }
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
 
         public CursorIconState CurrentCursorIconState { get; private set; }
@@ -39,24 +39,39 @@ namespace ShadowFlareRemake.UI.Cursor
         public void PickUpLootFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             PickUpLootLogic(lootModel);
-            CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
+            itemsGridModel.RemoveItemFromGrid(tileIndex, true);
             Changed();
         }
 
         private void PickUpLootLogic(LootModel lootModel)
         {
-            PickedUpLootModel = lootModel;
+            HeldLootModel = lootModel;
         }
 
         private void DropLootLogic()
         {
-            PickedUpLootModel = null;
+            HeldLootModel = null;
         }
 
-        public void DropLootOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        public void PlaceLootInGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            itemsGridModel.PlaceLootOnGrid(tileIndex, lootModel);
-            DropLootLogic();
+            var tuple = itemsGridModel.TryPlaceLootOnGrid(tileIndex, lootModel);
+            var isLootPlaced = tuple.Item1;
+            var swappedLoot = tuple.Item2;
+
+            if(isLootPlaced)
+            {
+                if(swappedLoot != null)
+                {
+                    PickUpLootLogic(swappedLoot);
+                }
+                else
+                {
+                    DropLootLogic();
+                }
+
+                Changed();
+            }
         }
 
         public void DropLootOnGround()

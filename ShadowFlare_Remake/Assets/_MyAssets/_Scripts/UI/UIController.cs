@@ -172,21 +172,19 @@ namespace ShadowFlareRemake.UI
             if(itemsGridModel == null)
                 return;
 
-            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Is Inventory Item: {gridLootModel != null}");
+            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Contains Loot Model: {gridLootModel != null}");
 
-            var cursorLootModel = _curserModel.PickedUpLootModel;
+            var cursorLootModel = _curserModel.HeldLootModel;
 
             if(cursorLootModel == null && gridLootModel == null)
                 return;
 
             if(cursorLootModel != null && gridLootModel == null)
             {
-                //itemsGridModel.PlaceLootOnGrid(tileIndex, lootModel);
-                _curserModel.DropLootOnGrid(itemsGridModel, tileIndex, cursorLootModel);
+                _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
             }
             else if(cursorLootModel == null && gridLootModel != null)
             {
-                //itemsGridModel.RemoveItemFromGrid(tileIndex);
                 _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, gridLootModel);
             }
             else if(cursorLootModel != null && gridLootModel != null)

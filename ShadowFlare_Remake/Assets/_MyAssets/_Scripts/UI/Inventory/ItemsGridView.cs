@@ -67,15 +67,15 @@ namespace ShadowFlareRemake.UI.Inventory
                 //itemRect.SetParent(tileView);
                 //itemRect.localPosition = Vector3.zero;
 
-                //var gridTileView = _gridTilesDict[index];
-                //gridTileView.SetModel(gridTileModel);
+                var gridTileView = _gridTilesDict[index];
+                gridTileView.SetModel(gridTileModel);
             }
         }
 
         private void InovkeTileClicked(Vector2Int index)
         {
-            var lootModel = Model.HeldLootDict[index];
-            OnTileClicked?.Invoke(Model, index, lootModel);
+            var gridTileModel = Model.GridTileModelsDict[index];
+            OnTileClicked?.Invoke(Model, index, gridTileModel.LootModel);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

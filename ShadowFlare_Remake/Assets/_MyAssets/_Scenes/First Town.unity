@@ -693,7 +693,10 @@ MonoBehaviour:
   _testLootParent: {fileID: 1971432786}
   _testLootPrefab: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
     type: 3}
-  _testLootData: {fileID: 11400000, guid: f0747755880de284291758893d4d3927, type: 2}
+  _testLootData:
+  - {fileID: 11400000, guid: f0747755880de284291758893d4d3927, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
 --- !u!4 &153281228
 Transform:
   m_ObjectHideFlags: 0
@@ -16232,7 +16235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971432785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5000305, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -8,64 +8,153 @@ namespace ShadowFlareRemake.UI
     public class ItemsGridModel : Model
     {
         public Dictionary<Vector2Int, GridTileModel> GridTileModelsDict { get; private set; } = new();
-        public Dictionary<Vector2Int, LootModel> HeldLootDict { get; private set; } = new();
 
         public string Name { get; private set; }
         public int GridWidth { get; private set; }
         public int GridHeight { get; private set; }
+
         //public int TileWidth { get; private set; }
         //public int TileHight { get; private set; }
+
+        private Vector2Int _topLeftValidIndex;
 
         public ItemsGridModel(string name, int gridWidth, int gridHeight /*,int tileWidth, int tileHight*/)
         {
             Name = name;
             //InitTileSize(tileWidth, tileHight);
-            InitIGridTilesAndLootDicts(gridWidth,gridHeight);
+            InitIGridTilesDict(gridWidth, gridHeight);
         }
 
-        public void PlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
+        public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
-            //HeldLootDict[tileIndex] = lootModel;
-            GridTileModelsDict[tileIndex].SetLootModel(lootModel);
+            GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
+            var swappedLoot = gridTileModel.LootModel;
+            RemoveItemFromGrid(tileIndex, false);
+
+            if(!IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            {
+                GridTileModelsDict[tileIndex].SetLootModel(swappedLoot);
+                return (false, lootModel);
+            }
+
+            GridTileModelsDict[_topLeftValidIndex].SetLootModel(lootModel);
             Changed();
 
-            //if(!IsValidPlacement(PickedItem, tileIndex))
-            //{
-            //    return;
-            //}
-
-
-            //var isIndexTaken = ItemsDict.TryGetValue(tileIndex, out var carriedItem);
-
-            //if(!isIndexTaken) {
-            //    ItemsDict.Add(tileIndex, item);
-
-            //} else {
-            //    ItemsDict[tileIndex] = item;
-            //}
+            SetTopLeftValidIndex(-1, -1);
+            return (true, swappedLoot);
         }
 
-        public void RemoveItemFromGrid(Vector2Int tileIndex)
+        public void RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
         {
-            HeldLootDict[tileIndex] = null;
+            GridTileModelsDict[tileIndex].SetLootModel(null);
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
         }
 
-        private bool IsValidPlacement(LootView inventoryItem, Vector2Int tileIndex)
+        private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)
         {
-            bool isValid;
+            var isValidHorizontally = IsValidPlacementHorizontally(width, tileIndex);
+            var isValidVertically = IsValidPlacementVertically(height, tileIndex);
 
-            if(inventoryItem == null)
+            var isValidPlacement = isValidHorizontally && isValidVertically;
+            Debug.Log($"Inventory: Is Valid Loot Placement: {isValidPlacement}");
+
+            return isValidPlacement;
+        }
+
+        private bool IsValidPlacementHorizontally(int width, Vector2Int tileIndex)
+        {
+            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
+
+            var indexCheck = new Vector2Int();
+            var consecutiveTilesCounter = 0;
+            var helper = 0;
+
+            indexCheck.y = tileIndex.y;
+
+            for(int i = -width + 1; i < width; i++)
             {
-                isValid = false;
+                indexCheck.x = tileIndex.x + i;
+
+                if(!IsValidTileIndex(indexCheck))
+                {
+                    continue;
+                }
+
+                GridTileModelsDict.TryGetValue(indexCheck, out GridTileModel gridTileModel);
+
+                if(gridTileModel.LootModel == null)
+                {
+                    if(indexCheck.x < _topLeftValidIndex.x)
+                        SetTopLeftValidIndex(tileIndex.x, _topLeftValidIndex.y);
+
+                    helper = 1;
+                }
+                else
+                    helper = -1;
+
+                consecutiveTilesCounter += helper;
             }
-            else
+
+            if(consecutiveTilesCounter >= width)
+                return true;
+
+            SetTopLeftValidIndex(-1, -1);
+            return false;
+        }
+
+        private bool IsValidPlacementVertically(int height, Vector2Int tileIndex)
+        {
+            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
+
+            var indexCheck = new Vector2Int();
+            var consecutiveTilesCounter = 0;
+            var helper = 0;
+
+            indexCheck.x = tileIndex.x;
+
+            for(int i = -height + 1; i < height; i++)
             {
-                isValid = true;
+                indexCheck.y = tileIndex.y + i;
 
+                if(!IsValidTileIndex(indexCheck))
+                {
+                    continue;
+                }
+
+                GridTileModelsDict.TryGetValue(indexCheck, out GridTileModel gridTileModel);
+
+                if(gridTileModel.LootModel == null)
+                {
+                    if(indexCheck.y < _topLeftValidIndex.y)
+                        SetTopLeftValidIndex(_topLeftValidIndex.x, indexCheck.y);
+
+                    helper = 1;
+                }
+                else
+                    helper = -1;
+
+                consecutiveTilesCounter += helper;
             }
 
-            Debug.Log($"Inventory: Is Valid Placement: {isValid}");
-            return isValid;
+            if(consecutiveTilesCounter >= height)
+                return true;
+
+            SetTopLeftValidIndex(-1, -1);
+            return false;
+        }
+
+        private bool IsValidTileIndex(Vector2Int indexCheck)
+        {
+            if(indexCheck.x < 0 || indexCheck.x > GridWidth - 1 || indexCheck.y < 0 || indexCheck.y > GridHeight - 1)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         //private void InitTileSize(float tileWidth, float tileHight)
@@ -80,7 +169,7 @@ namespace ShadowFlareRemake.UI
         //    TileHight = (int)(tileHight * heightRatioDiff);
         //}
 
-        private void InitIGridTilesAndLootDicts(int gridWidth, int gridHight)
+        private void InitIGridTilesDict(int gridWidth, int gridHight)
         {
             GridWidth = gridWidth;
             GridHeight = gridHight;
@@ -91,9 +180,14 @@ namespace ShadowFlareRemake.UI
                 {
                     var tileIndex = new Vector2Int(x, y);
                     GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex));
-                    HeldLootDict.Add(tileIndex, null);
                 }
             }
+        }
+
+        private void SetTopLeftValidIndex(int x, int y)
+        {
+            _topLeftValidIndex.x = x;
+            _topLeftValidIndex.y = y;
         }
     }
 }

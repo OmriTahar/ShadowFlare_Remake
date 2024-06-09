@@ -21,6 +21,7 @@ namespace ShadowFlareRemake.Loot
 
         [Header("Settings")]
         [SerializeField] private int _spriteSizeMultiplier = 60;
+        [SerializeField] private int _spritePosHelper = 40;
 
         protected override void ModelChanged()
         {
@@ -63,6 +64,10 @@ namespace ShadowFlareRemake.Loot
             _image.preserveAspect = true;
 
             _rect.sizeDelta = new Vector2(Width * _spriteSizeMultiplier, Height * _spriteSizeMultiplier);
+
+            var x = (Width - 1) * _spritePosHelper;
+            var y = (Height - 1) * -_spritePosHelper;
+            _rect.localPosition = new Vector2(x,y);
         }
 
         public void UILootViewClicked()
