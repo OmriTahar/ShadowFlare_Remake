@@ -247,7 +247,6 @@ namespace ShadowFlareRemake.Player
 
             while(timer < timeToComplete)
             {
-
                 Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
                 _characterController.Move(movement);
                 timer += Time.deltaTime;

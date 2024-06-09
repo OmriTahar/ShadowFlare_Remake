@@ -42,13 +42,12 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void InitGridTilesDict()
         {
-            var tileViews = GetComponentsInChildren<GridTileView>();
+            var gridTileViews = GetComponentsInChildren<GridTileView>();
 
-            foreach(var view in tileViews)
+            foreach(var tileView in gridTileViews)
             {
-                _gridTilesDict.Add(view.Index, view);
-                view.SetModel(Model.GridTileModelsDict[view.Index]);
-                view.OnTileClicked += InovkeTileClicked;
+                _gridTilesDict.Add(tileView.Index, tileView);
+                tileView.OnTileClicked += InovkeTileClicked;
             }
         }
 
@@ -68,13 +67,14 @@ namespace ShadowFlareRemake.UI.Inventory
                 //itemRect.SetParent(tileView);
                 //itemRect.localPosition = Vector3.zero;
 
-                var gridTileView = _gridTilesDict[index];
-                gridTileView.SetModel(gridTileModel);
+                //var gridTileView = _gridTilesDict[index];
+                //gridTileView.SetModel(gridTileModel);
             }
         }
 
-        private void InovkeTileClicked(Vector2Int index, LootModel lootModel)
+        private void InovkeTileClicked(Vector2Int index)
         {
+            var lootModel = Model.HeldLootDict[index];
             OnTileClicked?.Invoke(Model, index, lootModel);
         }
 

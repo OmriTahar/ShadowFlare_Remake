@@ -1,48 +1,29 @@
-using ShadowFlareRemake.Loot;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
-    public class GridTileView : View<GridTileModel>
+    public class GridTileView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public event Action<Vector2Int, LootModel> OnTileClicked;
+        public event Action<Vector2Int, bool> OnTileHovered;
+        public event Action<Vector2Int> OnTileClicked;
 
         [field: SerializeField] public Vector2Int Index { get; private set; }
 
-        [Header("References")]
-        [SerializeField] private LootView _lootView;
-
-        protected override void Initialize()
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            _lootView.OnLootViewClicked += TileClicked;
+            OnTileHovered?.Invoke(Index, true);
         }
 
-        protected override void Clean()
+        public void OnPointerExit(PointerEventData eventData)
         {
-            _lootView.OnLootViewClicked -= TileClicked;
-        }
-
-        protected override void ModelChanged()
-        {
-            SetLootModel();
-        }
-
-        private void SetLootModel()
-        {
-            if(Model.LootModel == null)
-            {
-                _lootView.gameObject.SetActive(false);
-                return;
-            }
-
-            _lootView.gameObject.SetActive(true);
-            _lootView.SetModel(Model.LootModel);
+            OnTileHovered?.Invoke(Index, false);
         }
 
         public void TileClicked()
         {
-            OnTileClicked?.Invoke(Index, Model.LootModel);
+            OnTileClicked?.Invoke(Index);
         }
     }
 }
