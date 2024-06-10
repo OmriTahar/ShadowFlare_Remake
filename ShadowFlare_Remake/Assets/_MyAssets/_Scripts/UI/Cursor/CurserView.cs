@@ -1,6 +1,7 @@
 using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
+using UnityEngine.UI;
 
 namespace ShadowFlareRemake.UI.Cursor
 {
@@ -8,6 +9,7 @@ namespace ShadowFlareRemake.UI.Cursor
     {
         [Header("Loot")]
         [SerializeField] private LootView _pickedUpLootView;
+        [SerializeField] private Image _pickedUpLootImage;
 
         [Header("Curser Icons")]
         [SerializeField] private Texture2D Move;
@@ -32,12 +34,12 @@ namespace ShadowFlareRemake.UI.Cursor
         {
             if(Model.HeldLootModel == null)
             {
-                _pickedUpLootView.gameObject.SetActive(false);
+                _pickedUpLootImage.enabled = false;
                 return;
             }
 
             _pickedUpLootView.SetModel(Model.HeldLootModel);
-            _pickedUpLootView.gameObject.SetActive(true);
+            _pickedUpLootImage.enabled = true;
         }
 
         private Texture2D GetCurserIcon(CursorIconState cursorIconState)

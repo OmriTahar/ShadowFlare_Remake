@@ -147,6 +147,47 @@ namespace ShadowFlareRemake.UI
             return false;
         }
 
+        private bool IsValidPlacementVertically2(int height, Vector2Int tileIndex)
+        {
+            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
+
+            var indexCheck = new Vector2Int();
+            var consecutiveTilesCounter = 0;
+            var helper = 0;
+
+            indexCheck.x = tileIndex.x;
+
+            for(int i = -height + 1; i < height; i++)
+            {
+                indexCheck.y = tileIndex.y + i;
+
+                if(!IsValidTileIndex(indexCheck))
+                {
+                    continue;
+                }
+
+                GridTileModelsDict.TryGetValue(indexCheck, out GridTileModel gridTileModel);
+
+                if(gridTileModel.LootModel == null)
+                {
+                    if(indexCheck.y < _topLeftValidIndex.y)
+                        SetTopLeftValidIndex(_topLeftValidIndex.x, indexCheck.y);
+
+                    helper = 1;
+                }
+                else
+                    helper = -1;
+
+                consecutiveTilesCounter += helper;
+            }
+
+            if(consecutiveTilesCounter >= height)
+                return true;
+
+            SetTopLeftValidIndex(-1, -1);
+            return false;
+        }
+
         private bool IsValidTileIndex(Vector2Int indexCheck)
         {
             if(indexCheck.x < 0 || indexCheck.x > GridWidth - 1 || indexCheck.y < 0 || indexCheck.y > GridHeight - 1)
