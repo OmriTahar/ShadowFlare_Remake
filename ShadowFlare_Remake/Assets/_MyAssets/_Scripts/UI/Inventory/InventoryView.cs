@@ -14,14 +14,17 @@ namespace ShadowFlareRemake.UI.Inventory
         [field: SerializeField] public LootView _testLootPrefab { get; private set; }
 
         [Header("Items Grid")]
+        [SerializeField] private ItemsGridView _weaponPanelView;
+        [SerializeField] private ItemsGridView _shieldPanelView;
+        [SerializeField] private ItemsGridView _helmetPanelView;
+        [SerializeField] private ItemsGridView _armorPanelView;
+        [SerializeField] private ItemsGridView _bootsPanelView;
         [SerializeField] private ItemsGridView _carryPanelView;
-
-        private ItemsGridModel _carryPanelModel;
 
         protected override void Initialize()
         {
             RegisterEvents();
-            SetCarryPanelModel();
+            SetItemsGridModels();
         }
 
         protected override void ModelChanged()
@@ -29,8 +32,13 @@ namespace ShadowFlareRemake.UI.Inventory
             _inventoryPanel.SetActive(Model.IsInventoryOpen);
         }
 
-        private void SetCarryPanelModel()
+        private void SetItemsGridModels()
         {
+            _weaponPanelView.SetModel(Model.WeaponPanelModel);
+            _shieldPanelView.SetModel(Model.ShieldPanelModel);
+            _helmetPanelView.SetModel(Model.HelmetPanelModel);
+            _armorPanelView.SetModel(Model.ArmorPanelModel);
+            _bootsPanelView.SetModel(Model.BootsPanelModel);
             _carryPanelView.SetModel(Model.CarryPanelModel);
         }
 
@@ -41,13 +49,35 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void RegisterEvents()
         {
+            _weaponPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+            _shieldPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+            _helmetPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+            _armorPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+            _bootsPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
             _carryPanelView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+
+            _weaponPanelView.OnTileClicked += TileClicked;
+            _shieldPanelView.OnTileClicked += TileClicked;
+            _helmetPanelView.OnTileClicked += TileClicked;
+            _armorPanelView.OnTileClicked += TileClicked;
+            _bootsPanelView.OnTileClicked += TileClicked;
             _carryPanelView.OnTileClicked += TileClicked;
         }
 
         private void DeregisterEvents()
         {
+            _weaponPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+            _shieldPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+            _helmetPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+            _armorPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+            _bootsPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
             _carryPanelView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+
+            _weaponPanelView.OnTileClicked -= TileClicked;
+            _shieldPanelView.OnTileClicked -= TileClicked;
+            _helmetPanelView.OnTileClicked -= TileClicked;
+            _armorPanelView.OnTileClicked -= TileClicked;
+            _bootsPanelView.OnTileClicked -= TileClicked;
             _carryPanelView.OnTileClicked -= TileClicked;
         }
 

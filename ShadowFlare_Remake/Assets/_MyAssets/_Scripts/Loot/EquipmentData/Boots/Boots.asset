@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cef976a76d54627488846906d08e1715, type: 3}
-  m_Name: Diamond_Item
+  m_Name: Boots
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Diamond
-  <Color>k__BackingField: {r: 0.6981132, g: 0.5789928, b: 0.13501245, a: 1}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 668836f0e38c55f458290b9accbc54d2,
+  <Name>k__BackingField: Boots
+  <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 9c510e7451d947a4da50febbf14557b4,
     type: 3}
-  <Width>k__BackingField: 1
-  <Height>k__BackingField: 1
+  <Width>k__BackingField: 2
+  <Height>k__BackingField: 2

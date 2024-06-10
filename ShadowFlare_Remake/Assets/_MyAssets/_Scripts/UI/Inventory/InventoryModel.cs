@@ -1,7 +1,13 @@
+
 namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
+        public ItemsGridModel WeaponPanelModel { get; private set; }
+        public ItemsGridModel ShieldPanelModel { get; private set; }
+        public ItemsGridModel HelmetPanelModel { get; private set; }
+        public ItemsGridModel ArmorPanelModel { get; private set; }
+        public ItemsGridModel BootsPanelModel { get; private set; }
         public ItemsGridModel CarryPanelModel { get; private set; }
 
         public bool IsInventoryOpen { get; private set; }
@@ -9,6 +15,16 @@ namespace ShadowFlareRemake.UI.Inventory
         public InventoryModel(bool isInventoryOpen)
         {
             SetIsInventoryOpen(isInventoryOpen);
+            SetItemsGridModels();
+        }
+
+        private void SetItemsGridModels()
+        {
+            WeaponPanelModel = new ItemsGridModel("Weapon Panel", 2, 4);
+            ShieldPanelModel = new ItemsGridModel("Shield Panel", 2, 3);
+            HelmetPanelModel = new ItemsGridModel("Helmet Panel", 2,2);
+            ArmorPanelModel = new ItemsGridModel("Armor Panel", 2,3);
+            BootsPanelModel = new ItemsGridModel("Boots Panel", 2,2);
             CarryPanelModel = new ItemsGridModel("Carry Panel", 10, 4);
         }
 

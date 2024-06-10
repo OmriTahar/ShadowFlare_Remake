@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cef976a76d54627488846906d08e1715, type: 3}
-  m_Name: Bow_Item
+  m_Name: Armor
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Bow
+  <Name>k__BackingField: Armor
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 652391a4945cb0949a90c5328a0f12af,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: cd1d226a0093eb84691d59f5697e74fb,
     type: 3}
-  <Width>k__BackingField: 3
-  <Height>k__BackingField: 2
+  <Width>k__BackingField: 2
+  <Height>k__BackingField: 3
