@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Armor
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Armor
+  <Type>k__BackingField: 4
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: cd1d226a0093eb84691d59f5697e74fb,
     type: 3}

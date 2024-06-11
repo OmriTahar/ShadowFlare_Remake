@@ -6,6 +6,8 @@ namespace ShadowFlareRemake.Enums
         Attack,
         PickUp,
         UI,
+        Merchacnt,
+        NPC,
         Other
     }
 }

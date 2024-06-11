@@ -12,11 +12,13 @@ namespace ShadowFlareRemake.UI.Cursor
         [SerializeField] private Image _pickedUpLootImage;
 
         [Header("Curser Icons")]
-        [SerializeField] private Texture2D Move;
-        [SerializeField] private Texture2D Attack;
-        [SerializeField] private Texture2D PickUp;
-        [SerializeField] private Texture2D UI;
-        [SerializeField] private Texture2D Other;
+        [SerializeField] private Texture2D _moveCursorIcon;
+        [SerializeField] private Texture2D _attackCursorIcon;
+        [SerializeField] private Texture2D _pickUpCursorIcon;
+        [SerializeField] private Texture2D _uiCursorIcon;
+        [SerializeField] private Texture2D _merchantCursorIcon;
+        [SerializeField] private Texture2D _npcCursorIcon;
+        [SerializeField] private Texture2D _otherCursorIcon;
 
         protected override void ModelChanged()
         {
@@ -47,21 +49,28 @@ namespace ShadowFlareRemake.UI.Cursor
             switch(cursorIconState)
             {
                 case CursorIconState.Move:
-                    return Move;
+                    return _moveCursorIcon;
 
                 case CursorIconState.Attack:
-                    return Attack;
+                    return _attackCursorIcon;
 
                 case CursorIconState.PickUp:
-                    return PickUp;
+                    return _pickUpCursorIcon;
 
                 case CursorIconState.UI:
-                    return UI;
+                    return _uiCursorIcon;
+
+                case CursorIconState.Merchacnt:
+                    return _merchantCursorIcon;
+
+                case CursorIconState.NPC:
+                    return _npcCursorIcon;
 
                 case CursorIconState.Other:
-                    return Other;
+                    return _otherCursorIcon;
             }
-            return Other;
+
+            return _otherCursorIcon;
         }
     }
 }

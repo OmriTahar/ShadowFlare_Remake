@@ -1,8 +1,8 @@
-using ShadowFlareRemake.Loot;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
@@ -11,20 +11,11 @@ namespace ShadowFlareRemake.UI.Inventory
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
 
-        [Header("References")]
-        [SerializeField] private RectTransform _rectTransform;
-
         private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
 
         protected override void Initialize()
         {
-            CacheNulls();
             InitGridTilesDict();
-        }
-
-        protected override void ModelChanged()
-        {
-            PlaceItems();
         }
 
         protected override void Clean()
@@ -32,12 +23,9 @@ namespace ShadowFlareRemake.UI.Inventory
             DeregisterEvents();
         }
 
-        private void CacheNulls()
+        protected override void ModelChanged()
         {
-            if(_rectTransform == null)
-            {
-                _rectTransform = GetComponent<RectTransform>();
-            }
+            PlaceItems();
         }
 
         private void InitGridTilesDict()
@@ -61,11 +49,6 @@ namespace ShadowFlareRemake.UI.Inventory
 
                 if(lootModel == null)
                     continue;
-
-                //var tileView = _gridTilesDict[index].transform;
-                //var itemRect = loot.transform;
-                //itemRect.SetParent(tileView);
-                //itemRect.localPosition = Vector3.zero;
 
                 var gridTileView = _gridTilesDict[index];
                 gridTileView.SetModel(gridTileModel);
@@ -95,43 +78,6 @@ namespace ShadowFlareRemake.UI.Inventory
                 tileView.OnTileClicked -= InovkeTileClicked;
             }
         }
-
-        //private Vector2 _mousePositionOnGrid = new Vector2();
-        //private Vector2Int _tileGridPosition = new Vector2Int();
-
-        //public void TileClicked() {
-
-        //    var clickedTile = GetTileGridPosition(Mouse.current.position.ReadValue());
-        //    OnTileClicked?.Invoke(clickedTile);
-        //}
-
-        //private Vector2Int GetTileGridPosition(Vector2 mousePosition) {
-
-        //    _mousePositionOnGrid.x = mousePosition.x - _rectTransform.position.x;
-        //    _mousePositionOnGrid.y = _rectTransform.position.y - mousePosition.y;
-
-        //    _tileGridPosition.x = (int)(_mousePositionOnGrid.x / Model.TileWidth);
-        //    _tileGridPosition.y = (int)(_mousePositionOnGrid.y / Model.TileHight);
-
-        //    return _tileGridPosition;
-        //}
-
-
-        //public void PlaceItem(InventoryItem inventoryItem, int posX, int posY) {
-
-        //    RectTransform rectTransform = inventoryItem.GetComponent<RectTransform>();
-        //    rectTransform.SetParent(_rectTransform);
-        //    //_inventoryItemSlot[posX, posY] = inventoryItem;
-
-        //    Vector2 position = new Vector2();
-        //    //position.x = posX * gridSizeWidth + gridSizeWidth / 2;
-        //    //position.y = -(posY * gridSizeHeight + gridSizeHeight / 2);
-
-        //    position.x = posX;
-        //    position.y = posY;
-
-        //    rectTransform.localPosition = position;
-        //}
     }
 }
 

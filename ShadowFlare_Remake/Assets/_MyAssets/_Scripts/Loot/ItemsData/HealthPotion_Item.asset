@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HealthPotion_Item
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Health Potion
+  <Type>k__BackingField: 7
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 9c0039c84e5c49b4b9ba046ac33c6db5,
     type: 3}

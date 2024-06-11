@@ -1,14 +1,17 @@
+using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
-        public ItemsGridModel WeaponPanelModel { get; private set; }
-        public ItemsGridModel ShieldPanelModel { get; private set; }
-        public ItemsGridModel HelmetPanelModel { get; private set; }
-        public ItemsGridModel ArmorPanelModel { get; private set; }
-        public ItemsGridModel BootsPanelModel { get; private set; }
-        public ItemsGridModel CarryPanelModel { get; private set; }
+        public ItemsGridModel TalismanItemsGridModel { get; private set; }
+        public ItemsGridModel WeaponItemsGridModel { get; private set; }
+        public ItemsGridModel ShieldItemsGridModel { get; private set; }
+        public ItemsGridModel HelmetItemsGridModel { get; private set; }
+        public ItemsGridModel ArmorItemsGridModel { get; private set; }
+        public ItemsGridModel BootsItemsGridModel { get; private set; }
+        public ItemsGridModel CarryItemsGridModel { get; private set; }
+        public ItemsGridModel QuickItemsGridModel { get; private set; }
 
         public bool IsInventoryOpen { get; private set; }
 
@@ -20,13 +23,14 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetItemsGridModels()
         {
-            WeaponPanelModel = new ItemsGridModel("Weapon Panel", 1,1);
-            ShieldPanelModel = new ItemsGridModel("Shield Panel", 1,1);
-            HelmetPanelModel = new ItemsGridModel("Helmet Panel", 1,1);
-            ArmorPanelModel = new ItemsGridModel("Armor Panel", 1,1);
-            BootsPanelModel = new ItemsGridModel("Boots Panel", 1,1);
-
-            CarryPanelModel = new ItemsGridModel("Carry Panel", 10, 4);
+            TalismanItemsGridModel = new ItemsGridModel("Talisman Grid", 2, 2, LootType.Talisman);
+            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1,1, LootType.Weapon);
+            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1,1, LootType.Shield);
+            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1,1, LootType.Helmet);
+            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1,1, LootType.Armor);
+            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1,1, LootType.Boots);
+            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, LootType.All);
+            QuickItemsGridModel = new ItemsGridModel("Carry Grid", 4, 2, LootType.Potion);
         }
 
         public void SetIsInventoryOpen(bool isInventoryOpen)
@@ -34,55 +38,6 @@ namespace ShadowFlareRemake.UI.Inventory
             IsInventoryOpen = isInventoryOpen;
             Changed();
         }
-
-        //public void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel)
-        //{
-        //    CurrentHoveredItemsGridModel = itemsGridModel;
-        //}
-
-        //public void PickUpLoot(Vector2Int tileIndex, LootView lootView)
-        //{
-        //    PickedLoot = lootView;
-
-        //    if(lootView == null)
-        //    {
-        //        PickedLootTransform = null;
-        //        return;
-        //    }
-
-        //    PickedLootTransform = lootView.transform;
-        //    CurrentHoveredItemsGridModel.RemoveItemFromGrid(tileIndex);
-        //}
-
-        //public void PlaceLootOnGrid(Vector2Int tileIndex, LootView lootView)
-        //{
-        //    CurrentHoveredItemsGridModel.PlaceLootOnGrid(tileIndex, lootView);
-
-        //    PickedLoot = null;
-        //    PickedLootTransform = null;
-        //}
-
-        //public void PlaceItem(Vector2Int tileIndex)
-        //{
-        //    if(!IsValidPlacement(PickedItem, tileIndex))
-        //    {
-        //        return;
-        //    }
-
-        //    ItemsDict[tileIndex] = PickedItem;
-
-        //    //var isIndexTaken = ItemsDict.TryGetValue(tileIndex, out var carriedItem);
-
-        //    //if(!isIndexTaken) {
-        //    //    ItemsDict.Add(tileIndex, item);
-
-        //    //} else {
-        //    //    ItemsDict[tileIndex] = item;
-        //    //}
-
-        //    Changed();
-        //}
-
     }
 }
 

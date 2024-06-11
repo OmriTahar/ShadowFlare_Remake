@@ -1,7 +1,7 @@
-using ShadowFlareRemake.Loot;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI.Inventory
 {

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cef976a76d54627488846906d08e1715, type: 3}
-  m_Name: ManaPotion_Item
+  m_Name: Necklace
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Mana Potion
-  <Type>k__BackingField: 7
+  <Name>k__BackingField: Necklace
+  <Type>k__BackingField: 6
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 6a75c99f48687db46a0570b6e6ba9c93,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 92ae13a49fa65af46906da8029caf780,
     type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1

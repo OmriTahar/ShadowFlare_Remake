@@ -58,7 +58,7 @@ namespace ShadowFlareRemake.GameManager
 
             _uiController.UpdatePlayerUI(_playerUnit);
 
-            int spawnPosX = 0;
+            float spawnPosX = _testLootParent.transform.position.x;
             foreach(var lootData in _testLootData)
             {
                 TestSpawnLoot(lootData, spawnPosX);
@@ -241,7 +241,7 @@ namespace ShadowFlareRemake.GameManager
 
         #region Loot
 
-        private void TestSpawnLoot(Loot_ScriptableObject lootData, int posX)
+        private void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
         {
             var lootModel = new LootModel(lootData);
 

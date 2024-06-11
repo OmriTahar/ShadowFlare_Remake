@@ -1,6 +1,6 @@
+using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
-using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Cursor
 {

@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Shield
+  <Type>k__BackingField: 2
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: ed1e4bbce05b0cc438171d626534a8d2,
     type: 3}
-  <Width>k__BackingField: 3
-  <Height>k__BackingField: 3
+  <Width>k__BackingField: 2
+  <Height>k__BackingField: 2

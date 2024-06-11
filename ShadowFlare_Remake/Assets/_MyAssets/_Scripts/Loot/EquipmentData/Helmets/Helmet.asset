@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Helmet
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Helmet
+  <Type>k__BackingField: 3
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 334b7085edbca194d91ceafd85fa49f5,
     type: 3}

@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace ShadowFlareRemake.UI
 {
@@ -14,16 +14,17 @@ namespace ShadowFlareRemake.UI
         public int GridHeight { get; private set; }
 
         private Vector2Int _topLeftValidIndex;
-
+        private LootType _acceptedLootType;
         private bool _isSingleTile;
-        private LootType _lootType;
 
         #region Init
 
-        public ItemsGridModel(string name, int gridWidth, int gridHeight)
+        public ItemsGridModel(string name, int gridWidth, int gridHeight, LootType acceptedLootType)
         {
             Name = name;
             _isSingleTile = (gridWidth == 1 && gridHeight == 1);
+            _acceptedLootType = acceptedLootType;
+
             InitIGridTilesDict(gridWidth, gridHeight);
         }
 
@@ -55,7 +56,10 @@ namespace ShadowFlareRemake.UI
 
         public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
-            //if(lootModel.LootData.Type != ) // YOU STOPPED HERE!!!!!!!!
+            if(_acceptedLootType != LootType.All && lootModel.LootData.Type != _acceptedLootType)
+            {
+                return (false, lootModel);
+            }
 
             GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
             var swappedLoot = gridTileModel.LootModel;
