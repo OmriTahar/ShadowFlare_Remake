@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.Enums
         Armor,
         Boots,
         Talisman,
-        Potion
+        Potion,
+        Gold
     }
 }

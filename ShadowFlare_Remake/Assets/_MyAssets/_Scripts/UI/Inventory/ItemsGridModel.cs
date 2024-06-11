@@ -75,21 +75,45 @@ namespace ShadowFlareRemake.UI
                 return (false, lootModel);
             }
 
-            GridTileModelsDict[_topLeftValidIndex].SetLootModel(lootModel);
+            PlaceOrRemoveItemOnGrid(lootModel, false);
             Changed();
 
             SetTopLeftValidIndex(-1, -1);
             return (true, swappedLoot);
         }
 
-        public void RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
+        private void PlaceOrRemoveItemOnGrid(LootModel lootModel, bool invokeChanged)
         {
-            GridTileModelsDict[tileIndex].SetLootModel(null);
+            var index = new Vector2Int();
+
+            for(int i = 0; i < lootModel.LootData.Width; i++)
+            {
+                index.x = _topLeftValidIndex.x + i;
+                index.y = _topLeftValidIndex.y;
+                GridTileModelsDict[index].SetLootModel(lootModel);
+            }
+
+            for(int i = 0; i < lootModel.LootData.Height; i++)
+            {
+                index.x = _topLeftValidIndex.x;
+                index.y = _topLeftValidIndex.y + i;
+                GridTileModelsDict[index].SetLootModel(lootModel);
+            }
 
             if(invokeChanged)
             {
                 Changed();
             }
+        }
+
+        public void RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
+        {
+            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
+
+            GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
+            var lootToRemove = gridTileModel.LootModel;
+
+            //PlaceOrRemoveItemOnGrid()
         }
 
         private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)
