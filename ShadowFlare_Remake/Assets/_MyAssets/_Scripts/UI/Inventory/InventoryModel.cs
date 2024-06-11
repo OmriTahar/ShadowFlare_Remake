@@ -20,11 +20,12 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetItemsGridModels()
         {
-            WeaponPanelModel = new ItemsGridModel("Weapon Panel", 2, 4);
-            ShieldPanelModel = new ItemsGridModel("Shield Panel", 2, 3);
-            HelmetPanelModel = new ItemsGridModel("Helmet Panel", 2,2);
-            ArmorPanelModel = new ItemsGridModel("Armor Panel", 2,3);
-            BootsPanelModel = new ItemsGridModel("Boots Panel", 2,2);
+            WeaponPanelModel = new ItemsGridModel("Weapon Panel", 1,1);
+            ShieldPanelModel = new ItemsGridModel("Shield Panel", 1,1);
+            HelmetPanelModel = new ItemsGridModel("Helmet Panel", 1,1);
+            ArmorPanelModel = new ItemsGridModel("Armor Panel", 1,1);
+            BootsPanelModel = new ItemsGridModel("Boots Panel", 1,1);
+
             CarryPanelModel = new ItemsGridModel("Carry Panel", 10, 4);
         }
 

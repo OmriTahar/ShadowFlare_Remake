@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;
@@ -8,30 +9,63 @@ namespace ShadowFlareRemake.UI
     public class ItemsGridModel : Model
     {
         public Dictionary<Vector2Int, GridTileModel> GridTileModelsDict { get; private set; } = new();
-
         public string Name { get; private set; }
         public int GridWidth { get; private set; }
         public int GridHeight { get; private set; }
 
-        //public int TileWidth { get; private set; }
-        //public int TileHight { get; private set; }
-
         private Vector2Int _topLeftValidIndex;
 
-        public ItemsGridModel(string name, int gridWidth, int gridHeight /*,int tileWidth, int tileHight*/)
+        private bool _isSingleTile;
+        private LootType _lootType;
+
+        #region Init
+
+        public ItemsGridModel(string name, int gridWidth, int gridHeight)
         {
             Name = name;
-            //InitTileSize(tileWidth, tileHight);
+            _isSingleTile = (gridWidth == 1 && gridHeight == 1);
             InitIGridTilesDict(gridWidth, gridHeight);
         }
 
+        private void InitIGridTilesDict(int gridWidth, int gridHight)
+        {
+            if (_isSingleTile)
+            {
+                var tileIndex = new Vector2Int(0, 0);
+                GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex, true));
+                return;
+            }
+
+            GridWidth = gridWidth;
+            GridHeight = gridHight;
+
+            for(int x = 0; x < gridWidth; x++)
+            {
+                for(int y = 0; y < gridHight; y++)
+                {
+                    var tileIndex = new Vector2Int(x, y);
+                    GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex ,false));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Place & Remove
+
         public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
+            //if(lootModel.LootData.Type != ) // YOU STOPPED HERE!!!!!!!!
+
             GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
             var swappedLoot = gridTileModel.LootModel;
             RemoveItemFromGrid(tileIndex, false);
 
-            if(!IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            if(_isSingleTile)
+            {
+                SetTopLeftValidIndex(0, 0);
+            }
+            else if(!_isSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 GridTileModelsDict[tileIndex].SetLootModel(swappedLoot);
                 return (false, lootModel);
@@ -157,38 +191,12 @@ namespace ShadowFlareRemake.UI
             return true;
         }
 
-        private void InitIGridTilesDict(int gridWidth, int gridHight)
-        {
-            GridWidth = gridWidth;
-            GridHeight = gridHight;
-
-            for(int x = 0; x < gridWidth; x++)
-            {
-                for(int y = 0; y < gridHight; y++)
-                {
-                    var tileIndex = new Vector2Int(x, y);
-                    GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex));
-                }
-            }
-        }
-
         private void SetTopLeftValidIndex(int x, int y)
         {
             _topLeftValidIndex.x = x;
             _topLeftValidIndex.y = y;
         }
 
-        //private void InitTileSize(float tileWidth, float tileHight)
-        //{
-        //    var screenWidth = Screen.width;
-        //    var screenHeight = Screen.height;
-
-        //    float widthRatioDiff = (float)screenWidth / 1920;
-        //    float heightRatioDiff = (float)screenHeight / 1080;
-
-        //    TileWidth = (int)(tileWidth * widthRatioDiff);
-        //    TileHight = (int)(tileHight * heightRatioDiff);
-        //}
-
+        #endregion
     }
 }

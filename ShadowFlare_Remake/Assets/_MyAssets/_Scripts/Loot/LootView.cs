@@ -19,22 +19,21 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
 
-        [Header("Settings")]
-        [SerializeField] private int _spriteSizeMultiplier = 60;
-        [SerializeField] private int _spritePosHelper = 40;
+        private int _sizeMultiplier = 60;
+        private int _posHelper = 35;
 
         protected override void ModelChanged()
         {
             SetData();
             SetName();
-            SetSprite();
+            HandleSetSprite();
         }
 
         public LootModel GetLootModel()
         {
             return Model;
         }
-     
+
         private void SetData()
         {
             if(Model.LootData == null)
@@ -55,19 +54,34 @@ namespace ShadowFlareRemake.Loot
                 _nameText.text = Name;
         }
 
-        private void SetSprite()
+        private void HandleSetSprite()
         {
             if(_image == null)
                 return;
 
+            SetSprite();
+            SetSpriteSize();
+        }
+
+        private void SetSprite()
+        {
             _image.sprite = Sprite;
             _image.preserveAspect = true;
+        }
 
-            _rect.sizeDelta = new Vector2(Width * _spriteSizeMultiplier, Height * _spriteSizeMultiplier);
+        private void SetSpriteSize()
+        {
+            _rect.sizeDelta = new Vector2(Width * _sizeMultiplier, Height * _sizeMultiplier);
 
-            var x = (Width - 1) * _spritePosHelper;
-            var y = (Height - 1) * -_spritePosHelper;
-            _rect.localPosition = new Vector2(x,y);
+            if(Model.IsSingleTile)
+            {
+                _rect.localPosition = new Vector2(0, 0);
+                return;
+            }
+
+            var x = (Width - 1) * _posHelper;
+            var y = (Height - 1) * -_posHelper;
+            _rect.localPosition = new Vector2(x, y);
         }
 
         public void UILootViewClicked()
