@@ -38,6 +38,39 @@ namespace ShadowFlareRemake.UI.Inventory
             IsInventoryOpen = isInventoryOpen;
             Changed();
         }
+
+        public ItemsGridModel GetItemsGridModel(LootType lootType)
+        {
+            switch(lootType)
+            {
+                case LootType.All:
+                    return CarryItemsGridModel;
+
+                case LootType.Weapon:
+                    return WeaponItemsGridModel;
+
+                case LootType.Shield:
+                    return ShieldItemsGridModel;
+
+                case LootType.Helmet:
+                    return HelmetItemsGridModel;
+
+                case LootType.Armor:
+                    return ArmorItemsGridModel;
+
+                case LootType.Boots:
+                    return BootsItemsGridModel;
+
+                case LootType.Talisman:
+                    return TalismanItemsGridModel;
+
+                case LootType.Potion:
+                    return QuickItemsGridModel;
+
+                default:
+                    return null;
+            }
+        }
     }
 }
 

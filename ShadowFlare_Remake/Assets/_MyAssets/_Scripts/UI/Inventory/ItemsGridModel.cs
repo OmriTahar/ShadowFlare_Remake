@@ -3,6 +3,7 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlasticGui.WorkspaceWindow.Diff.GetRestorePathData;
 
 namespace ShadowFlareRemake.UI
 {
@@ -59,40 +60,37 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region Getters
-
-        public LootModel GetLootModelFromTileIndex(Vector2Int tileIndex)
-        {
-            if(_heldLootRootIndexesDict[tileIndex].x != -1)
-            {
-                var rootIndex = _heldLootRootIndexesDict[tileIndex];
-                return GridTileModelsDict[rootIndex].LootModel;
-            }
-
-            return null;
-        }
-
-        public bool IsGridContainsLoot()
-        {
-            foreach(var value in GridTileModelsDict.Values)
-            {
-                if(value.LootModel != null)
-                {
-                    return true;
-                }
-            }
-            return false;   
-        }
-
-        #endregion
 
         #region NEW - Place & Remove 
 
-        public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
+        public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
         {
-            if(_acceptedLootType != LootType.All && lootModel.LootData.Type != _acceptedLootType)
+            bool isAccepetedLootType = _acceptedLootType == LootType.All || lootModel.LootData.Type == _acceptedLootType;
+
+            if(!isAccepetedLootType || lootModel == null)
             {
-                return (false, lootModel);
+                return false;
+            }
+
+            foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
+            {
+                var resultTuple = TryPlaceLootOnGrid(tileIndex, lootModel, false);
+                return resultTuple.Item1;
+            }
+
+            return false;
+        }
+
+        public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel, bool validateLootType = true)
+        {
+            if(validateLootType)
+            {
+                bool isAccepetedLootType = _acceptedLootType == LootType.All || lootModel.LootData.Type == _acceptedLootType;
+
+                if(!isAccepetedLootType || lootModel == null)
+                {
+                    return (false, lootModel);
+                }
             }
 
             _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
@@ -276,6 +274,33 @@ namespace ShadowFlareRemake.UI
         private void SetTopLeftValidIndex(Vector2Int tileIndex)
         {
             _topLeftValidIndex = tileIndex;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public LootModel GetLootModelFromTileIndex(Vector2Int tileIndex)
+        {
+            if(_heldLootRootIndexesDict[tileIndex].x != -1)
+            {
+                var rootIndex = _heldLootRootIndexesDict[tileIndex];
+                return GridTileModelsDict[rootIndex].LootModel;
+            }
+
+            return null;
+        }
+
+        public bool IsGridContainsLoot()
+        {
+            foreach(var value in GridTileModelsDict.Values)
+            {
+                if(value.LootModel != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
