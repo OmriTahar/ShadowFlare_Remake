@@ -24,13 +24,13 @@ namespace ShadowFlareRemake.UI.Inventory
         private void SetItemsGridModels()
         {
             TalismanItemsGridModel = new ItemsGridModel("Talisman Grid", 2, 2, LootType.Talisman);
-            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1,1, LootType.Weapon);
-            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1,1, LootType.Shield);
-            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1,1, LootType.Helmet);
-            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1,1, LootType.Armor);
-            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1,1, LootType.Boots);
-            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, LootType.All);
-            QuickItemsGridModel = new ItemsGridModel("Carry Grid", 4, 2, LootType.Potion);
+            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1, 1, LootType.Weapon);
+            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1, 1, LootType.Shield);
+            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1, 1, LootType.Helmet);
+            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1, 1, LootType.Armor);
+            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1, 1, LootType.Boots);
+            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, LootType.All, false);
+            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, LootType.Potion);
         }
 
         public void SetIsInventoryOpen(bool isInventoryOpen)

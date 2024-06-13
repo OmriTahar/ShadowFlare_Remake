@@ -1,8 +1,8 @@
+using ShadowFlareRemake.Loot;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
@@ -12,6 +12,9 @@ namespace ShadowFlareRemake.UI.Inventory
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
 
         private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
+
+        [Header("References")]
+        [SerializeField] private GameObject _placeHolderSprite;
 
         protected override void Initialize()
         {
@@ -26,6 +29,7 @@ namespace ShadowFlareRemake.UI.Inventory
         protected override void ModelChanged()
         {
             PlaceItems();
+            HandlePlaceHolderSprite();
         }
 
         private void InitGridTilesDict()
@@ -53,6 +57,22 @@ namespace ShadowFlareRemake.UI.Inventory
                 var gridTileView = _gridTilesDict[index];
                 gridTileView.SetModel(gridTileModel);
             }
+        }
+
+        private void HandlePlaceHolderSprite()
+        {
+            if(!Model.HasPlaceHolderSprite)
+                return;
+
+            if(Model.IsSingleTile)
+            {
+                var lootModel = Model.GridTileModelsDict[Vector2Int.zero].LootModel;
+                _placeHolderSprite.SetActive(lootModel == null);
+                return;
+            }
+
+            var isGridContainsLoot = Model.IsGridContainsLoot();
+            _placeHolderSprite.SetActive(!isGridContainsLoot);
         }
 
         private void InovkeTileClicked(Vector2Int index)

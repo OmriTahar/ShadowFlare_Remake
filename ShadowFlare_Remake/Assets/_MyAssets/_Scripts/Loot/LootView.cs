@@ -19,7 +19,7 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
 
-        private int _sizeMultiplier = 55;
+        private int _sizeMultiplier = 58;
         private int _posHelper = 35;
 
         protected override void ModelChanged()
