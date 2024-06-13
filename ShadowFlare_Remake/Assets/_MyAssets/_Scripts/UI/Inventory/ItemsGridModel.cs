@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ShadowFlareRemake.UI
 {
@@ -66,12 +66,12 @@ namespace ShadowFlareRemake.UI
                 return (false, lootModel);
             }
 
-            GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
             _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
             LootModel swappedLoot = null;
 
-            if(rootLootIndex.x != -1) 
+            if(rootLootIndex.x != -1)
             {
+                GridTileModelsDict.TryGetValue(rootLootIndex, out GridTileModel gridTileModel);
                 swappedLoot = gridTileModel.LootModel;
                 RemoveItemFromGrid(rootLootIndex, false);
             }
@@ -82,12 +82,15 @@ namespace ShadowFlareRemake.UI
             }
             else if(!_isSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
-                PlaceItemOnGrid(swappedLoot, false);
+                if(swappedLoot != null)
+                {
+                    SetTopLeftValidIndex(rootLootIndex);
+                    PlaceItemOnGrid(swappedLoot, false);
+                }
                 return (false, lootModel);
             }
 
             PlaceItemOnGrid(lootModel, true);
-
             SetTopLeftValidIndex(_emptyTileIndex);
             return (true, swappedLoot);
         }
@@ -98,18 +101,15 @@ namespace ShadowFlareRemake.UI
 
             var lootOtherIndexesHolder = new Vector2Int();
 
-            for(int i = 0; i < lootModel.LootData.Width; i++)
+            for(int x = 0; x < lootModel.LootData.Width; x++)
             {
-                lootOtherIndexesHolder.x = _topLeftValidIndex.x + i;
-                lootOtherIndexesHolder.y = _topLeftValidIndex.y;
-                _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
-            }
+                lootOtherIndexesHolder.x = _topLeftValidIndex.x + x;
 
-            for(int i = 0; i < lootModel.LootData.Height; i++)
-            {
-                lootOtherIndexesHolder.x = _topLeftValidIndex.x;
-                lootOtherIndexesHolder.y = _topLeftValidIndex.y + i;
-                _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
+                for(int y = 0; y < lootModel.LootData.Height; y++)
+                {
+                    lootOtherIndexesHolder.y = _topLeftValidIndex.y + y;
+                    _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
+                }
             }
 
             if(invokeChanged)
@@ -149,22 +149,19 @@ namespace ShadowFlareRemake.UI
 
         private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)
         {
+            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
             var isValidHorizontally = IsValidPlacementHorizontally(width, tileIndex);
             var isValidVertically = IsValidPlacementVertically(height, tileIndex);
-
             var isValidPlacement = isValidHorizontally && isValidVertically;
-            Debug.Log($"Inventory: Is Valid Loot Placement: {isValidPlacement}");
 
+            Debug.Log($"Items Grid Model: Is Valid Loot Placement: {isValidPlacement}. (Horizontal: {isValidHorizontally} | (Vertical: {isValidVertically})");
             return isValidPlacement;
         }
 
         private bool IsValidPlacementHorizontally(int width, Vector2Int tileIndex)
         {
-            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
-
             var tileIndexCheck = new Vector2Int();
             var consecutiveTilesCounter = 0;
-            var helper = 0;
 
             tileIndexCheck.y = tileIndex.y;
 
@@ -173,27 +170,23 @@ namespace ShadowFlareRemake.UI
                 tileIndexCheck.x = tileIndex.x + i;
 
                 if(!IsValidTileIndex(tileIndexCheck))
-                {
                     continue;
-                }
 
                 _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
 
                 if(lootIRootndex.x == -1)
                 {
                     if(tileIndexCheck.x < _topLeftValidIndex.x)
-                        SetTopLeftValidIndex(tileIndex.x, _topLeftValidIndex.y);
+                        SetTopLeftValidIndex(tileIndexCheck.x, _topLeftValidIndex.y);
 
-                    helper = 1;
+                    consecutiveTilesCounter++;
+
+                    if(consecutiveTilesCounter >= width)
+                        return true;
                 }
                 else
-                    helper = -1;
-
-                consecutiveTilesCounter += helper;
+                    consecutiveTilesCounter = 0;
             }
-
-            if(consecutiveTilesCounter >= width)
-                return true;
 
             SetTopLeftValidIndex(_emptyTileIndex);
             return false;
@@ -201,11 +194,8 @@ namespace ShadowFlareRemake.UI
 
         private bool IsValidPlacementVertically(int height, Vector2Int tileIndex)
         {
-            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
-
             var tileIndexCheck = new Vector2Int();
             var consecutiveTilesCounter = 0;
-            var helper = 0;
 
             tileIndexCheck.x = tileIndex.x;
 
@@ -225,16 +215,14 @@ namespace ShadowFlareRemake.UI
                     if(tileIndexCheck.y < _topLeftValidIndex.y)
                         SetTopLeftValidIndex(_topLeftValidIndex.x, tileIndexCheck.y);
 
-                    helper = 1;
+                    consecutiveTilesCounter++;
+
+                    if(consecutiveTilesCounter >= height)
+                        return true;
                 }
                 else
-                    helper = -1;
-
-                consecutiveTilesCounter += helper;
+                    consecutiveTilesCounter = 0;
             }
-
-            if(consecutiveTilesCounter >= height)
-                return true;
 
             SetTopLeftValidIndex(_emptyTileIndex);
             return false;
