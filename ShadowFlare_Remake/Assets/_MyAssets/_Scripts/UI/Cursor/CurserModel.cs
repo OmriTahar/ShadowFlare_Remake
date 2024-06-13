@@ -38,8 +38,8 @@ namespace ShadowFlareRemake.UI.Cursor
 
         public void PickUpLootFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            PickUpLootLogic(lootModel);
             itemsGridModel.RemoveItemFromGrid(tileIndex, true);
+            PickUpLootLogic(lootModel);
             Changed();
         }
 

@@ -167,29 +167,29 @@ namespace ShadowFlareRemake.UI
             _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
-        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel gridLootModel)
+        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             if(itemsGridModel == null)
+            {
                 return;
+            }
 
-            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Contains Loot Model: {gridLootModel != null}");
+            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Contains Loot Model: {lootModel != null}");
 
             var cursorLootModel = _curserModel.HeldLootModel;
 
-            if(cursorLootModel == null && gridLootModel == null)
+            if(cursorLootModel == null && lootModel == null)
+            {
                 return;
+            }
 
-            if(cursorLootModel != null && gridLootModel == null)
+            if(cursorLootModel != null)
             {
                 _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
             }
-            else if(cursorLootModel == null && gridLootModel != null)
+            else
             {
-                _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, gridLootModel);
-            }
-            else if(cursorLootModel != null && gridLootModel != null)
-            {
-                // Handle switch
+                _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, lootModel);
             }
         }
 

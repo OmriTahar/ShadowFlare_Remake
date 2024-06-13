@@ -57,8 +57,8 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void InovkeTileClicked(Vector2Int index)
         {
-            var gridTileModel = Model.GridTileModelsDict[index];
-            OnTileClicked?.Invoke(Model, index, gridTileModel.LootModel);
+            var lootModel = Model.GetLootModelFromTileIndex(index);
+            OnTileClicked?.Invoke(Model, index, lootModel);
         }
 
         public void OnPointerEnter(PointerEventData eventData)

@@ -13,9 +13,13 @@ namespace ShadowFlareRemake.UI
         public int GridWidth { get; private set; }
         public int GridHeight { get; private set; }
 
+        private Dictionary<Vector2Int, Vector2Int> _heldLootRootIndexesDict = new();
         private Vector2Int _topLeftValidIndex;
         private LootType _acceptedLootType;
         private bool _isSingleTile;
+
+        private readonly Vector2Int _singleTileIndex = Vector2Int.zero;
+        private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
 
         #region Init
 
@@ -24,16 +28,16 @@ namespace ShadowFlareRemake.UI
             Name = name;
             _isSingleTile = (gridWidth == 1 && gridHeight == 1);
             _acceptedLootType = acceptedLootType;
-
-            InitIGridTilesDict(gridWidth, gridHeight);
+            InitGridTilesModelDictAndHeldItemsIndexesDict(gridWidth, gridHeight);
         }
 
-        private void InitIGridTilesDict(int gridWidth, int gridHight)
+        private void InitGridTilesModelDictAndHeldItemsIndexesDict(int gridWidth, int gridHight)
         {
-            if (_isSingleTile)
+            if(_isSingleTile)
             {
-                var tileIndex = new Vector2Int(0, 0);
+                var tileIndex = _singleTileIndex;
                 GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex, true));
+                _heldLootRootIndexesDict.Add(tileIndex, _emptyTileIndex);
                 return;
             }
 
@@ -45,14 +49,15 @@ namespace ShadowFlareRemake.UI
                 for(int y = 0; y < gridHight; y++)
                 {
                     var tileIndex = new Vector2Int(x, y);
-                    GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex ,false));
+                    GridTileModelsDict.Add(tileIndex, new GridTileModel(tileIndex, false));
+                    _heldLootRootIndexesDict.Add(tileIndex, _emptyTileIndex);
                 }
             }
         }
 
         #endregion
 
-        #region Place & Remove
+        #region NEW - Place & Remove 
 
         public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
@@ -62,42 +67,49 @@ namespace ShadowFlareRemake.UI
             }
 
             GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
-            var swappedLoot = gridTileModel.LootModel;
-            RemoveItemFromGrid(tileIndex, false);
+            _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
+            LootModel swappedLoot = null;
+
+            if(rootLootIndex.x != -1) 
+            {
+                swappedLoot = gridTileModel.LootModel;
+                RemoveItemFromGrid(rootLootIndex, false);
+            }
 
             if(_isSingleTile)
             {
-                SetTopLeftValidIndex(0, 0);
+                SetTopLeftValidIndex(_singleTileIndex);
             }
             else if(!_isSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
-                GridTileModelsDict[tileIndex].SetLootModel(swappedLoot);
+                PlaceItemOnGrid(swappedLoot, false);
                 return (false, lootModel);
             }
 
-            PlaceOrRemoveItemOnGrid(lootModel, false);
-            Changed();
+            PlaceItemOnGrid(lootModel, true);
 
-            SetTopLeftValidIndex(-1, -1);
+            SetTopLeftValidIndex(_emptyTileIndex);
             return (true, swappedLoot);
         }
 
-        private void PlaceOrRemoveItemOnGrid(LootModel lootModel, bool invokeChanged)
+        private void PlaceItemOnGrid(LootModel lootModel, bool invokeChanged)
         {
-            var index = new Vector2Int();
+            GridTileModelsDict[_topLeftValidIndex].SetLootModel(lootModel);
+
+            var lootOtherIndexesHolder = new Vector2Int();
 
             for(int i = 0; i < lootModel.LootData.Width; i++)
             {
-                index.x = _topLeftValidIndex.x + i;
-                index.y = _topLeftValidIndex.y;
-                GridTileModelsDict[index].SetLootModel(lootModel);
+                lootOtherIndexesHolder.x = _topLeftValidIndex.x + i;
+                lootOtherIndexesHolder.y = _topLeftValidIndex.y;
+                _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
             }
 
             for(int i = 0; i < lootModel.LootData.Height; i++)
             {
-                index.x = _topLeftValidIndex.x;
-                index.y = _topLeftValidIndex.y + i;
-                GridTileModelsDict[index].SetLootModel(lootModel);
+                lootOtherIndexesHolder.x = _topLeftValidIndex.x;
+                lootOtherIndexesHolder.y = _topLeftValidIndex.y + i;
+                _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
             }
 
             if(invokeChanged)
@@ -108,12 +120,31 @@ namespace ShadowFlareRemake.UI
 
         public void RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
         {
-            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
+            var rootIndex = _heldLootRootIndexesDict[tileIndex];
+            GridTileModelsDict[rootIndex].SetLootModel(null);
 
-            GridTileModelsDict.TryGetValue(tileIndex, out GridTileModel gridTileModel);
-            var lootToRemove = gridTileModel.LootModel;
+            var indexesToRemove = new List<Vector2Int>();
 
-            //PlaceOrRemoveItemOnGrid()
+            foreach(var keyValuePair in _heldLootRootIndexesDict)
+            {
+                var tileIndexCheck = keyValuePair.Key;
+                var lootRootIndexCheck = keyValuePair.Value;
+
+                if(lootRootIndexCheck == rootIndex)
+                {
+                    indexesToRemove.Add(tileIndexCheck);
+                }
+            }
+
+            foreach(var index in indexesToRemove)
+            {
+                _heldLootRootIndexesDict[index] = _emptyTileIndex;
+            }
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
         }
 
         private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)
@@ -131,26 +162,26 @@ namespace ShadowFlareRemake.UI
         {
             SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
 
-            var indexCheck = new Vector2Int();
+            var tileIndexCheck = new Vector2Int();
             var consecutiveTilesCounter = 0;
             var helper = 0;
 
-            indexCheck.y = tileIndex.y;
+            tileIndexCheck.y = tileIndex.y;
 
             for(int i = -width + 1; i < width; i++)
             {
-                indexCheck.x = tileIndex.x + i;
+                tileIndexCheck.x = tileIndex.x + i;
 
-                if(!IsValidTileIndex(indexCheck))
+                if(!IsValidTileIndex(tileIndexCheck))
                 {
                     continue;
                 }
 
-                GridTileModelsDict.TryGetValue(indexCheck, out GridTileModel gridTileModel);
+                _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
 
-                if(gridTileModel.LootModel == null)
+                if(lootIRootndex.x == -1)
                 {
-                    if(indexCheck.x < _topLeftValidIndex.x)
+                    if(tileIndexCheck.x < _topLeftValidIndex.x)
                         SetTopLeftValidIndex(tileIndex.x, _topLeftValidIndex.y);
 
                     helper = 1;
@@ -164,7 +195,7 @@ namespace ShadowFlareRemake.UI
             if(consecutiveTilesCounter >= width)
                 return true;
 
-            SetTopLeftValidIndex(-1, -1);
+            SetTopLeftValidIndex(_emptyTileIndex);
             return false;
         }
 
@@ -172,27 +203,27 @@ namespace ShadowFlareRemake.UI
         {
             SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
 
-            var indexCheck = new Vector2Int();
+            var tileIndexCheck = new Vector2Int();
             var consecutiveTilesCounter = 0;
             var helper = 0;
 
-            indexCheck.x = tileIndex.x;
+            tileIndexCheck.x = tileIndex.x;
 
             for(int i = -height + 1; i < height; i++)
             {
-                indexCheck.y = tileIndex.y + i;
+                tileIndexCheck.y = tileIndex.y + i;
 
-                if(!IsValidTileIndex(indexCheck))
+                if(!IsValidTileIndex(tileIndexCheck))
                 {
                     continue;
                 }
 
-                GridTileModelsDict.TryGetValue(indexCheck, out GridTileModel gridTileModel);
+                _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
 
-                if(gridTileModel.LootModel == null)
+                if(lootIRootndex.x == -1)
                 {
-                    if(indexCheck.y < _topLeftValidIndex.y)
-                        SetTopLeftValidIndex(_topLeftValidIndex.x, indexCheck.y);
+                    if(tileIndexCheck.y < _topLeftValidIndex.y)
+                        SetTopLeftValidIndex(_topLeftValidIndex.x, tileIndexCheck.y);
 
                     helper = 1;
                 }
@@ -205,8 +236,19 @@ namespace ShadowFlareRemake.UI
             if(consecutiveTilesCounter >= height)
                 return true;
 
-            SetTopLeftValidIndex(-1, -1);
+            SetTopLeftValidIndex(_emptyTileIndex);
             return false;
+        }
+
+        public LootModel GetLootModelFromTileIndex(Vector2Int tileIndex)
+        {
+            if(_heldLootRootIndexesDict[tileIndex].x != -1)
+            {
+                var rootIndex = _heldLootRootIndexesDict[tileIndex];
+                return GridTileModelsDict[rootIndex].LootModel;
+            }
+
+            return null;
         }
 
         private bool IsValidTileIndex(Vector2Int indexCheck)
@@ -223,6 +265,11 @@ namespace ShadowFlareRemake.UI
         {
             _topLeftValidIndex.x = x;
             _topLeftValidIndex.y = y;
+        }
+
+        private void SetTopLeftValidIndex(Vector2Int tileIndex)
+        {
+            _topLeftValidIndex = tileIndex;
         }
 
         #endregion
