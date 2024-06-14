@@ -87,10 +87,16 @@ namespace ShadowFlareRemake.UI
         {
             if(IsSingleTile)
             {
+                bool isSpecificSlotIsOccupied = _heldLootRootIndexesDict[_singleTileIndex].x != -1;
+
+                if(isSpecificSlotIsOccupied)
+                {
+                    return false;
+                }
+
                 SetTopLeftValidIndex(_singleTileIndex);
             }
-
-            if(!IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 return false;
             }

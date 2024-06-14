@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.Loot
         public Color Color { get; private set; }
         public Color HighlightColor { get; private set; }
         public bool IsSingleTile { get; private set; } = false;
+        public bool IsInvokeAnimation { get; private set; }
 
         private const float _highlightAdder = 0.2f;
         private const float _alpha = 1;
@@ -24,6 +25,13 @@ namespace ShadowFlareRemake.Loot
         public void SetIsSingleTile(bool isSingleTile)
         {
             IsSingleTile = isSingleTile;
+        }
+
+        public void InvokeAnimation()
+        {
+            IsInvokeAnimation = true;
+            Changed();
+            IsInvokeAnimation = false;
         }
     }
 }

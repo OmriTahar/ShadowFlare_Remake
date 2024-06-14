@@ -426,7 +426,7 @@ MonoBehaviour:
   _rect: {fileID: 0}
   _image: {fileID: 0}
   _nameText: {fileID: 1738042203073190429}
-  _animator: {fileID: 0}
+  _animator: {fileID: 6546220259579257766}
 --- !u!114 &420056791961906650
 MonoBehaviour:
   m_ObjectHideFlags: 0

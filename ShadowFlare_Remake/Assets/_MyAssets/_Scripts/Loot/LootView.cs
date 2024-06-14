@@ -30,6 +30,7 @@ namespace ShadowFlareRemake.Loot
             SetData();
             SetName();
             HandleSetSprite();
+            HandleAnimation();
         }
 
         public LootModel GetLootModel()
@@ -92,9 +93,12 @@ namespace ShadowFlareRemake.Loot
             OnLootViewClicked?.Invoke();
         }
 
-        public void PlayDropAnimation()
+        private void HandleAnimation()
         {
-            _animator.SetTrigger(_dropAnimHash);
+            if(Model.IsInvokeAnimation)
+            {
+                _animator.SetTrigger(_dropAnimHash);
+            }
         }
     }
 }

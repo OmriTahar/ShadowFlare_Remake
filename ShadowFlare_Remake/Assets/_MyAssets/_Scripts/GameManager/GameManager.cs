@@ -227,12 +227,14 @@ namespace ShadowFlareRemake.GameManager
         {
             _lastPickedUpLootView = lootCollider.GetComponent<LootView>();
             var lootModel = _lastPickedUpLootView.GetLootModel();
-            _lastPickedUpLootView.gameObject.SetActive(false);
 
             if(!_uiController.TryPickUpLootFromTheGround(lootModel))
             {
-                _lastPickedUpLootView.PlayDropAnimation();
+                lootModel.InvokeAnimation();
+                return;
             }
+
+            _lastPickedUpLootView.gameObject.SetActive(false);
         }
 
         private void HandlePlayerDroppedLootToTheGround()
