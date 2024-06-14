@@ -66,9 +66,7 @@ namespace ShadowFlareRemake.UI
             bool isAccepetedLootType = _acceptedLootType == LootType.All || lootModel.LootData.Type == _acceptedLootType;
 
             if(!isAccepetedLootType || lootModel == null)
-            {
                 return false;
-            }
 
             bool isSuccess;
 
@@ -87,16 +85,12 @@ namespace ShadowFlareRemake.UI
         {
             if(IsSingleTile)
             {
-                bool isSpecificSlotIsOccupied = _heldLootRootIndexesDict[_singleTileIndex].x != -1;
-
-                if(isSpecificSlotIsOccupied)
-                {
+                if(_heldLootRootIndexesDict[_singleTileIndex].x != -1)
                     return false;
-                }
 
                 SetTopLeftValidIndex(_singleTileIndex);
             }
-            if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            else if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 return false;
             }
@@ -106,16 +100,13 @@ namespace ShadowFlareRemake.UI
             return true;
         }
 
-        public (bool, LootModel) TryHandPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel, bool validateLootType = true)
+        public (bool, LootModel) TryHandPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
-            if(validateLootType)
-            {
-                bool isAccepetedLootType = _acceptedLootType == LootType.All || lootModel.LootData.Type == _acceptedLootType;
+            bool isAccepetedLootType = _acceptedLootType == LootType.All || lootModel.LootData.Type == _acceptedLootType;
 
-                if(!isAccepetedLootType || lootModel == null)
-                {
-                    return (false, lootModel);
-                }
+            if(!isAccepetedLootType || lootModel == null)
+            {
+                return (false, lootModel);
             }
 
             _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
