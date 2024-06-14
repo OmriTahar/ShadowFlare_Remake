@@ -141,23 +141,28 @@ namespace ShadowFlareRemake.UI
 
         #region Item Grids & Loot
 
-        public void PickUpLootFromTheGround(LootModel lootModel)
+        public bool TryPickUpLootFromTheGround(LootModel lootModel)
         {
             if(_inventoryModel.IsInventoryOpen)
             {
                 _curserModel.PickUpLootFromGround(lootModel);
-                return;
+                return true;
             }
 
             var specificItemsGridModel = _inventoryModel.GetItemsGridModel(lootModel.LootData.Type);
             var carryItemsGridModel = _inventoryModel.GetItemsGridModel(LootType.All);
 
-            if(!specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
-                // Continue from here!!!
-
-                //carryItemsGridModel
+                return true;
             }
+
+            if(carryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void DropLootToTheGround()

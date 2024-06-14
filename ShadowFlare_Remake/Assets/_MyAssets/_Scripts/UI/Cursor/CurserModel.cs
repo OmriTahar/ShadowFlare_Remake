@@ -55,7 +55,7 @@ namespace ShadowFlareRemake.UI.Cursor
 
         public void PlaceLootInGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            var tuple = itemsGridModel.TryPlaceLootOnGrid(tileIndex, lootModel);
+            var tuple = itemsGridModel.TryHandPlaceLootOnGrid(tileIndex, lootModel);
             var isLootPlaced = tuple.Item1;
             var swappedLoot = tuple.Item2;
 

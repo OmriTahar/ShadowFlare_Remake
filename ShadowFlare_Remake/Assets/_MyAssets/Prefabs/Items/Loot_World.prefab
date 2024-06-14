@@ -423,9 +423,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680f40f3407022249b960d56051187f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 5221065971185454564}
-  _nameHolder: {fileID: 9197321906997652547}
+  _rect: {fileID: 0}
+  _image: {fileID: 0}
   _nameText: {fileID: 1738042203073190429}
+  _animator: {fileID: 0}
 --- !u!114 &420056791961906650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,6 +451,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5221065971394155764}
+  - component: {fileID: 6546220259579257766}
   m_Layer: 7
   m_Name: Loot_World
   m_TagString: Untagged
@@ -474,6 +476,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &6546220259579257766
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221065971394155767}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e9faa38196835c49a3f628d869f65b1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9197321906997652547
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,12 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private RectTransform _rect;
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
+        [SerializeField] private Animator _animator;
 
         private int _sizeMultiplier = 58;
         private int _posHelper = 35;
+
+        private readonly int _dropAnimHash = Animator.StringToHash("Drop");
 
         protected override void ModelChanged()
         {
@@ -87,6 +90,11 @@ namespace ShadowFlareRemake.Loot
         public void UILootViewClicked()
         {
             OnLootViewClicked?.Invoke();
+        }
+
+        public void PlayDropAnimation()
+        {
+            _animator.SetTrigger(_dropAnimHash);
         }
     }
 }

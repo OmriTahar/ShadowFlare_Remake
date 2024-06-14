@@ -3,7 +3,6 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlasticGui.WorkspaceWindow.Diff.GetRestorePathData;
 
 namespace ShadowFlareRemake.UI
 {
@@ -60,7 +59,6 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-
         #region NEW - Place & Remove 
 
         public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
@@ -72,16 +70,37 @@ namespace ShadowFlareRemake.UI
                 return false;
             }
 
+            bool isSuccess;
+
             foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
             {
-                var resultTuple = TryPlaceLootOnGrid(tileIndex, lootModel, false);
-                return resultTuple.Item1;
+                isSuccess = TryAutoPlaceLogic(tileIndex, lootModel);
+
+                if(isSuccess)
+                    return true;
             }
 
             return false;
         }
 
-        public (bool, LootModel) TryPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel, bool validateLootType = true)
+        private bool TryAutoPlaceLogic(Vector2Int tileIndex, LootModel lootModel)
+        {
+            if(IsSingleTile)
+            {
+                SetTopLeftValidIndex(_singleTileIndex);
+            }
+
+            if(!IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            {
+                return false;
+            }
+
+            PlaceItemOnGrid(lootModel, true);
+            SetTopLeftValidIndex(_emptyTileIndex);
+            return true;
+        }
+
+        public (bool, LootModel) TryHandPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel, bool validateLootType = true)
         {
             if(validateLootType)
             {

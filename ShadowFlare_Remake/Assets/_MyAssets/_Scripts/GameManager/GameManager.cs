@@ -62,7 +62,7 @@ namespace ShadowFlareRemake.GameManager
             foreach(var lootData in _testLootData)
             {
                 TestSpawnLoot(lootData, spawnPosX);
-                spawnPosX += 3;
+                spawnPosX += 1.5f;
             }
         }
 
@@ -229,7 +229,10 @@ namespace ShadowFlareRemake.GameManager
             var lootModel = _lastPickedUpLootView.GetLootModel();
             _lastPickedUpLootView.gameObject.SetActive(false);
 
-            _uiController.PickUpLootFromTheGround(lootModel);
+            if(!_uiController.TryPickUpLootFromTheGround(lootModel))
+            {
+                _lastPickedUpLootView.PlayDropAnimation();
+            }
         }
 
         private void HandlePlayerDroppedLootToTheGround()
