@@ -201,27 +201,21 @@ namespace ShadowFlareRemake.UI
         private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             if(itemsGridModel == null)
-            {
                 return;
-            }
 
             print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Contains Loot Model: {lootModel != null}");
 
             var cursorLootModel = _curserModel.HeldLootModel;
 
             if(cursorLootModel == null && lootModel == null)
-            {
                 return;
-            }
 
             if(cursorLootModel != null)
             {
                 _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
             }
             else
-            {
                 _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, lootModel);
-            }
         }
 
         #endregion

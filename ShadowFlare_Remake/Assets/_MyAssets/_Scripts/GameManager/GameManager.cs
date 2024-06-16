@@ -41,6 +41,7 @@ namespace ShadowFlareRemake.GameManager
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
+        private const int _lootDropHelper = 3;
 
         #region Unity Callbacks
 
@@ -245,8 +246,7 @@ namespace ShadowFlareRemake.GameManager
         private void HandlePlayerDropLootToTheGround(LootModel lootModel)
         {
             var worldLoot = Instantiate(_testLootPrefab);
-            var pos = _playerController.transform.position;
-            worldLoot.transform.position = new Vector3(pos.x - 1f, pos.y, pos.z - 2);
+            worldLoot.transform.position = GetLootDropPos();
 
             var lootView = worldLoot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
@@ -257,6 +257,18 @@ namespace ShadowFlareRemake.GameManager
         #endregion
 
         #region Loot
+
+        private Vector3 GetLootDropPos()
+        {
+            var playerPos = _playerController.transform.position;
+            var rayCastPos = _inputManager.CurrentRaycastHit.point;
+
+            var direction = (rayCastPos - playerPos).normalized;
+            var newPos = playerPos + (direction * _lootDropHelper);
+            newPos.y = 0;
+
+            return newPos;
+        }
 
         private void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
         {

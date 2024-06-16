@@ -31,7 +31,9 @@ namespace ShadowFlareRemake.Player
         private Coroutine _lastMoveCoroutine;
 
         private const int _rotationSpeed = 10;
+
         private bool _isAttacking = false;
+        private bool _isLastActionWasMove = false;
 
         #region Unity Callbacks
 
@@ -45,7 +47,7 @@ namespace ShadowFlareRemake.Player
         {
             if(_inputManager.IsLeftMouseIsHeldDown)
             {
-                HandleLeftClickActions();
+                HandleLeftClickActions(true);
             }
         }
 
@@ -96,7 +98,7 @@ namespace ShadowFlareRemake.Player
 
         private void RegisterLeftClickActions(InputAction.CallbackContext context)
         {
-            HandleLeftClickActions();
+            HandleLeftClickActions(false);
         }
 
         #endregion
@@ -127,9 +129,9 @@ namespace ShadowFlareRemake.Player
 
         #region Meat & Potatos
 
-        private void HandleLeftClickActions()
+        private void HandleLeftClickActions(bool isLeftMouseIsHeldDown)
         {
-            if(_isAttacking || _inputManager.IsCursorOnUI)
+            if(_isAttacking || _inputManager.IsCursorOnUI || (isLeftMouseIsHeldDown && !_isLastActionWasMove))
                 return;
 
             var hit = _inputManager.CurrentRaycastHit;
@@ -139,20 +141,22 @@ namespace ShadowFlareRemake.Player
 
             IEnumerator selectedCoroutine = null;
 
-            if(_inputManager.IsCursorOnGround)
+            if((isLeftMouseIsHeldDown && _isLastActionWasMove) || _inputManager.IsCursorOnGround)
             {
                 selectedCoroutine = MoveLogic(hit.point);
+                _isLastActionWasMove = true;
             }
             else if(_inputManager.IsCursorOnEnemy)
             {
                 var hitCollider = _inputManager.CurrentRaycastHitCollider;
                 var enemyPos = hitCollider.transform.position;
                 selectedCoroutine = MoveAndAttackLogic(enemyPos);
+                _isLastActionWasMove = false;
             }
             else if(_inputManager.IsCursorOnItem)
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
-                print("Pressed on Item - Collecting!");
+                _isLastActionWasMove = false;
             }
 
             HandleCoroutines(selectedCoroutine);
