@@ -142,6 +142,7 @@ namespace ShadowFlareRemake.UI
         private void HandleIsCurserHoldingLoot(bool isHoldingLoot)
         {
             DropLootLeftMouseClickEvent(isHoldingLoot);
+            OnIsPlayerHoldingLootChanged?.Invoke(isHoldingLoot);
         }
 
         #endregion
@@ -153,7 +154,6 @@ namespace ShadowFlareRemake.UI
             if(_inventoryModel.IsInventoryOpen)
             {
                 _curserModel.PickUpLootFromGround(lootModel);
-                OnIsPlayerHoldingLootChanged?.Invoke(true);
                 return true;
             }
 
@@ -162,13 +162,11 @@ namespace ShadowFlareRemake.UI
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
-                OnIsPlayerHoldingLootChanged?.Invoke(false);
                 return true;
             }
 
             if(carryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
-                OnIsPlayerHoldingLootChanged?.Invoke(false);
                 return true;
             }
 
@@ -215,13 +213,9 @@ namespace ShadowFlareRemake.UI
             if(cursorLootModel != null)
             {
                 _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
-                OnIsPlayerHoldingLootChanged?.Invoke(false);
             }
             else
-            {
                 _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, lootModel);
-                OnIsPlayerHoldingLootChanged?.Invoke(true);
-            }
         }
 
         #endregion
