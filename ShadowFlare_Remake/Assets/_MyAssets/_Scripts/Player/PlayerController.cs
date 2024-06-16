@@ -45,7 +45,7 @@ namespace ShadowFlareRemake.Player
 
         private void Update()
         {
-            if(_inputManager.IsLeftMouseIsHeldDown)
+            if(_inputManager.IsLeftMouseHeldDown)
             {
                 HandleLeftClickActions(true);
             }
@@ -129,9 +129,9 @@ namespace ShadowFlareRemake.Player
 
         #region Meat & Potatos
 
-        private void HandleLeftClickActions(bool isLeftMouseIsHeldDown)
+        private void HandleLeftClickActions(bool isLeftMouseHeldDown)
         {
-            if(_isAttacking || _inputManager.IsCursorOnUI || (isLeftMouseIsHeldDown && !_isLastActionWasMove))
+            if(!IsValidLeftMouseClick(isLeftMouseHeldDown))
                 return;
 
             var hit = _inputManager.CurrentRaycastHit;
@@ -141,7 +141,7 @@ namespace ShadowFlareRemake.Player
 
             IEnumerator selectedCoroutine = null;
 
-            if((isLeftMouseIsHeldDown && _isLastActionWasMove) || _inputManager.IsCursorOnGround)
+            if((isLeftMouseHeldDown && _isLastActionWasMove) || _inputManager.IsCursorOnGround)
             {
                 selectedCoroutine = MoveLogic(hit.point);
                 _isLastActionWasMove = true;
@@ -160,6 +160,16 @@ namespace ShadowFlareRemake.Player
             }
 
             HandleCoroutines(selectedCoroutine);
+        }
+
+        private bool IsValidLeftMouseClick(bool isLeftMouseHeldDown)
+        {
+            if(_isAttacking || _inputManager.IsCursorOnUI || (isLeftMouseHeldDown && !_isLastActionWasMove) || _inputManager.IsHoldingLoot)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void HandleCoroutines(IEnumerator coroutine)

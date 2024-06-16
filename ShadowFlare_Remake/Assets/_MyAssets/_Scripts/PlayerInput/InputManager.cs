@@ -2,9 +2,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.PlayerInput {
-    public class InputManager : Controller {
-
+namespace ShadowFlareRemake.PlayerInput
+{
+    public class InputManager : Controller
+    {
         public static InputManager Instance { get; private set; }
 
         // --- References ---
@@ -27,19 +28,20 @@ namespace ShadowFlareRemake.PlayerInput {
         public bool IsCursorOnItem { get; private set; }
         public bool IsCursorOnUI { get; private set; }
 
-        public bool IsLeftMouseIsHeldDown { get; private set; }
+        public bool IsHoldingLoot { get; private set; }
+        public bool IsLeftMouseHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
         private bool _isFinishedInit = false;
 
-        protected override void Awake() {
-
+        protected override void Awake()
+        {
             base.Awake();
             InitSingleton();
         }
 
-        private void OnEnable() {
-
+        private void OnEnable()
+        {
             LeftMouseClickAction.Enable();
             RightMouseClickAction.Enable();
             I_KeyboardClickAction.Enable();
@@ -49,14 +51,14 @@ namespace ShadowFlareRemake.PlayerInput {
             _isFinishedInit = true;
         }
 
-        private void Update() {
-
-            IsLeftMouseIsHeldDown = LeftMouseClickAction.IsPressed();
+        private void Update()
+        {
+            IsLeftMouseHeldDown = LeftMouseClickAction.IsPressed();
             HandleRaycastHit();
         }
 
-        private void OnDisable() {
-
+        private void OnDisable()
+        {
             LeftMouseClickAction.Disable();
             RightMouseClickAction.Disable();
             I_KeyboardClickAction.Disable();
@@ -66,37 +68,48 @@ namespace ShadowFlareRemake.PlayerInput {
             _isFinishedInit = false;
         }
 
-        public async Task WaitForInitFinish() {
-
-            while(!_isFinishedInit) {
-
+        public async Task WaitForInitFinish()
+        {
+            while(!_isFinishedInit)
+            {
                 await Task.Yield();
             }
         }
 
-        public void SetIsCursorOnUI(bool isCurserOnUI) {
-
+        public void SetIsCursorOnUI(bool isCurserOnUI)
+        {
             IsCursorOnUI = isCurserOnUI;
         }
 
-        private void InitSingleton() {
+        public void SetIsHoldingLoot(bool isHoldingLoot)
+        {
+            IsHoldingLoot = isHoldingLoot;
+        }
 
-            if(Instance == null) {
+        private void InitSingleton()
+        {
+
+            if(Instance == null)
+            {
                 Instance = this;
 
-            } else if(this != Instance) {
+            }
+            else if(this != Instance)
+            {
                 Destroy(this);
             }
         }
 
-        private void HandleRaycastHit() {
+        private void HandleRaycastHit()
+        {
 
             var mousePos = Mouse.current.position.ReadValue();
 
             CurrentMousePosition = mousePos;
             _currentMouseRay = MainCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit)) {
+            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit))
+            {
 
                 CurrentRaycastHit = hit;
                 CurrentRaycastHitCollider = hit.collider;

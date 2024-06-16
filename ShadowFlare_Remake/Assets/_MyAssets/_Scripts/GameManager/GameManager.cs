@@ -252,6 +252,8 @@ namespace ShadowFlareRemake.GameManager
             lootView.SetModel(lootModel);
 
             lootModel.InvokeDropAnimation();
+
+            _inputManager.SetIsHoldingLoot(false);
         }
 
         #endregion

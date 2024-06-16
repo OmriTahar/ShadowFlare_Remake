@@ -158,6 +158,7 @@ namespace ShadowFlareRemake.UI
             if(_inventoryModel.IsInventoryOpen)
             {
                 _curserModel.PickUpLootFromGround(lootModel);
+                _inputManager.SetIsHoldingLoot(true);
                 return true;
             }
 
