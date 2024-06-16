@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.GameManager.Units;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
-using ShadowFlareRemake.PlayerInput;
-using ShadowFlareRemake.UI;
 using ShadowFlareRemake.Rewards;
+using ShadowFlareRemake.UI;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager
 {

@@ -1,24 +1,18 @@
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Player;
-using ShadowFlareRemake.Rewards;
-using System;
+using ShadowFlareRemake.Enemies;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager {
-
-    [Serializable]
-    public class PlayerUnitStats : IPlayerUnitStats {
-
-        #region Fields
-
+namespace ShadowFlareRemake.GameManager.Units
+{
+    [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "Scriptable Objects/Create New Enemy Stats")]
+    public class EnemyUnitStats : ScriptableObject, IEnemyUnitStats
+    {
         private const string _spaceLine = "------------------------------------";
 
         [Space(15)]
         [SerializeField] private string ______Enemy_____ = _spaceLine;
-        [field: SerializeField] public Vocation Vcocation {  get; private set; }
-        [field: SerializeField] public int Strength { get; private set; }
-        [field: SerializeField] public int CurrentExp { get; private set; }
-        [field: SerializeField] public int ExpToLevelUp { get; private set; }
+        [field: SerializeField] public Color Color { get; private set; }
+        [field: SerializeField] public int ExpDrop { get; private set; }
+        [field: SerializeField] public int CoinsDrop { get; private set; }
 
         [Space(15)]
         [SerializeField] private string ______Base_____ = _spaceLine;
@@ -43,25 +37,5 @@ namespace ShadowFlareRemake.GameManager {
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
-
-        #endregion
-
-        public void GiveExpReward(ExpReward reward) {
-
-            CurrentExp = reward.NewCurrentExp;
-            ExpToLevelUp = reward.NewExpToLevelUp;
-            Level = reward.NewLevel;
-        }
-
-        public void GiveLevelUpReward(ILevelUpReward reward) {
-
-            MaxHP += reward.HP;
-            MaxMP += reward.MP;
-            Strength += Strength += reward.Strength;
-            Attack += reward.Attack;
-            Defense += reward.Defense;
-            MagicalAttack += reward.MagicalAttack;
-            MagicalDefence += reward.MagicalDefence;
-        }
     }
 }
