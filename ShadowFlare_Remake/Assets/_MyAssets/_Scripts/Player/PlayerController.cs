@@ -291,10 +291,8 @@ namespace ShadowFlareRemake.Player
 
         private void HandleTriggerEnter(Collider other)
         {
-
             if(other.gameObject.layer == AttackLayer)
             {
-
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, _model.Stats);
             }

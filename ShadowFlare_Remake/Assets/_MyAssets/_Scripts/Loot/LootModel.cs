@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.Loot
         public Color Color { get; private set; }
         public Color HighlightColor { get; private set; }
         public bool IsSingleTile { get; private set; } = false;
-        public bool IsInvokeAnimation { get; private set; }
+        public bool IsInvokeDropAnimation { get; private set; }
 
         private const float _highlightAdder = 0.2f;
         private const float _alpha = 1;
@@ -27,11 +27,11 @@ namespace ShadowFlareRemake.Loot
             IsSingleTile = isSingleTile;
         }
 
-        public void InvokeAnimation()
+        public void InvokeDropAnimation()
         {
-            IsInvokeAnimation = true;
+            IsInvokeDropAnimation = true;
             Changed();
-            IsInvokeAnimation = false;
+            IsInvokeDropAnimation = false;
         }
     }
 }

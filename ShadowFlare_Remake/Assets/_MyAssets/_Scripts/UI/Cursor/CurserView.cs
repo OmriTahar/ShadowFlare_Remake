@@ -1,12 +1,15 @@
-using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
+using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserView : View<CurserModel>
     {
+        public event Action<bool> OnCurserHoldingLootChange;
+
         [Header("Loot")]
         [SerializeField] private LootView _pickedUpLootView;
         [SerializeField] private Image _pickedUpLootImage;
@@ -34,14 +37,19 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void HandlePickedUpLootView()
         {
-            if(Model.HeldLootModel == null)
+            var isHoldingLoot = Model.IsHoldingLoot();
+
+            if(!isHoldingLoot)
             {
                 _pickedUpLootImage.enabled = false;
-                return;
+            }
+            else
+            {
+                _pickedUpLootView.SetModel(Model.HeldLootModel);
+                _pickedUpLootImage.enabled = true;
             }
 
-            _pickedUpLootView.SetModel(Model.HeldLootModel);
-            _pickedUpLootImage.enabled = true;
+            OnCurserHoldingLootChange?.Invoke(isHoldingLoot);
         }
 
         private Texture2D GetCurserIcon(CursorIconState cursorIconState)

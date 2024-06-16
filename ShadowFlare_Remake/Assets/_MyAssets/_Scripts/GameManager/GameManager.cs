@@ -25,9 +25,9 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
         [Header("Loot")]
-        [SerializeField] private Transform _testLootParent; 
-        [SerializeField] private GameObject _testLootPrefab; 
-        [SerializeField] private List<Loot_ScriptableObject> _testLootData; 
+        [SerializeField] private Transform _testLootParent;
+        [SerializeField] private GameObject _testLootPrefab;
+        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
 
         private InputManager _inputManager;
 
@@ -37,9 +37,10 @@ namespace ShadowFlareRemake.GameManager
 
         private GameObject _lastHighlighted_GameObject;
         private HighlightableObject _lastHighlightable;
-        private const string _highlightableTag = "Highlightable";
 
         private LootView _lastPickedUpLootView;
+
+        private const string _highlightableTag = "Highlightable";
 
         #region Unity Callbacks
 
@@ -93,13 +94,17 @@ namespace ShadowFlareRemake.GameManager
         private void RegisterEvents()
         {
             _playerController.OnIGotHit += HandlePlayerGotHit;
-            _playerController.OnPickedLoot += HandlePlayerPickedUpLootFromTheGround;
+            _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
+
+            _uiController.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
         }
 
         private void DergisterEvents()
         {
             _playerController.OnIGotHit -= HandlePlayerGotHit;
-            _playerController.OnPickedLoot -= HandlePlayerPickedUpLootFromTheGround;
+            _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
+
+            _uiController.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -223,23 +228,30 @@ namespace ShadowFlareRemake.GameManager
 
         }
 
-        private void HandlePlayerPickedUpLootFromTheGround(Collider lootCollider)
+        private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
         {
             _lastPickedUpLootView = lootCollider.GetComponent<LootView>();
             var lootModel = _lastPickedUpLootView.GetLootModel();
 
             if(!_uiController.TryPickUpLootFromTheGround(lootModel))
             {
-                lootModel.InvokeAnimation();
+                lootModel.InvokeDropAnimation();
                 return;
             }
 
             _lastPickedUpLootView.gameObject.SetActive(false);
         }
 
-        private void HandlePlayerDroppedLootToTheGround()
+        private void HandlePlayerDropLootToTheGround(LootModel lootModel)
         {
-            _lastPickedUpLootView.gameObject.SetActive(true);
+            var worldLoot = Instantiate(_testLootPrefab);
+            var pos = _playerController.transform.position;
+            worldLoot.transform.position = new Vector3(pos.x - 1f, pos.y, pos.z - 2);
+
+            var lootView = worldLoot.GetComponentInChildren<LootView>();
+            lootView.SetModel(lootModel);
+
+            lootModel.InvokeDropAnimation();
         }
 
         #endregion

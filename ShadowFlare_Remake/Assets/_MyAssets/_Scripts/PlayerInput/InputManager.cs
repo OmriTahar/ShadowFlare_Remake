@@ -26,6 +26,7 @@ namespace ShadowFlareRemake.PlayerInput {
         public bool IsCursorOnEnemy { get; private set; }
         public bool IsCursorOnItem { get; private set; }
         public bool IsCursorOnUI { get; private set; }
+
         public bool IsLeftMouseIsHeldDown { get; private set; }
 
         private Ray _currentMouseRay;

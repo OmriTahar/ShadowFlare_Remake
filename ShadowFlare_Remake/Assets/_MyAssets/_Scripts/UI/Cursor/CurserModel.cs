@@ -1,6 +1,7 @@
 using UnityEngine;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
+using System;
 
 namespace ShadowFlareRemake.UI.Cursor
 {
@@ -43,14 +44,9 @@ namespace ShadowFlareRemake.UI.Cursor
             Changed();
         }
 
-        private void PickUpLootLogic(LootModel lootModel)
+        public bool IsHoldingLoot()
         {
-            HeldLootModel = lootModel;
-        }
-
-        private void DropLootLogic()
-        {
-            HeldLootModel = null;
+            return HeldLootModel != null;
         }
 
         public void PlaceLootInGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
@@ -59,24 +55,35 @@ namespace ShadowFlareRemake.UI.Cursor
             var isLootPlaced = tuple.Item1;
             var swappedLoot = tuple.Item2;
 
-            if(isLootPlaced)
-            {
-                if(swappedLoot != null)
-                {
-                    PickUpLootLogic(swappedLoot);
-                }
-                else
-                {
-                    DropLootLogic();
-                }
+            if(!isLootPlaced)
+                return;
 
-                Changed();
+            if(swappedLoot != null)
+            {
+                PickUpLootLogic(swappedLoot);
             }
+            else
+            {
+                DropLootLogic();
+            }
+
+            Changed();
         }
 
         public void DropLootOnGround()
         {
             DropLootLogic();
+            Changed();
+        }
+
+        private void PickUpLootLogic(LootModel lootModel)
+        {
+            HeldLootModel = lootModel;
+        }
+
+        private void DropLootLogic()
+        {
+            HeldLootModel = null;
         }
     }
 }

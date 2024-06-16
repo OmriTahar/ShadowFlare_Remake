@@ -9,6 +9,8 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -17,6 +19,8 @@ namespace ShadowFlareRemake.UI
 {
     public class UIController : Controller
     {
+        public event Action<LootModel> OnDropLootToTheGround;
+
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
         [SerializeField] private InventoryView _inventoryView;
@@ -49,8 +53,7 @@ namespace ShadowFlareRemake.UI
 
         private async void Start()
         {
-            _inputManager = InputManager.Instance;
-            await InputManager.Instance.WaitForInitFinish();
+            await InitInputManager();
             RegisterEvents();
         }
 
@@ -61,13 +64,19 @@ namespace ShadowFlareRemake.UI
 
         private void Update()
         {
-            HandleMouseRaycastHit();
+            SetCurserIcon();
             SetPickedUpLootPosition();
         }
 
         #endregion
 
         #region Initialization
+
+        private async Task InitInputManager()
+        {
+            _inputManager = InputManager.Instance;
+            await _inputManager.WaitForInitFinish();
+        }
 
         private void CacheNulls()
         {
@@ -103,9 +112,9 @@ namespace ShadowFlareRemake.UI
 
         #region Cursor
 
-        private void HandleMouseRaycastHit()
+        private void SetCurserIcon()
         {
-            if(_inputManager.IsCursorOnUI)
+            if(_inputManager.IsCursorOnUI || _curserModel.IsHoldingLoot())
             {
                 _curserModel.SetCursorIconState(CursorIconState.UI);
             }
@@ -122,19 +131,22 @@ namespace ShadowFlareRemake.UI
                 _curserModel.SetCursorIconState(CursorIconState.PickUp);
             }
             else
-            {
                 _curserModel.SetCursorIconState(CursorIconState.Other);
-            }
         }
 
-        public void CursorEnteredUI(PointerEventData eventData)
+        private void CursorEnteredUI(PointerEventData eventData)
         {
             _inputManager.SetIsCursorOnUI(true);
         }
 
-        public void CursorLeftUI(PointerEventData eventData)
+        private void CursorLeftUI(PointerEventData eventData)
         {
             _inputManager.SetIsCursorOnUI(false);
+        }
+
+        private void HandleIsCurserHoldingLoot(bool isHoldingLoot)
+        {
+            DropLootLeftMouseClickEvent(isHoldingLoot);
         }
 
         #endregion
@@ -153,20 +165,20 @@ namespace ShadowFlareRemake.UI
             var carryItemsGridModel = _inventoryModel.GetItemsGridModel(LootType.All);
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
-            {
                 return true;
-            }
 
             if(carryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
-            {
                 return true;
-            }
 
             return false;
         }
 
-        public void DropLootToTheGround()
+        private void DropLootToTheGround(InputAction.CallbackContext context)
         {
+            if(!_curserModel.IsHoldingLoot() || _inputManager.IsCursorOnUI)
+                return;
+
+            OnDropLootToTheGround?.Invoke(_curserModel.HeldLootModel);
             _curserModel.DropLootOnGround();
         }
 
@@ -216,7 +228,7 @@ namespace ShadowFlareRemake.UI
 
         #region Inventory
 
-        private void ToggleInventory()
+        private void ToggleInventory() // Called from a UI button clicked event
         {
             DoToggleInventory();
         }
@@ -357,6 +369,7 @@ namespace ShadowFlareRemake.UI
         private void RegisterEvents()
         {
             InputManagerEvents(true);
+            CursorEvents(true);
             HudEvents(true);
             InventoryEvents(true);
             StatsEvents(true);
@@ -366,6 +379,7 @@ namespace ShadowFlareRemake.UI
         private void DeregisterEvents()
         {
             InputManagerEvents(false);
+            CursorEvents(false);
             HudEvents(false);
             InventoryEvents(false);
             StatsEvents(false);
@@ -384,6 +398,22 @@ namespace ShadowFlareRemake.UI
                 _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
                 _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
             }
+        }
+
+        private void DropLootLeftMouseClickEvent(bool isRegister)
+        {
+            if(isRegister)
+                _inputManager.LeftMouseClickAction.performed += DropLootToTheGround;
+            else
+                _inputManager.LeftMouseClickAction.performed -= DropLootToTheGround;
+        }
+
+        private void CursorEvents(bool isRegister)
+        {
+            if(isRegister)
+                _curserView.OnCurserHoldingLootChange += HandleIsCurserHoldingLoot;
+            else
+                _curserView.OnCurserHoldingLootChange -= HandleIsCurserHoldingLoot;
         }
 
         private void HudEvents(bool isRegister)

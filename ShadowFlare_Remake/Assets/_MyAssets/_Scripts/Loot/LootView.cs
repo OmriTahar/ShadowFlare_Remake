@@ -95,7 +95,10 @@ namespace ShadowFlareRemake.Loot
 
         private void HandleAnimation()
         {
-            if(Model.IsInvokeAnimation)
+            if(_animator == null)
+                return;
+
+            if(Model.IsInvokeDropAnimation)
             {
                 _animator.SetTrigger(_dropAnimHash);
             }
