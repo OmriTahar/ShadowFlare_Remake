@@ -1,8 +1,8 @@
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.PlayerInput;
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,7 +27,7 @@ namespace ShadowFlareRemake.Player
 
         private PlayerModel _model;
         private CharacterController _characterController;
-        private InputManager _inputManager;
+        private IInputManager _inputManager;
         private Coroutine _lastMoveCoroutine;
 
         private const int _rotationSpeed = 10;
@@ -78,22 +78,16 @@ namespace ShadowFlareRemake.Player
                 _view = GetComponentInChildren<PlayerView>();
         }
 
-
-        public async Task InitPlayer(IUnit unit)
+        public void InitPlayer(IUnit unit, IInputManager inputManager)
         {
             _model = new PlayerModel(unit);
             _view.SetModel(_model);
 
-            await InitInputManager();
+            _inputManager = inputManager;
+
             RegisterEvents();
 
             _meleeAttack.SetUnitStats(unit.Stats);
-        }
-
-        private async Task InitInputManager()
-        {
-            _inputManager = InputManager.Instance;
-            await _inputManager.WaitForInitFinish();
         }
 
         private void RegisterLeftClickActions(InputAction.CallbackContext context)
@@ -107,8 +101,8 @@ namespace ShadowFlareRemake.Player
 
         private void RegisterEvents()
         {
-            _inputManager.LeftMouseClickAction.performed += RegisterLeftClickActions;
-            _inputManager.RightMouseClickAction.performed += AttackAtDirection;
+            _inputManager.ResigterToInputAction(PlayerInputType.LeftMouse, RegisterLeftClickActions);
+            _inputManager.ResigterToInputAction(PlayerInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleAttackStepForward;
@@ -117,8 +111,8 @@ namespace ShadowFlareRemake.Player
 
         private void DeregisterEvents()
         {
-            _inputManager.LeftMouseClickAction.performed -= RegisterLeftClickActions;
-            _inputManager.RightMouseClickAction.performed -= AttackAtDirection;
+            _inputManager.DeresigterFromInputAction(PlayerInputType.LeftMouse, RegisterLeftClickActions);
+            _inputManager.DeresigterFromInputAction(PlayerInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;

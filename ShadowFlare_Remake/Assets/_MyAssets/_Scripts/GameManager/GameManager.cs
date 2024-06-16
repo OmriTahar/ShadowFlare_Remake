@@ -1,20 +1,24 @@
+using System.Collections.Generic;
+using UnityEngine;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
-using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
+using ShadowFlareRemake.Rewards;
 
 namespace ShadowFlareRemake.GameManager
 {
     public class GameManager : MonoBehaviour
     {
-        [Header("General")]
+        [Header("Input")]
+        [SerializeField] private InputManager _inputManager;
+
+        [Header("Rewards")]
         [SerializeField] private RewardsManager _rewardsManager;
+
+        [Header("UI")]
         [SerializeField] private UIController _uiController;
 
         [Header("Enemies")]
@@ -28,8 +32,6 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private Transform _testLootParent;
         [SerializeField] private GameObject _testLootPrefab;
         [SerializeField] private List<Loot_ScriptableObject> _testLootData;
-
-        private InputManager _inputManager;
 
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
@@ -52,13 +54,13 @@ namespace ShadowFlareRemake.GameManager
 
         private async void Start()
         {
-            await InitPlayer();
-            await InitInputManager();
+            await _inputManager.WaitForInitFinish();
 
             InitEnemies();
-            RegisterEvents();
+            InitPlayer();
+            InitUiController();
 
-            _uiController.UpdatePlayerUI(_playerUnit);
+            RegisterEvents();
 
             float spawnPosX = _testLootParent.transform.position.x;
             foreach(var lootData in _testLootData)
@@ -82,10 +84,10 @@ namespace ShadowFlareRemake.GameManager
 
         #region Initialization
 
-        private async Task InitInputManager()
+        private void InitUiController()
         {
-            _inputManager = InputManager.Instance;
-            await _inputManager.WaitForInitFinish();
+            _uiController.InitUiController(_inputManager);
+            _uiController.UpdatePlayerUI(_playerUnit);
         }
 
         #endregion
@@ -98,6 +100,8 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
 
             _uiController.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
+            _uiController.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
+            _uiController.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
         }
 
         private void DergisterEvents()
@@ -106,6 +110,8 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
 
             _uiController.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
+            _uiController.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
+            _uiController.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -142,6 +148,20 @@ namespace ShadowFlareRemake.GameManager
 
             if(_lastHighlightable != null)
                 _lastHighlightable.SetIsHighlighted(false);
+        }
+
+        #endregion
+
+        #region Input Manager
+
+        private void HandlePlayerHoldingLoot(bool isHoldingLoot)
+        {
+            _inputManager.SetIsHoldingLoot(isHoldingLoot);
+        }
+
+        private void HandleIsCurserOnUI(bool isCurserOnUI)
+        {
+            _inputManager.SetIsCursorOnUI(isCurserOnUI);
         }
 
         #endregion
@@ -218,10 +238,10 @@ namespace ShadowFlareRemake.GameManager
 
         #region Player
 
-        private async Task InitPlayer()
+        private void InitPlayer()
         {
             _playerUnit = new Unit(_playerUnitStats);
-            await _playerController.InitPlayer(_playerUnit);
+            _playerController.InitPlayer(_playerUnit, _inputManager);
         }
 
         private void HandlePlayerGotHit(Attack attack, IUnitStats unit)
@@ -252,8 +272,7 @@ namespace ShadowFlareRemake.GameManager
             lootView.SetModel(lootModel);
 
             lootModel.InvokeDropAnimation();
-
-            _inputManager.SetIsHoldingLoot(false);
+            HandlePlayerHoldingLoot(false);
         }
 
         #endregion

@@ -1,6 +1,7 @@
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Events;
-using ShadowFlareRemake.Loot;
+using System;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
@@ -9,17 +10,17 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
-using System;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI
 {
     public class UIController : Controller
     {
         public event Action<LootModel> OnDropLootToTheGround;
+        public event Action<bool> OnIsCurserOnUiChanged;
+        public event Action<bool> OnIsPlayerHoldingLootChanged;
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
@@ -40,7 +41,7 @@ namespace ShadowFlareRemake.UI
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
 
-        private InputManager _inputManager;
+        private IInputManager _inputManager;
 
         #region Unity Callbacks
 
@@ -49,12 +50,6 @@ namespace ShadowFlareRemake.UI
             base.Awake();
             CacheNulls();
             InitModels();
-        }
-
-        private async void Start()
-        {
-            await InitInputManager();
-            RegisterEvents();
         }
 
         private void OnDisable()
@@ -72,10 +67,10 @@ namespace ShadowFlareRemake.UI
 
         #region Initialization
 
-        private async Task InitInputManager()
+        public void InitUiController(IInputManager inputManager)
         {
-            _inputManager = InputManager.Instance;
-            await _inputManager.WaitForInitFinish();
+            _inputManager = inputManager;
+            RegisterEvents();
         }
 
         private void CacheNulls()
@@ -136,12 +131,12 @@ namespace ShadowFlareRemake.UI
 
         private void CursorEnteredUI(PointerEventData eventData)
         {
-            _inputManager.SetIsCursorOnUI(true);
+            OnIsCurserOnUiChanged?.Invoke(true);
         }
 
         private void CursorLeftUI(PointerEventData eventData)
         {
-            _inputManager.SetIsCursorOnUI(false);
+            OnIsCurserOnUiChanged?.Invoke(false);
         }
 
         private void HandleIsCurserHoldingLoot(bool isHoldingLoot)
@@ -158,7 +153,7 @@ namespace ShadowFlareRemake.UI
             if(_inventoryModel.IsInventoryOpen)
             {
                 _curserModel.PickUpLootFromGround(lootModel);
-                _inputManager.SetIsHoldingLoot(true);
+                OnIsPlayerHoldingLootChanged?.Invoke(true);
                 return true;
             }
 
@@ -166,10 +161,16 @@ namespace ShadowFlareRemake.UI
             var carryItemsGridModel = _inventoryModel.GetItemsGridModel(LootType.All);
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            {
+                OnIsPlayerHoldingLootChanged?.Invoke(false);
                 return true;
+            }
 
             if(carryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            {
+                OnIsPlayerHoldingLootChanged?.Invoke(false);
                 return true;
+            }
 
             return false;
         }
@@ -214,9 +215,13 @@ namespace ShadowFlareRemake.UI
             if(cursorLootModel != null)
             {
                 _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
+                OnIsPlayerHoldingLootChanged?.Invoke(false);
             }
             else
+            {
                 _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, lootModel);
+                OnIsPlayerHoldingLootChanged?.Invoke(true);
+            }
         }
 
         #endregion
@@ -385,22 +390,22 @@ namespace ShadowFlareRemake.UI
         {
             if(isRegister)
             {
-                _inputManager.I_KeyboardClickAction.performed += ToggleInventory;
-                _inputManager.S_KeyboardClickAction.performed += ToggleStats;
+                _inputManager.ResigterToInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
+                _inputManager.ResigterToInputAction(PlayerInputType.S_Keyboard, ToggleInventory);
             }
             else
             {
-                _inputManager.I_KeyboardClickAction.performed -= ToggleInventory;
-                _inputManager.S_KeyboardClickAction.performed -= ToggleStats;
+                _inputManager.DeresigterFromInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
+                _inputManager.DeresigterFromInputAction(PlayerInputType.S_Keyboard, ToggleInventory);
             }
         }
 
         private void DropLootLeftMouseClickEvent(bool isRegister)
         {
             if(isRegister)
-                _inputManager.LeftMouseClickAction.performed += DropLootToTheGround;
+                _inputManager.ResigterToInputAction(PlayerInputType.LeftMouse, DropLootToTheGround);
             else
-                _inputManager.LeftMouseClickAction.performed -= DropLootToTheGround;
+                _inputManager.DeresigterFromInputAction(PlayerInputType.LeftMouse, DropLootToTheGround);
         }
 
         private void CursorEvents(bool isRegister)

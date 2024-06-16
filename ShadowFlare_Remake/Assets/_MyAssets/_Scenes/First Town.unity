@@ -1314,6 +1314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44decafebd85afe43a595052a396cbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputManager: {fileID: 440198284}
   _rewardsManager: {fileID: 410748830}
   _uiController: {fileID: 915568423}
   _enemiesParent: {fileID: 1054742629}
@@ -3411,17 +3412,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4604abe96a32f04893553a74078d99a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MainCamera>k__BackingField: {fileID: 86125036}
-  <LeftMouseClickAction>k__BackingField:
+  _mainCamera: {fileID: 86125036}
+  LeftMouseClickAction:
     m_Name: Left Mouse Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 44e5a61b-a52d-4e64-a6ec-9e01c3f6d745
+    m_Id: 380e5481-8b1e-464d-b309-d5d0f55133cf
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 764c88a5-e544-4bac-8c59-5d4a14216fd0
+      m_Id: 866d627b-560f-4089-96f4-49395748f7e6
       m_Path: <Mouse>/leftButton
       m_Interactions: 
       m_Processors: 
@@ -3429,16 +3430,16 @@ MonoBehaviour:
       m_Action: Left Mouse Click
       m_Flags: 0
     m_Flags: 0
-  <RightMouseClickAction>k__BackingField:
+  RightMouseClickAction:
     m_Name: Right Mouse Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: aa3a0c7d-fb3c-4f74-a502-2a322158ea01
+    m_Id: 808dd928-a563-49ad-ab06-54f2236928c7
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: c2492382-4188-4616-abeb-70a698f94888
+      m_Id: ae7f8eba-f11c-493e-a345-972a9843d010
       m_Path: <Mouse>/rightButton
       m_Interactions: 
       m_Processors: 
@@ -3446,16 +3447,16 @@ MonoBehaviour:
       m_Action: Right Mouse Click
       m_Flags: 0
     m_Flags: 0
-  <I_KeyboardClickAction>k__BackingField:
+  I_KeyboardClickAction:
     m_Name: I_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 1cf20358-4a88-458e-8f87-e228131f4725
+    m_Id: 01a10156-d2ca-4322-a183-06f4516fbf97
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: d0538edd-8930-4690-b3b4-d3589f6e9bb7
+      m_Id: 6d65b755-dcc4-4de4-a232-97064d6152e7
       m_Path: <Keyboard>/i
       m_Interactions: 
       m_Processors: 
@@ -3463,16 +3464,16 @@ MonoBehaviour:
       m_Action: I_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  <S_KeyboardClickAction>k__BackingField:
+  S_KeyboardClickAction:
     m_Name: S_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: f6a2fdcf-d073-40f4-9a1c-63f0480c4209
+    m_Id: 35f8b7c4-0ea6-470f-a510-55d07fb6b85a
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: e0b7c718-8151-4f74-9a31-6f01636d8715
+      m_Id: d2ba7d52-7912-4565-8206-3d2cbac0a539
       m_Path: <Keyboard>/s
       m_Interactions: 
       m_Processors: 
@@ -3480,16 +3481,16 @@ MonoBehaviour:
       m_Action: S_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  <H_KeyboardClickAction>k__BackingField:
+  H_KeyboardClickAction:
     m_Name: H_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: f292ffc7-9ef5-48d2-b7b5-322cc2e6a3fc
+    m_Id: e84adadc-d94b-4c5c-97eb-1daebfa3682a
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: d652c0a1-952d-4cfd-a495-a22a93ee8ba8
+      m_Id: 4d450127-30dd-42ef-b83b-e26719858a50
       m_Path: <Keyboard>/h
       m_Interactions: 
       m_Processors: 
