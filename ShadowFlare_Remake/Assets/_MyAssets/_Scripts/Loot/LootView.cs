@@ -27,8 +27,11 @@ namespace ShadowFlareRemake.Loot
 
         protected override void ModelChanged()
         {
+            if(Model == null)
+                return;
+
             SetData();
-            SetName();
+            SetNameText();
             HandleSetSprite();
             HandleAnimation();
         }
@@ -52,9 +55,9 @@ namespace ShadowFlareRemake.Loot
             Height = Model.LootData.Height;
         }
 
-        private void SetName()
+        private void SetNameText()
         {
-            if(_nameText != null)
+            if(_nameText != null && !string.IsNullOrEmpty(Name))
                 _nameText.text = Name;
         }
 

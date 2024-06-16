@@ -270,9 +270,10 @@ namespace ShadowFlareRemake.GameManager
 
             var lootView = worldLoot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
-
             lootModel.InvokeDropAnimation();
+
             HandlePlayerHoldingLoot(false);
+            _playerController.SetIsLastActionWasMove(false);
         }
 
         #endregion

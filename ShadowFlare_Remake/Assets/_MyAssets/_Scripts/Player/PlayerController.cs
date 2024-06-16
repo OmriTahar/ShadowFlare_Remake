@@ -138,19 +138,19 @@ namespace ShadowFlareRemake.Player
             if((isLeftMouseHeldDown && _isLastActionWasMove) || _inputManager.IsCursorOnGround)
             {
                 selectedCoroutine = MoveLogic(hit.point);
-                _isLastActionWasMove = true;
+                SetIsLastActionWasMove(true);
             }
             else if(_inputManager.IsCursorOnEnemy)
             {
                 var hitCollider = _inputManager.CurrentRaycastHitCollider;
                 var enemyPos = hitCollider.transform.position;
                 selectedCoroutine = MoveAndAttackLogic(enemyPos);
-                _isLastActionWasMove = false;
+                SetIsLastActionWasMove(false);
             }
             else if(_inputManager.IsCursorOnItem)
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
-                _isLastActionWasMove = false;
+                SetIsLastActionWasMove(false);
             }
 
             HandleCoroutines(selectedCoroutine);
@@ -291,6 +291,11 @@ namespace ShadowFlareRemake.Player
             }
 
             OnPickedLoot?.Invoke(lootCollider);
+        }
+
+        public void SetIsLastActionWasMove(bool isLastActionWasMove)
+        {
+            _isLastActionWasMove = isLastActionWasMove;
         }
 
         #endregion 

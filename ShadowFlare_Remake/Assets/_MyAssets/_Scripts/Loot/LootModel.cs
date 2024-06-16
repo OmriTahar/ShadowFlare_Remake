@@ -17,7 +17,6 @@ namespace ShadowFlareRemake.Loot
         public LootModel(Loot_ScriptableObject lootData)
         {
             LootData = lootData;
-
             Color = new Color(lootData.Color.r, lootData.Color.g, lootData.Color.b, 1);
             HighlightColor = new Color(Color.r + _highlightAdder, Color.g + _highlightAdder, Color.b + _highlightAdder, _alpha);
         }
@@ -25,6 +24,7 @@ namespace ShadowFlareRemake.Loot
         public void SetIsSingleTile(bool isSingleTile)
         {
             IsSingleTile = isSingleTile;
+            Changed();
         }
 
         public void InvokeDropAnimation()
