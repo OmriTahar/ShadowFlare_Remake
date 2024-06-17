@@ -30,6 +30,7 @@ namespace ShadowFlareRemake.Enemies {
         public EnemyModel InitEnemy(IUnit unit, Transform playerTransform) {
 
             PlayerTransform = playerTransform;
+            name = unit.Stats.Name;
 
             CacheNulls();
             RegisterEvents();
