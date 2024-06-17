@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace CartoonHeroes
 {
     public class SetCharacter : MonoBehaviour
     {
-        
         public Transform characterRoot;
         public ItemGroup[] itemGroups;
 
@@ -14,18 +12,6 @@ namespace CartoonHeroes
         const string hideString = "(Hide)";
 
         public GameObject disabledGraySkeleton;
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         [System.Serializable]
         public class ItemGroup
@@ -40,7 +26,6 @@ namespace CartoonHeroes
         {
             public GameObject prefab;
         }
-
 
         public GameObject AddItem(ItemGroup itemGroup, int itemSlot)
         {
