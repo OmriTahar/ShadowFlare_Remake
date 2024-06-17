@@ -62,12 +62,7 @@ namespace ShadowFlareRemake.GameManager
 
             RegisterEvents();
 
-            float spawnPosX = _testLootParent.transform.position.x;
-            foreach(var lootData in _testLootData)
-            {
-                TestSpawnLoot(lootData, spawnPosX);
-                spawnPosX += 1.5f;
-            }
+            HandleTestSpawnLoot();
         }
 
         private void Update()
@@ -290,6 +285,20 @@ namespace ShadowFlareRemake.GameManager
             newPos.y = 0;
 
             return newPos;
+        }
+
+        #endregion
+
+        #region Tests
+
+        private void HandleTestSpawnLoot()
+        {
+            float spawnPosX = _testLootParent.transform.position.x;
+            foreach(var lootData in _testLootData)
+            {
+                TestSpawnLoot(lootData, spawnPosX);
+                spawnPosX += 1.25f;
+            }
         }
 
         private void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
