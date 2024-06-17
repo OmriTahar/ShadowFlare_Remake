@@ -385,12 +385,12 @@ namespace ShadowFlareRemake.UI
             if(isRegister)
             {
                 _inputManager.ResigterToInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
-                _inputManager.ResigterToInputAction(PlayerInputType.S_Keyboard, ToggleInventory);
+                _inputManager.ResigterToInputAction(PlayerInputType.S_Keyboard, ToggleStats);
             }
             else
             {
                 _inputManager.DeresigterFromInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
-                _inputManager.DeresigterFromInputAction(PlayerInputType.S_Keyboard, ToggleInventory);
+                _inputManager.DeresigterFromInputAction(PlayerInputType.S_Keyboard, ToggleStats);
             }
         }
 
