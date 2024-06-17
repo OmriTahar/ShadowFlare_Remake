@@ -18,6 +18,8 @@ namespace ShadowFlareRemake.Player {
         private float _singleAttackAnimLength;
         private float _threeStrikesAnimLength;
 
+        private const string _isMovingBool = "IsMoving";
+
         protected override void Initialize() {
 
             base.Initialize();
@@ -41,6 +43,8 @@ namespace ShadowFlareRemake.Player {
                 print("Model is null muchacho");
                 return;
             }
+
+            _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
 
             if(Model.IsAttacking) {
                 HandleAttackAnimations();

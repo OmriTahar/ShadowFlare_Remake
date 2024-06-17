@@ -32,7 +32,10 @@ namespace ShadowFlareRemake.GameManager
         public bool IsLeftMouseHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
+        private int _raycastLayerMask;
         private bool _isFinishedInit = false;
+
+        private const int _rayCastMaxDistance = 1000;
 
         #region Unity Callbacks
 
@@ -155,15 +158,13 @@ namespace ShadowFlareRemake.GameManager
 
         private void HandleRaycastHit()
         {
-
             var mousePos = Mouse.current.position.ReadValue();
 
             CurrentMousePosition = mousePos;
             _currentMouseRay = _mainCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit))
+            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit, _rayCastMaxDistance))
             {
-
                 CurrentRaycastHit = hit;
                 CurrentRaycastHitCollider = hit.collider;
 

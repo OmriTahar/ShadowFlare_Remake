@@ -4,6 +4,7 @@ using ShadowFlareRemake.Events;
 namespace ShadowFlareRemake {
     public abstract class Controller : MonoBehaviour {
 
+        protected int PlayerLayer;
         protected int GroundLayer;
         protected int EnemyLayer;
         protected int ItemLayer;
@@ -30,6 +31,7 @@ namespace ShadowFlareRemake {
 
         private void InitLayers() {
 
+            PlayerLayer = LayerMask.NameToLayer("Player");
             GroundLayer = LayerMask.NameToLayer("Ground");
             EnemyLayer = LayerMask.NameToLayer("Enemy");
             ItemLayer = LayerMask.NameToLayer("Item");

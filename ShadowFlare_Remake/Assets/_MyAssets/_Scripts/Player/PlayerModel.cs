@@ -8,6 +8,8 @@ namespace ShadowFlareRemake.Player {
         public enum AttackType { None, Single, ThreeStrikes }
         public AttackType CurrentAttackType { get; private set; }
 
+        public bool IsMoving { get; private set; }
+
         public bool IsAttacking { get; private set; } = false;
         public bool CanTakeDamage { get; private set; } = true;
 
@@ -31,6 +33,12 @@ namespace ShadowFlareRemake.Player {
 
             IsAttacking = isAttacking;
             CurrentAttackType = attackType;
+            Changed();
+        }
+
+        public void SetIsMoving(bool isMoving)
+        {
+            IsMoving = isMoving;
             Changed();
         }
     }

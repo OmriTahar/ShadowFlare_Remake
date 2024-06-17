@@ -182,6 +182,8 @@ namespace ShadowFlareRemake.Player
             targetPos.y = 0f;
             var movementSpeed = _model.Stats.MovementSpeed;
 
+            _model.SetIsMoving(true);
+
             while(Vector3.Distance(transform.position, targetPos) > 0.1f)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
@@ -190,6 +192,8 @@ namespace ShadowFlareRemake.Player
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
                 yield return null;
             }
+
+            _model.SetIsMoving(false);
         }
 
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos)
@@ -205,6 +209,8 @@ namespace ShadowFlareRemake.Player
                 yield break;
             }
 
+            _model.SetIsMoving(true);
+
             while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
@@ -213,6 +219,8 @@ namespace ShadowFlareRemake.Player
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
                 yield return null;
             }
+
+            _model.SetIsMoving(false);
 
             Attack(PlayerModel.AttackType.Single);
         }
@@ -273,6 +281,8 @@ namespace ShadowFlareRemake.Player
             targetPos.y = 0f;
             var movementSpeed = _model.Stats.MovementSpeed;
 
+            _model.SetIsMoving(true);
+
             if(Vector3.Distance(transform.position, targetPos) <= _pickUpDistance)
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
@@ -280,6 +290,8 @@ namespace ShadowFlareRemake.Player
                 OnPickedLoot?.Invoke(lootCollider);
                 yield break;
             }
+
+            _model.SetIsMoving(false);
 
             while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
             {
