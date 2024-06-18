@@ -281,8 +281,6 @@ namespace ShadowFlareRemake.Player
             targetPos.y = 0f;
             var movementSpeed = _model.Stats.MovementSpeed;
 
-            _model.SetIsMoving(true);
-
             if(Vector3.Distance(transform.position, targetPos) <= _pickUpDistance)
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
@@ -291,9 +289,9 @@ namespace ShadowFlareRemake.Player
                 yield break;
             }
 
-            _model.SetIsMoving(false);
+            _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
+            while(Vector3.Distance(transform.position, targetPos) > _pickUpDistance)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
@@ -301,6 +299,8 @@ namespace ShadowFlareRemake.Player
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
                 yield return null;
             }
+
+            _model.SetIsMoving(false);
 
             OnPickedLoot?.Invoke(lootCollider);
         }

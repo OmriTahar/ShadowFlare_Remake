@@ -1,9 +1,9 @@
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.PlayerInput;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.PlayerInput;
 
 namespace ShadowFlareRemake.GameManager
 {
@@ -23,13 +23,13 @@ namespace ShadowFlareRemake.GameManager
         public RaycastHit CurrentRaycastHit { get; private set; }
         public Vector3 CurrentMousePosition { get; private set; }
 
+        public bool IsLeftMouseHeldDown { get; private set; }
+        public bool IsHoldingLoot { get; private set; }
+
         public bool IsCursorOnGround { get; private set; }
         public bool IsCursorOnEnemy { get; private set; }
         public bool IsCursorOnItem { get; private set; }
         public bool IsCursorOnUI { get; private set; }
-
-        public bool IsHoldingLoot { get; private set; }
-        public bool IsLeftMouseHeldDown { get; private set; }
 
         private Ray _currentMouseRay;
         private int _raycastLayerMask;
@@ -42,16 +42,12 @@ namespace ShadowFlareRemake.GameManager
         protected override void Awake()
         {
             base.Awake();
+            InitRaycastLayerMask();
         }
 
         private void OnEnable()
         {
-            LeftMouseClickAction.Enable();
-            RightMouseClickAction.Enable();
-            I_KeyboardClickAction.Enable();
-            S_KeyboardClickAction.Enable();
-            H_KeyboardClickAction.Enable();
-
+            SetIsClickActionsEnabled(true);
             _isFinishedInit = true;
         }
 
@@ -63,12 +59,7 @@ namespace ShadowFlareRemake.GameManager
 
         private void OnDisable()
         {
-            LeftMouseClickAction.Disable();
-            RightMouseClickAction.Disable();
-            I_KeyboardClickAction.Disable();
-            S_KeyboardClickAction.Disable();
-            H_KeyboardClickAction.Disable();
-
+            SetIsClickActionsEnabled(false);
             _isFinishedInit = false;
         }
 
@@ -76,11 +67,36 @@ namespace ShadowFlareRemake.GameManager
 
         #region Initialization
 
+        private void InitRaycastLayerMask()
+        {
+            _raycastLayerMask = ~(1 << PlayerLayer);
+        }
+
         public async Task WaitForInitFinish()
         {
             while(!_isFinishedInit)
             {
                 await Task.Yield();
+            }
+        }
+
+        private void SetIsClickActionsEnabled(bool isEnable)
+        {
+            if(isEnable)
+            {
+                LeftMouseClickAction.Enable();
+                RightMouseClickAction.Enable();
+                I_KeyboardClickAction.Enable();
+                S_KeyboardClickAction.Enable();
+                H_KeyboardClickAction.Enable();
+            }
+            else
+            {
+                LeftMouseClickAction.Disable();
+                RightMouseClickAction.Disable();
+                I_KeyboardClickAction.Disable();
+                S_KeyboardClickAction.Disable();
+                H_KeyboardClickAction.Disable();
             }
         }
 
@@ -163,7 +179,7 @@ namespace ShadowFlareRemake.GameManager
             CurrentMousePosition = mousePos;
             _currentMouseRay = _mainCamera.ScreenPointToRay(mousePos);
 
-            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit, _rayCastMaxDistance))
+            if(Physics.Raycast(_currentMouseRay, out RaycastHit hit, _rayCastMaxDistance, _raycastLayerMask))
             {
                 CurrentRaycastHit = hit;
                 CurrentRaycastHitCollider = hit.collider;
