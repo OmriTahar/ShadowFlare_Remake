@@ -1,25 +1,22 @@
 
+using ShadowFlareRemake.Enums;
+
 namespace ShadowFlareRemake.Player {
     public class PlayerModel : Model {
 
         public IUnit Unit { get; private set; }
         public IPlayerUnitStats Stats { get; private set; }
 
-        public enum AttackType { None, Single, ThreeStrikes }
-        public AttackType CurrentAttackType { get; private set; }
+        public PlayerAttack CurrentPlayerAttack { get; private set; }
+        public bool IsAttacking { get; private set; } = false;
 
         public bool IsMoving { get; private set; }
-
-        public bool IsAttacking { get; private set; } = false;
         public bool CanTakeDamage { get; private set; } = true;
 
-        public PlayerModel(IUnit unit, bool isAttacking = false, AttackType attackType = AttackType.None) {
+        public PlayerModel(IUnit unit) {
 
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;
-
-            IsAttacking = isAttacking;
-            CurrentAttackType = attackType;
         }
 
         public void SetUnit(IUnit unit) {
@@ -29,10 +26,14 @@ namespace ShadowFlareRemake.Player {
             Changed();
         }
 
-        public void SetAttackState(bool isAttacking, AttackType attackType = AttackType.None) {
+        public void SetAttackState(bool isAttacking, PlayerAttack playerAttack) {
 
             IsAttacking = isAttacking;
-            CurrentAttackType = attackType;
+            CurrentPlayerAttack = playerAttack;
+
+            if(playerAttack != PlayerAttack.None)
+                IsMoving = false;
+           
             Changed();
         }
 

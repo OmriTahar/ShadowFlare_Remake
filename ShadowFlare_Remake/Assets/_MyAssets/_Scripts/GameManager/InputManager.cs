@@ -37,7 +37,7 @@ namespace ShadowFlareRemake.GameManager
 
         private const int _rayCastMaxDistance = 1000;
 
-        #region Unity Callbacks
+        #region MonoBehaviour
 
         protected override void Awake()
         {

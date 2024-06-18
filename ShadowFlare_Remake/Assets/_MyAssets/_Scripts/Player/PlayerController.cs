@@ -35,7 +35,7 @@ namespace ShadowFlareRemake.Player
         private bool _isAttacking = false;
         private bool _isLastActionWasMove = false;
 
-        #region Unity Callbacks
+        #region MonoBehaviour
 
         protected override void Awake()
         {
@@ -205,7 +205,7 @@ namespace ShadowFlareRemake.Player
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
                 transform.LookAt(targetDirection);
-                Attack(PlayerModel.AttackType.Single);
+                Attack(PlayerAttack.MeleeSingle);
                 yield break;
             }
 
@@ -222,7 +222,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
 
-            Attack(PlayerModel.AttackType.Single);
+            Attack(PlayerAttack.MeleeSingle);
         }
 
         private void AttackAtDirection(InputAction.CallbackContext context)
@@ -239,12 +239,12 @@ namespace ShadowFlareRemake.Player
             var targetDirection = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
             transform.LookAt(targetDirection);
 
-            Attack(PlayerModel.AttackType.ThreeStrikes);
+            Attack(PlayerAttack.MeleeTriple);
         }
 
-        private void Attack(PlayerModel.AttackType attackType)
+        private void Attack(PlayerAttack playerAttack)
         {
-            _model.SetAttackState(true, attackType);
+            _model.SetAttackState(true, playerAttack);
             _isAttacking = true;
         }
 
@@ -272,7 +272,7 @@ namespace ShadowFlareRemake.Player
 
         private void ResetAttackCooldown()
         {
-            _model.SetAttackState(false);
+            _model.SetAttackState(false, PlayerAttack.None);
             _isAttacking = false;
         }
 
