@@ -1,11 +1,10 @@
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Tools;
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Tools;
 
 namespace ShadowFlareRemake.Enemies
 {
@@ -13,40 +12,42 @@ namespace ShadowFlareRemake.Enemies
     {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;
-        public event Action OnEnemyKilled;
+        public event Action OnDeath;
         public event Action OnFinishedDeathAnimation;
+        public event Action OnFinishedFadeOutAnimation;
+
+        [Header("Rendering")]
+        [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
+        // Add here the highlitable (currently under game manager - Use interface?)
 
         [Header("Health Slider")]
         [SerializeField] private TMP_Text _name;
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private Transform _healthSliderTransform;
 
+        [Header("Animations")]
+        [SerializeField] private Animator _animator;
+
         [Header("Other")]
-        [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Collider _myCollider;
+        [SerializeField] private GameObject _canvas;
         [SerializeField] private ParticleSystem _hitEffect;
         [SerializeField] private FadingObject _fadingObject;
 
-        [Header("Animations")]
-        [SerializeField] private Animator _animator;
-        [SerializeField] private AnimationClip _closeAttackAnim;
-        [SerializeField] private AnimationClip _rangedAttackAnim;
-        [SerializeField] private AnimationClip _deathAnim;
-
-        private WaitForSeconds _closeAttackCooldown;
-
-        private float _closeAttackAnimLength;
-        private float _rangedAttackAnimLength;
-        private float _deathAnimLength;
+        [Header("Settings")]
+        [SerializeField] private Vector3 _healthBarStabilizer;
+        [SerializeField] private bool _useSkinnedMeshRenderer;
 
         private int _lastSeenHP;
+
+        private readonly int _deathAnimHash = Animator.StringToHash("Death");
 
         #region View Overrides
 
         protected override void Initialize()
         {
             CacheNulls();
-            _closeAttackCooldown = new WaitForSeconds(_closeAttackAnimLength);
         }
 
         protected override void ModelReplaced()
@@ -54,24 +55,21 @@ namespace ShadowFlareRemake.Enemies
             if(Model == null)
                 return;
 
-            _name.text = Model.Name;
-            _meshRenderer.material.color = Model.Color;
-
+            SetNameText();
+            SetColor();
             ResetHealthSliderValues();
         }
 
         protected override void ModelChanged()
         {
-            if(Model == null)
+            if(Model == null || Model.CurrentEnemyState == EnemyState.Dead)
                 return;
 
             HandleHitEffect();
             HandleHP();
 
             if(Model.IsAttacking)
-            {
                 HandleAttackAnimations();
-            }
         }
 
         #endregion
@@ -85,12 +83,31 @@ namespace ShadowFlareRemake.Enemies
 
         private void OnTriggerEnter(Collider other)
         {
+            if(Model.CurrentEnemyState == EnemyState.Dead)
+                return;
+
             OnTriggerEnterEvent?.Invoke(other);
         }
 
         #endregion
 
         #region Initialization
+
+        private void SetNameText()
+        {
+            _name.text = Model.Name;
+        }
+
+        private void SetColor()
+        {
+            if(_useSkinnedMeshRenderer)
+            {
+                _skinnedMeshRenderer.material.color = Model.Color;
+                return;
+            }
+
+            _meshRenderer.material.color = Model.Color;
+        }
 
         private void ResetHealthSliderValues()
         {
@@ -110,23 +127,7 @@ namespace ShadowFlareRemake.Enemies
             {
                 _myCollider = GetComponent<Collider>();
             }
-
-            if(_closeAttackAnim != null)
-            {
-                _closeAttackAnimLength = _closeAttackAnim.length;
-            }
-
-            if(_rangedAttackAnim != null)
-            {
-                _rangedAttackAnimLength = _rangedAttackAnim.length;
-            }
-
-            if(_deathAnim != null)
-            {
-                _deathAnimLength = _deathAnim.length;
-            }
         }
-
 
         #endregion
 
@@ -158,8 +159,8 @@ namespace ShadowFlareRemake.Enemies
 
             if(_lastSeenHP == 0)
             {
-                OnEnemyKilled?.Invoke();
-                HandleDeathAnimation();
+                OnDeath?.Invoke();
+                HandleDeath();
             }
         }
 
@@ -176,39 +177,25 @@ namespace ShadowFlareRemake.Enemies
         private void DoCloseAttack()
         {
             _animator.SetTrigger("CloseAttack");
-            StartCoroutine(WaitForAnimationEnd(Model.CurrentAttackMethod));
         }
 
-        private async void HandleDeathAnimation()
+        private void HandleDeath()
         {
             print($"{Model.Name} was killed!");
 
-            _animator.SetTrigger("Die");
+            _animator.SetTrigger(_deathAnimHash);
 
-            await Task.Delay((int)_deathAnimLength * 1000);
-
-            FadeOut();
+            _canvas.SetActive(false);
         }
 
-        private IEnumerator WaitForAnimationEnd(AttackMethod attackMethod)
+        public void FinishedDeathAnimation() // Called from an animation event 
         {
-            switch(attackMethod)
-            {
-                case AttackMethod.Close:
-                    yield return _closeAttackCooldown;
-                    break;
-
-                case AttackMethod.Range:
-                    break;
-
-            }
-
-            OnAttackAnimationEnded?.Invoke();
+            FadeOut();
         }
 
         private void StabilizeHpSlider()
         {
-            _healthSliderTransform.rotation = Quaternion.Euler(40, 40, 0);
+            _healthSliderTransform.rotation = Quaternion.Euler(_healthBarStabilizer);
         }
 
         #endregion
@@ -268,7 +255,7 @@ namespace ShadowFlareRemake.Enemies
             }
 
             StopAllCoroutines();
-            OnFinishedDeathAnimation?.Invoke();
+            OnFinishedFadeOutAnimation?.Invoke();
         }
 
         #endregion

@@ -111,7 +111,7 @@ namespace ShadowFlareRemake.GameManager
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
                 enemy.OnIGotHit -= HandleEnemyGotHit;
-                enemy.OnIGotKilled -= HandleEnemyDied;
+                enemy.OnDeath -= HandleEnemyDied;
             }
         }
 
@@ -200,7 +200,7 @@ namespace ShadowFlareRemake.GameManager
         private void RegisterEnemyEvents(EnemyController enemyController)
         {
             enemyController.OnIGotHit += HandleEnemyGotHit;
-            enemyController.OnIGotKilled += HandleEnemyDied;
+            enemyController.OnDeath += HandleEnemyDied;
         }
 
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)

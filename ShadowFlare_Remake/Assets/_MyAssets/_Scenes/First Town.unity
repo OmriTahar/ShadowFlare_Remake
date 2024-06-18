@@ -6079,7 +6079,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn (4)
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -6094,7 +6094,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -6140,8 +6140,14 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 7275f01a36891a24f9459fb2dc71f186,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!4 &682426337 stripped
@@ -7888,7 +7894,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn (3)
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -7903,7 +7909,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -7949,8 +7955,14 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 7275f01a36891a24f9459fb2dc71f186,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!4 &878303834 stripped
@@ -15454,7 +15466,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn (2)
+      value: Red Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -15469,7 +15481,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -15515,7 +15527,7 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: b9b5d55fd48433d4c9a4508b5b029695,
+      objectReference: {fileID: 11400000, guid: 479817401f23dfc4fb4593490e3c9b8b,
         type: 2}
     - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -15523,6 +15535,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b9b5d55fd48433d4c9a4508b5b029695,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!4 &1538489714 stripped
@@ -15782,7 +15800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -16876,7 +16894,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn (1)
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -16891,7 +16909,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -16937,8 +16955,14 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 7275f01a36891a24f9459fb2dc71f186,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!4 &1717387293 stripped
@@ -19964,7 +19988,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn (5)
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -19974,12 +19998,12 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -20025,8 +20049,14 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 7275f01a36891a24f9459fb2dc71f186,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!4 &1941233442 stripped
@@ -22950,7 +22980,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Enemy To Spawn
+      value: Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -22960,12 +22990,12 @@ PrefabInstance:
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -23011,8 +23041,14 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 81328f2179fd0234d918cb666b68f1d1,
+      objectReference: {fileID: 11400000, guid: 7275f01a36891a24f9459fb2dc71f186,
         type: 2}
+    - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
+        type: 3}
+      propertyPath: <EnemyPrefab>k__BackingField
+      value: 
+      objectReference: {fileID: 3026627004370994610, guid: 16fad5bd982c86849a0bd54d2eebabf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf5072e62b826134db1b3aff1f3b0193, type: 3}
 --- !u!1001 &5333997295604999326

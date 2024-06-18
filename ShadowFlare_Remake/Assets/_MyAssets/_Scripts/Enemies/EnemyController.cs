@@ -1,14 +1,15 @@
+using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.Enums;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using ShadowFlareRemake.Combat;
 
-namespace ShadowFlareRemake.Enemies {
-
-    public abstract class EnemyController : Controller {
-
+namespace ShadowFlareRemake.Enemies
+{
+    public abstract class EnemyController : Controller
+    {
         public event Action<Attack, EnemyController> OnIGotHit;
-        public event Action<IEnemyUnitStats> OnIGotKilled;
+        public event Action<IEnemyUnitStats> OnDeath;
 
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
@@ -27,8 +28,8 @@ namespace ShadowFlareRemake.Enemies {
 
         protected bool IsAllowedToAttack = true;
 
-        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform) {
-
+        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform)
+        {
             PlayerTransform = playerTransform;
             name = unit.Stats.Name;
 
@@ -39,87 +40,90 @@ namespace ShadowFlareRemake.Enemies {
             return Model;
         }
 
-        protected virtual void Update() {
-
-            if(!IsActive) {
+        protected virtual void Update()
+        {
+            if(!IsActive)
                 return;
-            }
 
             DistanceFromPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
 
-            if(ChasePlayer) {
+            if(ChasePlayer)
+            {
                 Agent.SetDestination(PlayerTransform.position);
             }
         }
 
-        private void OnDestroy() {
+        private void OnDestroy()
+        {
             DeregisterEvents();
         }
-      
-        protected virtual void SetModel(IUnit unit) {
 
+        protected virtual void SetModel(IUnit unit)
+        {
             Model = new EnemyModel(unit);
             View.SetModel(Model);
         }
 
-        public void SetEnemyUnitAndUnitHandler(IUnit unit) {
-
+        public void SetEnemyUnitAndUnitHandler(IUnit unit)
+        {
             Model.SetEnemyUnitAndUnitHandler(unit);
         }
 
-        public Collider GetEnemyCollider() {
-
+        public Collider GetEnemyCollider()
+        {
             return View.GetEnemyCollider();
         }
 
         protected abstract void Attack();
 
-        private void HandleTriggerEnter(Collider other) {
-
-            if(other.gameObject.layer == AttackLayer) {
-
+        private void HandleTriggerEnter(Collider other)
+        {
+            if(other.gameObject.layer == AttackLayer)
+            {
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, this);
             }
         }
 
-        private void HandleDeath() {
-
-            OnIGotKilled?.Invoke(Model.Stats);
+        private void HandleDeath()
+        {
+            OnDeath?.Invoke(Model.Stats);
+            Model.SetEnemyState(EnemyState.Dead);
         }
 
-        private void HandleDeathAnimationFinished() {
-
+        private void HandleDeathAnimationFinished()
+        {
             Destroy(gameObject);
         }
 
-        private void ResetAttackCooldown() {
-
+        private void ResetAttackCooldown()
+        {
             Model.UpdateAttackState(false, Enums.AttackMethod.None);
             IsAllowedToAttack = true;
         }
 
-        private void CacheNulls() {
-
-            if(View == null) {
+        private void CacheNulls()
+        {
+            if(View == null)
+            {
                 View = GetComponentInChildren<EnemyView>();
             }
         }
 
-        private void RegisterEvents() {
-
+        private void RegisterEvents()
+        {
             View.OnAttackAnimationEnded += ResetAttackCooldown;
             View.OnTriggerEnterEvent += HandleTriggerEnter;
-            View.OnEnemyKilled += HandleDeath;
-            View.OnFinishedDeathAnimation += HandleDeathAnimationFinished;
+            View.OnDeath += HandleDeath;
+            View.OnFinishedFadeOutAnimation += HandleDeathAnimationFinished;
         }
 
-        private void DeregisterEvents() {
-
+        private void DeregisterEvents()
+        {
             View.OnAttackAnimationEnded -= ResetAttackCooldown;
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
-            View.OnEnemyKilled -= HandleDeath;
-            View.OnFinishedDeathAnimation -= HandleDeathAnimationFinished;
+            View.OnDeath -= HandleDeath;
+            View.OnFinishedFadeOutAnimation -= HandleDeathAnimationFinished;
         }
     }
 }

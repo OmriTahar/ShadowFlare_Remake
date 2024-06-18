@@ -8,10 +8,12 @@ namespace ShadowFlareRemake.GameManager
 
         [Header("References")]
         [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
         [SerializeField] private GameObject _nameHolder;
 
         [Header("Settings")]
         [SerializeField] private float _highlightIntensity = 0.2f;
+        [SerializeField] private bool _useSkinnedMeshRenderer;
 
         private Color _color;
         private Color _highlightColor;
@@ -35,7 +37,13 @@ namespace ShadowFlareRemake.GameManager
 
         private void InitColors()
         {
-            _color = _meshRenderer.material.color;
+            if(_useSkinnedMeshRenderer)
+            {
+                _color = _skinnedMeshRenderer.material.color;
+            }
+            else
+                _color = _meshRenderer.material.color;
+
             _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
         }
 
@@ -51,6 +59,13 @@ namespace ShadowFlareRemake.GameManager
         private void HandleIsHighlighted()
         {
             _nameHolder.gameObject.SetActive(IsHighlighted);
+
+            if(_useSkinnedMeshRenderer)
+            {
+                _skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
+                return;
+            }
+
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
         }
     }

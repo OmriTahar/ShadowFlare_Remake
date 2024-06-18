@@ -14,6 +14,8 @@ namespace ShadowFlareRemake.Enemies
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
 
+        public EnemyState CurrentEnemyState { get; private set; }
+
         public bool IsAttacking { get; private set; } = false;
 
         public EnemyModel(IUnit unit)
@@ -36,6 +38,12 @@ namespace ShadowFlareRemake.Enemies
         {
             IsAttacking = isAttacking;
             CurrentAttackMethod = attackMethod;
+            Changed();
+        }
+
+        public void SetEnemyState(EnemyState enemyState)
+        {
+            CurrentEnemyState = enemyState; 
             Changed();
         }
 
