@@ -1,6 +1,5 @@
 using ShadowFlareRemake.Enums;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Player
@@ -8,8 +7,11 @@ namespace ShadowFlareRemake.Player
     public class PlayerView : View<PlayerModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
-        public event Action OnAttackAnimationEnded;
         public event Action OnDoStepForwardAnimationEvent;
+        public event Action OnAttackAnimationEnded;
+
+        [Header("Sub Views")]
+        [SerializeField] private PlayerAnimationsSubView _animaionsSubView;
 
         [Header("Melee Attack Helpers")]
         [SerializeField] private BoxCollider _swordBoxCollider;
@@ -17,14 +19,6 @@ namespace ShadowFlareRemake.Player
 
         [Header("Animation")]
         [SerializeField] private Animator _playerAnimator;
-        [SerializeField] private AnimationClip _meleeFirstAttackAnimation;
-        [SerializeField] private AnimationClip _meleeSecondAttackAnimation;
-        [SerializeField] private AnimationClip _meleeThirdAttackAnimation;
-
-        private float _meleeSingleAttackAnimLength;
-        private float _meleeSeoncdAttackAnimLength;
-        private float _meleeThirdAttackAnimLength;
-        private float _meleeTripleAttackAnimLength;
 
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
@@ -34,10 +28,8 @@ namespace ShadowFlareRemake.Player
 
         protected override void Initialize()
         {
-            if(_playerAnimator == null)
-                _playerAnimator = GetComponent<Animator>();
-
-            SetAnimationDurations();
+            CacheNulls();
+            RegisterEvents();
         }
 
         protected override void ModelChanged()
@@ -45,9 +37,12 @@ namespace ShadowFlareRemake.Player
             _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
 
             if(Model.IsAttacking)
-            {
                 HandleAttackAnimations();
-            }
+        }
+
+        protected override void Clean()
+        {
+            DeregisterEvents();
         }
 
         #endregion
@@ -63,12 +58,28 @@ namespace ShadowFlareRemake.Player
 
         #region Initializaion
 
-        private void SetAnimationDurations()
+        private void CacheNulls()
         {
-            _meleeSingleAttackAnimLength = _meleeFirstAttackAnimation.length;
-            _meleeSeoncdAttackAnimLength = _meleeSecondAttackAnimation.length;
-            _meleeThirdAttackAnimLength = _meleeThirdAttackAnimation.length;
-            _meleeTripleAttackAnimLength = _meleeSingleAttackAnimLength + _meleeSeoncdAttackAnimLength + _meleeThirdAttackAnimLength;
+            if(_playerAnimator == null)
+                _playerAnimator = GetComponent<Animator>();
+        }
+
+        #endregion
+
+        #region Events
+
+        private void RegisterEvents()
+        {
+            _animaionsSubView.OnDo_StepForwardAnimationEvent += InvokeDoStepForward;
+            _animaionsSubView.OnFinished_MeleeSingleAttack += FinishedMeleeAttack;
+            _animaionsSubView.OnFinished_MeleeTripleAttack += FinishedMeleeAttack;
+        }
+        
+        private void DeregisterEvents()
+        {
+            _animaionsSubView.OnDo_StepForwardAnimationEvent -= InvokeDoStepForward;
+            _animaionsSubView.OnFinished_MeleeSingleAttack -= FinishedMeleeAttack;
+            _animaionsSubView.OnFinished_MeleeTripleAttack -= FinishedMeleeAttack;
         }
 
         #endregion
@@ -92,37 +103,38 @@ namespace ShadowFlareRemake.Player
             }
         }
 
+        private void DoMeleeSingleAttack()
+        {
+            _playerAnimator.SetTrigger(_meleeSingleAttackTrigger);
+            SetMeleeAttackActivness(true);
+        }
+
+        private void DoMeleeTripleAttack()
+        {
+            _playerAnimator.SetTrigger(_meleeTripleAttackTrigger);
+            SetMeleeAttackActivness(true);
+        }
+
         private void SetMeleeAttackActivness(bool isActive)
         {
             _swordBoxCollider.enabled = isActive;
             _swordTrailObject.SetActive(isActive);
         }
 
-        public void DoMeleeSingleAttack()
+        private void InvokeDoStepForward() 
         {
-            _playerAnimator.SetTrigger(_meleeSingleAttackTrigger);
-            SetMeleeAttackActivness(true);
-            StartCoroutine(WaitForAnimationEnd(_meleeSingleAttackAnimLength));
+            OnDoStepForwardAnimationEvent?.Invoke();
         }
 
-        public void DoMeleeTripleAttack()
+        private void InvokeFinishedAttackAnimation()
         {
-            _playerAnimator.SetTrigger(_meleeTripleAttackTrigger);
-            SetMeleeAttackActivness(true);
-            StartCoroutine(WaitForAnimationEnd(_meleeTripleAttackAnimLength));
-        }
-
-        private IEnumerator WaitForAnimationEnd(float animDuration)
-        {
-            yield return new WaitForSeconds(animDuration);
-
-            SetMeleeAttackActivness(false);
             OnAttackAnimationEnded?.Invoke();
         }
 
-        public void DoStepForward() 
-        { 
-            OnDoStepForwardAnimationEvent?.Invoke();
+        private void FinishedMeleeAttack()
+        {
+            SetMeleeAttackActivness(false);
+            InvokeFinishedAttackAnimation();
         }
 
         #endregion

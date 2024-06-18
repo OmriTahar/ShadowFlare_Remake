@@ -248,7 +248,7 @@ namespace ShadowFlareRemake.Player
             _isAttacking = true;
         }
 
-        public void HandleAttackStepForward() // Invoked from an animation event
+        public void HandleAttackStepForward() 
         {
             if(_lastMoveCoroutine != null)
                 StopCoroutine(_lastMoveCoroutine);
