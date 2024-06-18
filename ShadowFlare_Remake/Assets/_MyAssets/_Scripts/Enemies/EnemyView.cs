@@ -41,20 +41,12 @@ namespace ShadowFlareRemake.Enemies
 
         private int _lastSeenHP;
 
+        #region View Overrides
+
         protected override void Initialize()
         {
             CacheNulls();
             _closeAttackCooldown = new WaitForSeconds(_closeAttackAnimLength);
-        }
-
-        private void FixedUpdate()
-        {
-            StabilizeHpSlider();
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            OnTriggerEnterEvent?.Invoke(other);
         }
 
         protected override void ModelReplaced()
@@ -82,10 +74,23 @@ namespace ShadowFlareRemake.Enemies
             }
         }
 
-        public Collider GetEnemyCollider()
+        #endregion
+
+        #region MonoBehaviour
+
+        private void FixedUpdate()
         {
-            return _myCollider;
+            StabilizeHpSlider();
         }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            OnTriggerEnterEvent?.Invoke(other);
+        }
+
+        #endregion
+
+        #region Initialization
 
         private void ResetHealthSliderValues()
         {
@@ -93,6 +98,39 @@ namespace ShadowFlareRemake.Enemies
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
         }
+
+        public Collider GetEnemyCollider()
+        {
+            return _myCollider;
+        }
+
+        private void CacheNulls()
+        {
+            if(_myCollider == null)
+            {
+                _myCollider = GetComponent<Collider>();
+            }
+
+            if(_closeAttackAnim != null)
+            {
+                _closeAttackAnimLength = _closeAttackAnim.length;
+            }
+
+            if(_rangedAttackAnim != null)
+            {
+                _rangedAttackAnimLength = _rangedAttackAnim.length;
+            }
+
+            if(_deathAnim != null)
+            {
+                _deathAnimLength = _deathAnim.length;
+            }
+        }
+
+
+        #endregion
+
+        #region Meat & Potatos
 
         private void HandleHitEffect()
         {
@@ -168,37 +206,18 @@ namespace ShadowFlareRemake.Enemies
             OnAttackAnimationEnded?.Invoke();
         }
 
-        private void FadeOut()
-        {
-            StartCoroutine(FadeOutLogic(_fadingObject));
-        }
-
         private void StabilizeHpSlider()
         {
             _healthSliderTransform.rotation = Quaternion.Euler(40, 40, 0);
         }
 
-        private void CacheNulls()
+        #endregion
+
+        #region Fade Out
+
+        private void FadeOut()
         {
-            if(_myCollider == null)
-            {
-                _myCollider = GetComponent<Collider>();
-            }
-
-            if(_closeAttackAnim != null)
-            {
-                _closeAttackAnimLength = _closeAttackAnim.length;
-            }
-
-            if(_rangedAttackAnim != null)
-            {
-                _rangedAttackAnimLength = _rangedAttackAnim.length;
-            }
-
-            if(_deathAnim != null)
-            {
-                _deathAnimLength = _deathAnim.length;
-            }
+            StartCoroutine(FadeOutLogic(_fadingObject));
         }
 
         private IEnumerator FadeOutLogic(FadingObject fadingObject)
@@ -251,6 +270,8 @@ namespace ShadowFlareRemake.Enemies
             StopAllCoroutines();
             OnFinishedDeathAnimation?.Invoke();
         }
+
+        #endregion
     }
 }
 
