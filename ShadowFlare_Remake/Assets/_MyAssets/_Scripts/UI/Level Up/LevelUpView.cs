@@ -26,9 +26,9 @@ namespace ShadowFlareRemake.UI.LevelUp
         //[SerializeField] private TMP_Text _addedSpellText;
         //[SerializeField] private TMP_Text _occupationText;
 
-        private readonly int _isActiveAnimHash = Animator.StringToHash("IsActive");
-        private readonly int _cornerAnimHash = Animator.StringToHash("Corner");
-
+        private readonly int _showLevelUpHash = Animator.StringToHash("Show Level Up");
+        private readonly int _moveToCornerAnimHash = Animator.StringToHash("Move To Corner");
+        private readonly int _hideLevelUpAnimHash = Animator.StringToHash("Hide Level Up");
 
         protected override void ModelChanged()
         {
@@ -53,20 +53,16 @@ namespace ShadowFlareRemake.UI.LevelUp
         {
             switch(Model.State)
             {
-                case LevelUpModel.LevelUpPanelState.Hidden:
-                    _animator.SetBool(_isActiveAnimHash, false);
-                    break;
-
                 case LevelUpModel.LevelUpPanelState.Shown:
-                    _animator.SetBool(_isActiveAnimHash, true);
+                    _animator.SetTrigger(_showLevelUpHash);
                     break;
 
                 case LevelUpModel.LevelUpPanelState.MovingToCorner:
-                    _animator.SetTrigger(_cornerAnimHash);
+                    _animator.SetTrigger(_moveToCornerAnimHash);
                     break;
 
                 case LevelUpModel.LevelUpPanelState.FadingOut:
-                    _animator.SetBool(_isActiveAnimHash, false);
+                    _animator.SetTrigger(_hideLevelUpAnimHash);
                     break;
 
                 default:
