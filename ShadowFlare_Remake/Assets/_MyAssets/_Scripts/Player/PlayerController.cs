@@ -274,8 +274,6 @@ namespace ShadowFlareRemake.Player
                     _characterController.Move(movement);
                 }
 
-                print($"Distance from enemy: {distanceFromEnemy} | Attack distance: {_attackDistance}");
-
                 timer += Time.deltaTime;
                 yield return null;
             }
