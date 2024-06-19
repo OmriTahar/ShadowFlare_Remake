@@ -6265,6 +6265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyView: {fileID: 7970543067481453309}
   _meshRenderer: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
   _nameHolder: {fileID: 5388307940072675350}

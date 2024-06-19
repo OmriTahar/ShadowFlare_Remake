@@ -123,26 +123,40 @@ namespace ShadowFlareRemake.GameManager
         {
             var hitCollider = _inputManager.CurrentRaycastHitCollider;
 
-            if(hitCollider != null && hitCollider.gameObject.tag == _highlightableTag)
+            if(IsValidHighlightableObject(hitCollider))
             {
-                var newObject = hitCollider.gameObject;
-
-                if(newObject == _lastHighlighted_GameObject && _lastHighlightable.IsHighlighted)
-                    return;
-
-                if(_lastHighlightable != null)
-                    _lastHighlightable.SetIsHighlighted(false);
-
-                var newHighlightable = newObject.GetComponent<HighlightableObject>();
-                newHighlightable.SetIsHighlighted(true);
-
-                _lastHighlighted_GameObject = newObject;
-                _lastHighlightable = newHighlightable;
+                HighlightObject(hitCollider);
                 return;
             }
 
             if(_lastHighlightable != null)
                 _lastHighlightable.SetIsHighlighted(false);
+        }
+
+        private bool IsValidHighlightableObject(Collider hitCollider)
+        {
+            return (hitCollider != null && hitCollider.gameObject.tag == _highlightableTag);
+        }
+
+        private void HighlightObject(Collider hitCollider)
+        {
+            var newObject = hitCollider.gameObject;
+
+            if(newObject == _lastHighlighted_GameObject && _lastHighlightable.IsHighlighted)
+                return;
+
+            if(_lastHighlightable != null)
+                _lastHighlightable.SetIsHighlighted(false);
+
+            var newHighlightable = newObject.GetComponent<HighlightableObject>();
+
+            if(!newHighlightable.IsHighlightable)
+                return;
+
+            newHighlightable.SetIsHighlighted(true);
+
+            _lastHighlighted_GameObject = newObject;
+            _lastHighlightable = newHighlightable;
         }
 
         #endregion

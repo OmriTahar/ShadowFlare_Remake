@@ -2,9 +2,10 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI.LevelUp {
-    public class LevelUpView : UIView<LevelUpModel> {
-
+namespace ShadowFlareRemake.UI.LevelUp
+{
+    public class LevelUpView : UIView<LevelUpModel>
+    {
         public event Action OnPanelClicked;
 
         [Header("References")]
@@ -29,14 +30,14 @@ namespace ShadowFlareRemake.UI.LevelUp {
         private readonly int _cornerAnimHash = Animator.StringToHash("Corner");
 
 
-        protected override void ModelChanged() {
-
+        protected override void ModelChanged()
+        {
             SetTexts();
             HandlePanelState();
         }
 
-        private void SetTexts() {
-
+        private void SetTexts()
+        {
             _levelText.text = Model.Level.ToString();
             _hpText.text = Model.HP.ToString();
             _mpText.text = Model.MP.ToString();
@@ -48,26 +49,24 @@ namespace ShadowFlareRemake.UI.LevelUp {
             _magicalDefenseText.text = Model.MagicalDefence.ToString();
         }
 
-        private void HandlePanelState() {
-
-            switch(Model.State) {
-
+        private void HandlePanelState()
+        {
+            switch(Model.State)
+            {
                 case LevelUpModel.LevelUpPanelState.Hidden:
-
-                    _levelUpPanel.SetActive(false);
                     _animator.SetBool(_isActiveAnimHash, false);
                     break;
 
-
-                case LevelUpModel.LevelUpPanelState.Idle:
-
-                    _levelUpPanel.SetActive(true);
+                case LevelUpModel.LevelUpPanelState.Shown:
                     _animator.SetBool(_isActiveAnimHash, true);
                     break;
 
-                case LevelUpModel.LevelUpPanelState.Corner:
-
+                case LevelUpModel.LevelUpPanelState.MovingToCorner:
                     _animator.SetTrigger(_cornerAnimHash);
+                    break;
+
+                case LevelUpModel.LevelUpPanelState.FadingOut:
+                    _animator.SetBool(_isActiveAnimHash, false);
                     break;
 
                 default:
@@ -75,8 +74,8 @@ namespace ShadowFlareRemake.UI.LevelUp {
             }
         }
 
-        public void PanelClicked() {
-
+        public void PanelClicked()
+        {
             OnPanelClicked?.Invoke();
         }
     }

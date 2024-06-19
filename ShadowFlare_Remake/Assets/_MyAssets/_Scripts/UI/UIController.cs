@@ -338,16 +338,12 @@ namespace ShadowFlareRemake.UI
         {
             switch(_levelUpModel.State)
             {
-                case LevelUpModel.LevelUpPanelState.Hidden:
-                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Idle);
+                case LevelUpModel.LevelUpPanelState.Shown:
+                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.MovingToCorner);
                     break;
 
-                case LevelUpModel.LevelUpPanelState.Idle:
-                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Corner);
-                    break;
-
-                case LevelUpModel.LevelUpPanelState.Corner:
-                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.Hidden);
+                case LevelUpModel.LevelUpPanelState.MovingToCorner:
+                    _levelUpModel.SetPanelState(LevelUpModel.LevelUpPanelState.FadingOut);
                     break;
 
                 default:

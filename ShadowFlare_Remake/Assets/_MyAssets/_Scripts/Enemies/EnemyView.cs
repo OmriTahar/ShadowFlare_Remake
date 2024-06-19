@@ -19,7 +19,6 @@ namespace ShadowFlareRemake.Enemies
         [Header("Rendering")]
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
-        // Add here the highlitable (currently under game manager - Use interface?)
 
         [Header("Health Slider")]
         [SerializeField] private TMP_Text _name;
@@ -31,7 +30,6 @@ namespace ShadowFlareRemake.Enemies
 
         [Header("Other")]
         [SerializeField] private Collider _myCollider;
-        [SerializeField] private GameObject _canvas;
         [SerializeField] private ParticleSystem _hitEffect;
         [SerializeField] private FadingObject _fadingObject;
 
@@ -181,11 +179,8 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleDeath()
         {
-            print($"{Model.Name} was killed!");
-
             _animator.SetTrigger(_deathAnimHash);
-
-            _canvas.SetActive(false);
+            _myCollider.enabled = false;
         }
 
         public void FinishedDeathAnimation() // Called from an animation event 

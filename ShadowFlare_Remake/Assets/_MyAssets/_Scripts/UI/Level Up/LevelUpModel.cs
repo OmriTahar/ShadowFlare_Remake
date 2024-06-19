@@ -1,12 +1,11 @@
 using ShadowFlareRemake.Rewards;
 
-namespace ShadowFlareRemake.UI.LevelUp {
-    public class LevelUpModel : Model {
-
-        public enum LevelUpPanelState { Hidden, Idle, Corner }
+namespace ShadowFlareRemake.UI.LevelUp
+{
+    public class LevelUpModel : Model
+    {
+        public enum LevelUpPanelState { Hidden, Shown, MovingToCorner, FadingOut }
         public LevelUpPanelState State { get; private set; } = LevelUpPanelState.Hidden;
-
-        public bool IsPanelOpen { get; private set; }
 
         public int Level { get; private set; }
         public int HP { get; private set; }
@@ -17,12 +16,11 @@ namespace ShadowFlareRemake.UI.LevelUp {
         public int MagicalAttack { get; private set; }
         public int MagicalDefence { get; private set; }
 
-
         public LevelUpModel() { }
 
-        public void SetReward(int newLevel, ILevelUpReward reward) {
-
-            State = LevelUpPanelState.Idle;
+        public void SetReward(int newLevel, ILevelUpReward reward)
+        {
+            State = LevelUpPanelState.Shown;
 
             Level = newLevel;
             HP = reward.HP;
@@ -32,11 +30,12 @@ namespace ShadowFlareRemake.UI.LevelUp {
             Defense = reward.Defense;
             MagicalAttack = reward.MagicalAttack;
             MagicalDefence = reward.MagicalDefence;
+
             Changed();
         }
 
-        public void SetPanelState(LevelUpPanelState state) {
-
+        public void SetPanelState(LevelUpPanelState state)
+        {
             State = state;
             Changed();
         }

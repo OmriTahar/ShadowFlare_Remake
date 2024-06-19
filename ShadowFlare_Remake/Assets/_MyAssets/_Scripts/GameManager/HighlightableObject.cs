@@ -1,12 +1,15 @@
+using ShadowFlareRemake.Enemies;
 using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager
 {
     public class HighlightableObject : MonoBehaviour
     {
+        public bool IsHighlightable { get; private set; } = true;
         public bool IsHighlighted { get; private set; }
 
         [Header("References")]
+        [SerializeField] private EnemyView _enemyView;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
         [SerializeField] private GameObject _nameHolder;
@@ -24,7 +27,17 @@ namespace ShadowFlareRemake.GameManager
         {
             InitTag();
             InitColors();
-            HandleIsHighlighted();
+            HandleIsHighlightedLogic();
+        }
+
+        private void OnEnable()
+        {
+            RegisterEvents();
+        }
+
+        private void OnDisable()
+        {
+            DeregisterEvents();
         }
 
         private void InitTag()
@@ -37,14 +50,24 @@ namespace ShadowFlareRemake.GameManager
 
         private void InitColors()
         {
-            if(_useSkinnedMeshRenderer)
-            {
-                _color = _skinnedMeshRenderer.material.color;
-            }
-            else
-                _color = _meshRenderer.material.color;
-
+            _color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
             _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
+        }
+
+        private void RegisterEvents()
+        {
+            if(_enemyView == null)
+                return;
+
+            _enemyView.OnDeath += DisableHighlightable;
+        }
+
+        private void DeregisterEvents()
+        {
+            if(_enemyView == null)
+                return;
+
+            _enemyView.OnDeath -= DisableHighlightable;
         }
 
         public void SetIsHighlighted(bool isHighlighted)
@@ -53,10 +76,10 @@ namespace ShadowFlareRemake.GameManager
                 return;
 
             IsHighlighted = isHighlighted;
-            HandleIsHighlighted();
+            HandleIsHighlightedLogic();
         }
 
-        private void HandleIsHighlighted()
+        private void HandleIsHighlightedLogic()
         {
             _nameHolder.gameObject.SetActive(IsHighlighted);
 
@@ -67,6 +90,12 @@ namespace ShadowFlareRemake.GameManager
             }
 
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
+        }
+
+        private void DisableHighlightable()
+        {
+            IsHighlightable = false;
+            SetIsHighlighted(false);
         }
     }
 }

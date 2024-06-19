@@ -28,7 +28,9 @@ namespace ShadowFlareRemake.Player
         private PlayerModel _model;
         private CharacterController _characterController;
         private IInputManager _inputManager;
+
         private Coroutine _lastMoveCoroutine;
+        private Vector3 _lastTargetPos;
 
         private const int _rotationSpeed = 10;
 
@@ -236,8 +238,8 @@ namespace ShadowFlareRemake.Player
             }
 
             var raycastHit = _inputManager.CurrentRaycastHit;
-            var targetDirection = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
-            transform.LookAt(targetDirection);
+            _lastTargetPos = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
+            transform.LookAt(_lastTargetPos);
 
             Attack(PlayerAttack.MeleeTriple);
         }
@@ -248,7 +250,7 @@ namespace ShadowFlareRemake.Player
             _isAttacking = true;
         }
 
-        public void HandleAttackStepForward() 
+        public void HandleAttackStepForward()
         {
             if(_lastMoveCoroutine != null)
                 StopCoroutine(_lastMoveCoroutine);
@@ -259,12 +261,21 @@ namespace ShadowFlareRemake.Player
         private IEnumerator AttackStepForwardLogic(float timeToComplete)
         {
             float timer = 0;
+            float distanceFromEnemy = 0;
             var movementSpeed = _model.Stats.MovementSpeed;
 
             while(timer < timeToComplete)
             {
-                Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
-                _characterController.Move(movement);
+                distanceFromEnemy = Vector3.Distance(transform.position, _lastTargetPos);
+
+                if(distanceFromEnemy > _attackDistance)
+                {
+                    Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
+                    _characterController.Move(movement);
+                }
+
+                print($"Distance from enemy: {distanceFromEnemy} | Attack distance: {_attackDistance}");
+
                 timer += Time.deltaTime;
                 yield return null;
             }
