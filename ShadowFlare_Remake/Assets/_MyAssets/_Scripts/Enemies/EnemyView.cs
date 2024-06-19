@@ -16,7 +16,8 @@ namespace ShadowFlareRemake.Enemies
         public event Action OnFinishedDeathAnimation;
         public event Action OnFinishedFadeOutAnimation;
 
-        [Header("Rendering")]
+        [Header("Collision & Renderers")]
+        [SerializeField] private Collider _myCollider;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
 
@@ -25,12 +26,10 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] private Slider _healthSlider;
         [SerializeField] private Transform _healthSliderTransform;
 
-        [Header("Animations")]
+        [Header("Animations & Effects")]
         [SerializeField] private Animator _animator;
-
-        [Header("Other")]
-        [SerializeField] private Collider _myCollider;
         [SerializeField] private ParticleSystem _hitEffect;
+        [SerializeField] private ParticleSystem _bloodEffect;
         [SerializeField] private FadingObject _fadingObject;
 
         [Header("Settings")]
@@ -180,6 +179,7 @@ namespace ShadowFlareRemake.Enemies
         private void HandleDeath()
         {
             _animator.SetTrigger(_deathAnimHash);
+            _bloodEffect.Play();
             _myCollider.enabled = false;
         }
 
