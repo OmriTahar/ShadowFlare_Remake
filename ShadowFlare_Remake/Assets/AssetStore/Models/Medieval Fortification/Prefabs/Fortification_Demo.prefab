@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33185831696061894}
   - component: {fileID: 23324688025292070}
   - component: {fileID: 64399283143172948}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Front (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 33617181873012034}
   - component: {fileID: 23445093688634252}
   - component: {fileID: 64374932916100652}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 33443649495908984}
   - component: {fileID: 23125593174760544}
   - component: {fileID: 64152019468033618}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 33074166746796804}
   - component: {fileID: 23752677298602400}
   - component: {fileID: 64936646122166832}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   - component: {fileID: 33155802597012830}
   - component: {fileID: 23929603662462160}
   - component: {fileID: 64925699900690728}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 33203592260622496}
   - component: {fileID: 23942004314980874}
   - component: {fileID: 64761209748734064}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 33687765690801064}
   - component: {fileID: 23896352258180508}
   - component: {fileID: 64872159560201232}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 33493453885491770}
   - component: {fileID: 23740081072851602}
   - component: {fileID: 64054501519986494}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 33245792785858402}
   - component: {fileID: 23578704443758688}
   - component: {fileID: 64109395295723884}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,7 +894,7 @@ GameObject:
   - component: {fileID: 33212673379862636}
   - component: {fileID: 23777518521388360}
   - component: {fileID: 64548643820513916}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DoorR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,14 +908,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1250054851182826}
-  m_LocalRotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -1.5086284, y: 2.286522, z: 0.040783048}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4313953927845600}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &33212673379862636
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 33824440541830098}
   - component: {fileID: 23979935256493032}
   - component: {fileID: 64687649741947298}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Corner (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1090,7 +1090,7 @@ GameObject:
   - component: {fileID: 33645324291795650}
   - component: {fileID: 23476503396922958}
   - component: {fileID: 64830710431745382}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1188,7 +1188,7 @@ GameObject:
   - component: {fileID: 33838100840864354}
   - component: {fileID: 23657550009416696}
   - component: {fileID: 64140751806748662}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Corner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1283,7 +1283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4313953927845600}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1320,7 +1320,7 @@ GameObject:
   - component: {fileID: 33906004219455936}
   - component: {fileID: 23578499843553132}
   - component: {fileID: 64718527951387988}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,7 +1418,7 @@ GameObject:
   - component: {fileID: 33327024888980474}
   - component: {fileID: 23135038589205038}
   - component: {fileID: 64144796601084470}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1516,7 +1516,7 @@ GameObject:
   - component: {fileID: 33856936084600670}
   - component: {fileID: 23650911703482210}
   - component: {fileID: 64141042429798580}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1614,7 +1614,7 @@ GameObject:
   - component: {fileID: 33498893374496304}
   - component: {fileID: 23165086982046488}
   - component: {fileID: 64075943186249302}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1712,7 +1712,7 @@ GameObject:
   - component: {fileID: 33591319523322008}
   - component: {fileID: 23800031887520358}
   - component: {fileID: 64735764051166086}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,7 +1810,7 @@ GameObject:
   - component: {fileID: 33129904524372070}
   - component: {fileID: 23006105597731688}
   - component: {fileID: 64879942210389144}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1908,7 +1908,7 @@ GameObject:
   - component: {fileID: 33763586818475380}
   - component: {fileID: 23833802275639418}
   - component: {fileID: 64032943561584780}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2006,7 +2006,7 @@ GameObject:
   - component: {fileID: 33032412711583086}
   - component: {fileID: 23777140334272454}
   - component: {fileID: 64040855767823574}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2104,7 +2104,7 @@ GameObject:
   - component: {fileID: 33786873113919312}
   - component: {fileID: 23192446728704348}
   - component: {fileID: 64959680403706614}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Corner (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2202,7 +2202,7 @@ GameObject:
   - component: {fileID: 33574162931234468}
   - component: {fileID: 23098416373996502}
   - component: {fileID: 64282956104806920}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2300,7 +2300,7 @@ GameObject:
   - component: {fileID: 33235423658420438}
   - component: {fileID: 23812957518436390}
   - component: {fileID: 64819039187926262}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2398,7 +2398,7 @@ GameObject:
   - component: {fileID: 33405801585885570}
   - component: {fileID: 23774317734197042}
   - component: {fileID: 64008271383845204}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,7 +2496,7 @@ GameObject:
   - component: {fileID: 33515586136009756}
   - component: {fileID: 23595815837458798}
   - component: {fileID: 64303693313010782}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2591,7 +2591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4510011695960072}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Demo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2607,7 +2607,7 @@ Transform:
   m_GameObject: {fileID: 1678185745943948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.29}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4660730556917118}
@@ -2663,7 +2663,7 @@ GameObject:
   - component: {fileID: 33656155911907370}
   - component: {fileID: 23418500131444726}
   - component: {fileID: 64261121805674822}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2761,13 +2761,13 @@ GameObject:
   - component: {fileID: 33907945291812368}
   - component: {fileID: 23979674891862654}
   - component: {fileID: 64638550245729830}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Gate_Locker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4663032251153480
 Transform:
   m_ObjectHideFlags: 0
@@ -2859,7 +2859,7 @@ GameObject:
   - component: {fileID: 33485657514441498}
   - component: {fileID: 23875249832088506}
   - component: {fileID: 64249715805968792}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2957,7 +2957,7 @@ GameObject:
   - component: {fileID: 33167751216895078}
   - component: {fileID: 23657878842985450}
   - component: {fileID: 64850261421564360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3055,7 +3055,7 @@ GameObject:
   - component: {fileID: 33344598978667692}
   - component: {fileID: 23244288782933988}
   - component: {fileID: 64307319001011158}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3153,7 +3153,7 @@ GameObject:
   - component: {fileID: 33292811851490138}
   - component: {fileID: 23917453801206596}
   - component: {fileID: 64508708673159574}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DoorL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3167,14 +3167,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1856960373630696}
-  m_LocalRotation: {x: -0.00000003774895, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.5039788, y: 2.2865222, z: 0.04078281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4313953927845600}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &33292811851490138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3251,7 +3251,7 @@ GameObject:
   - component: {fileID: 33305957281225630}
   - component: {fileID: 23222122442275620}
   - component: {fileID: 64735252343467446}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3349,7 +3349,7 @@ GameObject:
   - component: {fileID: 33722954463585586}
   - component: {fileID: 23822111644916324}
   - component: {fileID: 64188821754501708}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3447,7 +3447,7 @@ GameObject:
   - component: {fileID: 33590928994870084}
   - component: {fileID: 23647093930322294}
   - component: {fileID: 64105316117521058}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Front (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3545,7 +3545,7 @@ GameObject:
   - component: {fileID: 33698622963865946}
   - component: {fileID: 23604737729525376}
   - component: {fileID: 64815942366841842}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Ladder (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3643,7 +3643,7 @@ GameObject:
   - component: {fileID: 33658562438609916}
   - component: {fileID: 23496949614143752}
   - component: {fileID: 64757584333699516}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Corner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3741,7 +3741,7 @@ GameObject:
   - component: {fileID: 33089013414025798}
   - component: {fileID: 23170267917791082}
   - component: {fileID: 64077093459151370}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3839,7 +3839,7 @@ GameObject:
   - component: {fileID: 33751382598214994}
   - component: {fileID: 23408937360506978}
   - component: {fileID: 64350421346203318}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Tower_Front (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3937,7 +3937,7 @@ GameObject:
   - component: {fileID: 33433735334154384}
   - component: {fileID: 23971795471212900}
   - component: {fileID: 64621508790272742}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fortification_Wall (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
