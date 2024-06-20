@@ -43,6 +43,9 @@ namespace ShadowFlareRemake.Enemies
 
         public void SetEnemyState(EnemyState enemyState)
         {
+            if(CurrentEnemyState == enemyState)
+                return;
+
             CurrentEnemyState = enemyState; 
             Changed();
         }

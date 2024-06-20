@@ -15,11 +15,16 @@ namespace ShadowFlareRemake.GameManager
         [Header("Input")]
         [SerializeField] private InputManager _inputManager;
 
+        [Header("UI")]
+        [SerializeField] private UIController _uiController;
+
         [Header("Rewards")]
         [SerializeField] private RewardsManager _rewardsManager;
 
-        [Header("UI")]
-        [SerializeField] private UIController _uiController;
+        [Header("Loot")]
+        [SerializeField] private Transform _testLootParent;
+        [SerializeField] private GameObject _testLootPrefab;
+        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -27,11 +32,6 @@ namespace ShadowFlareRemake.GameManager
         [Header("Player")]
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
-
-        [Header("Loot")]
-        [SerializeField] private Transform _testLootParent;
-        [SerializeField] private GameObject _testLootPrefab;
-        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
 
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
@@ -189,11 +189,8 @@ namespace ShadowFlareRemake.GameManager
 
         private void InitEnemyLogic(EnemyToSpawn enemyToSpawn)
         {
-            if(enemyToSpawn == null)
-            {
-                Debug.LogError("EnemyToSpawn Null Reference!");
+            if(enemyToSpawn == null || !enemyToSpawn.isActiveAndEnabled)
                 return;
-            }
 
             var spawnPoint = enemyToSpawn.transform;
             var enemyController = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);

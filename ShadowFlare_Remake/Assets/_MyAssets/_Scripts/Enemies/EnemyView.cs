@@ -38,6 +38,7 @@ namespace ShadowFlareRemake.Enemies
 
         private int _lastSeenHP;
 
+        private readonly int _isMovingAnimHash = Animator.StringToHash("Is Moving");
         private readonly int _deathAnimHash = Animator.StringToHash("Death");
 
         #region View Overrides
@@ -161,7 +162,31 @@ namespace ShadowFlareRemake.Enemies
             }
         }
 
-        public void HandleAttackAnimations()
+        private void HandleEnemyState()
+        {
+            switch(Model.CurrentEnemyState)
+            {
+                case EnemyState.Idle:
+                    _animator.SetBool(_isMovingAnimHash, false);
+                    break;
+
+                case EnemyState.Chasing:
+                    _animator.SetBool(_isMovingAnimHash, true);
+                    break;
+
+                case EnemyState.Attacking:
+                    HandleAttackAnimations();
+                    break;
+
+                case EnemyState.Dead:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void HandleAttackAnimations()
         {
             switch(Model.CurrentAttackMethod)
             {

@@ -42,15 +42,10 @@ namespace ShadowFlareRemake.Enemies
 
         protected virtual void Update()
         {
-            if(!IsActive)
+            if(!IsActive || !Agent.isActiveAndEnabled)
                 return;
 
             DistanceFromPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
-
-            if(ChasePlayer)
-            {
-                Agent.SetDestination(PlayerTransform.position);
-            }
         }
 
         private void OnDestroy()

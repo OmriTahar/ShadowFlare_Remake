@@ -375,6 +375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6330140032925643382}
   - component: {fileID: 3026627004370994610}
+  - component: {fileID: 5538062247025397426}
   m_Layer: 6
   m_Name: Skeleton_Prefab
   m_TagString: Untagged
@@ -412,11 +413,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   View: {fileID: 7970543067481453309}
-  Agent: {fileID: 0}
-  ChasePlayer: 0
-  AttackDistance: 2.2
-  IsActive: 0
+  Agent: {fileID: 5538062247025397426}
+  ChasePlayer: 1
+  AttackDistance: 2.8
+  IsActive: 1
   DistanceFromPlayer: 0
+--- !u!195 &5538062247025397426
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763378249402841772}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5257516841689689859
 GameObject:
   m_ObjectHideFlags: 0
