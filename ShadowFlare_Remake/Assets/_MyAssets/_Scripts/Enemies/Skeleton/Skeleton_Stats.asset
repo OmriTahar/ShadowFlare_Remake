@@ -16,6 +16,7 @@ MonoBehaviour:
   <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <Scale>k__BackingField: 18
   <EvolutionLevel>k__BackingField: 1
+  ______Enemy_Rewards_____: ------------------------------------
   <ExpDrop>k__BackingField: 10
   <CoinsDrop>k__BackingField: 10
   ______Base_____: ------------------------------------
@@ -29,6 +30,7 @@ MonoBehaviour:
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
   <AttackSpeed>k__BackingField: 1
+  <AttackDistance>k__BackingField: 2.8
   ______Magical_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
