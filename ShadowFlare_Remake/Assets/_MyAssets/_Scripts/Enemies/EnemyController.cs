@@ -16,17 +16,17 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] protected NavMeshAgent Agent;
 
         [Header("Base Settings")]
-        [SerializeField] protected bool ChasePlayer = false;
-        [SerializeField] protected float AttackDistance = 0.5f;
-
-        [Header("Base Status")]
         [SerializeField] protected bool IsActive = true;
+
+        [Header("Debug")]
         [SerializeField] protected float DistanceFromPlayer;
 
         protected EnemyModel Model;
         protected Transform PlayerTransform;
 
         protected bool IsAllowedToAttack = true;
+
+        #region Initialization
 
         public EnemyModel InitEnemy(IUnit unit, Transform playerTransform)
         {
@@ -36,9 +36,31 @@ namespace ShadowFlareRemake.Enemies
             CacheNulls();
             RegisterEvents();
             SetModel(unit);
+            SetNavMeshAgent();
 
             return Model;
         }
+
+        protected virtual void SetModel(IUnit unit)
+        {
+            Model = new EnemyModel(unit);
+            View.SetModel(Model);
+        }
+
+        private void CacheNulls()
+        {
+            if(View == null)
+                View = GetComponentInChildren<EnemyView>();
+        }
+
+        private void SetNavMeshAgent()
+        {
+            Agent.speed = Model.Stats.MovementSpeed;
+        }
+
+        #endregion
+
+        #region MonoBehaviour
 
         protected virtual void Update()
         {
@@ -48,16 +70,14 @@ namespace ShadowFlareRemake.Enemies
             DistanceFromPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             DeregisterEvents();
         }
 
-        protected virtual void SetModel(IUnit unit)
-        {
-            Model = new EnemyModel(unit);
-            View.SetModel(Model);
-        }
+        #endregion
+
+        #region Game Manager Helpers
 
         public void SetEnemyUnitAndUnitHandler(IUnit unit)
         {
@@ -69,41 +89,9 @@ namespace ShadowFlareRemake.Enemies
             return View.GetEnemyCollider();
         }
 
-        protected abstract void Attack();
+        #endregion
 
-        private void HandleTriggerEnter(Collider other)
-        {
-            if(other.gameObject.layer == AttackLayer)
-            {
-                var attack = other.GetComponent<Attack>();
-                OnIGotHit?.Invoke(attack, this);
-            }
-        }
-
-        private void HandleDeath()
-        {
-            OnDeath?.Invoke(Model.Stats);
-            Model.SetEnemyState(EnemyState.Dead);
-        }
-
-        private void HandleDeathAnimationFinished()
-        {
-            Destroy(gameObject);
-        }
-
-        private void ResetAttackCooldown()
-        {
-            Model.UpdateAttackState(false, Enums.AttackMethod.None);
-            IsAllowedToAttack = true;
-        }
-
-        private void CacheNulls()
-        {
-            if(View == null)
-            {
-                View = GetComponentInChildren<EnemyView>();
-            }
-        }
+        #region Events
 
         private void RegisterEvents()
         {
@@ -120,6 +108,38 @@ namespace ShadowFlareRemake.Enemies
             View.OnDeath -= HandleDeath;
             View.OnFinishedFadeOutAnimation -= HandleDeathAnimationFinished;
         }
+
+        #endregion
+
+        #region Comabt & Death
+
+        private void HandleTriggerEnter(Collider other)
+        {
+            if(other.gameObject.layer == AttackLayer)
+            {
+                var attack = other.GetComponent<Attack>();
+                OnIGotHit?.Invoke(attack, this);
+            }
+        }
+
+        private void ResetAttackCooldown()
+        {
+            Model.UpdateAttackState(false, Enums.AttackMethod.None);
+            IsAllowedToAttack = true;
+        }
+
+        private void HandleDeath()
+        {
+            OnDeath?.Invoke(Model.Stats);
+            Model.SetEnemyState(EnemyState.Dead);
+        }
+
+        private void HandleDeathAnimationFinished()
+        {
+            Destroy(gameObject);
+        }
+
+        #endregion
     }
 }
 

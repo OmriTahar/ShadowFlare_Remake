@@ -38,6 +38,7 @@ namespace ShadowFlareRemake.Enemies
 
         private int _lastSeenHP;
 
+        private readonly int _evolutionLevelAnimHash = Animator.StringToHash("Evolution Level");
         private readonly int _isMovingAnimHash = Animator.StringToHash("Is Moving");
         private readonly int _deathAnimHash = Animator.StringToHash("Death");
 
@@ -53,21 +54,21 @@ namespace ShadowFlareRemake.Enemies
             if(Model == null)
                 return;
 
+            ResetHealthSliderValues();
             SetNameText();
             SetColor();
-            ResetHealthSliderValues();
+            SetScale();
+            SetEvolutionLevelAnimParam();
         }
 
         protected override void ModelChanged()
         {
-            if(Model == null || Model.CurrentEnemyState == EnemyState.Dead)
+            if(Model == null)
                 return;
 
             HandleHitEffect();
             HandleHP();
-
-            if(Model.IsAttacking)
-                HandleAttackAnimations();
+            HandleEnemyState();
         }
 
         #endregion
@@ -107,11 +108,23 @@ namespace ShadowFlareRemake.Enemies
             _meshRenderer.material.color = Model.Color;
         }
 
+        private void SetScale()
+        {
+            float scale = Model.Stats.Scale;
+            transform.localScale = new Vector3(scale, scale, scale);
+        }
+
+        private void SetEvolutionLevelAnimParam()
+        {
+            _animator.SetInteger(_evolutionLevelAnimHash, Model.Stats.EvolutionLevel);
+        }
+
         private void ResetHealthSliderValues()
         {
             var value = Model.Stats.MaxHP;
             _healthSlider.maxValue = value;
             _healthSlider.value = value;
+            _lastSeenHP = Model.Unit.CurrentHP;
         }
 
         public Collider GetEnemyCollider()
@@ -133,33 +146,28 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleHitEffect()
         {
-            if(_hitEffect == null)
-            {
-                Debug.LogError("Hit effect is null");
+            if(_lastSeenHP == Model.Unit.CurrentHP || _hitEffect == null || Model.CurrentEnemyState == EnemyState.Dead)
                 return;
+
+            if(_hitEffect.isPlaying)
+            {
+                _hitEffect.Stop();
             }
 
-            if(_lastSeenHP > Model.Unit.CurrentHP)
-            {
-                if(_hitEffect.isPlaying)
-                {
-                    _hitEffect.Stop();
-                }
-                _hitEffect.Play();
-            }
+            _hitEffect.Play();
         }
 
         private void HandleHP()
         {
-            var hp = Model.Unit.CurrentHP;
-            _lastSeenHP = hp < 0 ? 0 : hp;
+            if(Model.CurrentEnemyState == EnemyState.Dead)
+                return;
+
+            var realHP = Model.Unit.CurrentHP;
+            _lastSeenHP = realHP < 0 ? 0 : realHP;
             _healthSlider.value = _lastSeenHP;
 
             if(_lastSeenHP == 0)
-            {
                 OnDeath?.Invoke();
-                HandleDeath();
-            }
         }
 
         private void HandleEnemyState()
@@ -167,11 +175,11 @@ namespace ShadowFlareRemake.Enemies
             switch(Model.CurrentEnemyState)
             {
                 case EnemyState.Idle:
-                    _animator.SetBool(_isMovingAnimHash, false);
+                    HandleIdleState();
                     break;
 
                 case EnemyState.Chasing:
-                    _animator.SetBool(_isMovingAnimHash, true);
+                    HandleChasingState();
                     break;
 
                 case EnemyState.Attacking:
@@ -179,6 +187,7 @@ namespace ShadowFlareRemake.Enemies
                     break;
 
                 case EnemyState.Dead:
+                    HandleDeath();
                     break;
 
                 default:
@@ -186,8 +195,21 @@ namespace ShadowFlareRemake.Enemies
             }
         }
 
+        private void HandleIdleState()
+        {
+            _animator.SetBool(_isMovingAnimHash, false);
+        }
+
+        private void HandleChasingState()
+        {
+            _animator.SetBool(_isMovingAnimHash, true);
+        }
+
         private void HandleAttackAnimations()
         {
+            if(!Model.IsAttacking)
+                return;
+
             switch(Model.CurrentAttackMethod)
             {
                 case AttackMethod.Close:

@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
   m_Name: Skeleton_Stats
   m_EditorClassIdentifier: 
-  ______Enemy_____: ------------------------------------
+  ______Enemy_Base_____: ------------------------------------
   <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+  <Scale>k__BackingField: 18
+  <EvolutionLevel>k__BackingField: 1
   <ExpDrop>k__BackingField: 10
   <CoinsDrop>k__BackingField: 10
   ______Base_____: ------------------------------------
   <Name>k__BackingField: Skeleton
   <Level>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 1
   ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 15
   <Attack>k__BackingField: 1

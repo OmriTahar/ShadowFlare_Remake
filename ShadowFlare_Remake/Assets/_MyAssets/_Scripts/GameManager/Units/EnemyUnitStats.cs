@@ -9,8 +9,13 @@ namespace ShadowFlareRemake.GameManager.Units
         private const string _spaceLine = "------------------------------------";
 
         [Space(15)]
-        [SerializeField] private string ______Enemy_____ = _spaceLine;
+        [SerializeField] private string ______Enemy_Base_____ = _spaceLine;
         [field: SerializeField] public Color Color { get; private set; }
+        [field: SerializeField] public float Scale { get; private set; }
+        [field: SerializeField] public int EvolutionLevel { get; private set; }
+
+        [Space(15)]
+        [SerializeField] private string ______Enemy_Rewards_____ = _spaceLine;
         [field: SerializeField] public int ExpDrop { get; private set; }
         [field: SerializeField] public int CoinsDrop { get; private set; }
 
@@ -28,6 +33,7 @@ namespace ShadowFlareRemake.GameManager.Units
         [field: SerializeField] public int HitRate { get; private set; }
         [field: SerializeField] public int EvasionRate { get; private set; }
         [field: SerializeField] public int AttackSpeed { get; private set; }
+        [field: SerializeField] public float AttackDistance { get; private set; }
 
         [Space(15)]
         [SerializeField] private string ______Magical_____ = _spaceLine;

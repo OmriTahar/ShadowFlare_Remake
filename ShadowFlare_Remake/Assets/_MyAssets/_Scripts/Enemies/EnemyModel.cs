@@ -7,22 +7,19 @@ namespace ShadowFlareRemake.Enemies
     {
         public IUnit Unit { get; private set; }
         public IEnemyUnitStats Stats { get; private set; }
+        public EnemyState CurrentEnemyState { get; private set; }
 
         public string Name { get; private set; }
         public Color Color { get; private set; }
 
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
-
-        public EnemyState CurrentEnemyState { get; private set; }
-
-        public bool IsAttacking { get; private set; } = false;
+        public bool IsAttacking { get; private set; }
 
         public EnemyModel(IUnit unit)
         {
             Unit = unit;
             Stats = unit.Stats as IEnemyUnitStats;
-
             Name = Stats.Name;
             Color = new Color(Stats.Color.r, Stats.Color.g, Stats.Color.b, 1);
         }
@@ -46,12 +43,9 @@ namespace ShadowFlareRemake.Enemies
             if(CurrentEnemyState == enemyState)
                 return;
 
-            CurrentEnemyState = enemyState; 
-            Changed();
-        }
+            Debug.Log($"{Name} is switching FROM {CurrentEnemyState} TO {enemyState}.");
 
-        public void InvokeChanged()
-        {
+            CurrentEnemyState = enemyState; 
             Changed();
         }
     }
