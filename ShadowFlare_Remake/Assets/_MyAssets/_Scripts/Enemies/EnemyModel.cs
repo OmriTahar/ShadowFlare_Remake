@@ -31,7 +31,7 @@ namespace ShadowFlareRemake.Enemies
             Changed();
         }
 
-        public void UpdateAttackState(bool isAttacking, AttackMethod attackMethod)
+        public void SetAttackState(bool isAttacking, AttackMethod attackMethod)
         {
             IsAttacking = isAttacking;
             CurrentAttackMethod = attackMethod;
@@ -45,7 +45,7 @@ namespace ShadowFlareRemake.Enemies
 
             Debug.Log($"{Name} is switching FROM {CurrentEnemyState} TO {enemyState}.");
 
-            CurrentEnemyState = enemyState; 
+            CurrentEnemyState = enemyState;
             Changed();
         }
     }

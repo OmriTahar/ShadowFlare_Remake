@@ -24,8 +24,6 @@ namespace ShadowFlareRemake.Enemies
         protected EnemyModel Model;
         protected Transform PlayerTransform;
 
-        protected bool IsAllowedToAttack = true;
-
         #region Initialization
 
         public EnemyModel InitEnemy(IUnit unit, Transform playerTransform)
@@ -95,7 +93,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void RegisterEvents()
         {
-            View.OnAttackAnimationEnded += ResetAttackCooldown;
+            View.OnAttackAnimationEnded += HandleAttackAnimationEnded;
             View.OnTriggerEnterEvent += HandleTriggerEnter;
             View.OnDeath += HandleDeath;
             View.OnFinishedFadeOutAnimation += HandleDeathAnimationFinished;
@@ -103,7 +101,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void DeregisterEvents()
         {
-            View.OnAttackAnimationEnded -= ResetAttackCooldown;
+            View.OnAttackAnimationEnded -= HandleAttackAnimationEnded;
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
             View.OnDeath -= HandleDeath;
             View.OnFinishedFadeOutAnimation -= HandleDeathAnimationFinished;
@@ -122,11 +120,7 @@ namespace ShadowFlareRemake.Enemies
             }
         }
 
-        private void ResetAttackCooldown()
-        {
-            Model.UpdateAttackState(false, Enums.AttackMethod.None);
-            IsAllowedToAttack = true;
-        }
+        protected abstract void HandleAttackAnimationEnded();
 
         private void HandleDeath()
         {

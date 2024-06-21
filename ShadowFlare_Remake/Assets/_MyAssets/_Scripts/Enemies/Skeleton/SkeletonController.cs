@@ -23,6 +23,7 @@ namespace ShadowFlareRemake.Enemies
                     break;
 
                 case EnemyState.Attacking:
+                    HandleAttackState();
                     break;
 
                 case EnemyState.Dead:
@@ -37,11 +38,16 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleIdleState()
         {
+            Model.SetAttackState(false, AttackMethod.None);
             Agent.isStopped = true;
 
             if(DistanceFromPlayer > Model.Stats.AttackDistance)
             {
                 Model.SetEnemyState(EnemyState.Chasing);
+            }
+            else
+            {
+                Model.SetEnemyState(EnemyState.Attacking);
             }
         }
 
@@ -53,19 +59,29 @@ namespace ShadowFlareRemake.Enemies
 
             if(DistanceFromPlayer <= Model.Stats.AttackDistance)
             {
-                Model.SetEnemyState(EnemyState.Idle);
+                Model.SetEnemyState(EnemyState.Attacking);
             }
+        }
+
+        private void HandleAttackState()
+        {
+            Agent.isStopped = true;
+            transform.LookAt(PlayerTransform);
+
+            if(!Model.IsAttacking)
+            {
+                Model.SetAttackState(true, AttackMethod.Close);
+            }
+        }
+
+        protected override void HandleAttackAnimationEnded()
+        {
+            Model.SetEnemyState(EnemyState.Idle);
         }
 
         private void HandleDeadState()
         {
             Agent.isStopped = true;
-        }
-
-        private void Attack()
-        {
-            Model.UpdateAttackState(true, AttackMethod.Close);
-            IsAllowedToAttack = false;
         }
     }
 }

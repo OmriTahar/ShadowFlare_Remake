@@ -40,7 +40,8 @@ namespace ShadowFlareRemake.Enemies
 
         private readonly int _evolutionLevelAnimHash = Animator.StringToHash("Evolution Level");
         private readonly int _isMovingAnimHash = Animator.StringToHash("Is Moving");
-        private readonly int _deathAnimHash = Animator.StringToHash("Death");
+        private readonly int _attackAnimHash = Animator.StringToHash("Attack");
+        private readonly int _isDeadAnimHash = Animator.StringToHash("Is Dead");
 
         #region View Overrides
 
@@ -220,12 +221,17 @@ namespace ShadowFlareRemake.Enemies
 
         private void DoCloseAttack()
         {
-            _animator.SetTrigger("CloseAttack");
+            _animator.SetTrigger(_attackAnimHash);
+        }
+
+        public void FinishedAttackAnimation()
+        {
+            OnAttackAnimationEnded?.Invoke();
         }
 
         private void HandleDeath()
         {
-            _animator.SetTrigger(_deathAnimHash);
+            _animator.SetBool(_isDeadAnimHash,true);
             _bloodEffect.Play();
             _myCollider.enabled = false;
         }
