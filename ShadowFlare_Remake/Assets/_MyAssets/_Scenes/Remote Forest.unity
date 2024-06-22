@@ -1447,6 +1447,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
   - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
   - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
+  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
+  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
   _enemiesParent: {fileID: 1054742629}
   _playerController: {fileID: 972601921}
   _playerUnitStats:

@@ -22,7 +22,7 @@ MonoBehaviour:
   ______Base_____: ------------------------------------
   <Name>k__BackingField: Skeleton
   <Level>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 1
+  <MovementSpeed>k__BackingField: 2
   ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 15
   <Attack>k__BackingField: 1

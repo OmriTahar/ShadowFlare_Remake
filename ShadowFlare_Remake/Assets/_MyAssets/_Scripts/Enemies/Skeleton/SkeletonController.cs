@@ -41,16 +41,16 @@ namespace ShadowFlareRemake.Enemies
             Model.SetAttackState(false, AttackMethod.None);
             Agent.isStopped = true;
 
+            if(!IsActive)
+                return;
+
             if(DistanceFromPlayer > Model.Stats.AttackDistance)
             {
                 Model.SetEnemyState(EnemyState.Chasing);
             }
             else
-            {
                 Model.SetEnemyState(EnemyState.Attacking);
-            }
         }
-
 
         private void HandleChasingState()
         {
@@ -59,7 +59,7 @@ namespace ShadowFlareRemake.Enemies
 
             if(DistanceFromPlayer <= Model.Stats.AttackDistance)
             {
-                Model.SetEnemyState(EnemyState.Attacking);
+                Model.SetEnemyState(EnemyState.Idle);
             }
         }
 

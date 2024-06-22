@@ -37,11 +37,12 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] private bool _useSkinnedMeshRenderer;
 
         private int _lastSeenHP;
+        private bool _isDying;
 
         private readonly int _evolutionLevelAnimHash = Animator.StringToHash("Evolution Level");
         private readonly int _isMovingAnimHash = Animator.StringToHash("Is Moving");
         private readonly int _attackAnimHash = Animator.StringToHash("Attack");
-        private readonly int _isDeadAnimHash = Animator.StringToHash("Is Dead");
+        private readonly int _dieAnimHash = Animator.StringToHash("Die");
 
         #region View Overrides
 
@@ -168,7 +169,9 @@ namespace ShadowFlareRemake.Enemies
             _healthSlider.value = _lastSeenHP;
 
             if(_lastSeenHP == 0)
+            {
                 OnDeath?.Invoke();
+            }
         }
 
         private void HandleEnemyState()
@@ -231,7 +234,11 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleDeath()
         {
-            _animator.SetBool(_isDeadAnimHash,true);
+            if(_isDying)
+                return;
+
+            _isDying = true;
+            _animator.SetTrigger(_dieAnimHash);
             _bloodEffect.Play();
             _myCollider.enabled = false;
         }

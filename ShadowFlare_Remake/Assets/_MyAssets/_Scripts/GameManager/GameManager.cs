@@ -230,7 +230,6 @@ namespace ShadowFlareRemake.GameManager
 
             if(expReward.IsPendingLevelUp)
             {
-
                 var levelUpReward = _rewardsManager.GetLevelUpReward(_playerUnitStats);
                 _playerUnitStats.GiveLevelUpReward(levelUpReward);
                 _playerUnit.FullHeal();

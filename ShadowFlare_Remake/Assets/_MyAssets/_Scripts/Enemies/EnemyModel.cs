@@ -43,10 +43,15 @@ namespace ShadowFlareRemake.Enemies
             if(CurrentEnemyState == enemyState)
                 return;
 
-            Debug.Log($"{Name} is switching FROM {CurrentEnemyState} TO {enemyState}.");
-
             CurrentEnemyState = enemyState;
             Changed();
+        }
+
+        private void PrintEnemyStateTransition(EnemyState enemyState)
+        {
+            string oldState = CurrentEnemyState.ToString().ToUpper();
+            string newState = enemyState.ToString().ToUpper();
+            Debug.Log($"{Name} is switching from {oldState} to {newState}.");
         }
     }
 }

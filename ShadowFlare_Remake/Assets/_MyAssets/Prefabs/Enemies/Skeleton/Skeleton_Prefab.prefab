@@ -414,7 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   View: {fileID: 7970543067481453309}
   Agent: {fileID: 5538062247025397426}
-  IsActive: 1
+  IsActive: 0
   DistanceFromPlayer: 0
 --- !u!195 &5538062247025397426
 NavMeshAgent:

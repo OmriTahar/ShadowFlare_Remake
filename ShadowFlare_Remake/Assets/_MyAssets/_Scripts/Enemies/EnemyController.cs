@@ -62,9 +62,6 @@ namespace ShadowFlareRemake.Enemies
 
         protected virtual void Update()
         {
-            if(!IsActive || !Agent.isActiveAndEnabled)
-                return;
-
             DistanceFromPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
         }
 
