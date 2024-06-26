@@ -15,6 +15,7 @@ namespace ShadowFlareRemake.Enemies
         public AttackType CurrentAttackType { get; private set; }
         public AttackMethod CurrentAttackMethod { get; private set; }
         public bool IsAttacking { get; private set; }
+        public bool IsReceivedCritialHit { get; private set; }
 
         public EnemyModel(IUnit unit)
         {
@@ -24,10 +25,11 @@ namespace ShadowFlareRemake.Enemies
             Color = new Color(Stats.Color.r, Stats.Color.g, Stats.Color.b, 1);
         }
 
-        public void SetEnemyUnitAndUnitHandler(IUnit unit)
+        public void SetEnemyUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false)
         {
             Unit = unit;
             Stats = Unit.Stats as IEnemyUnitStats;
+            IsReceivedCritialHit = isReceivedCritialHit;
             Changed();
         }
 

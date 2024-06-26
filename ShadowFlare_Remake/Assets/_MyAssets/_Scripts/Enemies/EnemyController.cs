@@ -75,9 +75,9 @@ namespace ShadowFlareRemake.Enemies
 
         #region Game Manager Helpers
 
-        public void SetEnemyUnitAndUnitHandler(IUnit unit)
+        public void SetEnemyUnitAfterHit(IUnit unit, bool isCritialHit)
         {
-            Model.SetEnemyUnitAndUnitHandler(unit);
+            Model.SetEnemyUnitAfterHit(unit, isCritialHit);
         }
 
         public Collider GetEnemyCollider()

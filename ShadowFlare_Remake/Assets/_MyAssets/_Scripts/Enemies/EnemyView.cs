@@ -1,3 +1,4 @@
+using ShadowFlare_Remake.VFX;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Tools;
 using System;
@@ -28,8 +29,7 @@ namespace ShadowFlareRemake.Enemies
 
         [Header("Animations & Effects")]
         [SerializeField] private Animator _animator;
-        [SerializeField] private ParticleSystem _hitEffect;
-        [SerializeField] private ParticleSystem _bloodEffect;
+        [SerializeField] private VisualEffectsSubView _vfxView;
         [SerializeField] private FadingObject _fadingObject;
 
         [Header("Settings")]
@@ -149,15 +149,16 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleHitEffect()
         {
-            if(_lastSeenHP == Model.Unit.CurrentHP || _hitEffect == null || Model.CurrentEnemyState == EnemyState.Dead)
+            if(_lastSeenHP == Model.Unit.CurrentHP || Model.CurrentEnemyState == EnemyState.Dead)
                 return;
 
-            if(_hitEffect.isPlaying)
+            if(Model.IsReceivedCritialHit)
             {
-                _hitEffect.Stop();
+                _vfxView.SetIsPlayingEffect(VfxType.HitBlood, true);
+                return;
             }
 
-            _hitEffect.Play();
+            _vfxView.SetIsPlayingEffect(VfxType.Hit, true);
         }
 
         private void HandleHP()
@@ -240,7 +241,7 @@ namespace ShadowFlareRemake.Enemies
 
             _isDying = true;
             _animator.SetTrigger(_dieAnimHash);
-            _bloodEffect.Play();
+            _vfxView.SetIsPlayingEffect(VfxType.DeathBlood, true);
             _myCollider.enabled = false;
         }
 

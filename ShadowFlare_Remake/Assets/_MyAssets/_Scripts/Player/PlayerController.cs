@@ -125,9 +125,9 @@ namespace ShadowFlareRemake.Player
 
         #region GameManager Helpers
 
-        public void SetUnitAndUnitHandler(IUnit unit)
+        public void SetPlayetUnitAfterHit(IUnit unit, bool isCritialHit)
         {
-            _model.SetUnit(unit);
+            _model.SetUnitAfterHit(unit, isCritialHit);
         }
 
         #endregion

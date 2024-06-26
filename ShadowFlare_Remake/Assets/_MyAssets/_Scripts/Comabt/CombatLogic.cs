@@ -1,7 +1,9 @@
+using UnityEngine;
+
 namespace ShadowFlareRemake.Combat {
     public static class CombatLogic {
 
-        public static void HandleTakeDamage(Attack attack, IUnit receiverUnit) {
+        public static bool HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnit receiverUnit) {
 
             var damage = 0;
 
@@ -15,6 +17,8 @@ namespace ShadowFlareRemake.Combat {
             }
            
             receiverUnit.TakeDamage(damage);
+
+            return Random.value >= 0.5f; // Improve this
         }
 
         private static int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) { // Todo: Expand this.

@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.Player {
 
         public PlayerAttack CurrentPlayerAttack { get; private set; }
         public bool IsAttacking { get; private set; } = false;
+        public bool IsReceivedCritialHit { get; private set; }
 
         public bool IsMoving { get; private set; }
         public bool CanTakeDamage { get; private set; } = true;
@@ -19,10 +20,11 @@ namespace ShadowFlareRemake.Player {
             Stats = unit.Stats as IPlayerUnitStats;
         }
 
-        public void SetUnit(IUnit unit) {
+        public void SetUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false) {
 
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;
+            IsReceivedCritialHit = isReceivedCritialHit;
             Changed();
         }
 

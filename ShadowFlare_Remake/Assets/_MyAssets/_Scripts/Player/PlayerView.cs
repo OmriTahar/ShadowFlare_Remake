@@ -1,3 +1,4 @@
+using ShadowFlare_Remake.VFX;
 using ShadowFlareRemake.Enums;
 using System;
 using UnityEngine;
@@ -13,10 +14,13 @@ namespace ShadowFlareRemake.Player
         [Header("References")]
         [SerializeField] private PlayerAnimationsSubView _animaionsSubView;
         [SerializeField] private Animator _playerAnimator;
+        [SerializeField] private VisualEffectsSubView _vfxView;
 
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
         private const string _isMovingBool = "IsMoving";
+
+        private int _lastSeenHP;
 
         #region View Overrides
 
@@ -26,12 +30,21 @@ namespace ShadowFlareRemake.Player
             RegisterEvents();
         }
 
+        protected override void ModelReplaced()
+        {
+            _lastSeenHP = Model.Unit.CurrentHP;
+        }
+
         protected override void ModelChanged()
         {
             _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
 
+            HandleHitEffect();
+
             if(Model.IsAttacking)
+            {
                 HandleAttackAnimations();
+            }
         }
 
         protected override void Clean()
@@ -115,6 +128,20 @@ namespace ShadowFlareRemake.Player
         private void InvokeOnAttackAnimationEnded()
         {
             OnAttackAnimationEnded?.Invoke();
+        }
+
+        private void HandleHitEffect()
+        {
+            if(_lastSeenHP == Model.Unit.CurrentHP)
+                return;
+
+            if(Model.IsReceivedCritialHit)
+            {
+                _vfxView.SetIsPlayingEffect(VfxType.HitBlood, true);
+                return;
+            }
+
+            _vfxView.SetIsPlayingEffect(VfxType.Hit, true);
         }
 
         #endregion
