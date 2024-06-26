@@ -14,11 +14,10 @@ namespace ShadowFlareRemake.Enemies
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
         [SerializeField] protected NavMeshAgent Agent;
-
-        [Header("Base Settings")]
-        [SerializeField] protected bool IsActive = true;
+        [SerializeField] protected Attack MeleeAttack;
 
         [Header("Debug")]
+        [SerializeField] protected bool IsActive = true;
         [SerializeField] protected float DistanceFromPlayer;
 
         protected EnemyModel Model;
@@ -26,10 +25,12 @@ namespace ShadowFlareRemake.Enemies
 
         #region Initialization
 
-        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform)
+        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform, bool isActive)
         {
             PlayerTransform = playerTransform;
             name = unit.Stats.Name;
+            IsActive = isActive;
+            MeleeAttack.SetUnitStats(unit.Stats);
 
             CacheNulls();
             RegisterEvents();
@@ -110,7 +111,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleTriggerEnter(Collider other)
         {
-            if(other.gameObject.layer == AttackLayer)
+            if(other.gameObject.layer == PlayerLayer && other.gameObject.tag == AttackTag)
             {
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, this);

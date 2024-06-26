@@ -25,7 +25,7 @@ MonoBehaviour:
   <MovementSpeed>k__BackingField: 4
   ______Physical_____: ------------------------------------
   <MaxHP>k__BackingField: 45
-  <Attack>k__BackingField: 1
+  <Attack>k__BackingField: 8
   <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1

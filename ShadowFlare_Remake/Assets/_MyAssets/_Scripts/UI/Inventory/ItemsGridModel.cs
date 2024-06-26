@@ -195,10 +195,7 @@ namespace ShadowFlareRemake.UI
             SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
             var isValidHorizontally = IsValidPlacementHorizontally(width, tileIndex);
             var isValidVertically = IsValidPlacementVertically(height, tileIndex);
-            var isValidPlacement = isValidHorizontally && isValidVertically;
-
-            Debug.Log($"Items Grid Model: Is Valid Loot Placement: {isValidPlacement}. (Horizontal: {isValidHorizontally} | (Vertical: {isValidVertically})");
-            return isValidPlacement;
+            return isValidHorizontally && isValidVertically;
         }
 
         private bool IsValidPlacementHorizontally(int width, Vector2Int tileIndex)

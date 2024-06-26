@@ -44,6 +44,7 @@ namespace ShadowFlareRemake.Enemies
         private readonly int _attackAnimHash = Animator.StringToHash("Attack");
         private readonly int _dieAnimHash = Animator.StringToHash("Die");
 
+
         #region View Overrides
 
         protected override void Initialize()
@@ -257,6 +258,18 @@ namespace ShadowFlareRemake.Enemies
 
         #region Fade Out
 
+        private const string _srcBlend_FadeOutParam = "_SrcBlend";
+        private const string _dstBlend_FadeOutParam = "_DstBlend";
+        private const string _zWrite_FadeOutParam = "_ZWrite";
+        private const string _surface_FadeOutParam = "_Surface";
+        private const string _deapthOnly_FadeOutParam = "DepthOnly";
+        private const string _showCaster_FadeOutParam = "SHADOWCASTER";
+        private const string _renderType_FadeOutParam = "RenderType";
+        private const string _transparent_FadeOutParam = "Transparent";
+        private const string _surfaceTypeTransparent = "_SURFACE_TYPE_TRANSPARENT";
+        private const string _alphaPreMultiplyOn = "_ALPHAPREMULTIPLY_ON";
+        private const string _baseColor = "_BaseColor";
+
         private void FadeOut()
         {
             StartCoroutine(FadeOutLogic(_fadingObject));
@@ -266,20 +279,20 @@ namespace ShadowFlareRemake.Enemies
         {
             foreach(var material in fadingObject.Materials)
             {
-                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                material.SetInt("_ZWrite", 0);
-                material.SetInt("_Surface", 1);
+                material.SetInt(_srcBlend_FadeOutParam, (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                material.SetInt(_dstBlend_FadeOutParam, (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                material.SetInt(_zWrite_FadeOutParam, 0);
+                material.SetInt(_surface_FadeOutParam, 1);
 
                 material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
 
-                material.SetShaderPassEnabled("DepthOnly", false);
-                material.SetShaderPassEnabled("SHADOWCASTER", true);
+                material.SetShaderPassEnabled(_deapthOnly_FadeOutParam, false);
+                material.SetShaderPassEnabled(_showCaster_FadeOutParam, true);
 
-                material.SetOverrideTag("RenderType", "Transparent");
+                material.SetOverrideTag(_renderType_FadeOutParam, _transparent_FadeOutParam);
 
-                material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-                material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                material.EnableKeyword(_surfaceTypeTransparent);
+                material.EnableKeyword(_alphaPreMultiplyOn);
             }
 
             float time = 0;
@@ -293,15 +306,9 @@ namespace ShadowFlareRemake.Enemies
             {
                 foreach(var material in fadingObject.Materials)
                 {
-                    if(material.HasProperty("_BaseColor"))
+                    if(material.HasProperty(_baseColor))
                     {
-
-                        material.color = new Color(
-                            material.color.r,
-                            material.color.g,
-                            material.color.b,
-                            Mathf.Lerp(fadingObject.InitialAlpha, 0, time * 2.5f)
-                            );
+                        material.color = new Color(material.color.r, material.color.g, material.color.b, Mathf.Lerp(fadingObject.InitialAlpha, 0, time * 2.5f));
                     }
                 }
 

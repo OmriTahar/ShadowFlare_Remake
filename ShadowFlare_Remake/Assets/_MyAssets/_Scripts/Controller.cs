@@ -8,14 +8,15 @@ namespace ShadowFlareRemake {
         protected int GroundLayer;
         protected int EnemyLayer;
         protected int ItemLayer;
-        protected int AttackLayer;
         protected int UILayer;
+        protected string AttackTag;
 
         private AcceptBlock _acceptBlock;
 
         protected virtual void Awake() {
 
             InitLayers();
+            InitTags();
             _acceptBlock = new AcceptBlock();
         }
 
@@ -35,8 +36,12 @@ namespace ShadowFlareRemake {
             GroundLayer = LayerMask.NameToLayer("Ground");
             EnemyLayer = LayerMask.NameToLayer("Enemy");
             ItemLayer = LayerMask.NameToLayer("Item");
-            AttackLayer = LayerMask.NameToLayer("Attack");
             UILayer = LayerMask.NameToLayer("UI");
+        }
+
+        private void InitTags()
+        {
+            AttackTag = "Attack";
         }
     }
 }

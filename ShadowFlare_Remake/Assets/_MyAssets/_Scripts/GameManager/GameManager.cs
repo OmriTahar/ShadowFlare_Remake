@@ -33,6 +33,10 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
+        [Header("Test")]
+        [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
+        [SerializeField] private bool _isEnemyActiveOnSpawn;
+
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
@@ -49,7 +53,7 @@ namespace ShadowFlareRemake.GameManager
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         private async void Start()
@@ -183,11 +187,11 @@ namespace ShadowFlareRemake.GameManager
 
             foreach(var enemyToSpawn in enemiesToSpawn)
             {
-                InitEnemyLogic(enemyToSpawn);
+                InitEnemyLogic(enemyToSpawn, _isEnemyActiveOnSpawn);
             }
         }
 
-        private void InitEnemyLogic(EnemyToSpawn enemyToSpawn)
+        private void InitEnemyLogic(EnemyToSpawn enemyToSpawn, bool isEnemyActive, bool destroyEnemyToSpawn = true)
         {
             if(enemyToSpawn == null || !enemyToSpawn.isActiveAndEnabled)
                 return;
@@ -198,14 +202,18 @@ namespace ShadowFlareRemake.GameManager
             var enemyUnitStats = enemyToSpawn.EnemyUnit;
             var enemyUnit = new Unit(enemyUnitStats);
 
-            var enemyModel = enemyController.InitEnemy(enemyUnit, _playerController.transform);
+            var enemyModel = enemyController.InitEnemy(enemyUnit, _playerController.transform, isEnemyActive);
             _enemyUnitsDict.Add(enemyController, enemyUnit);
 
             var enemyCollider = enemyController.GetEnemyCollider();
             _enemiesCollidersDict.Add(enemyCollider, enemyModel);
 
             RegisterEnemyEvents(enemyController);
-            Destroy(enemyToSpawn.gameObject);
+
+            if(destroyEnemyToSpawn)
+            {
+                Destroy(enemyToSpawn.gameObject);
+            }
         }
 
         private void RegisterEnemyEvents(EnemyController enemyController)
@@ -249,9 +257,11 @@ namespace ShadowFlareRemake.GameManager
             _playerController.InitPlayer(_playerUnit, _inputManager);
         }
 
-        private void HandlePlayerGotHit(Attack attack, IUnitStats unit)
+        private void HandlePlayerGotHit(Attack attack)
         {
-
+            CombatLogic.HandleTakeDamage(attack, _playerUnit);
+            _playerController.SetUnitAndUnitHandler(_playerUnit);
+            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
@@ -323,6 +333,34 @@ namespace ShadowFlareRemake.GameManager
 
             lootView.SetModel(lootModel);
         }
+
+        public void TestSpawnEnemy()
+        {
+            _testEnemyToSpawn.SetGameobjectNameAsEnemy();
+            InitEnemyLogic(_testEnemyToSpawn, _isEnemyActiveOnSpawn, false);
+        }
+
+#if UNITY_EDITOR
+
+        [UnityEditor.CustomEditor(typeof(GameManager))]
+        public class Drawer : UnityEditor.Editor
+        {
+            public override void OnInspectorGUI()
+            {
+                base.OnInspectorGUI();
+                GUILayout.Space(10);
+
+                if(GUILayout.Button("Spawn Enemy"))
+                {
+                    var gameManager = target as GameManager;
+                    gameManager.TestSpawnEnemy();
+                }
+
+                GUILayout.Space(10);
+            }
+        }
+
+#endif
 
         #endregion
     }

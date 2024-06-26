@@ -274,7 +274,7 @@ namespace ShadowFlareRemake.UI
             UpdatePlayerStats(unit);
         }
 
-        private void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP)
+        public void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP)
         {
             _hudModel.SetHPAndMP(currentHP, maxHP, currentMP, maxMP);
         }

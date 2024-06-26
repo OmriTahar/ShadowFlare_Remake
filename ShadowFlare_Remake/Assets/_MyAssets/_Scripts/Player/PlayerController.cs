@@ -11,7 +11,7 @@ namespace ShadowFlareRemake.Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : Controller
     {
-        public event Action<Attack, IUnitStats> OnIGotHit;
+        public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
 
         [Header("References")]
@@ -119,6 +119,15 @@ namespace ShadowFlareRemake.Player
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;
             _view.OnTriggerEnterEvent -= HandleTriggerEnter;
+        }
+
+        #endregion
+
+        #region GameManager Helpers
+
+        public void SetUnitAndUnitHandler(IUnit unit)
+        {
+            _model.SetUnit(unit);
         }
 
         #endregion
@@ -325,10 +334,10 @@ namespace ShadowFlareRemake.Player
 
         private void HandleTriggerEnter(Collider other)
         {
-            if(other.gameObject.layer == AttackLayer)
+            if(other.gameObject.layer == EnemyLayer && other.gameObject.tag == AttackTag)
             {
                 var attack = other.GetComponent<Attack>();
-                OnIGotHit?.Invoke(attack, _model.Stats);
+                OnIGotHit?.Invoke(attack);
             }
         }
 
