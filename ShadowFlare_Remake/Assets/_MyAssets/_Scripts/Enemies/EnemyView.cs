@@ -149,7 +149,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleHitEffect()
         {
-            if(_lastSeenHP == Model.Unit.CurrentHP || Model.CurrentEnemyState == EnemyState.Dead)
+            if(Model.Unit.CurrentHP >= _lastSeenHP || Model.CurrentEnemyState == EnemyState.Dead)
                 return;
 
             if(Model.IsReceivedCritialHit)

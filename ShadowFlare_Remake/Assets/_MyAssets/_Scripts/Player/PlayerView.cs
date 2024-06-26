@@ -40,6 +40,7 @@ namespace ShadowFlareRemake.Player
             _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
 
             HandleHitEffect();
+            HandleHP();
 
             if(Model.IsAttacking)
             {
@@ -130,9 +131,22 @@ namespace ShadowFlareRemake.Player
             OnAttackAnimationEnded?.Invoke();
         }
 
+        private void HandleHP()
+        {
+            // Check if not already dead
+
+            var realHP = Model.Unit.CurrentHP;
+            _lastSeenHP = realHP < 0 ? 0 : realHP;
+
+            //if(_lastSeenHP == 0)
+            //{
+            //    OnDeath?.Invoke();
+            //}
+        }
+
         private void HandleHitEffect()
         {
-            if(_lastSeenHP == Model.Unit.CurrentHP)
+            if(Model.Unit.CurrentHP >= _lastSeenHP)
                 return;
 
             if(Model.IsReceivedCritialHit)
