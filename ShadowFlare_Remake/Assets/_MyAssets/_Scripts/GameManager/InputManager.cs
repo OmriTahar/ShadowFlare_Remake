@@ -25,14 +25,14 @@ namespace ShadowFlareRemake.GameManager
 
         [Space(10)]
         [Header("Keyboard Nums Input Actions")]
-        [SerializeField] private InputAction numOne_KeyboardClickAction;
-        [SerializeField] private InputAction numTwo_KeyboardClickAction;
-        [SerializeField] private InputAction numThree_KeyboardClickAction;
-        [SerializeField] private InputAction numFour_KeyboardClickAction;
-        [SerializeField] private InputAction numFive_KeyboardClickAction;
-        [SerializeField] private InputAction numSix_KeyboardClickAction;
-        [SerializeField] private InputAction numSeven_KeyboardClickAction;
-        [SerializeField] private InputAction numEight_KeyboardClickAction;
+        [SerializeField] private InputAction NumOne_KeyboardClickAction;
+        [SerializeField] private InputAction NumTwo_KeyboardClickAction;
+        [SerializeField] private InputAction NumThree_KeyboardClickAction;
+        [SerializeField] private InputAction NumFour_KeyboardClickAction;
+        [SerializeField] private InputAction NumFive_KeyboardClickAction;
+        [SerializeField] private InputAction NumSix_KeyboardClickAction;
+        [SerializeField] private InputAction NumSeven_KeyboardClickAction;
+        [SerializeField] private InputAction NumEight_KeyboardClickAction;
 
         public Collider CurrentRaycastHitCollider { get; private set; }
         public RaycastHit CurrentRaycastHit { get; private set; }
@@ -106,14 +106,14 @@ namespace ShadowFlareRemake.GameManager
                 S_KeyboardClickAction.Enable();
                 H_KeyboardClickAction.Enable();
 
-                numOne_KeyboardClickAction.Enable();
-                numTwo_KeyboardClickAction.Enable();
-                numThree_KeyboardClickAction.Enable();
-                numFour_KeyboardClickAction.Enable();
-                numFive_KeyboardClickAction.Enable();
-                numSix_KeyboardClickAction.Enable();
-                numSeven_KeyboardClickAction.Enable();
-                numEight_KeyboardClickAction.Enable();
+                NumOne_KeyboardClickAction.Enable();
+                NumTwo_KeyboardClickAction.Enable();
+                NumThree_KeyboardClickAction.Enable();
+                NumFour_KeyboardClickAction.Enable();
+                NumFive_KeyboardClickAction.Enable();
+                NumSix_KeyboardClickAction.Enable();
+                NumSeven_KeyboardClickAction.Enable();
+                NumEight_KeyboardClickAction.Enable();
             }
             else
             {
@@ -124,14 +124,14 @@ namespace ShadowFlareRemake.GameManager
                 S_KeyboardClickAction.Disable();
                 H_KeyboardClickAction.Disable();
 
-                numOne_KeyboardClickAction.Disable();
-                numTwo_KeyboardClickAction.Disable();
-                numThree_KeyboardClickAction.Disable();
-                numFour_KeyboardClickAction.Disable();
-                numFive_KeyboardClickAction.Disable();
-                numSix_KeyboardClickAction.Disable();
-                numSeven_KeyboardClickAction.Disable();
-                numEight_KeyboardClickAction.Disable();
+                NumOne_KeyboardClickAction.Disable();
+                NumTwo_KeyboardClickAction.Disable();
+                NumThree_KeyboardClickAction.Disable();
+                NumFour_KeyboardClickAction.Disable();
+                NumFive_KeyboardClickAction.Disable();
+                NumSix_KeyboardClickAction.Disable();
+                NumSeven_KeyboardClickAction.Disable();
+                NumEight_KeyboardClickAction.Disable();
             }
         }
 
@@ -255,35 +255,35 @@ namespace ShadowFlareRemake.GameManager
             switch(inputType)
             {
                 case PlayerKeyboardNumsInputType.NumOne:
-                    numOne_KeyboardClickAction.performed += action;
+                    NumOne_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumTwo:
-                    numTwo_KeyboardClickAction.performed += action;
+                    NumTwo_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumThree:
-                    numThree_KeyboardClickAction.performed += action;
+                    NumThree_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumFour:
-                    numFour_KeyboardClickAction.performed += action;
+                    NumFour_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumFive:
-                    numFive_KeyboardClickAction.performed += action;
+                    NumFive_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumSix:
-                    numSix_KeyboardClickAction.performed += action;
+                    NumSix_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumSeven:
-                    numSeven_KeyboardClickAction.performed += action;
+                    NumSeven_KeyboardClickAction.performed += action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumEight:
-                    numEight_KeyboardClickAction.performed += action;
+                    NumEight_KeyboardClickAction.performed += action;
                     break;
 
                 default:
@@ -296,35 +296,35 @@ namespace ShadowFlareRemake.GameManager
             switch(inputType)
             {
                 case PlayerKeyboardNumsInputType.NumOne:
-                    numOne_KeyboardClickAction.performed -= action;
+                    NumOne_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumTwo:
-                    numTwo_KeyboardClickAction.performed -= action;
+                    NumTwo_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumThree:
-                    numThree_KeyboardClickAction.performed -= action;
+                    NumThree_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumFour:
-                    numFour_KeyboardClickAction.performed -= action;
+                    NumFour_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumFive:
-                    numFive_KeyboardClickAction.performed -= action;
+                    NumFive_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumSix:
-                    numSix_KeyboardClickAction.performed -= action;
+                    NumSix_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumSeven:
-                    numSeven_KeyboardClickAction.performed -= action;
+                    NumSeven_KeyboardClickAction.performed -= action;
                     break;
 
                 case PlayerKeyboardNumsInputType.NumEight:
-                    numEight_KeyboardClickAction.performed -= action;
+                    NumEight_KeyboardClickAction.performed -= action;
                     break;
 
                 default:

@@ -20,6 +20,28 @@ namespace ShadowFlareRemake.GameManager.Units
             CurrentMP = Stats.MaxMP;
         }
 
+        public void HealHP(int Amount)
+        {
+            var afterHealAmount = CurrentHP + Amount;
+            CurrentHP = afterHealAmount > Stats.MaxHP? Stats.MaxHP : afterHealAmount;
+        }
+
+        public void HealMP(int Amount)
+        {
+            var afterHealAmount = CurrentHP + Amount;
+            CurrentHP = afterHealAmount > Stats.MaxMP ? Stats.MaxMP : afterHealAmount;
+        }
+
+        public bool IsHpFull()
+        {
+            return CurrentHP == Stats.MaxHP;
+        }
+
+        public bool IsMpFull()
+        {
+            return CurrentMP == Stats.MaxMP;
+        }
+
         public void TakeDamage(int damage)
         {
             CurrentHP -= damage;

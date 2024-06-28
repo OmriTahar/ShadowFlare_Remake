@@ -6,6 +6,7 @@ using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager
@@ -99,6 +100,7 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
 
             _uiController.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
+            _uiController.OnPotionClicked += HandlePlayerUsedQuickItem;
             _uiController.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
             _uiController.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
         }
@@ -109,6 +111,7 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
 
             _uiController.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
+            _uiController.OnPotionClicked -= HandlePlayerUsedQuickItem;
             _uiController.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
             _uiController.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
 
@@ -289,6 +292,32 @@ namespace ShadowFlareRemake.GameManager
 
             HandlePlayerHoldingLoot(false);
             _playerController.SetIsLastActionWasMove(false);
+        }
+
+        private void HandlePlayerUsedQuickItem(LootModel lootModel, Vector2Int index)
+        {
+            var hpHealAmount = lootModel.LootData.HpRestoreAmount;
+            var mpHealAmount = lootModel.LootData.MpRestoreAmount;
+            bool hasHealed = false;
+
+            if(!_playerUnit.IsHpFull() && hpHealAmount > 0)
+            {
+                _playerUnit.HealHP(hpHealAmount);
+                hasHealed = true;
+            }
+
+            if(!_playerUnit.IsMpFull() && mpHealAmount > 0)
+            {
+                _playerUnit.HealMP(mpHealAmount);
+                hasHealed = true;
+            }
+
+            if(!hasHealed)
+                return;
+
+            _playerController.SetPlayetUnitAfterHeal(_playerUnit);
+            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiController.RemovePotionFromInventory(index);
         }
 
         #endregion

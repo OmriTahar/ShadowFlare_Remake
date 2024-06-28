@@ -19,3 +19,5 @@ MonoBehaviour:
     type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  <HpRestoreAmount>k__BackingField: 30
+  <MpRestoreAmount>k__BackingField: 0

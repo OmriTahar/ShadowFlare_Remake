@@ -1,4 +1,6 @@
 using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Loot;
+using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
@@ -70,6 +72,16 @@ namespace ShadowFlareRemake.UI.Inventory
                 default:
                     return null;
             }
+        }
+
+        public LootModel GetQuickItemLootModel(Vector2Int index)
+        {
+            return QuickItemsGridModel.GetLootModelFromTileIndex(index);
+        }
+
+        public void RemovePotionFromInventory(Vector2Int index)
+        {
+            QuickItemsGridModel.RemoveItemFromGrid(index, true);
         }
     }
 }

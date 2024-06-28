@@ -23,6 +23,8 @@ namespace ShadowFlareRemake.UI.Inventory
         [SerializeField] private ItemsGridView _carryItemsGridView;
         [SerializeField] private ItemsGridView _quickItemsGridView;
 
+        #region View Overrides
+
         protected override void Initialize()
         {
             RegisterEvents();
@@ -33,6 +35,10 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             _inventoryPanel.SetActive(Model.IsInventoryOpen);
         }
+
+        #endregion
+
+        #region Initialization
 
         private void SetItemsGridModels()
         {
@@ -50,6 +56,35 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             DeregisterEvents();
         }
+
+        #endregion
+
+
+        #region Meat & Potatos
+
+        private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
+            OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
+        }
+
+        public void TileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        {
+            OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootModel);
+        }
+
+        public LootModel GetQuickItemLootModel(Vector2Int index)
+        {
+            return Model.GetQuickItemLootModel(index);
+        }
+
+        public void RemovePotionFromInventory(Vector2Int index)
+        {
+            Model.RemovePotionFromInventory(index);
+        }
+
+        #endregion
+
+        #region Events
 
         private void RegisterEvents()
         {
@@ -93,14 +128,6 @@ namespace ShadowFlareRemake.UI.Inventory
             _quickItemsGridView.OnTileClicked -= TileClicked;
         }
 
-        private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
-        {
-            OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
-        }
-
-        public void TileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
-        {
-            OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootModel);
-        }
+        #endregion
     }
 }

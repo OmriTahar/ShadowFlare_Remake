@@ -127,7 +127,12 @@ namespace ShadowFlareRemake.Player
 
         public void SetPlayetUnitAfterHit(IUnit unit, bool isCritialHit)
         {
-            _model.SetUnitAfterHit(unit, isCritialHit);
+            _model.SetPlayerUnitAfterHit(unit, isCritialHit);
+        }
+
+        public void SetPlayetUnitAfterHeal(IUnit unit)
+        {
+            _model.SetPlayerUnitAfterHeal(unit);
         }
 
         #endregion

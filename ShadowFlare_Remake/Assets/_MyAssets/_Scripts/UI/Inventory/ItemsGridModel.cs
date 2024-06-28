@@ -59,7 +59,7 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region NEW - Place & Remove 
+        #region Place & Remove 
 
         public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
         {
@@ -299,7 +299,7 @@ namespace ShadowFlareRemake.UI
             {
                 var rootIndex = _heldLootRootIndexesDict[tileIndex];
                 return GridTileModelsDict[rootIndex].LootModel;
-            }
+            } 
 
             return null;
         }

@@ -1,7 +1,6 @@
-using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Events;
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
@@ -10,15 +9,18 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
-using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Events;
-using ShadowFlareRemake.Loot;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI
 {
     public class UIController : Controller
     {
         public event Action<LootModel> OnDropLootToTheGround;
+        public event Action<LootModel, Vector2Int> OnPotionClicked;
         public event Action<bool> OnIsCurserOnUiChanged;
         public event Action<bool> OnIsPlayerHoldingLootChanged;
 
@@ -42,14 +44,38 @@ namespace ShadowFlareRemake.UI
         private LevelUpModel _levelUpModel;
 
         private IInputManager _inputManager;
+        private Dictionary<string, Vector2Int> _quickItemsIndexesDict = new();
 
-        #region Unity Callbacks
+        #region Quick Items Variables
+
+        private const string _numOne_QuickItemActionName = "Num One_Keyboard Click";
+        private const string _numTwo_QuickItemActionName = "Num Two_Keyboard Click";
+        private const string _numThree_QuickItemActionName = "Num Three_Keyboard Click";
+        private const string _numFour_QuickItemActionName = "Num Four_Keyboard Click";
+        private const string _numFive_QuickItemActionName = "Num Five_Keyboard Click";
+        private const string _numSix_QuickItemActionName = "Num Six_Keyboard Click";
+        private const string _numSeven_QuickItemActionName = "Num Seven_Keyboard Click";
+        private const string _numEight_QuickItemActionName = "Num Eight_Keyboard Click";
+
+        private readonly Vector2Int _numOne_QuickItemIndex = new Vector2Int(0, 0);
+        private readonly Vector2Int _numTwo_QuickItemIndex = new Vector2Int(1, 0);
+        private readonly Vector2Int _numThree_QuickItemIndex = new Vector2Int(2, 0);
+        private readonly Vector2Int _numFour_QuickItemIndex = new Vector2Int(3, 0);
+        private readonly Vector2Int _numFive_QuickItemIndex = new Vector2Int(0, 1);
+        private readonly Vector2Int _numSix_QuickItemIndex = new Vector2Int(1, 1);
+        private readonly Vector2Int _numSeven_QuickItemIndex = new Vector2Int(2, 1);
+        private readonly Vector2Int _numEight_QuickItemIndex = new Vector2Int(3, 1);
+
+        #endregion
+
+        #region MonoBehaviour
 
         protected override void Awake()
         {
             base.Awake();
             CacheNulls();
             InitModels();
+            InitQuickItemsIndexesDict();
         }
 
         private void OnDisable()
@@ -101,6 +127,18 @@ namespace ShadowFlareRemake.UI
 
             _levelUpModel = new LevelUpModel();
             _levelUpView.SetModel(_levelUpModel);
+        }
+
+        private void InitQuickItemsIndexesDict()
+        {
+            _quickItemsIndexesDict.Add(_numOne_QuickItemActionName, _numOne_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numTwo_QuickItemActionName, _numTwo_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numThree_QuickItemActionName, _numThree_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numFour_QuickItemActionName, _numFour_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numFive_QuickItemActionName, _numFive_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numSix_QuickItemActionName, _numSix_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numSeven_QuickItemActionName, _numSeven_QuickItemIndex);
+            _quickItemsIndexesDict.Add(_numEight_QuickItemActionName, _numEight_QuickItemIndex);
         }
 
         #endregion
@@ -237,6 +275,22 @@ namespace ShadowFlareRemake.UI
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
             HandleUiScreenCover();
+        }
+
+        private void HandleKeyboardNumClicked(InputAction.CallbackContext context)
+        {
+            var index = _quickItemsIndexesDict[context.action.name];
+            var lootModel = _inventoryView.GetQuickItemLootModel(index);
+
+            if(lootModel == null)
+                return;
+
+            OnPotionClicked?.Invoke(lootModel, index);
+        }
+
+        public void RemovePotionFromInventory(Vector2Int index)
+        {
+            _inventoryView.RemovePotionFromInventory(index);
         }
 
         #endregion
@@ -382,11 +436,29 @@ namespace ShadowFlareRemake.UI
             {
                 _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
                 _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
+
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
+                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
             }
             else
             {
                 _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
                 _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
+
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
+                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
             }
         }
 

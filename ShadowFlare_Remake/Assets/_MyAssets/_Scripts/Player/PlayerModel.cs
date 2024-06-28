@@ -20,7 +20,13 @@ namespace ShadowFlareRemake.Player {
             Stats = unit.Stats as IPlayerUnitStats;
         }
 
-        public void SetUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false) {
+        public void SetPlayerUnitAfterHeal(IUnit unit)
+        {
+            Unit = unit;
+            Changed();
+        }
+
+        public void SetPlayerUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false) {
 
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;

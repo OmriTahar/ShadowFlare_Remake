@@ -16,14 +16,12 @@ namespace ShadowFlareRemake.UI.Inventory
         [Header("References")]
         [SerializeField] private GameObject _placeHolderSprite;
 
+        #region View Overrides
+
         protected override void Initialize()
         {
             InitGridTilesDict();
-        }
-
-        protected override void Clean()
-        {
-            DeregisterEvents();
+            RegisterEvents();
         }
 
         protected override void ModelChanged()
@@ -32,6 +30,15 @@ namespace ShadowFlareRemake.UI.Inventory
             HandlePlaceHolderSprite();
         }
 
+        protected override void Clean()
+        {
+            DeregisterEvents();
+        }
+
+        #endregion
+
+        #region Initialization
+
         private void InitGridTilesDict()
         {
             var gridTileViews = GetComponentsInChildren<GridTileView>();
@@ -39,9 +46,12 @@ namespace ShadowFlareRemake.UI.Inventory
             foreach(var tileView in gridTileViews)
             {
                 _gridTilesDict.Add(tileView.Index, tileView);
-                tileView.OnTileClicked += InovkeTileClicked;
             }
         }
+
+        #endregion
+
+        #region Meat & Potatos
 
         private void PlaceItems()
         {
@@ -91,6 +101,18 @@ namespace ShadowFlareRemake.UI.Inventory
             OnCursorChangedHoverOverGrid?.Invoke(Model, false);
         }
 
+        #endregion
+
+        #region Events
+
+        private void RegisterEvents()
+        {
+            foreach(var tileView in _gridTilesDict.Values)
+            {
+                tileView.OnTileClicked += InovkeTileClicked;
+            }
+        }
+
         private void DeregisterEvents()
         {
             foreach(var tileView in _gridTilesDict.Values)
@@ -98,6 +120,8 @@ namespace ShadowFlareRemake.UI.Inventory
                 tileView.OnTileClicked -= InovkeTileClicked;
             }
         }
+
+        #endregion
     }
 }
 

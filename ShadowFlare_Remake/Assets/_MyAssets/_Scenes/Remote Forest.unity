@@ -1480,12 +1480,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 670567b1b02569c40ac9a71613fd6969, type: 2}
   - {fileID: 11400000, guid: e979b2cab34d3a240bf9088b7d927714, type: 2}
   - {fileID: 11400000, guid: aebe5f0828dc3c941b23043d0005e5af, type: 2}
-  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
-  - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
-  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
-  - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
-  - {fileID: 11400000, guid: 3ce531c61ed3a6a4ebe7a22441d92170, type: 2}
-  - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
   _enemiesParent: {fileID: 1054742629}
   _playerController: {fileID: 972601921}
   _playerUnitStats:
@@ -3672,16 +3672,16 @@ MonoBehaviour:
       m_Action: H_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numOne_KeyboardClickAction:
+  NumOne_KeyboardClickAction:
     m_Name: Num One_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 637a38d6-8107-4684-acab-9f328367db41
+    m_Id: bc85bff7-0e6f-43bc-806f-e12eabd3246e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: c4c55c60-9e8a-4e27-bed3-e94b76bc8d9f
+      m_Id: 2c38aee6-c0da-46d8-974e-2d876ab2d6e5
       m_Path: <Keyboard>/1
       m_Interactions: 
       m_Processors: 
@@ -3689,16 +3689,16 @@ MonoBehaviour:
       m_Action: Num One_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numTwo_KeyboardClickAction:
+  NumTwo_KeyboardClickAction:
     m_Name: Num Two_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: d9285899-e903-4649-9251-7b14147aa24a
+    m_Id: 7f14280b-cc80-4183-876f-814055754b9c
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 40bcfd62-4251-43ba-bdff-2acb396634c1
+      m_Id: 31cbcd62-0e62-4453-956b-f4ec32e03fd1
       m_Path: <Keyboard>/2
       m_Interactions: 
       m_Processors: 
@@ -3706,16 +3706,16 @@ MonoBehaviour:
       m_Action: Num Two_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numThree_KeyboardClickAction:
+  NumThree_KeyboardClickAction:
     m_Name: Num Three_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 5933ea0b-c4b4-4ef5-b8ee-a0775a5b526a
+    m_Id: 90ade5b8-27e0-4fff-b96b-d3d7201d5ce0
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 940af9e2-c7a0-4270-bf7f-4e0782853188
+      m_Id: ee418c53-16ed-4d16-bbd0-b6c0a056bfba
       m_Path: <Keyboard>/3
       m_Interactions: 
       m_Processors: 
@@ -3723,16 +3723,16 @@ MonoBehaviour:
       m_Action: Num Three_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numFour_KeyboardClickAction:
+  NumFour_KeyboardClickAction:
     m_Name: Num Four_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: beaabc04-743a-4ff8-aa6a-b5a9d01613e7
+    m_Id: e6c48255-277c-4c3b-baf6-dacdd93a24c5
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 94b179b5-76b2-4e20-ae9c-c5adc54a4b65
+      m_Id: 34b840bc-9f31-4f20-b9bd-6e558cb56158
       m_Path: <Keyboard>/4
       m_Interactions: 
       m_Processors: 
@@ -3740,16 +3740,16 @@ MonoBehaviour:
       m_Action: Num Four_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numFive_KeyboardClickAction:
+  NumFive_KeyboardClickAction:
     m_Name: Num Five_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 1beab188-a09e-4ee9-9b1e-408eff3b8c55
+    m_Id: 20618e2e-983c-4e16-afe4-05c1a94715dc
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 378e5e88-b530-4dea-8e56-4681a44a35af
+      m_Id: 22504b4b-dd26-4329-9498-5b13eb752224
       m_Path: <Keyboard>/5
       m_Interactions: 
       m_Processors: 
@@ -3757,16 +3757,16 @@ MonoBehaviour:
       m_Action: Num Five_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numSix_KeyboardClickAction:
+  NumSix_KeyboardClickAction:
     m_Name: Num Six_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 11260f21-edea-4308-b2fc-b5eb05643c89
+    m_Id: f8dd3844-1d8f-48e7-b8bb-c79c88dcbe4e
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: be88e2c7-3e7a-49da-8f36-37739bdffc89
+      m_Id: 01a33fea-7855-4e82-91c6-69a40210ce6e
       m_Path: <Keyboard>/6
       m_Interactions: 
       m_Processors: 
@@ -3774,16 +3774,16 @@ MonoBehaviour:
       m_Action: Num Six_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numSeven_KeyboardClickAction:
+  NumSeven_KeyboardClickAction:
     m_Name: Num Seven_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: cbb20aef-e664-45b5-b3a5-8d27c4a61e89
+    m_Id: 51fa6d5d-8241-473c-97ed-764cc7486cef
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 737358b6-7aae-468c-bf79-861517dd730c
+      m_Id: 1220bd9c-e5c3-4a41-a605-86843736d5a7
       m_Path: <Keyboard>/7
       m_Interactions: 
       m_Processors: 
@@ -3791,16 +3791,16 @@ MonoBehaviour:
       m_Action: Num Seven_Keyboard Click
       m_Flags: 0
     m_Flags: 0
-  numEight_KeyboardClickAction:
+  NumEight_KeyboardClickAction:
     m_Name: Num Eight_Keyboard Click
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: e06ae20d-1b37-41ce-b75b-612776e4d367
+    m_Id: 5534443a-8f09-46c2-b44a-b16581b47bb6
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: b0524380-7155-45bd-8198-ef707670c4bd
+      m_Id: 24ec09f2-0320-4760-921c-0846fc7061fe
       m_Path: <Keyboard>/8
       m_Interactions: 
       m_Processors: 
@@ -6487,7 +6487,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -8333,7 +8333,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -15985,7 +15985,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -17430,7 +17430,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -20558,7 +20558,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
