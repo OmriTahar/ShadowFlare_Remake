@@ -1,12 +1,10 @@
 
 namespace ShadowFlareRemake.Enums
 {
-    public enum PlayerInputType
+    public enum PlayerKeyboardLettersInputType
     {
-        LeftMouse,
-        RightMouse,
         I_Keyboard,
         H_Keyboard,
-        S_Keyboard
+        S_Keyboard,
     }
 }

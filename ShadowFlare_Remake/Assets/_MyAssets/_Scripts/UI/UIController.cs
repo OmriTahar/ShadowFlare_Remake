@@ -380,22 +380,22 @@ namespace ShadowFlareRemake.UI
         {
             if(isRegister)
             {
-                _inputManager.ResigterToInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
-                _inputManager.ResigterToInputAction(PlayerInputType.S_Keyboard, ToggleStats);
+                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
+                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
             }
             else
             {
-                _inputManager.DeresigterFromInputAction(PlayerInputType.I_Keyboard, ToggleInventory);
-                _inputManager.DeresigterFromInputAction(PlayerInputType.S_Keyboard, ToggleStats);
+                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
+                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
             }
         }
 
         private void DropLootLeftMouseClickEvent(bool isRegister)
         {
             if(isRegister)
-                _inputManager.ResigterToInputAction(PlayerInputType.LeftMouse, DropLootToTheGround);
+                _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
             else
-                _inputManager.DeresigterFromInputAction(PlayerInputType.LeftMouse, DropLootToTheGround);
+                _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
         }
 
         private void CursorEvents(bool isRegister)

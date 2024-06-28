@@ -103,8 +103,8 @@ namespace ShadowFlareRemake.Player
 
         private void RegisterEvents()
         {
-            _inputManager.ResigterToInputAction(PlayerInputType.LeftMouse, RegisterLeftClickActions);
-            _inputManager.ResigterToInputAction(PlayerInputType.RightMouse, AttackAtDirection);
+            _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
+            _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleAttackStepForward;
@@ -113,8 +113,8 @@ namespace ShadowFlareRemake.Player
 
         private void DeregisterEvents()
         {
-            _inputManager.DeresigterFromInputAction(PlayerInputType.LeftMouse, RegisterLeftClickActions);
-            _inputManager.DeresigterFromInputAction(PlayerInputType.RightMouse, AttackAtDirection);
+            _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
+            _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;

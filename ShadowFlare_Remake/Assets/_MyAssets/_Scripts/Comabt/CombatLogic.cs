@@ -18,7 +18,7 @@ namespace ShadowFlareRemake.Combat {
            
             receiverUnit.TakeDamage(damage);
 
-            return Random.value >= 0.5f; // Improve this
+            return Random.value >= 0.75f; // Improve this
         }
 
         private static int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) { // Todo: Expand this.

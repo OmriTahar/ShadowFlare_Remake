@@ -19,7 +19,13 @@ namespace ShadowFlareRemake.PlayerInput
         bool IsHoldingLoot { get; }
         bool IsLeftMouseHeldDown { get; }
 
-        void ResigterToInputAction(PlayerInputType inputType, Action<InputAction.CallbackContext> action);
-        void DeresigterFromInputAction(PlayerInputType inputType, Action<InputAction.CallbackContext> action);
+        void ResigterToMouseInputAction(PlayerMouseInputType inputType, Action<InputAction.CallbackContext> action);
+        void DeresigterFromMouseInputAction(PlayerMouseInputType inputType, Action<InputAction.CallbackContext> action);
+
+        void ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType inputType, Action<InputAction.CallbackContext> action);
+        void DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType inputType, Action<InputAction.CallbackContext> action);
+
+        void ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType inputType, Action<InputAction.CallbackContext> action);
+        void DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType inputType, Action<InputAction.CallbackContext> action);
     }
 }
