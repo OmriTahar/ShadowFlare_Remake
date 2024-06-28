@@ -4,6 +4,9 @@ namespace ShadowFlareRemake.UI.Hud {
 
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
+        public enum HpEffectSlider { Heal, Hit };
+        public HpEffectSlider CurrentHpEffectSlider { get; private set; } = HpEffectSlider.Hit;
+
         public int CurrentMP { get; private set; }
         public int MaxMP { get; private set; }
 
@@ -14,13 +17,14 @@ namespace ShadowFlareRemake.UI.Hud {
         public HudModel() {
         }
 
-        public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP, bool invokeChanged = true) {
+        public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP) {
+
+            CurrentHpEffectSlider = currentHP > CurrentHP? HpEffectSlider.Heal : HpEffectSlider.Hit;
 
             CurrentHP = currentHP;
             MaxHP = maxHP;
             CurrentMP = currentMP;
             MaxMP = maxMP;
-
             Changed();
         }
 

@@ -34,7 +34,7 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
-        [Header("Test")]
+        [Header("----- Tests -----")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
 
@@ -369,6 +369,20 @@ namespace ShadowFlareRemake.GameManager
             InitEnemyLogic(_testEnemyToSpawn, _isEnemyActiveOnSpawn, false);
         }
 
+        public void HitPlayer()
+        {
+            _playerUnit.TakeDamage(20);
+            _playerController.SetPlayetUnitAfterHit(_playerUnit, true);
+            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+        }
+
+        public void HealPlayer()
+        {
+            _playerUnit.FullHeal();
+            _playerController.SetPlayetUnitAfterHeal(_playerUnit);
+            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+        }
+
 #if UNITY_EDITOR
 
         [UnityEditor.CustomEditor(typeof(GameManager))]
@@ -379,10 +393,25 @@ namespace ShadowFlareRemake.GameManager
                 base.OnInspectorGUI();
                 GUILayout.Space(10);
 
+                var gameManager = target as GameManager;
+
                 if(GUILayout.Button("Spawn Enemy"))
                 {
-                    var gameManager = target as GameManager;
                     gameManager.TestSpawnEnemy();
+                }
+
+                GUILayout.Space(20);
+
+                if(GUILayout.Button("Hit Player"))
+                {
+                    gameManager.HitPlayer();
+                }
+
+                GUILayout.Space(20);
+
+                if(GUILayout.Button("Heal Player"))
+                {
+                    gameManager.HealPlayer();
                 }
 
                 GUILayout.Space(10);

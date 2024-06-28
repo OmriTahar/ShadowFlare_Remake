@@ -1,4 +1,6 @@
+using ShadowFlareRemake.Tools;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,15 +18,28 @@ namespace ShadowFlareRemake.UI.Hud
         [Header("Texts")]
         [SerializeField] private TMP_Text _levelText;
 
-        [Header("Sliders")]
+        [Header("HP Sliders")]
         [SerializeField] private Slider _hpSlider;
+        [SerializeField] private MultiStateView _hpSlider_MSV;
+        [SerializeField] private Slider _hpHealSlider;
+        [SerializeField] private Slider _hpHitSlider;
+
+        [Header("MP Sliders")]
         [SerializeField] private Slider _mpSlider;
+
+        [Header("EXP Sliders")]
         [SerializeField] private Slider _expSlider;
+
+        private const float _sliderLerpDuration = 1.5f;
+
+        private float _lastSeenHP;
+
+        #region View Overrides
 
         protected override void ModelReplaced()
         {
-            base.ModelReplaced();
             _hudPanel.SetActive(true);
+            InitHpSliders();
         }
 
         protected override void ModelChanged()
@@ -35,10 +50,84 @@ namespace ShadowFlareRemake.UI.Hud
             SetLevel();
         }
 
+        #endregion
+
+        #region Initialization
+
+        private void InitHpSliders()
+        {
+            SetHpSlidersMaxValue();
+            _hpSlider.value = Model.CurrentHP;
+            _lastSeenHP = _hpSlider.value;
+            _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+        }
+
+        #endregion
+
         private void SetHP()
         {
+            SetHpSlidersMaxValue();
+
+            if(_lastSeenHP == Model.CurrentHP)
+                return;
+
+            _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+
+            switch(Model.CurrentHpEffectSlider)
+            {
+                case HudModel.HpEffectSlider.Heal:
+                    HandleHpHealEffect();
+                    break;
+
+                case HudModel.HpEffectSlider.Hit:
+                    HandleHpHitEffect();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void SetHpSlidersMaxValue()
+        {
             _hpSlider.maxValue = Model.MaxHP;
+            _hpHealSlider.maxValue = Model.MaxHP;
+            _hpHitSlider.maxValue = Model.MaxHP;
+        }
+
+        private void HandleHpHealEffect()
+        {
+            _hpHealSlider.value = Model.CurrentHP;
+
+            _hpSlider.value = _lastSeenHP;
+
+            StartCoroutine(LerpSliderValue(_hpSlider, Model.CurrentHP));
+        }
+
+        private void HandleHpHitEffect()
+        {
             _hpSlider.value = Model.CurrentHP;
+
+            _hpHitSlider.value = _lastSeenHP;
+
+            StartCoroutine(LerpSliderValue(_hpHitSlider, Model.CurrentHP));
+        }
+
+        public IEnumerator LerpSliderValue(Slider slider, float targetValue)
+        {
+            float startValue = slider.value;
+            float timeElapsed = 0f;
+
+            while(timeElapsed < _sliderLerpDuration)
+            {
+                timeElapsed += Time.deltaTime;
+                float lerpProgress = timeElapsed / _sliderLerpDuration;
+                slider.value = Mathf.Lerp(startValue, targetValue, lerpProgress);
+                yield return null;
+            }
+
+            slider.value = targetValue;
+            _lastSeenHP = Model.CurrentHP;
         }
 
         private void SetMP()
