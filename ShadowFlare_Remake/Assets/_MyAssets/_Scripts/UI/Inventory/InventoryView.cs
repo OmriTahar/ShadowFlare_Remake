@@ -1,7 +1,7 @@
+using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Loot;
 using System;
 using UnityEngine;
-using ShadowFlareRemake.Loot;
-using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.UI.Inventory
 {

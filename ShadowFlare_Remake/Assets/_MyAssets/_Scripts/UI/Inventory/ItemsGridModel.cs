@@ -318,7 +318,7 @@ namespace ShadowFlareRemake.UI
             {
                 var rootIndex = _heldLootRootIndexesDict[tileIndex];
                 return GridTileModelsDict[rootIndex].LootModel;
-            } 
+            }
 
             return null;
         }

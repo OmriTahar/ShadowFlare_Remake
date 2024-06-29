@@ -1,4 +1,3 @@
-
 namespace ShadowFlareRemake.Enums
 {
     public enum PlayerKeyboardNumsInputType

@@ -1,4 +1,3 @@
-using Codice.Client.Common.GameUI;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.GameManager.Units;
@@ -13,19 +12,10 @@ namespace ShadowFlareRemake.GameManager
 {
     public class GameManager : MonoBehaviour
     {
-        [Header("Input")]
+        [Header("Managers")]
         [SerializeField] private InputManager _inputManager;
-
-        [Header("UI")]
-        [SerializeField] private UIController _uiController;
-
-        [Header("Rewards")]
         [SerializeField] private RewardsManager _rewardsManager;
-
-        [Header("Loot")]
-        [SerializeField] private Transform _testLootParent;
-        [SerializeField] private GameObject _testLootPrefab;
-        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
+        [SerializeField] private UIController _uiController;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -34,19 +24,25 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
-        [Header("----- Tests -----")]
-        [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
+        [Header("--------------- Loot Tests ---------------")]
+        [SerializeField] private Transform _testLootParent;
+        [SerializeField] private GameObject _testLootPrefab;
+        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
         [SerializeField] private Loot_ScriptableObject _testLootDataToSpawn;
+
+        [Header("--------------- Enemies Tests ---------------")]
+        [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
+
+        [Header("--------------- Player Tests ---------------")]
         [SerializeField] private int _healOrDamageAmount = 10;
 
-        private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
+        private Unit _playerUnit;
         private GameObject _lastHighlighted_GameObject;
         private HighlightableObject _lastHighlightable;
-
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
@@ -66,7 +62,6 @@ namespace ShadowFlareRemake.GameManager
             InitEnemies();
             InitPlayer();
             InitUiController();
-
             RegisterEvents();
 
             HandleTestSpawnLoot();
@@ -126,7 +121,7 @@ namespace ShadowFlareRemake.GameManager
 
         #endregion
 
-        #region General
+        #region Highlightable Objects
 
         private void HandleHighlightObjectOnCursorFocus()
         {
@@ -402,16 +397,16 @@ namespace ShadowFlareRemake.GameManager
 
                 var gameManager = target as GameManager;
 
-                if(GUILayout.Button("Spawn Enemy"))
+                if(GUILayout.Button("Spawn Loot"))
                 {
-                    gameManager.TestSpawnEnemy();
+                    gameManager.TestSpawnLootItem();
                 }
 
                 GUILayout.Space(15);
 
-                if(GUILayout.Button("Spawn Loot"))
+                if(GUILayout.Button("Spawn Enemy"))
                 {
-                    gameManager.TestSpawnLootItem();
+                    gameManager.TestSpawnEnemy();
                 }
 
                 GUILayout.Space(15);

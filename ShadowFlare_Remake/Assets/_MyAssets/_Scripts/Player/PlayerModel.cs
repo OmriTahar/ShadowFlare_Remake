@@ -1,9 +1,9 @@
-
 using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake.Player {
-    public class PlayerModel : Model {
-
+namespace ShadowFlareRemake.Player
+{
+    public class PlayerModel : Model
+    {
         public IUnit Unit { get; private set; }
         public IPlayerUnitStats Stats { get; private set; }
 
@@ -14,8 +14,8 @@ namespace ShadowFlareRemake.Player {
         public bool IsMoving { get; private set; }
         public bool CanTakeDamage { get; private set; } = true;
 
-        public PlayerModel(IUnit unit) {
-
+        public PlayerModel(IUnit unit)
+        {
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;
         }
@@ -26,22 +26,22 @@ namespace ShadowFlareRemake.Player {
             Changed();
         }
 
-        public void SetPlayerUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false) {
-
+        public void SetPlayerUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false)
+        {
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;
             IsReceivedCritialHit = isReceivedCritialHit;
             Changed();
         }
 
-        public void SetAttackState(bool isAttacking, PlayerAttack playerAttack) {
-
+        public void SetAttackState(bool isAttacking, PlayerAttack playerAttack)
+        {
             IsAttacking = isAttacking;
             CurrentPlayerAttack = playerAttack;
 
             if(playerAttack != PlayerAttack.None)
                 IsMoving = false;
-           
+
             Changed();
         }
 

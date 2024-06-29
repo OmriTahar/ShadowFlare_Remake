@@ -25,15 +25,14 @@ namespace ShadowFlareRemake.Player
         [SerializeField] private float _attackDistance = 2f;
         [SerializeField] private float _pickUpDistance = 1.5f;
 
+        private const int _rotationSpeed = 10;
+
         private PlayerModel _model;
         private CharacterController _characterController;
         private IInputManager _inputManager;
 
         private Coroutine _lastMoveCoroutine;
         private Vector3 _lastTargetPos;
-
-        private const int _rotationSpeed = 10;
-
         private bool _isAttacking = false;
         private bool _isLastActionWasMove = false;
 

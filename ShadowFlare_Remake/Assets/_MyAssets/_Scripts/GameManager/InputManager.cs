@@ -139,7 +139,6 @@ namespace ShadowFlareRemake.GameManager
 
         #region Meat & Potatos
 
-
         public void SetIsCursorOnUI(bool isCurserOnUI)
         {
             IsCursorOnUI = isCurserOnUI;

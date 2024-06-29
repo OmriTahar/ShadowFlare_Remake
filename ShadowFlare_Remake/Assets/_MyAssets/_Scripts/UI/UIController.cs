@@ -258,7 +258,7 @@ namespace ShadowFlareRemake.UI
 
         #region Inventory
 
-        private void ToggleInventory() 
+        private void ToggleInventory()
         {
             DoToggleInventory();
         }
