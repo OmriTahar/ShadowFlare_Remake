@@ -32,6 +32,7 @@ namespace ShadowFlareRemake.UI.Hud
 
         private const float _sliderLerpDuration = 1.5f;
 
+        private Coroutine _lastHpCoroutine;
         private float _lastSeenHP;
 
         #region View Overrides
@@ -68,8 +69,10 @@ namespace ShadowFlareRemake.UI.Hud
         {
             SetHpSlidersMaxValue();
 
-            if(_lastSeenHP == Model.CurrentHP)
-                return;
+            if(_lastHpCoroutine != null)
+            {
+                StopCoroutine(_lastHpCoroutine);
+            }
 
             _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
 
@@ -98,19 +101,15 @@ namespace ShadowFlareRemake.UI.Hud
         private void HandleHpHealEffect()
         {
             _hpHealSlider.value = Model.CurrentHP;
-
             _hpSlider.value = _lastSeenHP;
-
-            StartCoroutine(LerpSliderValue(_hpSlider, Model.CurrentHP));
+            _lastHpCoroutine = StartCoroutine(LerpSliderValue(_hpSlider, Model.CurrentHP));
         }
 
         private void HandleHpHitEffect()
         {
             _hpSlider.value = Model.CurrentHP;
-
             _hpHitSlider.value = _lastSeenHP;
-
-            StartCoroutine(LerpSliderValue(_hpHitSlider, Model.CurrentHP));
+            _lastHpCoroutine = StartCoroutine(LerpSliderValue(_hpHitSlider, Model.CurrentHP));
         }
 
         public IEnumerator LerpSliderValue(Slider slider, float targetValue)
@@ -123,11 +122,12 @@ namespace ShadowFlareRemake.UI.Hud
                 timeElapsed += Time.deltaTime;
                 float lerpProgress = timeElapsed / _sliderLerpDuration;
                 slider.value = Mathf.Lerp(startValue, targetValue, lerpProgress);
+                _lastSeenHP = slider.value;
                 yield return null;
             }
 
             slider.value = targetValue;
-            _lastSeenHP = Model.CurrentHP;
+            _lastSeenHP = slider.value;
         }
 
         private void SetMP()

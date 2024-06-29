@@ -1,3 +1,4 @@
+using Codice.Client.Common.GameUI;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.GameManager.Units;
@@ -6,7 +7,6 @@ using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager
@@ -37,6 +37,7 @@ namespace ShadowFlareRemake.GameManager
         [Header("----- Tests -----")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
+        [SerializeField] private int _healOrDamageAmount = 10;
 
         private Unit _playerUnit;
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
@@ -371,14 +372,14 @@ namespace ShadowFlareRemake.GameManager
 
         public void HitPlayer()
         {
-            _playerUnit.TakeDamage(20);
+            _playerUnit.TakeDamage(_healOrDamageAmount);
             _playerController.SetPlayetUnitAfterHit(_playerUnit, true);
             _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void HealPlayer()
         {
-            _playerUnit.FullHeal();
+            _playerUnit.HealHP(_healOrDamageAmount);
             _playerController.SetPlayetUnitAfterHeal(_playerUnit);
             _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
@@ -391,7 +392,7 @@ namespace ShadowFlareRemake.GameManager
             public override void OnInspectorGUI()
             {
                 base.OnInspectorGUI();
-                GUILayout.Space(10);
+                GUILayout.Space(20);
 
                 var gameManager = target as GameManager;
 
@@ -400,14 +401,14 @@ namespace ShadowFlareRemake.GameManager
                     gameManager.TestSpawnEnemy();
                 }
 
-                GUILayout.Space(20);
+                GUILayout.Space(15);
 
                 if(GUILayout.Button("Hit Player"))
                 {
                     gameManager.HitPlayer();
                 }
 
-                GUILayout.Space(20);
+                GUILayout.Space(15);
 
                 if(GUILayout.Button("Heal Player"))
                 {
