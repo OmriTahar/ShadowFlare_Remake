@@ -7,6 +7,7 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryView : UIView<InventoryModel>
     {
+        public event Action<LootModel, Vector2Int> OnTileHovered;
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
 
@@ -66,7 +67,12 @@ namespace ShadowFlareRemake.UI.Inventory
             OnCursorChangedHoverOverGrid?.Invoke(itemsGridModel, isCursorOn);
         }
 
-        public void TileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        public void InvokeTileHovered(LootModel lootModel, Vector2Int index)
+        {
+            OnTileHovered?.Invoke(lootModel, index);
+        }
+
+        public void InvokeTileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootModel);
         }
@@ -96,14 +102,17 @@ namespace ShadowFlareRemake.UI.Inventory
             _carryItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
             _quickItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
 
-            _talismanItemsGridView.OnTileClicked += TileClicked;
-            _weaponItemsGridView.OnTileClicked += TileClicked;
-            _shieldItemsGridlView.OnTileClicked += TileClicked;
-            _helmetItemsGridView.OnTileClicked += TileClicked;
-            _armorItemsGridView.OnTileClicked += TileClicked;
-            _bootsItemsGridView.OnTileClicked += TileClicked;
-            _carryItemsGridView.OnTileClicked += TileClicked;
-            _quickItemsGridView.OnTileClicked += TileClicked;
+            _talismanItemsGridView.OnTileClicked += InvokeTileClicked;
+            _weaponItemsGridView.OnTileClicked += InvokeTileClicked;
+            _shieldItemsGridlView.OnTileClicked += InvokeTileClicked;
+            _helmetItemsGridView.OnTileClicked += InvokeTileClicked;
+            _armorItemsGridView.OnTileClicked += InvokeTileClicked;
+            _bootsItemsGridView.OnTileClicked += InvokeTileClicked;
+            _carryItemsGridView.OnTileClicked += InvokeTileClicked;
+            _quickItemsGridView.OnTileClicked += InvokeTileClicked;
+
+            _carryItemsGridView.OnTileHovered += InvokeTileHovered;
+            _quickItemsGridView.OnTileHovered += InvokeTileHovered;
         }
 
         private void DeregisterEvents()
@@ -117,14 +126,17 @@ namespace ShadowFlareRemake.UI.Inventory
             _carryItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
             _quickItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
 
-            _talismanItemsGridView.OnTileClicked -= TileClicked;
-            _weaponItemsGridView.OnTileClicked -= TileClicked;
-            _shieldItemsGridlView.OnTileClicked -= TileClicked;
-            _helmetItemsGridView.OnTileClicked -= TileClicked;
-            _armorItemsGridView.OnTileClicked -= TileClicked;
-            _bootsItemsGridView.OnTileClicked -= TileClicked;
-            _carryItemsGridView.OnTileClicked -= TileClicked;
-            _quickItemsGridView.OnTileClicked -= TileClicked;
+            _talismanItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _weaponItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _shieldItemsGridlView.OnTileClicked -= InvokeTileClicked;
+            _helmetItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _armorItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _bootsItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _carryItemsGridView.OnTileClicked -= InvokeTileClicked;
+            _quickItemsGridView.OnTileClicked -= InvokeTileClicked;
+
+            _carryItemsGridView.OnTileHovered -= InvokeTileHovered;
+            _quickItemsGridView.OnTileHovered -= InvokeTileHovered;
         }
 
         #endregion

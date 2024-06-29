@@ -45,7 +45,7 @@ namespace ShadowFlareRemake.UI.Cursor
             }
             else
             {
-                _pickedUpLootView.SetModel(Model.HeldLootModel);
+                _pickedUpLootView.SetModel(Model.CurrentHeldLootModel);
                 _pickedUpLootImage.enabled = true;
             }
 

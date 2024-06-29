@@ -10,6 +10,7 @@ namespace ShadowFlareRemake.UI.Inventory
     {
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
+        public event Action<LootModel, Vector2Int> OnTileHovered;
 
         private Dictionary<Vector2Int, GridTileView> _gridTilesDict = new();
 
@@ -91,6 +92,16 @@ namespace ShadowFlareRemake.UI.Inventory
             OnTileClicked?.Invoke(Model, index, lootModel);
         }
 
+        private void InovkeLootViewHovered(Vector2Int index)
+        {
+            var lootModel = Model.GetLootModelFromTileIndex(index);
+
+            if (lootModel == null)
+                return; 
+
+            OnTileHovered?.Invoke(lootModel, index);
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             OnCursorChangedHoverOverGrid?.Invoke(Model, true);
@@ -109,6 +120,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             foreach(var tileView in _gridTilesDict.Values)
             {
+                tileView.OnTileHovered += InovkeLootViewHovered;
                 tileView.OnTileClicked += InovkeTileClicked;
             }
         }
@@ -117,6 +129,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             foreach(var tileView in _gridTilesDict.Values)
             {
+                tileView.OnTileHovered -= InovkeLootViewHovered;
                 tileView.OnTileClicked -= InovkeTileClicked;
             }
         }

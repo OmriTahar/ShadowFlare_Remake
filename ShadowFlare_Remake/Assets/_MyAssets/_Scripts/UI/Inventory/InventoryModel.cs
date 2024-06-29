@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory
@@ -28,14 +29,14 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetItemsGridModels()
         {
-            TalismanItemsGridModel = new ItemsGridModel("Talisman Grid", 2, 2, LootType.Talisman);
-            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1, 1, LootType.Weapon);
-            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1, 1, LootType.Shield);
-            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1, 1, LootType.Helmet);
-            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1, 1, LootType.Armor);
-            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1, 1, LootType.Boots);
-            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, LootType.All, false);
-            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, LootType.HealthPotion);
+            TalismanItemsGridModel = new ItemsGridModel("Talisman Grid", 2, 2, new List<LootType>() { LootType.Talisman });
+            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1, 1, new List<LootType>() { LootType.Weapon });
+            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1, 1, new List<LootType>() { LootType.Shield });
+            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1, 1, new List<LootType>() { LootType.Helmet });
+            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1, 1, new List<LootType>() { LootType.Armor });
+            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1, 1, new List<LootType>() { LootType.Boots });
+            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, new List<LootType>() { LootType.All }, false);
+            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, new List<LootType>() { LootType.HealthPotion, LootType.ManaPotion });
         }
 
         #endregion
@@ -74,6 +75,9 @@ namespace ShadowFlareRemake.UI.Inventory
                     return TalismanItemsGridModel;
 
                 case LootType.HealthPotion:
+                    return QuickItemsGridModel;
+
+                case LootType.ManaPotion:
                     return QuickItemsGridModel;
 
                 default:

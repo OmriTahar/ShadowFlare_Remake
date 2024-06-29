@@ -7,7 +7,8 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
-        public LootModel HeldLootModel { get; private set; }
+        public LootModel CurentHoveredLootModel { get; private set; }
+        public LootModel CurrentHeldLootModel { get; private set; }
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
 
         public CursorIconState CurrentCursorIconState { get; private set; }
@@ -46,7 +47,7 @@ namespace ShadowFlareRemake.UI.Cursor
 
         public bool IsHoldingLoot()
         {
-            return HeldLootModel != null;
+            return CurrentHeldLootModel != null;
         }
 
         public void PlaceLootInGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
@@ -78,12 +79,17 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void PickUpLootLogic(LootModel lootModel)
         {
-            HeldLootModel = lootModel;
+            CurrentHeldLootModel = lootModel;
         }
 
         private void DropLootLogic()
         {
-            HeldLootModel = null;
+            CurrentHeldLootModel = null;
+        }
+
+        public void SetCurrentHoveredLootModel(LootModel lootModel)
+        {
+            CurentHoveredLootModel = lootModel;
         }
     }
 }

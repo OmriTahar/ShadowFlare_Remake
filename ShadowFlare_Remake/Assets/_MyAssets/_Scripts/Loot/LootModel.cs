@@ -5,7 +5,6 @@ namespace ShadowFlareRemake.Loot
     public class LootModel : Model
     {
         public  Loot_ScriptableObject LootData { get; private set; }
-
         public Color Color { get; private set; }
         public Color HighlightColor { get; private set; }
         public bool IsSingleTile { get; private set; } = false;

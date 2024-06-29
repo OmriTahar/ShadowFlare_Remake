@@ -216,7 +216,7 @@ namespace ShadowFlareRemake.UI
             if(!_curserModel.IsHoldingLoot() || _inputManager.IsCursorOnUI)
                 return;
 
-            OnDropLootToTheGround?.Invoke(_curserModel.HeldLootModel);
+            OnDropLootToTheGround?.Invoke(_curserModel.CurrentHeldLootModel);
             _curserModel.DropLootOnGround();
         }
 
@@ -236,12 +236,17 @@ namespace ShadowFlareRemake.UI
             _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
         }
 
+        private void HandleLootViewHovered(LootModel lootModel, Vector2Int tileIndex)
+        {
+            _curserModel.SetCurrentHoveredLootModel(lootModel); 
+        }
+
         private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             if(itemsGridModel == null)
                 return;
 
-            var cursorLootModel = _curserModel.HeldLootModel;
+            var cursorLootModel = _curserModel.CurrentHeldLootModel;
 
             if(cursorLootModel == null && lootModel == null)
                 return;
@@ -288,13 +293,18 @@ namespace ShadowFlareRemake.UI
 
         private void HandleMouseRightClickOnLoot(InputAction.CallbackContext context)
         {
-            var index = _quickItemsIndexesDict[context.action.name];
-            var lootModel = _inventoryView.GetQuickItemLootModel(index);
-
-            if(lootModel == null)
+            if(_curserModel.CurentHoveredLootModel == null)
                 return;
 
-            OnPotionClicked?.Invoke(lootModel, index);
+            // Continue from here!!!!!!!!!
+
+            //var index = _quickItemsIndexesDict[context.action.name];
+            //var lootModel = _inventoryView.GetQuickItemLootModel(index);
+
+            //if(lootModel == null)
+            //    return;
+
+            //OnPotionClicked?.Invoke(lootModel, index);
         }
 
 
@@ -524,6 +534,7 @@ namespace ShadowFlareRemake.UI
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileClicked += HandleItemsGridClicked;
+                _inventoryView.OnTileHovered += HandleLootViewHovered;
             }
             else
             {
@@ -531,6 +542,7 @@ namespace ShadowFlareRemake.UI
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
+                _inventoryView.OnTileHovered -= HandleLootViewHovered;
             }
         }
 

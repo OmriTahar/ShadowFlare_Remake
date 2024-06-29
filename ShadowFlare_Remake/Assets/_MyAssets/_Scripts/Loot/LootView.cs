@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ShadowFlareRemake.Loot
@@ -9,21 +10,22 @@ namespace ShadowFlareRemake.Loot
     {
         public event Action OnLootViewClicked;
 
-        public string Name { get; private set; }
-        public Sprite Sprite { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-
         [Header("Refernces")]
         [SerializeField] private RectTransform _rect;
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private Animator _animator;
 
-        private int _sizeMultiplier = 58;
-        private int _posHelper = 35;
-
         private readonly int _dropAnimHash = Animator.StringToHash("Drop");
+        private const int _sizeMultiplier = 58;
+        private const int _posHelper = 35;
+
+        private string _name;
+        private Sprite _sprite;
+        private int _width;
+        private int _height;
+
+        #region View Overrides
 
         protected override void ModelChanged()
         {
@@ -36,10 +38,18 @@ namespace ShadowFlareRemake.Loot
             HandleAnimation();
         }
 
+        #endregion
+
+        #region Initialization
+
         public LootModel GetLootModel()
         {
             return Model;
         }
+
+        #endregion
+
+        #region Meat & Potatos
 
         private void SetData()
         {
@@ -49,16 +59,16 @@ namespace ShadowFlareRemake.Loot
                 return;
             }
 
-            Name = Model.LootData.Name;
-            Sprite = Model.LootData.Sprite;
-            Width = Model.LootData.Width;
-            Height = Model.LootData.Height;
+            _name = Model.LootData.Name;
+            _sprite = Model.LootData.Sprite;
+            _width = Model.LootData.Width;
+            _height = Model.LootData.Height;
         }
 
         private void SetNameText()
         {
-            if(_nameText != null && !string.IsNullOrEmpty(Name))
-                _nameText.text = Name;
+            if(_nameText != null && !string.IsNullOrEmpty(_name))
+                _nameText.text = _name;
         }
 
         private void HandleSetSprite()
@@ -72,13 +82,13 @@ namespace ShadowFlareRemake.Loot
 
         private void SetSprite()
         {
-            _image.sprite = Sprite;
+            _image.sprite = _sprite;
             _image.preserveAspect = true;
         }
 
         private void SetSpriteSize()
         {
-            _rect.sizeDelta = new Vector2(Width * _sizeMultiplier, Height * _sizeMultiplier);
+            _rect.sizeDelta = new Vector2(_width * _sizeMultiplier, _height * _sizeMultiplier);
 
             if(Model.IsSingleTile)
             {
@@ -86,12 +96,12 @@ namespace ShadowFlareRemake.Loot
                 return;
             }
 
-            var x = (Width - 1) * _posHelper;
-            var y = (Height - 1) * -_posHelper;
+            var x = (_width - 1) * _posHelper;
+            var y = (_height - 1) * -_posHelper;
             _rect.localPosition = new Vector2(x, y);
         }
 
-        public void UILootViewClicked()
+        public void UILootViewClicked()  // Called from a UI button clicked event
         {
             OnLootViewClicked?.Invoke();
         }
@@ -106,6 +116,8 @@ namespace ShadowFlareRemake.Loot
                 _animator.SetTrigger(_dropAnimHash);
             }
         }
+
+        #endregion
     }
 }
 
