@@ -286,6 +286,18 @@ namespace ShadowFlareRemake.UI
             OnPotionClicked?.Invoke(lootModel, index);
         }
 
+        private void HandleMouseRightClickOnLoot(InputAction.CallbackContext context)
+        {
+            var index = _quickItemsIndexesDict[context.action.name];
+            var lootModel = _inventoryView.GetQuickItemLootModel(index);
+
+            if(lootModel == null)
+                return;
+
+            OnPotionClicked?.Invoke(lootModel, index);
+        }
+
+
         public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
             _inventoryView.RemovePotionFromInventory(index, lootType);
@@ -432,9 +444,14 @@ namespace ShadowFlareRemake.UI
         {
             if(isRegister)
             {
+                // Mouse
+                _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
+
+                // Keyboard Letters
                 _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
                 _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
+                // Keyboard Nums
                 _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
                 _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
                 _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
@@ -446,9 +463,14 @@ namespace ShadowFlareRemake.UI
             }
             else
             {
+                // Mouse
+                _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
+
+                // Keyboard Letters
                 _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
                 _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
+                // Keyboard Nums
                 _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
                 _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
                 _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);

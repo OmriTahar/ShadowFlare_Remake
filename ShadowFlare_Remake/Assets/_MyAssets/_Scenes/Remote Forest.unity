@@ -1466,26 +1466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 440198284}
-  _uiController: {fileID: 915568423}
   _rewardsManager: {fileID: 410748830}
-  _testLootParent: {fileID: 1971432786}
-  _testLootPrefab: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
-    type: 3}
-  _testLootData:
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: f1aa69c7dd088014dbe5e2c671f30a1d, type: 2}
-  - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
-  - {fileID: 11400000, guid: cf13cfe7e56b97946bdea927ba786699, type: 2}
-  - {fileID: 11400000, guid: 989e2cb7147fd5245a2a61182cca89f9, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
-  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  _uiController: {fileID: 915568423}
   _enemiesParent: {fileID: 1054742629}
   _playerController: {fileID: 972601921}
   _playerUnitStats:
@@ -1512,9 +1494,27 @@ MonoBehaviour:
     <MagicalHitRate>k__BackingField: 1
     <MagicalEvasionRate>k__BackingField: 1
     <MagicalAttackSpeed>k__BackingField: 1
-  _testEnemyToSpawn: {fileID: 1302082256}
+  _testLootParent: {fileID: 1971432786}
+  _testLootPrefab: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
+    type: 3}
+  _testLootData:
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: f1aa69c7dd088014dbe5e2c671f30a1d, type: 2}
+  - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
+  - {fileID: 11400000, guid: cf13cfe7e56b97946bdea927ba786699, type: 2}
+  - {fileID: 11400000, guid: 989e2cb7147fd5245a2a61182cca89f9, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
   _testLootDataToSpawn: {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d,
     type: 2}
+  _testEnemyToSpawn: {fileID: 1302082256}
   _isEnemyActiveOnSpawn: 1
   _healOrDamageAmount: 10
 --- !u!4 &153281228
@@ -7852,7 +7852,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventoryPanel: {fileID: 1903344054}
-  <_testLootPrefab>k__BackingField: {fileID: 0}
   _talismanItemsGridView: {fileID: 610681755}
   _weaponItemsGridView: {fileID: 888476946}
   _shieldItemsGridlView: {fileID: 1542022395}
@@ -19033,7 +19032,7 @@ MonoBehaviour:
   _uiCursorIcon: {fileID: 2800000, guid: 4fee88e7ef452b146aa4add22a3da773, type: 3}
   _merchantCursorIcon: {fileID: 2800000, guid: 88a3efd142a70364eb0219ded72e16cd, type: 3}
   _npcCursorIcon: {fileID: 2800000, guid: 81c11de65c5451d41a9a0eb359e343b5, type: 3}
-  _otherCursorIcon: {fileID: 2800000, guid: 460b8c81943825c479af7ffbd80c9e5d, type: 3}
+  _otherCursorIcon: {fileID: 2800000, guid: 66efa82389d32814ca7e2e56fa53e471, type: 3}
 --- !u!1001 &1812370361
 PrefabInstance:
   m_ObjectHideFlags: 0

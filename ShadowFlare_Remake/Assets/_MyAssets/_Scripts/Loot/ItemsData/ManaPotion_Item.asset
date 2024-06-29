@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: ManaPotion_Item
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Mana Potion
-  <Type>k__BackingField: 7
+  <Type>k__BackingField: 8
   <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 6a75c99f48687db46a0570b6e6ba9c93,
     type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  <HpRestoreAmount>k__BackingField: 0
+  <MpRestoreAmount>k__BackingField: 0
