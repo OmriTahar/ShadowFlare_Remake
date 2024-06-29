@@ -4,22 +4,29 @@ namespace ShadowFlareRemake.UI.Hud {
 
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
-        public enum HpEffectSlider { Heal, Hit };
-        public HpEffectSlider CurrentHpEffectSlider { get; private set; } = HpEffectSlider.Hit;
+        public SliderEffectType CurrentHpEffectSlider { get; private set; } = SliderEffectType.Reduce;
 
         public int CurrentMP { get; private set; }
         public int MaxMP { get; private set; }
+        public SliderEffectType CurrentMpEffectSlider { get; private set; } = SliderEffectType.Reduce;
 
         public int CurrentExp { get; private set; }
         public int ExpToLevelUp { get; private set; }
         public int Level { get; private set; }
 
-        public HudModel() {
-        }
+        public enum SliderEffectType { Fill, Reduce };
+
+        #region Initialization
+
+        public HudModel() { }
+
+        #endregion
+
+        #region Meat & Potatos
 
         public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP) {
 
-            CurrentHpEffectSlider = currentHP > CurrentHP? HpEffectSlider.Heal : HpEffectSlider.Hit;
+            CurrentHpEffectSlider = currentHP > CurrentHP? SliderEffectType.Fill : SliderEffectType.Reduce;
 
             CurrentHP = currentHP;
             MaxHP = maxHP;
@@ -40,6 +47,8 @@ namespace ShadowFlareRemake.UI.Hud {
             Level = newLevel;
             Changed();
         }
+
+        #endregion
     }
 }
 

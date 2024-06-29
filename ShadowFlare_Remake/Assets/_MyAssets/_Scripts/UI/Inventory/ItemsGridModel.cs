@@ -293,6 +293,25 @@ namespace ShadowFlareRemake.UI
 
         #region Helpers
 
+        public Vector2Int GetLootModelRootIndexByType(LootType lootType)
+        {
+            foreach(var keyValuePair in GridTileModelsDict)
+            {
+                var rootIndex = keyValuePair.Key;
+                var gridTileModel = keyValuePair.Value;
+
+                if(gridTileModel.LootModel == null)
+                    continue;
+
+                if(gridTileModel.LootModel.LootData.Type == lootType)
+                {
+                    return rootIndex;
+                }
+            }
+
+            return _emptyTileIndex;
+        }
+
         public LootModel GetLootModelFromTileIndex(Vector2Int tileIndex)
         {
             if(_heldLootRootIndexesDict[tileIndex].x != -1)

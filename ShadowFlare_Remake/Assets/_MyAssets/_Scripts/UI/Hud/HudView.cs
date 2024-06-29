@@ -65,6 +65,8 @@ namespace ShadowFlareRemake.UI.Hud
 
         #endregion
 
+        #region Meat & Potatos
+
         private void SetHP()
         {
             SetHpSlidersMaxValue();
@@ -78,11 +80,11 @@ namespace ShadowFlareRemake.UI.Hud
 
             switch(Model.CurrentHpEffectSlider)
             {
-                case HudModel.HpEffectSlider.Heal:
+                case HudModel.SliderEffectType.Fill:
                     HandleHpHealEffect();
                     break;
 
-                case HudModel.HpEffectSlider.Hit:
+                case HudModel.SliderEffectType.Reduce:
                     HandleHpHitEffect();
                     break;
 
@@ -147,15 +149,17 @@ namespace ShadowFlareRemake.UI.Hud
             _levelText.text = Model.Level.ToString();
         }
 
-        public void InventoryClicked()
+        public void InventoryClicked() // Called from a UI button clicked event
         {
             OnInventoryButtonClicked?.Invoke();
         }
 
-        public void StatsClicked()
+        public void StatsClicked() // Called from a UI button clicked event
         {
             OnStatsClicked?.Invoke();
         }
+
+        #endregion
     }
 }
 

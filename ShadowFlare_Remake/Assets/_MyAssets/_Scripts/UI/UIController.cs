@@ -19,8 +19,8 @@ namespace ShadowFlareRemake.UI
 {
     public class UIController : Controller
     {
-        public event Action<LootModel> OnDropLootToTheGround;
         public event Action<LootModel, Vector2Int> OnPotionClicked;
+        public event Action<LootModel> OnDropLootToTheGround;
         public event Action<bool> OnIsCurserOnUiChanged;
         public event Action<bool> OnIsPlayerHoldingLootChanged;
 
@@ -43,8 +43,8 @@ namespace ShadowFlareRemake.UI
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
 
-        private IInputManager _inputManager;
         private Dictionary<string, Vector2Int> _quickItemsIndexesDict = new();
+        private IInputManager _inputManager;
 
         #region Quick Items Variables
 
@@ -58,12 +58,12 @@ namespace ShadowFlareRemake.UI
         private const string _numEight_QuickItemActionName = "Num Eight_Keyboard Click";
 
         private readonly Vector2Int _numOne_QuickItemIndex = new Vector2Int(0, 0);
-        private readonly Vector2Int _numTwo_QuickItemIndex = new Vector2Int(1, 0);
-        private readonly Vector2Int _numThree_QuickItemIndex = new Vector2Int(2, 0);
-        private readonly Vector2Int _numFour_QuickItemIndex = new Vector2Int(3, 0);
-        private readonly Vector2Int _numFive_QuickItemIndex = new Vector2Int(0, 1);
-        private readonly Vector2Int _numSix_QuickItemIndex = new Vector2Int(1, 1);
-        private readonly Vector2Int _numSeven_QuickItemIndex = new Vector2Int(2, 1);
+        private readonly Vector2Int _numTwo_QuickItemIndex = new Vector2Int(0, 1);
+        private readonly Vector2Int _numThree_QuickItemIndex = new Vector2Int(1, 0);
+        private readonly Vector2Int _numFour_QuickItemIndex = new Vector2Int(1, 1);
+        private readonly Vector2Int _numFive_QuickItemIndex = new Vector2Int(2, 0);
+        private readonly Vector2Int _numSix_QuickItemIndex = new Vector2Int(2, 1);
+        private readonly Vector2Int _numSeven_QuickItemIndex = new Vector2Int(3, 0);
         private readonly Vector2Int _numEight_QuickItemIndex = new Vector2Int(3, 1);
 
         #endregion
@@ -241,8 +241,6 @@ namespace ShadowFlareRemake.UI
             if(itemsGridModel == null)
                 return;
 
-            print($"{itemsGridModel.Name} was clicked at tile index: {tileIndex} | Contains Loot Model: {lootModel != null}");
-
             var cursorLootModel = _curserModel.HeldLootModel;
 
             if(cursorLootModel == null && lootModel == null)
@@ -260,7 +258,7 @@ namespace ShadowFlareRemake.UI
 
         #region Inventory
 
-        private void ToggleInventory() // Called from a UI button clicked event
+        private void ToggleInventory() 
         {
             DoToggleInventory();
         }
@@ -288,9 +286,9 @@ namespace ShadowFlareRemake.UI
             OnPotionClicked?.Invoke(lootModel, index);
         }
 
-        public void RemovePotionFromInventory(Vector2Int index)
+        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
-            _inventoryView.RemovePotionFromInventory(index);
+            _inventoryView.RemovePotionFromInventory(index, lootType);
         }
 
         #endregion
@@ -372,7 +370,7 @@ namespace ShadowFlareRemake.UI
             }
         }
 
-        public void CloseClicked()
+        public void CloseClicked() // Called from a UI button clicked event
         {
             _inventoryModel.SetIsInventoryOpen(false);
             _statsModel.SetIsStatsOpen(false);

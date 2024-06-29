@@ -36,6 +36,7 @@ namespace ShadowFlareRemake.GameManager
 
         [Header("----- Tests -----")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
+        [SerializeField] private Loot_ScriptableObject _testLootDataToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
         [SerializeField] private int _healOrDamageAmount = 10;
 
@@ -318,7 +319,7 @@ namespace ShadowFlareRemake.GameManager
 
             _playerController.SetPlayetUnitAfterHeal(_playerUnit);
             _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
-            _uiController.RemovePotionFromInventory(index);
+            _uiController.RemovePotionFromInventory(index, lootModel.LootData.Type);
         }
 
         #endregion
@@ -351,7 +352,7 @@ namespace ShadowFlareRemake.GameManager
             }
         }
 
-        private void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
+        public void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
         {
             var lootModel = new LootModel(lootData);
 
@@ -368,6 +369,11 @@ namespace ShadowFlareRemake.GameManager
         {
             _testEnemyToSpawn.SetGameobjectNameAsEnemy();
             InitEnemyLogic(_testEnemyToSpawn, _isEnemyActiveOnSpawn, false);
+        }
+
+        public void TestSpawnLootItem()
+        {
+            TestSpawnLoot(_testLootDataToSpawn, 0);
         }
 
         public void HitPlayer()
@@ -399,6 +405,13 @@ namespace ShadowFlareRemake.GameManager
                 if(GUILayout.Button("Spawn Enemy"))
                 {
                     gameManager.TestSpawnEnemy();
+                }
+
+                GUILayout.Space(15);
+
+                if(GUILayout.Button("Spawn Loot"))
+                {
+                    gameManager.TestSpawnLootItem();
                 }
 
                 GUILayout.Space(15);

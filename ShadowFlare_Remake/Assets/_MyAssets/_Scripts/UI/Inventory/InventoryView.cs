@@ -1,17 +1,17 @@
 using System;
 using UnityEngine;
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryView : UIView<InventoryModel>
     {
-        public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
+        public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
-        [field: SerializeField] public LootView _testLootPrefab { get; private set; }
 
         [Header("Items Grid")]
         [SerializeField] private ItemsGridView _talismanItemsGridView;
@@ -59,7 +59,6 @@ namespace ShadowFlareRemake.UI.Inventory
 
         #endregion
 
-
         #region Meat & Potatos
 
         private void InvokeCursorChangedHoverOverGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
@@ -77,9 +76,9 @@ namespace ShadowFlareRemake.UI.Inventory
             return Model.GetQuickItemLootModel(index);
         }
 
-        public void RemovePotionFromInventory(Vector2Int index)
+        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
-            Model.RemovePotionFromInventory(index);
+            Model.RemovePotionFromInventory(index, lootType);
         }
 
         #endregion

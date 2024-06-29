@@ -1477,9 +1477,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdc40685355f02447a0a469c3ec8b708, type: 2}
   - {fileID: 11400000, guid: cf13cfe7e56b97946bdea927ba786699, type: 2}
   - {fileID: 11400000, guid: 989e2cb7147fd5245a2a61182cca89f9, type: 2}
-  - {fileID: 11400000, guid: 670567b1b02569c40ac9a71613fd6969, type: 2}
-  - {fileID: 11400000, guid: e979b2cab34d3a240bf9088b7d927714, type: 2}
-  - {fileID: 11400000, guid: aebe5f0828dc3c941b23043d0005e5af, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
+  - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
   - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
   - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
   - {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d, type: 2}
@@ -1513,6 +1513,8 @@ MonoBehaviour:
     <MagicalEvasionRate>k__BackingField: 1
     <MagicalAttackSpeed>k__BackingField: 1
   _testEnemyToSpawn: {fileID: 1302082256}
+  _testLootDataToSpawn: {fileID: 11400000, guid: 78b117f1a9046a348b8a81a71f677e1d,
+    type: 2}
   _isEnemyActiveOnSpawn: 1
   _healOrDamageAmount: 10
 --- !u!4 &153281228

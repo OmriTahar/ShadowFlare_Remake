@@ -14,8 +14,11 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel BootsItemsGridModel { get; private set; }
         public ItemsGridModel CarryItemsGridModel { get; private set; }
         public ItemsGridModel QuickItemsGridModel { get; private set; }
-
         public bool IsInventoryOpen { get; private set; }
+
+        private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
+
+        #region Initialization
 
         public InventoryModel(bool isInventoryOpen)
         {
@@ -32,8 +35,12 @@ namespace ShadowFlareRemake.UI.Inventory
             ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1, 1, LootType.Armor);
             BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1, 1, LootType.Boots);
             CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, LootType.All, false);
-            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, LootType.Potion);
+            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, LootType.HealthPotion);
         }
+
+        #endregion
+
+        #region Meat & Potatos
 
         public void SetIsInventoryOpen(bool isInventoryOpen)
         {
@@ -66,7 +73,7 @@ namespace ShadowFlareRemake.UI.Inventory
                 case LootType.Talisman:
                     return TalismanItemsGridModel;
 
-                case LootType.Potion:
+                case LootType.HealthPotion:
                     return QuickItemsGridModel;
 
                 default:
@@ -79,10 +86,20 @@ namespace ShadowFlareRemake.UI.Inventory
             return QuickItemsGridModel.GetLootModelFromTileIndex(index);
         }
 
-        public void RemovePotionFromInventory(Vector2Int index)
+        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
+            var lootIndex = CarryItemsGridModel.GetLootModelRootIndexByType(lootType);
+
+            if(lootIndex != _emptyTileIndex)
+            {
+                CarryItemsGridModel.RemoveItemFromGrid(lootIndex, true);
+                return;
+            }
+
             QuickItemsGridModel.RemoveItemFromGrid(index, true);
         }
+
+        #endregion
     }
 }
 
