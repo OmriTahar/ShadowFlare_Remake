@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class GridTileView : View<GridTileModel>, IPointerEnterHandler, IPointerExitHandler
     {
-        public event Action<Vector2Int> OnTileHovered;
+        public event Action<Vector2Int, bool> OnTileHovered;
         public event Action<Vector2Int> OnTileClicked;
 
         [field: SerializeField] public Vector2Int Index { get; private set; }
@@ -50,17 +50,12 @@ namespace ShadowFlareRemake.UI.Inventory
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            InvokeTileHovered();
+            OnTileHovered?.Invoke(Index, true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            //InvokeTileHovered();
-        }
-
-        public void InvokeTileHovered()
-        {
-            OnTileHovered?.Invoke(Index);
+            OnTileHovered?.Invoke(Index, false);
         }
 
         public void InvokeTileClicked()

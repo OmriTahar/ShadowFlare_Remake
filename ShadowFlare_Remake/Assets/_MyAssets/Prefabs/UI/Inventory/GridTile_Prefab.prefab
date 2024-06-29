@@ -31,7 +31,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7169015464803793582}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.75, y: 0.05}
   m_AnchorMax: {x: 0.95, y: 0.4}
@@ -168,7 +167,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7169015464803793582}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -228,6 +226,7 @@ MonoBehaviour:
   _rect: {fileID: 2256947090476706708}
   _image: {fileID: 4605189114856119547}
   _nameText: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!114 &6714972836241993376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +318,6 @@ RectTransform:
   - {fileID: 2256947090476706708}
   - {fileID: 4182548647512333785}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -402,7 +400,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7169015464803793583}
         m_TargetAssemblyTypeName: ShadowFlareRemake.UI.Inventory.GridTileView, ShadowFlareRemake.UI
-        m_MethodName: TileClicked
+        m_MethodName: InvokeTileClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

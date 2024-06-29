@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ShadowFlareRemake.Loot
@@ -101,11 +100,6 @@ namespace ShadowFlareRemake.Loot
             _rect.localPosition = new Vector2(x, y);
         }
 
-        public void UILootViewClicked()  // Called from a UI button clicked event
-        {
-            OnLootViewClicked?.Invoke();
-        }
-
         private void HandleAnimation()
         {
             if(_animator == null)
@@ -115,6 +109,11 @@ namespace ShadowFlareRemake.Loot
             {
                 _animator.SetTrigger(_dropAnimHash);
             }
+        }
+
+        public void UILootViewClicked()  // Called from a UI button clicked event
+        {
+            OnLootViewClicked?.Invoke();
         }
 
         #endregion

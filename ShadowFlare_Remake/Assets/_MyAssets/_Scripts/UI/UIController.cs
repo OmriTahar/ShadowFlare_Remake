@@ -238,7 +238,7 @@ namespace ShadowFlareRemake.UI
 
         private void HandleLootViewHovered(LootModel lootModel, Vector2Int tileIndex)
         {
-            _curserModel.SetCurrentHoveredLootModel(lootModel); 
+            _curserModel.SetCurrentHoveredLootModel(lootModel, tileIndex); 
         }
 
         private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
@@ -296,17 +296,8 @@ namespace ShadowFlareRemake.UI
             if(_curserModel.CurentHoveredLootModel == null)
                 return;
 
-            // Continue from here!!!!!!!!!
-
-            //var index = _quickItemsIndexesDict[context.action.name];
-            //var lootModel = _inventoryView.GetQuickItemLootModel(index);
-
-            //if(lootModel == null)
-            //    return;
-
-            //OnPotionClicked?.Invoke(lootModel, index);
+            OnPotionClicked?.Invoke(_curserModel.CurentHoveredLootModel, _curserModel.CurrentHoveredLootModelRootIndex);
         }
-
 
         public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
@@ -533,16 +524,16 @@ namespace ShadowFlareRemake.UI
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileClicked += HandleItemsGridClicked;
                 _inventoryView.OnTileHovered += HandleLootViewHovered;
+                _inventoryView.OnTileClicked += HandleItemsGridClicked;
             }
             else
             {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
                 _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileClicked -= HandleItemsGridClicked;
                 _inventoryView.OnTileHovered -= HandleLootViewHovered;
+                _inventoryView.OnTileClicked -= HandleItemsGridClicked;
             }
         }
 

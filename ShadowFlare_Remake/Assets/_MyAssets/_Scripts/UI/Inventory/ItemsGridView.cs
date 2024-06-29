@@ -17,6 +17,8 @@ namespace ShadowFlareRemake.UI.Inventory
         [Header("References")]
         [SerializeField] private GameObject _placeHolderSprite;
 
+        private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
+
         #region View Overrides
 
         protected override void Initialize()
@@ -92,13 +94,15 @@ namespace ShadowFlareRemake.UI.Inventory
             OnTileClicked?.Invoke(Model, index, lootModel);
         }
 
-        private void InovkeLootViewHovered(Vector2Int index)
+        private void InovkeLootViewHovered(Vector2Int index, bool isHovered)
         {
+            if(!isHovered)
+            {
+                OnTileHovered?.Invoke(null, _emptyTileIndex);
+                return;
+            }
+
             var lootModel = Model.GetLootModelFromTileIndex(index);
-
-            if (lootModel == null)
-                return; 
-
             OnTileHovered?.Invoke(lootModel, index);
         }
 

@@ -7,9 +7,10 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
-        public LootModel CurentHoveredLootModel { get; private set; }
-        public LootModel CurrentHeldLootModel { get; private set; }
         public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
+        public LootModel CurentHoveredLootModel { get; private set; }
+        public Vector2Int CurrentHoveredLootModelRootIndex { get; private set; }
+        public LootModel CurrentHeldLootModel { get; private set; }
 
         public CursorIconState CurrentCursorIconState { get; private set; }
 
@@ -87,9 +88,10 @@ namespace ShadowFlareRemake.UI.Cursor
             CurrentHeldLootModel = null;
         }
 
-        public void SetCurrentHoveredLootModel(LootModel lootModel)
+        public void SetCurrentHoveredLootModel(LootModel lootModel, Vector2Int rootIndex)
         {
             CurentHoveredLootModel = lootModel;
+            CurrentHoveredLootModelRootIndex = rootIndex;
         }
     }
 }
