@@ -63,7 +63,7 @@ namespace ShadowFlareRemake.UI
 
         public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
         {
-            if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.Type))
+            if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.LootType))
                 return false;
 
             bool isSuccess;
@@ -113,7 +113,7 @@ namespace ShadowFlareRemake.UI
 
         public (bool, LootModel) TryHandPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
         {
-            if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.Type))
+            if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.LootType))
                 return (false, lootModel);
 
             _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
@@ -310,7 +310,7 @@ namespace ShadowFlareRemake.UI
                 if(gridTileModel.LootModel == null)
                     continue;
 
-                if(gridTileModel.LootModel.LootData.Type == lootType)
+                if(gridTileModel.LootModel.LootData.LootType == lootType)
                 {
                     return rootIndex;
                 }

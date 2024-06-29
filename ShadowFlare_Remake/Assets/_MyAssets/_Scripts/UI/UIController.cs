@@ -195,7 +195,7 @@ namespace ShadowFlareRemake.UI
                 return true;
             }
 
-            var specificItemsGridModel = _inventoryModel.GetItemsGridModel(lootModel.LootData.Type);
+            var specificItemsGridModel = _inventoryModel.GetItemsGridModel(lootModel.LootData.LootType);
             var carryItemsGridModel = _inventoryModel.GetItemsGridModel(LootType.All);
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))

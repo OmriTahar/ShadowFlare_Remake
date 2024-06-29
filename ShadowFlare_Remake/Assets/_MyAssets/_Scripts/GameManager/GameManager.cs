@@ -27,8 +27,8 @@ namespace ShadowFlareRemake.GameManager
         [Header("--------------- Loot Tests ---------------")]
         [SerializeField] private Transform _testLootParent;
         [SerializeField] private GameObject _testLootPrefab;
-        [SerializeField] private List<Loot_ScriptableObject> _testLootData;
-        [SerializeField] private Loot_ScriptableObject _testLootDataToSpawn;
+        [SerializeField] private List<LootData_ScriptableObject> _testLootData;
+        [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
 
         [Header("--------------- Enemies Tests ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
@@ -293,8 +293,9 @@ namespace ShadowFlareRemake.GameManager
 
         private void HandlePlayerUsedQuickItem(LootModel lootModel, Vector2Int index)
         {
-            var hpHealAmount = lootModel.LootData.HpRestoreAmount;
-            var mpHealAmount = lootModel.LootData.MpRestoreAmount;
+            var potionData = lootModel.LootData as PotionData_ScriptableObject;
+            var hpHealAmount = potionData.HpRestoreAmount;
+            var mpHealAmount = potionData.MpRestoreAmount;
             bool hasHealed = false;
 
             if(!_playerUnit.IsHpFull() && hpHealAmount > 0)
@@ -314,7 +315,7 @@ namespace ShadowFlareRemake.GameManager
 
             _playerController.SetPlayetUnitAfterHeal(_playerUnit);
             _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
-            _uiController.RemovePotionFromInventory(index, lootModel.LootData.Type);
+            _uiController.RemovePotionFromInventory(index, lootModel.LootData.LootType);
         }
 
         #endregion
@@ -347,7 +348,7 @@ namespace ShadowFlareRemake.GameManager
             }
         }
 
-        public void TestSpawnLoot(Loot_ScriptableObject lootData, float posX)
+        public void TestSpawnLoot(LootData_ScriptableObject lootData, float posX)
         {
             var lootModel = new LootModel(lootData);
 

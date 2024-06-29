@@ -14,20 +14,20 @@ namespace ShadowFlareRemake.GameManager.Units
         private const string _spaceLine = "------------------------------------";
 
         [Space(15)]
-        [SerializeField] private string ______Enemy_____ = _spaceLine;
+        [SerializeField] private string ______PLAYER_____ = _spaceLine;
         [field: SerializeField] public Vocation Vcocation { get; private set; }
         [field: SerializeField] public int Strength { get; private set; }
         [field: SerializeField] public int CurrentExp { get; private set; }
         [field: SerializeField] public int ExpToLevelUp { get; private set; }
 
         [Space(15)]
-        [SerializeField] private string ______Base_____ = _spaceLine;
+        [SerializeField] private string ______BASE_____ = _spaceLine;
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public int Level { get; private set; }
         [field: SerializeField] public int MovementSpeed { get; private set; }
 
         [Space(15)]
-        [SerializeField] private string ______Physical_____ = _spaceLine;
+        [SerializeField] private string ______PHYSICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
         [field: SerializeField] public int Attack { get; private set; }
         [field: SerializeField] public int Defense { get; private set; }
@@ -36,7 +36,7 @@ namespace ShadowFlareRemake.GameManager.Units
         [field: SerializeField] public int AttackSpeed { get; private set; }
 
         [Space(15)]
-        [SerializeField] private string ______Magical_____ = _spaceLine;
+        [SerializeField] private string ______MAGICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxMP { get; private set; }
         [field: SerializeField] public int MagicalAttack { get; private set; }
         [field: SerializeField] public int MagicalDefence { get; private set; }

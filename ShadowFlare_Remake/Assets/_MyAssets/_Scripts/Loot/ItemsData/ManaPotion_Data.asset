@@ -9,15 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef976a76d54627488846906d08e1715, type: 3}
-  m_Name: ManaPotion_Item
+  m_Script: {fileID: 11500000, guid: ba1dfa6724790554e870a21865cf0476, type: 3}
+  m_Name: ManaPotion_Data
   m_EditorClassIdentifier: 
+  _________BASE_________: ------------------------------------
   <Name>k__BackingField: Mana Potion
-  <Type>k__BackingField: 8
-  <Color>k__BackingField: {r: 0.3898906, g: 0.69803923, b: 0.13333331, a: 1}
+  <LootType>k__BackingField: 8
+  <Color>k__BackingField: {r: 0, g: 0.51324224, b: 1, a: 1}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 6a75c99f48687db46a0570b6e6ba9c93,
     type: 3}
+  _________SIZE_________: ------------------------------------
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  _________ATTRIBUTES_________: ------------------------------------
   <HpRestoreAmount>k__BackingField: 0
-  <MpRestoreAmount>k__BackingField: 0
+  <MpRestoreAmount>k__BackingField: 30
