@@ -15,7 +15,7 @@ namespace ShadowFlareRemake.GameManager.Units
 
         [Space(15)]
         [SerializeField] private string ______PLAYER_____ = _spaceLine;
-        [field: SerializeField] public Vocation Vcocation { get; private set; }
+        [field: SerializeField] public Vocation Vocation { get; private set; }
         [field: SerializeField] public int Strength { get; private set; }
         [field: SerializeField] public int CurrentExp { get; private set; }
         [field: SerializeField] public int ExpToLevelUp { get; private set; }
