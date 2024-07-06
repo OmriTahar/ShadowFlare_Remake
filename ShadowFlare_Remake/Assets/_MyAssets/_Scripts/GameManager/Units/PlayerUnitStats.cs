@@ -1,7 +1,9 @@
 using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager.Units
@@ -9,7 +11,7 @@ namespace ShadowFlareRemake.GameManager.Units
     [Serializable]
     public class PlayerUnitStats : IPlayerUnitStats
     {
-        #region Fields
+        #region Unit Fields
 
         private const string _spaceLine = "------------------------------------";
 
@@ -62,6 +64,23 @@ namespace ShadowFlareRemake.GameManager.Units
             Defense += reward.Defense;
             MagicalAttack += reward.MagicalAttack;
             MagicalDefence += reward.MagicalDefence;
+        }
+
+        public void SetPlayerGear(List<LootModel> currentlyEquippedGear)
+        {
+            foreach(var model in currentlyEquippedGear)
+            {
+                HandleCurrentlyEquippedGearStats(model.LootData);
+            }
+        }
+
+        private void HandleCurrentlyEquippedGearStats(LootData_ScriptableObject loodData)
+        {
+            if(loodData is WeaponData_ScriptableObject)
+            {
+                var weaponData = loodData as WeaponData_ScriptableObject;
+                Attack += weaponData.Attack;
+            }
         }
     }
 }

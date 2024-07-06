@@ -15,6 +15,8 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel BootsItemsGridModel { get; private set; }
         public ItemsGridModel CarryItemsGridModel { get; private set; }
         public ItemsGridModel QuickItemsGridModel { get; private set; }
+
+        public List<LootModel> CurrentlyEquippedGear { get; private set; } = new();
         public bool IsInventoryOpen { get; private set; }
 
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
@@ -29,14 +31,14 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetItemsGridModels()
         {
-            TalismanItemsGridModel = new ItemsGridModel("Talisman Grid", 2, 2, new List<LootType>() { LootType.Talisman });
-            WeaponItemsGridModel = new ItemsGridModel("Weapon Grid", 1, 1, new List<LootType>() { LootType.Weapon });
-            ShieldItemsGridModel = new ItemsGridModel("Shield Grid", 1, 1, new List<LootType>() { LootType.Shield });
-            HelmetItemsGridModel = new ItemsGridModel("Helmet Grid", 1, 1, new List<LootType>() { LootType.Helmet });
-            ArmorItemsGridModel = new ItemsGridModel("Armor Grid", 1, 1, new List<LootType>() { LootType.Armor });
-            BootsItemsGridModel = new ItemsGridModel("Boots Grid", 1, 1, new List<LootType>() { LootType.Boots });
-            CarryItemsGridModel = new ItemsGridModel("Carry Grid", 10, 4, new List<LootType>() { LootType.All }, false);
-            QuickItemsGridModel = new ItemsGridModel("Quick Items Grid", 4, 2, new List<LootType>() { LootType.HealthPotion, LootType.ManaPotion });
+            TalismanItemsGridModel = new ItemsGridModel(ItemsGridType.Talisman, 2, 2, new List<LootType>() { LootType.Talisman });
+            WeaponItemsGridModel = new ItemsGridModel(ItemsGridType.Weapon, 1, 1, new List<LootType>() { LootType.Weapon });
+            ShieldItemsGridModel = new ItemsGridModel(ItemsGridType.Shield, 1, 1, new List<LootType>() { LootType.Shield });
+            HelmetItemsGridModel = new ItemsGridModel(ItemsGridType.Helmet, 1, 1, new List<LootType>() { LootType.Helmet });
+            ArmorItemsGridModel = new ItemsGridModel(ItemsGridType.Armor, 1, 1, new List<LootType>() { LootType.Armor });
+            BootsItemsGridModel = new ItemsGridModel(ItemsGridType.Boots, 1, 1, new List<LootType>() { LootType.Boots });
+            CarryItemsGridModel = new ItemsGridModel(ItemsGridType.Carry, 10, 4, new List<LootType>() { LootType.All }, false);
+            QuickItemsGridModel = new ItemsGridModel(ItemsGridType.QuickItems, 4, 2, new List<LootType>() { LootType.HealthPotion, LootType.ManaPotion });
         }
 
         #endregion
@@ -47,9 +49,63 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             IsInventoryOpen = isInventoryOpen;
             Changed();
+
         }
 
-        public ItemsGridModel GetItemsGridModel(LootType lootType)
+        public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
+        {
+            var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
+
+            if (specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            {
+                if(IsEquippableItemsGrid(specificItemsGridModel.ItemsGridType))
+                {
+                    CurrentlyEquippedGear.Add(lootModel);
+                }
+
+                return true;
+            }
+
+            return CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
+        }
+
+        public (bool, LootModel) TryHandPlaceLootOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        {
+            var tuple = itemsGridModel.TryHandPlaceLootOnGrid(tileIndex, lootModel);
+            var isLootPlaced = tuple.Item1;
+
+            if(isLootPlaced)
+            {
+                CurrentlyEquippedGear.Add(lootModel);
+            }
+
+            return tuple;
+        }
+
+        public void RemoveItemFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex)
+        {
+            itemsGridModel.RemoveItemFromGrid(tileIndex, true);
+        }
+
+        public LootModel GetQuickItemLootModel(Vector2Int index)
+        {
+            return QuickItemsGridModel.GetLootModelFromTileIndex(index);
+        }
+
+        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
+        {
+            var lootIndex = CarryItemsGridModel.GetLootModelRootIndexByType(lootType);
+
+            if(lootIndex != _emptyTileIndex)
+            {
+                CarryItemsGridModel.RemoveItemFromGrid(lootIndex, true);
+                return;
+            }
+
+            QuickItemsGridModel.RemoveItemFromGrid(index, true);
+        }
+
+        private ItemsGridModel GetItemsGridModel(LootType lootType)
         {
             switch(lootType)
             {
@@ -85,22 +141,9 @@ namespace ShadowFlareRemake.UI.Inventory
             }
         }
 
-        public LootModel GetQuickItemLootModel(Vector2Int index)
+        private bool IsEquippableItemsGrid(ItemsGridType itemsGridType)
         {
-            return QuickItemsGridModel.GetLootModelFromTileIndex(index);
-        }
-
-        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
-        {
-            var lootIndex = CarryItemsGridModel.GetLootModelRootIndexByType(lootType);
-
-            if(lootIndex != _emptyTileIndex)
-            {
-                CarryItemsGridModel.RemoveItemFromGrid(lootIndex, true);
-                return;
-            }
-
-            QuickItemsGridModel.RemoveItemFromGrid(index, true);
+            return (itemsGridType != ItemsGridType.Carry && itemsGridType != ItemsGridType.QuickItems);
         }
 
         #endregion

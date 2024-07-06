@@ -23,6 +23,7 @@ namespace ShadowFlareRemake.UI
         public event Action<LootModel> OnDropLootToTheGround;
         public event Action<bool> OnIsCurserOnUiChanged;
         public event Action<bool> OnIsPlayerHoldingLootChanged;
+        public event Action<List<LootModel>> OnPlayerGearChanged;
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
@@ -35,18 +36,18 @@ namespace ShadowFlareRemake.UI
         [SerializeField] private Transform _pickedUpLootTranform;
 
         [Header("Other")]
-        [SerializeField] private GameObject _closeButton;
+        [SerializeField] private GameObject _closeButton; // Can this be somewhere else?
 
         private CurserModel _curserModel;
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
-
-        private Dictionary<string, Vector2Int> _quickItemsIndexesDict = new();
         private IInputManager _inputManager;
 
         #region Quick Items Variables
+
+        private Dictionary<string, Vector2Int> _quickItemsIndexesDict = new();
 
         private const string _numOne_QuickItemActionName = "Num One_Keyboard Click";
         private const string _numTwo_QuickItemActionName = "Num Two_Keyboard Click";
@@ -191,24 +192,11 @@ namespace ShadowFlareRemake.UI
         {
             if(_inventoryModel.IsInventoryOpen)
             {
-                _curserModel.PickUpLootFromGround(lootModel);
+                _curserModel.PickUpLoot(lootModel);
                 return true;
             }
 
-            var specificItemsGridModel = _inventoryModel.GetItemsGridModel(lootModel.LootData.LootType);
-            var carryItemsGridModel = _inventoryModel.GetItemsGridModel(LootType.All);
-
-            if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
-            {
-                return true;
-            }
-
-            if(carryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
-            {
-                return true;
-            }
-
-            return false;
+            return _inventoryModel.TryAutoPlaceLootOnGrid(lootModel);
         }
 
         private void DropLootToTheGround(InputAction.CallbackContext context)
@@ -217,7 +205,48 @@ namespace ShadowFlareRemake.UI
                 return;
 
             OnDropLootToTheGround?.Invoke(_curserModel.CurrentHeldLootModel);
-            _curserModel.DropLootOnGround();
+            _curserModel.DropLoot();
+        }
+
+        private void HandleLootViewHovered(LootModel lootModel, Vector2Int tileIndex)
+        {
+            _curserModel.SetCurrentHoveredLootModel(lootModel, tileIndex);
+        }
+
+        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        {
+            var cursorLootModel = _curserModel.CurrentHeldLootModel;
+
+            if(itemsGridModel == null || (cursorLootModel == null && lootModel == null))
+                return;
+
+            if(cursorLootModel != null)
+            {
+                var tuple = _inventoryModel.TryHandPlaceLootOnGrid(itemsGridModel, tileIndex, cursorLootModel);
+                var isLootPlaced = tuple.Item1;
+                var swappedLoot = tuple.Item2;
+
+                if(isLootPlaced)
+                {
+                    OnPlayerGearChanged?.Invoke(_inventoryModel.CurrentlyEquippedGear);
+                }
+                else
+                {
+                    return;
+                }
+
+                if(swappedLoot != null)
+                {
+                    _curserModel.PickUpLoot(swappedLoot);
+                }
+                else
+                    _curserModel.DropLoot();
+
+                return;
+            }
+
+            _inventoryModel.RemoveItemFromGrid(itemsGridModel, tileIndex);
+            _curserModel.PickUpLoot(lootModel);
         }
 
         private void SetPickedUpLootPosition()
@@ -225,39 +254,36 @@ namespace ShadowFlareRemake.UI
             _pickedUpLootTranform.position = _inputManager.CurrentMousePosition;
         }
 
-        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
-        {
-            if(!isCursorOn)
-            {
-                _curserModel.SetCurrentHoveredItemsGrid(null);
-                return;
-            }
+        //private void HandleItemsGridClickedOld(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        //{
+        //    if(itemsGridModel == null)
+        //        return;
 
-            _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
-        }
+        //    var cursorLootModel = _curserModel.CurrentHeldLootModel;
 
-        private void HandleLootViewHovered(LootModel lootModel, Vector2Int tileIndex)
-        {
-            _curserModel.SetCurrentHoveredLootModel(lootModel, tileIndex); 
-        }
+        //    if(cursorLootModel == null && lootModel == null)
+        //        return;
 
-        private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
-        {
-            if(itemsGridModel == null)
-                return;
+        //    if(cursorLootModel != null)
+        //    {
+        //        //_curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
+        //    }
+        //    else
+        //    {
+        //        //_curserModel.Pi(itemsGridModel, tileIndex, lootModel);
+        //    }
+        //}
 
-            var cursorLootModel = _curserModel.CurrentHeldLootModel;
+        //private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        //{
+        //    if(!isCursorOn)
+        //    {
+        //        _curserModel.SetCurrentHoveredItemsGrid(null);
+        //        return;
+        //    }
 
-            if(cursorLootModel == null && lootModel == null)
-                return;
-
-            if(cursorLootModel != null)
-            {
-                _curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
-            }
-            else
-                _curserModel.PickUpLootFromGrid(itemsGridModel, tileIndex, lootModel);
-        }
+        //    _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
+        //}
 
         #endregion
 
@@ -303,7 +329,7 @@ namespace ShadowFlareRemake.UI
         {
             _inventoryView.RemovePotionFromInventory(index, lootType);
         }
-
+        
         #endregion
 
         #region Stats
@@ -523,7 +549,6 @@ namespace ShadowFlareRemake.UI
             {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
-                _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered += HandleLootViewHovered;
                 _inventoryView.OnTileClicked += HandleItemsGridClicked;
             }
@@ -531,7 +556,6 @@ namespace ShadowFlareRemake.UI
             {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
-                _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered -= HandleLootViewHovered;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
             }

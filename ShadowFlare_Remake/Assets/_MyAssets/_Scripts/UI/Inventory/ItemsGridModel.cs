@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.UI
     public class ItemsGridModel : Model
     {
         public Dictionary<Vector2Int, GridTileModel> GridTileModelsDict { get; private set; } = new();
-        public string Name { get; private set; }
+        public ItemsGridType ItemsGridType { get; private set; }
         public int GridWidth { get; private set; }
         public int GridHeight { get; private set; }
         public bool IsSingleTile { get; private set; }
@@ -24,9 +24,9 @@ namespace ShadowFlareRemake.UI
 
         #region Init
 
-        public ItemsGridModel(string name, int gridWidth, int gridHeight, List<LootType> acceptedLootTypes, bool hasPlaceHolderSprite = true)
+        public ItemsGridModel(ItemsGridType itemsGridType, int gridWidth, int gridHeight, List<LootType> acceptedLootTypes, bool hasPlaceHolderSprite = true)
         {
-            Name = name;
+            ItemsGridType = itemsGridType;
             HasPlaceHolderSprite = hasPlaceHolderSprite;
             IsSingleTile = (gridWidth == 1 && gridHeight == 1);
             _acceptedLootTypes = acceptedLootTypes;

@@ -45,6 +45,11 @@ namespace ShadowFlareRemake.GameManager.Units
         public void TakeDamage(int damage)
         {
             CurrentHP -= damage;
+
+            if (CurrentHP < 0)
+            {
+                CurrentHP = 0;
+            }
         }
     }
 }

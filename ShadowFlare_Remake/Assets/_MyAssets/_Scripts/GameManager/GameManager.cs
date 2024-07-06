@@ -100,6 +100,7 @@ namespace ShadowFlareRemake.GameManager
             _uiController.OnPotionClicked += HandlePlayerUsedQuickItem;
             _uiController.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
             _uiController.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
+            _uiController.OnPlayerGearChanged += HandlePlayerEquippedGearStats;
         }
 
         private void DergisterEvents()
@@ -111,6 +112,7 @@ namespace ShadowFlareRemake.GameManager
             _uiController.OnPotionClicked -= HandlePlayerUsedQuickItem;
             _uiController.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
             _uiController.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
+            _uiController.OnPlayerGearChanged -= HandlePlayerEquippedGearStats;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -275,6 +277,8 @@ namespace ShadowFlareRemake.GameManager
                 return;
             }
 
+            //HandlePlayerEquippedGearStats()
+
             _lastPickedUpLootView.gameObject.SetActive(false);
         }
 
@@ -316,6 +320,13 @@ namespace ShadowFlareRemake.GameManager
             _playerController.SetPlayetUnitAfterHeal(_playerUnit);
             _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
             _uiController.RemovePotionFromInventory(index, lootModel.LootData.LootType);
+        }
+
+        private void HandlePlayerEquippedGearStats(List<LootModel> currentlyEquippedGear)
+        {
+            _playerUnitStats.SetPlayerGear(currentlyEquippedGear);
+            _playerController.SetPlayerUnitAfterEquippedGearChange(_playerUnit);
+            _uiController.UpdatePlayerUI(_playerUnit);
         }
 
         #endregion

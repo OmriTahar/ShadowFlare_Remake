@@ -26,6 +26,13 @@ namespace ShadowFlareRemake.Player
             Changed();
         }
 
+        public void SetPlayerUnitAfterEquippedGearChange(IUnit unit)
+        {
+            Unit = unit;
+            Stats = unit.Stats as IPlayerUnitStats;
+            Changed();
+        }
+
         public void SetPlayerUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false)
         {
             Unit = unit;
