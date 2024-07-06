@@ -294,7 +294,7 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region Stats
+        #region Stats Panel
 
         private void ToggleStats()
         {
@@ -315,9 +315,9 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region Update Player UI
+        #region Update Player Stats & Hud
 
-        public void UpdatePlayerUI(IUnit unit)
+        public void UpdatePlayerStatsAndHud(IUnit unit)
         {
             var stats = unit.Stats as IPlayerUnitStats;
 
@@ -346,6 +346,10 @@ namespace ShadowFlareRemake.UI
         {
             _statsModel.SetPlayerStats(unit);
         }
+
+        #endregion
+
+        #region UI Screen Cover
 
         private void HandleUiScreenCover()
         {

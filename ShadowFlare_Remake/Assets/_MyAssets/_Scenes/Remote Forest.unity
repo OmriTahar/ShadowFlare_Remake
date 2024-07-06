@@ -1527,13 +1527,13 @@ MonoBehaviour:
     ______BASE_____: ------------------------------------
     <Name>k__BackingField: Ronen
     <Level>k__BackingField: 1
-    <MovementSpeed>k__BackingField: 6
     ______PHYSICAL_____: ------------------------------------
     <MaxHP>k__BackingField: 50
     <Attack>k__BackingField: 1
     <Defense>k__BackingField: 1
     <HitRate>k__BackingField: 1
     <EvasionRate>k__BackingField: 1
+    <MovementSpeed>k__BackingField: 6
     <AttackSpeed>k__BackingField: 1
     ______MAGICAL_____: ------------------------------------
     <MaxMP>k__BackingField: 20

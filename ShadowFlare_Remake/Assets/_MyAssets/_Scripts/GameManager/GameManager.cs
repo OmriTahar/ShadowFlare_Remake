@@ -84,7 +84,7 @@ namespace ShadowFlareRemake.GameManager
         private void InitUiController()
         {
             _uiController.InitUiController(_inputManager);
-            _uiController.UpdatePlayerUI(_playerUnit);
+            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
         }
 
         #endregion
@@ -246,7 +246,7 @@ namespace ShadowFlareRemake.GameManager
                 _uiController.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
 
-            _uiController.UpdatePlayerUI(_playerUnit);
+            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
         }
 
         #endregion
@@ -326,7 +326,7 @@ namespace ShadowFlareRemake.GameManager
         {
             _playerUnitStats.SetPlayerGear(currentlyEquippedGear);
             _playerController.SetPlayerUnitAfterEquippedGearChange(_playerUnit);
-            _uiController.UpdatePlayerUI(_playerUnit);
+            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
         }
 
         #endregion
