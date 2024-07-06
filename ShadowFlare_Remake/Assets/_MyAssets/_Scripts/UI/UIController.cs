@@ -23,7 +23,7 @@ namespace ShadowFlareRemake.UI
         public event Action<LootModel> OnDropLootToTheGround;
         public event Action<bool> OnIsCurserOnUiChanged;
         public event Action<bool> OnIsPlayerHoldingLootChanged;
-        public event Action<List<LootModel>> OnPlayerGearChanged;
+        public event Action<List<EquipmentData_ScriptableObject>> OnPlayerGearChanged;
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
@@ -230,16 +230,22 @@ namespace ShadowFlareRemake.UI
                     return;
 
                 _curserModel.DropLoot();
-                OnPlayerGearChanged?.Invoke(_inventoryModel.CurrentlyEquippedGear);
 
                 if(swappedLoot != null)
+                {
                     _curserModel.PickUpLoot(swappedLoot);
-
-                return;
+                }
+            }
+            else
+            {
+                _inventoryModel.RemoveItemFromGrid(itemsGridModel, tileIndex);
+                _curserModel.PickUpLoot(lootModel);
             }
 
-            _inventoryModel.RemoveItemFromGrid(itemsGridModel, tileIndex);
-            _curserModel.PickUpLoot(lootModel);
+            if(_inventoryModel.IsEquippableItemsGrid(itemsGridModel.ItemsGridType))
+            {
+                OnPlayerGearChanged?.Invoke(_inventoryModel.CurrentlyEquippedGearData);
+            }
         }
 
         private void SetPickedUpLootPosition()
@@ -290,6 +296,11 @@ namespace ShadowFlareRemake.UI
         public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
             _inventoryModel.RemovePotionFromInventory(index, lootType);
+        }
+
+        public List<EquipmentData_ScriptableObject> GetPlayerCurrentlyEquippedGearData()
+        {
+            return _inventoryModel.CurrentlyEquippedGearData;
         }
 
         #endregion

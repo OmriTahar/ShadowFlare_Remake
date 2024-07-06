@@ -277,9 +277,8 @@ namespace ShadowFlareRemake.GameManager
                 return;
             }
 
-            //HandlePlayerEquippedGearStats()
-
             _lastPickedUpLootView.gameObject.SetActive(false);
+            HandlePlayerEquippedGearStats(_uiController.GetPlayerCurrentlyEquippedGearData());
         }
 
         private void HandlePlayerDropLootToTheGround(LootModel lootModel)
@@ -322,11 +321,24 @@ namespace ShadowFlareRemake.GameManager
             _uiController.RemovePotionFromInventory(index, lootModel.LootData.LootType);
         }
 
-        private void HandlePlayerEquippedGearStats(List<LootModel> currentlyEquippedGear)
+        private void HandlePlayerEquippedGearStats(List<EquipmentData_ScriptableObject> currentlyEquippedGear)
         {
-            _playerUnitStats.SetPlayerGear(currentlyEquippedGear);
+            var equippedGearAddedStats = GetEquippedGearAddedStats(currentlyEquippedGear);
+            _playerUnitStats.SetCurrentEquippedGearAddedStats(equippedGearAddedStats);
             _playerController.SetPlayerUnitAfterEquippedGearChange(_playerUnit);
             _uiController.UpdatePlayerStatsAndHud(_playerUnit);
+        }
+
+        private IEquippedGearAddedStats GetEquippedGearAddedStats(List<EquipmentData_ScriptableObject> currentlyEquippedGear)
+        {
+            var equippedGearAddedStats = new EquippedGearAddedStats();
+
+            foreach (var equipmentData in currentlyEquippedGear)
+            {
+                equippedGearAddedStats.AddEquippedGearStats(equipmentData);
+            }
+
+            return equippedGearAddedStats;
         }
 
         #endregion

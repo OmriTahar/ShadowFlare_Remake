@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
-        public List<LootModel> CurrentlyEquippedGear { get; private set; } = new();
+        public List<EquipmentData_ScriptableObject> CurrentlyEquippedGearData { get; private set; } = new();
         public ItemsGridModel TalismanItemsGridModel { get; private set; }
         public ItemsGridModel WeaponItemsGridModel { get; private set; }
         public ItemsGridModel ShieldItemsGridModel { get; private set; }
@@ -57,11 +57,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
-                if(IsEquippableItemsGrid(specificItemsGridModel.ItemsGridType))
-                {
-                    CurrentlyEquippedGear.Add(lootModel);
-                }
-
+                TryAddOrRemoveEquippedGearFromList(specificItemsGridModel.ItemsGridType, lootModel, true);
                 return true;
             }
 
@@ -76,12 +72,12 @@ namespace ShadowFlareRemake.UI.Inventory
 
             if(isLootPlaced)
             {
-                CurrentlyEquippedGear.Add(lootModel);
+                TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, lootModel, true);
             }
 
             if(swappedLoot != null)
             {
-                CurrentlyEquippedGear.Remove(swappedLoot);
+                TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, swappedLoot, false);
             }
 
             return tuple;
@@ -89,7 +85,8 @@ namespace ShadowFlareRemake.UI.Inventory
 
         public void RemoveItemFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex)
         {
-            itemsGridModel.RemoveItemFromGrid(tileIndex, true);
+            var removedLootModel = itemsGridModel.RemoveItemFromGrid(tileIndex, true);
+            TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, removedLootModel, false);
         }
 
         public LootModel GetQuickItemLootModel(Vector2Int index)
@@ -108,6 +105,28 @@ namespace ShadowFlareRemake.UI.Inventory
             }
 
             QuickItemsGridModel.RemoveItemFromGrid(index, true);
+        }
+
+        public bool IsEquippableItemsGrid(ItemsGridType itemsGridType)
+        {
+            return (itemsGridType != ItemsGridType.Carry && itemsGridType != ItemsGridType.QuickItems);
+        }
+
+        private bool TryAddOrRemoveEquippedGearFromList(ItemsGridType itemsGridType, LootModel lootModel, bool isAddToList)
+        {
+            if(!IsEquippableItemsGrid(itemsGridType))
+                return false;
+
+            var equipmentData = lootModel.LootData as EquipmentData_ScriptableObject;
+
+            if(isAddToList)
+            {
+                CurrentlyEquippedGearData.Add(equipmentData);
+                return true;
+            }
+
+            CurrentlyEquippedGearData.Remove(equipmentData);
+            return true;
         }
 
         private ItemsGridModel GetItemsGridModel(LootType lootType)
@@ -144,11 +163,6 @@ namespace ShadowFlareRemake.UI.Inventory
                 default:
                     return null;
             }
-        }
-
-        private bool IsEquippableItemsGrid(ItemsGridType itemsGridType)
-        {
-            return (itemsGridType != ItemsGridType.Carry && itemsGridType != ItemsGridType.QuickItems);
         }
 
         #endregion

@@ -4,6 +4,6 @@ namespace ShadowFlareRemake.GameManager
 {
     public class PlayerGear
     {
-        public WeaponData_ScriptableObject WeaponData;
+        public EquipmentData_ScriptableObject WeaponData;
     }
 }

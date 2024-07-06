@@ -29,7 +29,7 @@ namespace ShadowFlareRemake.Combat {
 
         private static int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) {  // Todo: Expand this.
 
-            var damage = Attacker.MagicalAttack - receiverUnit.MagicalDefence;
+            var damage = Attacker.MagicalAttack - receiverUnit.MagicalDefense;
             return damage > 1 ? damage : 1;
         }
     }

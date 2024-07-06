@@ -68,7 +68,7 @@ namespace ShadowFlareRemake.UI.Stats {
         {
             _mpText.text = $"{Model.Unit.CurrentMP} / {Model.Stats.MaxMP}";
             _magicalAttackText.text = Model.Stats.MagicalAttack.ToString();
-            _magicalDefenseText.text = Model.Stats.MagicalDefence.ToString();
+            _magicalDefenseText.text = Model.Stats.MagicalDefense.ToString();
             _magicalAttackSpeedText.text = Model.Stats.MagicalAttackSpeed.ToString();
             _magicalHitRateText.text = Model.Stats.MagicalHitRate.ToString();
             _magicalEvasionRateText.text = Model.Stats.MagicalEvasionRate.ToString();

@@ -168,9 +168,10 @@ namespace ShadowFlareRemake.UI
             }
         }
 
-        public void RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
+        public LootModel RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
         {
             var rootIndex = _heldLootRootIndexesDict[tileIndex];
+            var removedLootModel = GridTileModelsDict[rootIndex].LootModel;
             GridTileModelsDict[rootIndex].SetLootModel(null);
 
             var indexesToRemove = new List<Vector2Int>();
@@ -195,6 +196,8 @@ namespace ShadowFlareRemake.UI
             {
                 Changed();
             }
+
+            return removedLootModel;
         }
 
         private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)

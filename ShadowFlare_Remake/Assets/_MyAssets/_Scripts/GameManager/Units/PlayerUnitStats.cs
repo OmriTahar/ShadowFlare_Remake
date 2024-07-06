@@ -1,9 +1,7 @@
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.GameManager.Units
@@ -41,12 +39,14 @@ namespace ShadowFlareRemake.GameManager.Units
         [SerializeField] private string ______MAGICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxMP { get; private set; }
         [field: SerializeField] public int MagicalAttack { get; private set; }
-        [field: SerializeField] public int MagicalDefence { get; private set; }
+        [field: SerializeField] public int MagicalDefense { get; private set; }
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
 
         #endregion
+
+        private IEquippedGearAddedStats _current_EquippedGearAddedStats;
 
         public void GiveExpReward(ExpReward reward)
         {
@@ -59,28 +59,60 @@ namespace ShadowFlareRemake.GameManager.Units
         {
             MaxHP += reward.HP;
             MaxMP += reward.MP;
-            Strength += Strength += reward.Strength;
+            Strength += reward.Strength;
             Attack += reward.Attack;
             Defense += reward.Defense;
             MagicalAttack += reward.MagicalAttack;
-            MagicalDefence += reward.MagicalDefence;
+            MagicalDefense += reward.MagicalDefence;
         }
 
-        public void SetPlayerGear(List<LootModel> currentlyEquippedGear)
+        public void SetCurrentEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
-            foreach(var model in currentlyEquippedGear)
-            {
-                HandleCurrentlyEquippedGearStats(model.LootData);
-            }
+            RemoveCurrentEquippedGearAddedStats();
+            SetEquippedGearAddedStats(addedStats);
         }
 
-        private void HandleCurrentlyEquippedGearStats(LootData_ScriptableObject loodData)
+        private void SetEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
-            if(loodData is WeaponData_ScriptableObject)
-            {
-                var weaponData = loodData as WeaponData_ScriptableObject;
-                Attack += weaponData.Attack;
-            }
+            MaxHP += addedStats.MaxHP;
+            Attack += addedStats.Attack;
+            Defense += addedStats.Defense;
+            HitRate += addedStats.HitRate;
+            EvasionRate += addedStats.EvasionRate;
+            MovementSpeed += addedStats.MovementSpeed;
+            AttackSpeed += addedStats.AttackSpeed;
+            Strength += addedStats.Strength;
+            MaxMP += addedStats.MaxMP;
+            MagicalAttack += addedStats.MagicalAttack;
+            MagicalDefense += addedStats.MagicalDefense;
+            MagicalHitRate += addedStats.MagicalHitRate;
+            MagicalEvasionRate += addedStats.MagicalEvasionRate;
+            MagicalAttackSpeed += addedStats.MagicalAttackSpeed;
+
+            _current_EquippedGearAddedStats = addedStats;
+        }
+
+        private void RemoveCurrentEquippedGearAddedStats()
+        {
+            if(_current_EquippedGearAddedStats == null)
+                return;
+
+            MaxHP -= _current_EquippedGearAddedStats.MaxHP;
+            Attack -= _current_EquippedGearAddedStats.Attack;
+            Defense -= _current_EquippedGearAddedStats.Defense;
+            HitRate -= _current_EquippedGearAddedStats.HitRate;
+            EvasionRate -= _current_EquippedGearAddedStats.EvasionRate;
+            MovementSpeed -= _current_EquippedGearAddedStats.MovementSpeed;
+            AttackSpeed -= _current_EquippedGearAddedStats.AttackSpeed;
+            Strength -= _current_EquippedGearAddedStats.Strength;
+            MaxMP -= _current_EquippedGearAddedStats.MaxMP;
+            MagicalAttack -= _current_EquippedGearAddedStats.MagicalAttack;
+            MagicalDefense -= _current_EquippedGearAddedStats.MagicalDefense;
+            MagicalHitRate -= _current_EquippedGearAddedStats.MagicalHitRate;
+            MagicalEvasionRate -= _current_EquippedGearAddedStats.MagicalEvasionRate;
+            MagicalAttackSpeed -= _current_EquippedGearAddedStats.MagicalAttackSpeed;
+
+            _current_EquippedGearAddedStats = null;
         }
     }
 }

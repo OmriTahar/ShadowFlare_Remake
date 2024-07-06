@@ -1538,7 +1538,7 @@ MonoBehaviour:
     ______MAGICAL_____: ------------------------------------
     <MaxMP>k__BackingField: 20
     <MagicalAttack>k__BackingField: 1
-    <MagicalDefence>k__BackingField: 1
+    <MagicalDefense>k__BackingField: 0
     <MagicalHitRate>k__BackingField: 1
     <MagicalEvasionRate>k__BackingField: 1
     <MagicalAttackSpeed>k__BackingField: 1
