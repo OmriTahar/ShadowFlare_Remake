@@ -7,6 +7,7 @@ namespace ShadowFlareRemake.UI.Inventory
 {
     public class InventoryModel : Model
     {
+        public List<LootModel> CurrentlyEquippedGear { get; private set; } = new();
         public ItemsGridModel TalismanItemsGridModel { get; private set; }
         public ItemsGridModel WeaponItemsGridModel { get; private set; }
         public ItemsGridModel ShieldItemsGridModel { get; private set; }
@@ -15,8 +16,6 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel BootsItemsGridModel { get; private set; }
         public ItemsGridModel CarryItemsGridModel { get; private set; }
         public ItemsGridModel QuickItemsGridModel { get; private set; }
-
-        public List<LootModel> CurrentlyEquippedGear { get; private set; } = new();
         public bool IsInventoryOpen { get; private set; }
 
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
@@ -56,7 +55,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
 
-            if (specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
                 if(IsEquippableItemsGrid(specificItemsGridModel.ItemsGridType))
                 {
@@ -73,10 +72,16 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             var tuple = itemsGridModel.TryHandPlaceLootOnGrid(tileIndex, lootModel);
             var isLootPlaced = tuple.Item1;
+            var swappedLoot = tuple.Item2;
 
             if(isLootPlaced)
             {
                 CurrentlyEquippedGear.Add(lootModel);
+            }
+
+            if(swappedLoot != null)
+            {
+                CurrentlyEquippedGear.Remove(swappedLoot);
             }
 
             return tuple;

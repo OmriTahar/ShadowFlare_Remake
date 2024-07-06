@@ -22,7 +22,7 @@ namespace ShadowFlareRemake.UI
         private readonly Vector2Int _singleTileIndex = Vector2Int.zero;
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
 
-        #region Init
+        #region Initialization
 
         public ItemsGridModel(ItemsGridType itemsGridType, int gridWidth, int gridHeight, List<LootType> acceptedLootTypes, bool hasPlaceHolderSprite = true)
         {

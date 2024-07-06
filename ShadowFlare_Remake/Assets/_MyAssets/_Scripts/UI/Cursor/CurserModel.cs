@@ -20,6 +20,8 @@ namespace ShadowFlareRemake.UI.Cursor
 
         #endregion
 
+        #region Meat & Potatos
+
         public void SetCursorIconState(CursorIconState newCursorState)
         {
             if(newCursorState == CurrentCursorIconState)
@@ -52,35 +54,7 @@ namespace ShadowFlareRemake.UI.Cursor
             CurrentHoveredLootModelRootIndex = rootIndex;
         }
 
-        //public ItemsGridModel CurrentHoveredItemsGridModel { get; private set; }
-
-        //public void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel)
-        //{
-        //    CurrentHoveredItemsGridModel = itemsGridModel;
-        //}
-
-
-        //public void PlaceLootInGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
-        //{
-        //    var tuple = itemsGridModel.TryHandPlaceLootOnGrid(tileIndex, lootModel);
-        //    var isLootPlaced = tuple.Item1;
-        //    var swappedLoot = tuple.Item2;
-
-        //    if(!isLootPlaced)
-        //        return;
-
-        //    if(swappedLoot != null)
-        //    {
-        //        PickUpLootLogic(swappedLoot);
-        //    }
-        //    else
-        //    {
-        //        DropLootLogic();
-        //    }
-
-        //    Changed();
-        //}
-
+        #endregion
     }
 }
 

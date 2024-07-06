@@ -226,21 +226,14 @@ namespace ShadowFlareRemake.UI
                 var isLootPlaced = tuple.Item1;
                 var swappedLoot = tuple.Item2;
 
-                if(isLootPlaced)
-                {
-                    OnPlayerGearChanged?.Invoke(_inventoryModel.CurrentlyEquippedGear);
-                }
-                else
-                {
+                if(!isLootPlaced)
                     return;
-                }
+
+                _curserModel.DropLoot();
+                OnPlayerGearChanged?.Invoke(_inventoryModel.CurrentlyEquippedGear);
 
                 if(swappedLoot != null)
-                {
                     _curserModel.PickUpLoot(swappedLoot);
-                }
-                else
-                    _curserModel.DropLoot();
 
                 return;
             }
@@ -253,37 +246,6 @@ namespace ShadowFlareRemake.UI
         {
             _pickedUpLootTranform.position = _inputManager.CurrentMousePosition;
         }
-
-        //private void HandleItemsGridClickedOld(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
-        //{
-        //    if(itemsGridModel == null)
-        //        return;
-
-        //    var cursorLootModel = _curserModel.CurrentHeldLootModel;
-
-        //    if(cursorLootModel == null && lootModel == null)
-        //        return;
-
-        //    if(cursorLootModel != null)
-        //    {
-        //        //_curserModel.PlaceLootInGrid(itemsGridModel, tileIndex, cursorLootModel);
-        //    }
-        //    else
-        //    {
-        //        //_curserModel.Pi(itemsGridModel, tileIndex, lootModel);
-        //    }
-        //}
-
-        //private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
-        //{
-        //    if(!isCursorOn)
-        //    {
-        //        _curserModel.SetCurrentHoveredItemsGrid(null);
-        //        return;
-        //    }
-
-        //    _curserModel.SetCurrentHoveredItemsGrid(itemsGridModel);
-        //}
 
         #endregion
 
@@ -309,7 +271,7 @@ namespace ShadowFlareRemake.UI
         private void HandleKeyboardNumClicked(InputAction.CallbackContext context)
         {
             var index = _quickItemsIndexesDict[context.action.name];
-            var lootModel = _inventoryView.GetQuickItemLootModel(index);
+            var lootModel = _inventoryModel.GetQuickItemLootModel(index);
 
             if(lootModel == null)
                 return;
@@ -327,9 +289,9 @@ namespace ShadowFlareRemake.UI
 
         public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
-            _inventoryView.RemovePotionFromInventory(index, lootType);
+            _inventoryModel.RemovePotionFromInventory(index, lootType);
         }
-        
+
         #endregion
 
         #region Stats

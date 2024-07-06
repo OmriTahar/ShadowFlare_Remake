@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using System;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace ShadowFlareRemake.UI.Inventory
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
 
-        [Header("Items Grid")]
+        [Header("Items Grids")]
         [SerializeField] private ItemsGridView _talismanItemsGridView;
         [SerializeField] private ItemsGridView _weaponItemsGridView;
         [SerializeField] private ItemsGridView _shieldItemsGridlView;
@@ -37,6 +36,11 @@ namespace ShadowFlareRemake.UI.Inventory
             _inventoryPanel.SetActive(Model.IsInventoryOpen);
         }
 
+        protected override void Clean()
+        {
+            DeregisterEvents();
+        }
+
         #endregion
 
         #region Initialization
@@ -51,11 +55,6 @@ namespace ShadowFlareRemake.UI.Inventory
             _bootsItemsGridView.SetModel(Model.BootsItemsGridModel);
             _carryItemsGridView.SetModel(Model.CarryItemsGridModel);
             _quickItemsGridView.SetModel(Model.QuickItemsGridModel);
-        }
-
-        protected override void Clean()
-        {
-            DeregisterEvents();
         }
 
         #endregion
@@ -75,16 +74,6 @@ namespace ShadowFlareRemake.UI.Inventory
         public void InvokeTileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootModel);
-        }
-
-        public LootModel GetQuickItemLootModel(Vector2Int index)
-        {
-            return Model.GetQuickItemLootModel(index);
-        }
-
-        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
-        {
-            Model.RemovePotionFromInventory(index, lootType);
         }
 
         #endregion
