@@ -1554,6 +1554,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06af98c5cc82f81469db023132ce3e38, type: 2}
   - {fileID: 11400000, guid: b2f90ddb0a03a114883d9543665566f8, type: 2}
   - {fileID: 11400000, guid: 57791beb8edc5174aa59f68ff7e9e085, type: 2}
+  - {fileID: 11400000, guid: 2a6fab92815cbe6418ee6c5237d1b903, type: 2}
+  - {fileID: 11400000, guid: e3936f19356a42f40beab169fc71bde2, type: 2}
+  - {fileID: 11400000, guid: 052c6d0696748854c9881198891aae2e, type: 2}
+  - {fileID: 11400000, guid: e3936f19356a42f40beab169fc71bde2, type: 2}
   _testLootDataToSpawn: {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98,
     type: 2}
   _testEnemyToSpawn: {fileID: 1302082256}

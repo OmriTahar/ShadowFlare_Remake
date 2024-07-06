@@ -325,7 +325,6 @@ namespace ShadowFlareRemake.GameManager
         {
             var equippedGearAddedStats = GetEquippedGearAddedStats(currentlyEquippedGear);
             _playerUnitStats.SetCurrentEquippedGearAddedStats(equippedGearAddedStats);
-            _playerController.SetPlayerUnitAfterEquippedGearChange(_playerUnit);
             _uiController.UpdatePlayerStatsAndHud(_playerUnit);
         }
 

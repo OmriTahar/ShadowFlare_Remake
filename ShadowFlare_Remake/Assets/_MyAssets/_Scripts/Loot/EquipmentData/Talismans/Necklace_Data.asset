@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4796bdbfdfdcd8428034c279c4af31c, type: 3}
+  m_Name: Necklace_Data
+  m_EditorClassIdentifier: 
+  _________BASE_________: ------------------------------------
+  <Name>k__BackingField: Necklace
+  <LootType>k__BackingField: 6
+  <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 92ae13a49fa65af46906da8029caf780,
+    type: 3}
+  _________SIZE_________: ------------------------------------
+  <Width>k__BackingField: 1
+  <Height>k__BackingField: 1
+  ______PHYSICAL_____: ------------------------------------
+  <MaxHP>k__BackingField: 0
+  <Attack>k__BackingField: 0
+  <Defense>k__BackingField: 0
+  <HitRate>k__BackingField: 0
+  <EvasionRate>k__BackingField: 0
+  <MovementSpeed>k__BackingField: 3
+  <AttackSpeed>k__BackingField: 0
+  <Strength>k__BackingField: 0
+  ______MAGICAL_____: ------------------------------------
+  <MaxMP>k__BackingField: 0
+  <MagicalAttack>k__BackingField: 0
+  <MagicalDefense>k__BackingField: 0
+  <MagicalHitRate>k__BackingField: 0
+  <MagicalEvasionRate>k__BackingField: 0
+  <MagicalAttackSpeed>k__BackingField: 0

@@ -129,11 +129,6 @@ namespace ShadowFlareRemake.Player
             _model.SetPlayerUnitAfterHit(unit, isCritialHit);
         }
 
-        public void SetPlayerUnitAfterEquippedGearChange(IUnit unit)
-        {
-            _model.SetPlayerUnitAfterEquippedGearChange(unit);
-        }
-
         public void SetPlayetUnitAfterHeal(IUnit unit)
         {
             _model.SetPlayerUnitAfterHeal(unit);
