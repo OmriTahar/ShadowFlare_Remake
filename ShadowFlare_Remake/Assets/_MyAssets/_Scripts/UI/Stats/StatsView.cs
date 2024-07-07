@@ -31,6 +31,10 @@ namespace ShadowFlareRemake.UI.Stats {
         [SerializeField] private TMP_Text _magicalHitRateText;
         [SerializeField] private TMP_Text _magicalEvasionRateText;
 
+        [Header("Settings")]
+        [SerializeField] private Color _statDefaultColor;
+        [SerializeField] private Color _statBuffedColor;
+
         protected override void ModelChanged() {
 
             _statsPanel.SetActive(Model.IsPanelOpen);
@@ -39,17 +43,26 @@ namespace ShadowFlareRemake.UI.Stats {
                 return;
             }
 
-            SetBaseStats();
-            SetPhysicalStats();
-            SetMagicalStats();
+            SetExpAndLevelStats();
+
+            if(Model.IsFullStatsUpdate)
+            {
+                SetBaseStats();
+                SetPhysicalStats();
+                SetMagicalStats();
+            }
+        }
+
+        private void SetExpAndLevelStats()
+        {
+            _levelText.text = Model.Stats.Level.ToString();
+            _expText.text = $"{Model.Stats.CurrentExp} / {Model.Stats.ExpToLevelUp}";
         }
 
         private void SetBaseStats()
         {
             _nameText.text = Model.Stats.Name;
             _vocationText.text = Model.Stats.Vocation.ToString();
-            _levelText.text = Model.Stats.Level.ToString();
-            _expText.text = $"{Model.Stats.CurrentExp} / {Model.Stats.ExpToLevelUp}";
         }
 
         private void SetPhysicalStats()
@@ -62,6 +75,14 @@ namespace ShadowFlareRemake.UI.Stats {
             _evasionRateText.text = Model.Stats.EvasionRate.ToString();
             _movementSpeedText.text = Model.Stats.MovementSpeed.ToString();
             _attackSpeedText.text = Model.Stats.AttackSpeed.ToString();
+
+            SetBuffedTextColor(_strengthText, Model.EquippedGearAddedStats.Strength);
+            SetBuffedTextColor(_attackText, Model.EquippedGearAddedStats.Attack);
+            SetBuffedTextColor(_defenseText, Model.EquippedGearAddedStats.Defense);
+            SetBuffedTextColor(_hitRateText, Model.EquippedGearAddedStats.HitRate);
+            SetBuffedTextColor(_evasionRateText, Model.EquippedGearAddedStats.EvasionRate);
+            SetBuffedTextColor(_movementSpeedText, Model.EquippedGearAddedStats.MovementSpeed);
+            SetBuffedTextColor(_attackSpeedText, Model.EquippedGearAddedStats.AttackSpeed);
         }
 
         private void SetMagicalStats()
@@ -72,6 +93,17 @@ namespace ShadowFlareRemake.UI.Stats {
             _magicalAttackSpeedText.text = Model.Stats.MagicalAttackSpeed.ToString();
             _magicalHitRateText.text = Model.Stats.MagicalHitRate.ToString();
             _magicalEvasionRateText.text = Model.Stats.MagicalEvasionRate.ToString();
+
+            SetBuffedTextColor(_magicalAttackText, Model.EquippedGearAddedStats.MagicalAttack);
+            SetBuffedTextColor(_magicalDefenseText, Model.EquippedGearAddedStats.MagicalDefense);
+            SetBuffedTextColor(_magicalAttackSpeedText, Model.EquippedGearAddedStats.MagicalAttackSpeed);
+            SetBuffedTextColor(_magicalHitRateText, Model.EquippedGearAddedStats.MagicalHitRate);
+            SetBuffedTextColor(_magicalEvasionRateText, Model.EquippedGearAddedStats.MagicalEvasionRate);
+        }
+
+        private void SetBuffedTextColor(TMP_Text text, int equippedGearAddedStat)
+        {
+            text.color = equippedGearAddedStat > 0 ? _statBuffedColor : _statDefaultColor;
         }
     }
 }

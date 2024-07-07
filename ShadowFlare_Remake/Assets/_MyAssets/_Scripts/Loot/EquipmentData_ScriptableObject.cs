@@ -5,8 +5,6 @@ namespace ShadowFlareRemake.Loot
     [CreateAssetMenu(fileName = "NewEquipment", menuName = "Scriptable Objects/Create New Loot/Create New Equipment")]
     public class EquipmentData_ScriptableObject : LootData_ScriptableObject
     {
-        private const string _spaceLine = "------------------------------------";
-
         [Space(15)]
         [SerializeField] private string ______PHYSICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
@@ -18,7 +16,6 @@ namespace ShadowFlareRemake.Loot
         [field: SerializeField] public int AttackSpeed { get; private set; }
         [field: SerializeField] public int Strength { get; private set; }
 
-
         [Space(15)]
         [SerializeField] private string ______MAGICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxMP { get; private set; }
@@ -27,5 +24,7 @@ namespace ShadowFlareRemake.Loot
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
+
+        private const string _spaceLine = "------------------------------------";
     }
 }

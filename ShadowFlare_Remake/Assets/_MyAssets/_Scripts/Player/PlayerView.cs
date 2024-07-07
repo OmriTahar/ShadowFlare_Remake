@@ -149,7 +149,7 @@ namespace ShadowFlareRemake.Player
             if(Model.Unit.CurrentHP >= _lastSeenHP)
                 return;
 
-            if(Model.IsReceivedCritialHit)
+            if(Model.IsLastHitWasCritialHit)
             {
                 _vfxView.SetIsPlayingEffect(VfxType.HitBlood, true);
                 return;

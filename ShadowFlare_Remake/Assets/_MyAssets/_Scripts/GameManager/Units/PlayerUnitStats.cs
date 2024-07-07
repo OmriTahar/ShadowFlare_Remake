@@ -1,6 +1,7 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
+using ShadowFlareRemake.UI.Stats;
 using System;
 using UnityEngine;
 
@@ -9,9 +10,7 @@ namespace ShadowFlareRemake.GameManager.Units
     [Serializable]
     public class PlayerUnitStats : IPlayerUnitStats
     {
-        #region Unit Fields
-
-        private const string _spaceLine = "------------------------------------";
+        #region Stats Fields
 
         [Space(15)]
         [SerializeField] private string ______PLAYER_____ = _spaceLine;
@@ -44,9 +43,9 @@ namespace ShadowFlareRemake.GameManager.Units
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
 
-        #endregion
+        private const string _spaceLine = "------------------------------------";
 
-        private IEquippedGearAddedStats _current_EquippedGearAddedStats;
+        #endregion
 
         public void GiveExpReward(ExpReward reward)
         {
@@ -66,13 +65,25 @@ namespace ShadowFlareRemake.GameManager.Units
             MagicalDefense += reward.MagicalDefence;
         }
 
-        public void SetCurrentEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
+        public void RemoveEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
-            RemoveCurrentEquippedGearAddedStats();
-            SetEquippedGearAddedStats(addedStats);
+            MaxHP -= addedStats.MaxHP;
+            Attack -= addedStats.Attack;
+            Defense -= addedStats.Defense;
+            HitRate -= addedStats.HitRate;
+            EvasionRate -= addedStats.EvasionRate;
+            MovementSpeed -= addedStats.MovementSpeed;
+            AttackSpeed -= addedStats.AttackSpeed;
+            Strength -= addedStats.Strength;
+            MaxMP -= addedStats.MaxMP;
+            MagicalAttack -= addedStats.MagicalAttack;
+            MagicalDefense -= addedStats.MagicalDefense;
+            MagicalHitRate -= addedStats.MagicalHitRate;
+            MagicalEvasionRate -= addedStats.MagicalEvasionRate;
+            MagicalAttackSpeed -= addedStats.MagicalAttackSpeed;
         }
 
-        private void SetEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
+        public void SetEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
             MaxHP += addedStats.MaxHP;
             Attack += addedStats.Attack;
@@ -88,31 +99,6 @@ namespace ShadowFlareRemake.GameManager.Units
             MagicalHitRate += addedStats.MagicalHitRate;
             MagicalEvasionRate += addedStats.MagicalEvasionRate;
             MagicalAttackSpeed += addedStats.MagicalAttackSpeed;
-
-            _current_EquippedGearAddedStats = addedStats;
-        }
-
-        private void RemoveCurrentEquippedGearAddedStats()
-        {
-            if(_current_EquippedGearAddedStats == null)
-                return;
-
-            MaxHP -= _current_EquippedGearAddedStats.MaxHP;
-            Attack -= _current_EquippedGearAddedStats.Attack;
-            Defense -= _current_EquippedGearAddedStats.Defense;
-            HitRate -= _current_EquippedGearAddedStats.HitRate;
-            EvasionRate -= _current_EquippedGearAddedStats.EvasionRate;
-            MovementSpeed -= _current_EquippedGearAddedStats.MovementSpeed;
-            AttackSpeed -= _current_EquippedGearAddedStats.AttackSpeed;
-            Strength -= _current_EquippedGearAddedStats.Strength;
-            MaxMP -= _current_EquippedGearAddedStats.MaxMP;
-            MagicalAttack -= _current_EquippedGearAddedStats.MagicalAttack;
-            MagicalDefense -= _current_EquippedGearAddedStats.MagicalDefense;
-            MagicalHitRate -= _current_EquippedGearAddedStats.MagicalHitRate;
-            MagicalEvasionRate -= _current_EquippedGearAddedStats.MagicalEvasionRate;
-            MagicalAttackSpeed -= _current_EquippedGearAddedStats.MagicalAttackSpeed;
-
-            _current_EquippedGearAddedStats = null;
         }
     }
 }

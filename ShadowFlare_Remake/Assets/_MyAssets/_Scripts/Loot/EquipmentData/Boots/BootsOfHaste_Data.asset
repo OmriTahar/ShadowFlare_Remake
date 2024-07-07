@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BootsOfHaste_Data
   m_EditorClassIdentifier: 
   _________BASE_________: ------------------------------------
-  <Name>k__BackingField: Lords Armor
+  <Name>k__BackingField: Boots Of Haste
   <LootType>k__BackingField: 5
   <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 608716fb89152f34594d344a65006ae3,

@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.Player
 
         public PlayerAttack CurrentPlayerAttack { get; private set; }
         public bool IsAttacking { get; private set; } = false;
-        public bool IsReceivedCritialHit { get; private set; }
+        public bool IsLastHitWasCritialHit { get; private set; }
 
         public bool IsMoving { get; private set; }
         public bool CanTakeDamage { get; private set; } = true;
@@ -18,20 +18,6 @@ namespace ShadowFlareRemake.Player
         {
             Unit = unit;
             Stats = unit.Stats as IPlayerUnitStats;
-        }
-
-        public void SetPlayerUnitAfterHeal(IUnit unit)
-        {
-            Unit = unit;
-            Changed();
-        }
-
-        public void SetPlayerUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false)
-        {
-            Unit = unit;
-            Stats = unit.Stats as IPlayerUnitStats;
-            IsReceivedCritialHit = isReceivedCritialHit;
-            Changed();
         }
 
         public void SetAttackState(bool isAttacking, PlayerAttack playerAttack)
@@ -48,6 +34,12 @@ namespace ShadowFlareRemake.Player
         public void SetIsMoving(bool isMoving)
         {
             IsMoving = isMoving;
+            Changed();
+        }
+
+        public void SetIsLastHitWasCritialHit(bool isLastHitWasCritialHit)
+        {
+            IsLastHitWasCritialHit = isLastHitWasCritialHit;
             Changed();
         }
     }

@@ -26,6 +26,7 @@ namespace ShadowFlareRemake.Player
         [SerializeField] private float _pickUpDistance = 1.5f;
 
         private const int _rotationSpeed = 10;
+        private const float _destinationReachedThreshold = 0.1f;
 
         private PlayerModel _model;
         private CharacterController _characterController;
@@ -124,14 +125,9 @@ namespace ShadowFlareRemake.Player
 
         #region GameManager Helpers
 
-        public void SetPlayetUnitAfterHit(IUnit unit, bool isCritialHit)
+        public void SetIsLastHitWasCritialHit(bool isCritialHit)
         {
-            _model.SetPlayerUnitAfterHit(unit, isCritialHit);
-        }
-
-        public void SetPlayetUnitAfterHeal(IUnit unit)
-        {
-            _model.SetPlayerUnitAfterHeal(unit);
+            _model.SetIsLastHitWasCritialHit(isCritialHit);
         }
 
         #endregion
@@ -199,7 +195,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > 0.1f)
+            while(Vector3.Distance(transform.position, targetPos) > _destinationReachedThreshold)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
@@ -269,6 +265,24 @@ namespace ShadowFlareRemake.Player
                 StopCoroutine(_lastMoveCoroutine);
 
             _lastMoveCoroutine = StartCoroutine(AttackStepForwardLogic(_stepForwardDuration));
+        }
+
+        private IEnumerator AttackStepForwardLogicNew(float timeToComplete)
+        {
+            float timer = 0;
+            var movementSpeed = _model.Stats.MovementSpeed;
+
+            while(timer < timeToComplete)
+            {
+                if(!Physics.Raycast(transform.position, Vector3.forward, _attackDistance, EnemyLayer))
+                {
+                    Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
+                    _characterController.Move(movement);
+                }
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
         }
 
         private IEnumerator AttackStepForwardLogic(float timeToComplete)

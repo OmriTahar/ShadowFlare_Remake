@@ -1,4 +1,4 @@
-namespace ShadowFlareRemake.GameManager.Units
+namespace ShadowFlareRemake.UI.Stats
 {
     public interface IEquippedGearAddedStats
     {

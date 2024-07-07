@@ -5,6 +5,7 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
+using ShadowFlareRemake.UI.Stats;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,6 +42,7 @@ namespace ShadowFlareRemake.GameManager
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
         private Unit _playerUnit;
+        private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
         private GameObject _lastHighlighted_GameObject;
         private HighlightableObject _lastHighlightable;
         private LootView _lastPickedUpLootView;
@@ -50,18 +52,13 @@ namespace ShadowFlareRemake.GameManager
 
         #region Unity Callbacks
 
-        private void Awake()
-        {
-            //DontDestroyOnLoad(gameObject);
-        }
-
         private async void Start()
         {
             await _inputManager.WaitForInitFinish();
 
             InitEnemies();
             InitPlayer();
-            InitUiController();
+            InitUiController(); 
             RegisterEvents();
 
             HandleTestSpawnLoot();
@@ -84,7 +81,7 @@ namespace ShadowFlareRemake.GameManager
         private void InitUiController()
         {
             _uiController.InitUiController(_inputManager);
-            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
+            _uiController.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
         }
 
         #endregion
@@ -246,7 +243,7 @@ namespace ShadowFlareRemake.GameManager
                 _uiController.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
 
-            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
+            _uiController.UpdatePlayerVitalsAndExp(_playerUnit);
         }
 
         #endregion
@@ -262,8 +259,8 @@ namespace ShadowFlareRemake.GameManager
         private void HandlePlayerGotHit(Attack attack)
         {
             var isCritialHit = CombatLogic.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
-            _playerController.SetPlayetUnitAfterHit(_playerUnit, isCritialHit);
-            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _playerController.SetIsLastHitWasCritialHit(isCritialHit);
+            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
@@ -316,30 +313,24 @@ namespace ShadowFlareRemake.GameManager
             if(!hasHealed)
                 return;
 
-            _playerController.SetPlayetUnitAfterHeal(_playerUnit);
-            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
             _uiController.RemovePotionFromInventory(index, lootModel.LootData.LootType);
         }
 
         private void HandlePlayerEquippedGearStats(List<EquipmentData_ScriptableObject> currentlyEquippedGear)
         {
-            var equippedGearAddedStats = GetEquippedGearAddedStats(currentlyEquippedGear);
-            _playerUnitStats.SetCurrentEquippedGearAddedStats(equippedGearAddedStats);
-            _uiController.UpdatePlayerStatsAndHud(_playerUnit);
-        }
+            _playerUnitStats.RemoveEquippedGearAddedStats(_playerEquippedGearAddedStats);
+            _playerEquippedGearAddedStats.ResetValues();
 
-        private IEquippedGearAddedStats GetEquippedGearAddedStats(List<EquipmentData_ScriptableObject> currentlyEquippedGear)
-        {
-            var equippedGearAddedStats = new EquippedGearAddedStats();
-
-            foreach (var equipmentData in currentlyEquippedGear)
+            foreach(var equipmentData in currentlyEquippedGear)
             {
-                equippedGearAddedStats.AddEquippedGearStats(equipmentData);
+                _playerEquippedGearAddedStats.AddEquippedGearStats(equipmentData);
             }
 
-            return equippedGearAddedStats;
+            _playerUnitStats.SetEquippedGearAddedStats(_playerEquippedGearAddedStats);
+            _uiController.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
         }
-
+        
         #endregion
 
         #region Loot
@@ -394,18 +385,17 @@ namespace ShadowFlareRemake.GameManager
             TestSpawnLoot(_testLootDataToSpawn, 0);
         }
 
-        public void HitPlayer()
+        public void TestHitPlayer()
         {
             _playerUnit.TakeDamage(_healOrDamageAmount);
-            _playerController.SetPlayetUnitAfterHit(_playerUnit, true);
-            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _playerController.SetIsLastHitWasCritialHit(true);
+            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
-        public void HealPlayer()
+        public void TestHealPlayer()
         {
             _playerUnit.HealHP(_healOrDamageAmount);
-            _playerController.SetPlayetUnitAfterHeal(_playerUnit);
-            _uiController.UpdatePlayerHpAndMp(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
 #if UNITY_EDITOR
@@ -436,14 +426,14 @@ namespace ShadowFlareRemake.GameManager
 
                 if(GUILayout.Button("Hit Player"))
                 {
-                    gameManager.HitPlayer();
+                    gameManager.TestHitPlayer();
                 }
 
                 GUILayout.Space(15);
 
                 if(GUILayout.Button("Heal Player"))
                 {
-                    gameManager.HealPlayer();
+                    gameManager.TestHealPlayer();
                 }
 
                 GUILayout.Space(10);

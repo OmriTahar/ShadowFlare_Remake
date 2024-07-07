@@ -1,7 +1,7 @@
-using ShadowFlareRemake.GameManager.Units;
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.UI.Stats;
 
-namespace ShadowFlareRemake.GameManager
+namespace ShadowFlareRemake.GameManager.Units
 {
     public class EquippedGearAddedStats : IEquippedGearAddedStats
     {
@@ -21,6 +21,24 @@ namespace ShadowFlareRemake.GameManager
         public int MagicalAttackSpeed { get; private set; }
 
         public EquippedGearAddedStats() { }
+
+        public void ResetValues()
+        {
+            MaxHP = 0;
+            Attack = 0;
+            Defense = 0;
+            HitRate = 0;
+            EvasionRate = 0;
+            MovementSpeed = 0;
+            AttackSpeed = 0;
+            Strength = 0;
+            MaxMP = 0;
+            MagicalAttack = 0;
+            MagicalDefense = 0;
+            MagicalHitRate = 0;
+            MagicalEvasionRate = 0;
+            MagicalAttackSpeed = 0;
+        }
 
         public void AddEquippedGearStats(EquipmentData_ScriptableObject addedStats)
         {

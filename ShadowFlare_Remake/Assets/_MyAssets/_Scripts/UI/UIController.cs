@@ -326,19 +326,28 @@ namespace ShadowFlareRemake.UI
 
         #endregion
 
-        #region Update Player Stats & Hud
+        #region Update Player Stats & HUD
 
-        public void UpdatePlayerStatsAndHud(IUnit unit)
+        public void UpdatePlayerFullUI(IUnit unit, IEquippedGearAddedStats addedStats)
         {
             var stats = unit.Stats as IPlayerUnitStats;
 
-            UpdatePlayerHpAndMp(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
+            UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             UpdatePlayerLevel(stats.Level);
+            UpdateFullPlayerStats(unit, addedStats);
+        }
+
+        public void UpdatePlayerVitalsAndExp(IUnit unit)
+        {
+            var stats = unit.Stats as IPlayerUnitStats;
+
+            UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
+            UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             UpdatePlayerStats(unit);
         }
 
-        public void UpdatePlayerHpAndMp(int currentHP, int maxHP, int currentMP, int maxMP)
+        public void UpdatePlayerVitals(int currentHP, int maxHP, int currentMP, int maxMP)
         {
             _hudModel.SetHPAndMP(currentHP, maxHP, currentMP, maxMP);
         }
@@ -351,6 +360,11 @@ namespace ShadowFlareRemake.UI
         private void UpdatePlayerLevel(int level)
         {
             _hudModel.SetLevel(level);
+        }
+
+        private void UpdateFullPlayerStats(IUnit unit, IEquippedGearAddedStats addedStats)
+        {
+            _statsModel.SetFullPlayerStats(unit, addedStats);
         }
 
         private void UpdatePlayerStats(IUnit unit)
