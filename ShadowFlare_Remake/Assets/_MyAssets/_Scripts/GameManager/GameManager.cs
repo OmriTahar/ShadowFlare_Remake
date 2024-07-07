@@ -5,7 +5,6 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
-using ShadowFlareRemake.UI.Stats;
 using System.Collections.Generic;
 using UnityEngine;
 

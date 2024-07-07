@@ -8192,6 +8192,7 @@ MonoBehaviour:
   _hudView: {fileID: 657828452}
   _levelUpView: {fileID: 71009184}
   _pickedUpLootTranform: {fileID: 1359072667}
+  _lootInfoRect: {fileID: 2146203232}
   _closeButton: {fileID: 1205873426}
 --- !u!224 &921169934 stripped
 RectTransform:
@@ -10136,10 +10137,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 110866647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 99.262505, y: -60}
-  m_SizeDelta: {x: 198.52501, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1119806024
 MonoBehaviour:
@@ -12393,10 +12394,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 110866647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 274.9775, y: -60}
-  m_SizeDelta: {x: 152.905, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1413200889
 MonoBehaviour:
@@ -15083,10 +15084,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2037212391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 106.97749, y: -70}
-  m_SizeDelta: {x: 213.95499, y: 140}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697402922
 MonoBehaviour:
@@ -16715,6 +16716,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1359072667}
+  - {fileID: 2146203232}
   m_Father: {fileID: 915568422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -16736,13 +16738,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pickedUpLootView: {fileID: 1359072668}
   _pickedUpLootImage: {fileID: 1359072669}
+  _lootInfoView: {fileID: 0}
   _moveCursorIcon: {fileID: 2800000, guid: c0b55e16840fbb642b2d8836c473dc39, type: 3}
-  _attackCursorIcon: {fileID: 2800000, guid: 7765a385effce2c48baa6fbcdfcd54eb, type: 3}
-  _pickUpCursorIcon: {fileID: 2800000, guid: ca2f60a685d733140b8108f548d85dc5, type: 3}
+  _attackCursorIcon: {fileID: 2800000, guid: 78c4c396efdc18d44828d481a67c0b79, type: 3}
+  _pickUpCursorIcon: {fileID: 2800000, guid: d40174d4d0697154c8eeead69c833bc9, type: 3}
   _uiCursorIcon: {fileID: 2800000, guid: 4fee88e7ef452b146aa4add22a3da773, type: 3}
   _merchantCursorIcon: {fileID: 2800000, guid: 88a3efd142a70364eb0219ded72e16cd, type: 3}
-  _npcCursorIcon: {fileID: 2800000, guid: 81c11de65c5451d41a9a0eb359e343b5, type: 3}
-  _otherCursorIcon: {fileID: 2800000, guid: 66efa82389d32814ca7e2e56fa53e471, type: 3}
+  _npcCursorIcon: {fileID: 2800000, guid: 541be7c446641ed42b6485ef5aab3746, type: 3}
+  _otherCursorIcon: {fileID: 2800000, guid: 81c11de65c5451d41a9a0eb359e343b5, type: 3}
 --- !u!1001 &1812370361
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17889,7 +17892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1903344055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19461,10 +19464,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2037212391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 282.69247, y: -70}
-  m_SizeDelta: {x: 137.47499, y: 140}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1978813631
 MonoBehaviour:
@@ -20466,6 +20469,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143385028}
+  m_CullTransparentMesh: 1
+--- !u!1 &2146203231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146203232}
+  - component: {fileID: 2146203234}
+  - component: {fileID: 2146203233}
+  m_Layer: 5
+  m_Name: Loot Info Sub View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2146203232
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146203231}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1804044776}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2146203233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146203231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2146203234
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146203231}
   m_CullTransparentMesh: 1
 --- !u!1001 &574675187211450087
 PrefabInstance:

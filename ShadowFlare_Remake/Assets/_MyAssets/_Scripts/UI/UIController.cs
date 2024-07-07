@@ -34,6 +34,7 @@ namespace ShadowFlareRemake.UI
 
         [Header("Loot")]
         [SerializeField] private Transform _pickedUpLootTranform;
+        [SerializeField] private RectTransform _lootInfoRect;
 
         [Header("Other")]
         [SerializeField] private GameObject _closeButton; // Can this be somewhere else?
@@ -43,7 +44,11 @@ namespace ShadowFlareRemake.UI
         private InventoryModel _inventoryModel;
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
+
         private IInputManager _inputManager;
+        private Camera _mainCamera;
+        private float _screenSizeX;
+        private float _screenSizeY;
 
         #region Quick Items Variables
 
@@ -77,6 +82,7 @@ namespace ShadowFlareRemake.UI
             CacheNulls();
             InitModels();
             InitQuickItemsIndexesDict();
+            SetScreenSize();
         }
 
         private void OnDisable()
@@ -88,6 +94,7 @@ namespace ShadowFlareRemake.UI
         {
             SetCurserIcon();
             SetPickedUpLootPosition();
+            SetLootInfoPosition();
         }
 
         #endregion
@@ -110,6 +117,8 @@ namespace ShadowFlareRemake.UI
             {
                 _hudView = GetComponentInChildren<HudView>();
             }
+
+            _mainCamera = Camera.main;
         }
 
         private void InitModels()
@@ -140,6 +149,12 @@ namespace ShadowFlareRemake.UI
             _quickItemsIndexesDict.Add(_numSix_QuickItemActionName, _numSix_QuickItemIndex);
             _quickItemsIndexesDict.Add(_numSeven_QuickItemActionName, _numSeven_QuickItemIndex);
             _quickItemsIndexesDict.Add(_numEight_QuickItemActionName, _numEight_QuickItemIndex);
+        }
+
+        private void SetScreenSize()
+        {
+            _screenSizeX = Screen.width;
+            _screenSizeY = Screen.height;
         }
 
         #endregion
@@ -251,6 +266,45 @@ namespace ShadowFlareRemake.UI
         private void SetPickedUpLootPosition()
         {
             _pickedUpLootTranform.position = _inputManager.CurrentMousePosition;
+        }
+
+        private void SetLootInfoPosition()
+        {
+            // Check if loot info is closed => return;
+
+            var mousePos = _inputManager.CurrentMousePosition;
+            bool isCursorOutOfScreen = mousePos.x < 0 || mousePos.x > _screenSizeX ||
+                                       mousePos.y < 0 || mousePos.y > _screenSizeY;
+
+            if(isCursorOutOfScreen)
+                return;
+
+            var lootInfoX_HalfSize = _lootInfoRect.sizeDelta.x * 0.5f;
+            var lootInfoY_HalfSize = _lootInfoRect.sizeDelta.y * 0.5f;
+            var mousePosMinusScreenX = Mathf.Abs(mousePos.x - _screenSizeX);
+            var mousePosMinusScreenY = Mathf.Abs(mousePos.y - _screenSizeY);
+
+            Vector3 newPos = new Vector3();
+
+            if(mousePosMinusScreenX < lootInfoX_HalfSize || (_screenSizeX - mousePosMinusScreenX) < lootInfoX_HalfSize)
+            {
+                newPos.x = _lootInfoRect.position.x;
+            }
+            else
+            {
+                newPos.x = mousePos.x;
+            }
+
+            if(mousePosMinusScreenY < lootInfoY_HalfSize || (_screenSizeY - mousePosMinusScreenY) < lootInfoY_HalfSize)
+            {
+                newPos.y = _lootInfoRect.position.y;
+            }
+            else
+            {
+                newPos.y = mousePos.y;
+            }
+
+            _lootInfoRect.position = newPos;
         }
 
         #endregion

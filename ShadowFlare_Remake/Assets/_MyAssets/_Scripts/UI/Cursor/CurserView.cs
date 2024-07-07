@@ -13,6 +13,7 @@ namespace ShadowFlareRemake.UI.Cursor
         [Header("Loot")]
         [SerializeField] private LootView _pickedUpLootView;
         [SerializeField] private Image _pickedUpLootImage;
+        [SerializeField] private LootInfoSubView _lootInfoView;
 
         [Header("Curser Icons")]
         [SerializeField] private Texture2D _moveCursorIcon;
