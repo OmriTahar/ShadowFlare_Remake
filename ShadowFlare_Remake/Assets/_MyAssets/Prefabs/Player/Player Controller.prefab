@@ -146,10 +146,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 2759206233626363538}
+  _frontRayOrigin: {fileID: 6072128260396353119}
   _meleeAttack: {fileID: 5761767850719682248}
   _stepForwardDuration: 0.2
   _attackDistance: 2.8
   _pickUpDistance: 2
+--- !u!1 &8906925711570099477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6072128260396353119}
+  m_Layer: 8
+  m_Name: Front Ray Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6072128260396353119
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8906925711570099477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 0.03, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6041939262222033734}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5956839983461413969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -291,7 +323,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 104627156368578327, guid: 361d8add2fe03a54690d8cdb30fd364c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6072128260396353119}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361d8add2fe03a54690d8cdb30fd364c, type: 3}
 --- !u!114 &742450719980607758 stripped
@@ -321,6 +357,12 @@ MonoBehaviour:
 --- !u!4 &5961332597317372369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4532250632830336, guid: 361d8add2fe03a54690d8cdb30fd364c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5956839983461413969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6041939262222033734 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 104627156368578327, guid: 361d8add2fe03a54690d8cdb30fd364c,
     type: 3}
   m_PrefabInstance: {fileID: 5956839983461413969}
   m_PrefabAsset: {fileID: 0}

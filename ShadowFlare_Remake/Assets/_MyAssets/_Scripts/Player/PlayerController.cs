@@ -16,6 +16,7 @@ namespace ShadowFlareRemake.Player
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
+        [SerializeField] private Transform _frontRayOrigin;
         [SerializeField] private Attack _meleeAttack;
 
         [Header("Movement Settings")]
@@ -34,6 +35,7 @@ namespace ShadowFlareRemake.Player
 
         private Coroutine _lastMoveCoroutine;
         private Vector3 _lastTargetPos;
+        private Ray _forwardRay;
         private bool _isAttacking = false;
         private bool _isLastActionWasMove = false;
 
@@ -267,35 +269,23 @@ namespace ShadowFlareRemake.Player
             _lastMoveCoroutine = StartCoroutine(AttackStepForwardLogic(_stepForwardDuration));
         }
 
-        private IEnumerator AttackStepForwardLogicNew(float timeToComplete)
+        private IEnumerator AttackStepForwardLogic(float timeToComplete) // Check if you can improve this
         {
             float timer = 0;
             var movementSpeed = _model.Stats.MovementSpeed;
+            _forwardRay = new Ray(_frontRayOrigin.position, transform.forward);
 
             while(timer < timeToComplete)
             {
-                if(!Physics.Raycast(transform.position, Vector3.forward, _attackDistance, EnemyLayer))
+                if(Physics.Raycast(_forwardRay, out RaycastHit hit, _attackDistance))
                 {
-                    Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
-                    _characterController.Move(movement);
+                    if(hit.collider.gameObject.layer != EnemyLayer)
+                    {
+                        Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
+                        _characterController.Move(movement);
+                    }
                 }
-
-                timer += Time.deltaTime;
-                yield return null;
-            }
-        }
-
-        private IEnumerator AttackStepForwardLogic(float timeToComplete)
-        {
-            float timer = 0;
-            float distanceFromEnemy = 0;
-            var movementSpeed = _model.Stats.MovementSpeed;
-
-            while(timer < timeToComplete)
-            {
-                distanceFromEnemy = Vector3.Distance(transform.position, _lastTargetPos);
-
-                if(distanceFromEnemy > _attackDistance)
+                else
                 {
                     Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
                     _characterController.Move(movement);
@@ -357,6 +347,16 @@ namespace ShadowFlareRemake.Player
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack);
             }
+        }
+
+        #endregion
+
+        #region Gizmos
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(_forwardRay.origin, _forwardRay.direction * _attackDistance);
         }
 
         #endregion
