@@ -1561,7 +1561,7 @@ MonoBehaviour:
   _testLootDataToSpawn: {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98,
     type: 2}
   _testEnemyToSpawn: {fileID: 1302082256}
-  _isEnemyActiveOnSpawn: 1
+  _isEnemyActiveOnSpawn: 0
   _healOrDamageAmount: 10
 --- !u!4 &153281228
 Transform:

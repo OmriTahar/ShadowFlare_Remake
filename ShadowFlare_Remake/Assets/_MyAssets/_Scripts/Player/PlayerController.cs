@@ -269,7 +269,7 @@ namespace ShadowFlareRemake.Player
             _lastMoveCoroutine = StartCoroutine(AttackStepForwardLogic(_stepForwardDuration));
         }
 
-        private IEnumerator AttackStepForwardLogic(float timeToComplete) // Check if you can improve this
+        private IEnumerator AttackStepForwardLogic(float timeToComplete)
         {
             float timer = 0;
             var movementSpeed = _model.Stats.MovementSpeed;
@@ -279,17 +279,12 @@ namespace ShadowFlareRemake.Player
             {
                 if(Physics.Raycast(_forwardRay, out RaycastHit hit, _attackDistance))
                 {
-                    if(hit.collider.gameObject.layer != EnemyLayer)
-                    {
-                        Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
-                        _characterController.Move(movement);
-                    }
+                    if(hit.collider.gameObject.layer == EnemyLayer)
+                        break;
                 }
-                else
-                {
-                    Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
-                    _characterController.Move(movement);
-                }
+
+                Vector3 movement = transform.forward * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
 
                 timer += Time.deltaTime;
                 yield return null;
