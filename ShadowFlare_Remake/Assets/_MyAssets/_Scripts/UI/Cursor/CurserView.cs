@@ -28,12 +28,7 @@ namespace ShadowFlareRemake.UI.Cursor
         {
             HandleCurserIcon(Model.CurrentCursorIconState);
             HandlePickedUpLootView();
-        }
-
-        private void HandleCurserIcon(CursorIconState newCurserIconState)
-        {
-            var newIcon = GetCurserIcon(newCurserIconState);
-            UnityEngine.Cursor.SetCursor(newIcon, Vector2.zero, CursorMode.Auto);
+            HandleHoveredLoot();
         }
 
         private void HandlePickedUpLootView()
@@ -52,6 +47,24 @@ namespace ShadowFlareRemake.UI.Cursor
 
             OnCurserHoldingLootChange?.Invoke(isHoldingLoot);
         }
+
+        private void HandleHoveredLoot()
+        {
+            if(Model.CurentHoveredLootModel == null)
+            {
+                _lootInfoView.gameObject.SetActive(false);
+                return;
+            }
+
+            _lootInfoView.gameObject.SetActive(true);
+        }
+
+        private void HandleCurserIcon(CursorIconState newCurserIconState)
+        {
+            var newIcon = GetCurserIcon(newCurserIconState);
+            UnityEngine.Cursor.SetCursor(newIcon, Vector2.zero, CursorMode.Auto);
+        }
+
 
         private Texture2D GetCurserIcon(CursorIconState cursorIconState)
         {

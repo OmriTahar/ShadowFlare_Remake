@@ -52,6 +52,7 @@ namespace ShadowFlareRemake.UI.Cursor
         {
             CurentHoveredLootModel = lootModel;
             CurrentHoveredLootModelRootIndex = rootIndex;
+            Changed();
         }
 
         #endregion
