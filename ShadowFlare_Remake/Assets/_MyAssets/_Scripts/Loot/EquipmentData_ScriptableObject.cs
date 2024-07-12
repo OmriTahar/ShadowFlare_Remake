@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Loot
@@ -5,6 +6,8 @@ namespace ShadowFlareRemake.Loot
     [CreateAssetMenu(fileName = "NewEquipment", menuName = "Scriptable Objects/Create New Loot/Create New Equipment")]
     public class EquipmentData_ScriptableObject : LootData_ScriptableObject
     {
+        public Dictionary<string, int> StatsDict { get; private set; } = new();
+
         [Space(15)]
         [SerializeField] private string ______PHYSICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
@@ -26,5 +29,24 @@ namespace ShadowFlareRemake.Loot
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
 
         private const string _spaceLine = "------------------------------------";
+
+        private void Awake()
+        {
+            StatsDict.Add("Max HP", MaxHP);
+            StatsDict.Add("Attack", Attack);
+            StatsDict.Add("Defense", Defense);
+            StatsDict.Add("HitRate", HitRate);
+            StatsDict.Add("Evasion Rate", EvasionRate);
+            StatsDict.Add("MovementSpeed", MovementSpeed);
+            StatsDict.Add("Attack Speed", AttackSpeed);
+            StatsDict.Add("Strength", Strength);
+
+            StatsDict.Add("Max MP", MaxMP);
+            StatsDict.Add("Magical Attack", MagicalAttack);
+            StatsDict.Add("Magical Defense", MagicalDefense);
+            StatsDict.Add("Magical Hit Rate", MagicalHitRate);
+            StatsDict.Add("Magical Evasion Rate", MagicalEvasionRate);
+            StatsDict.Add("Magical Attack Speed", MagicalAttackSpeed);
+        }
     }
 }
