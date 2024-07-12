@@ -1,6 +1,7 @@
 using ShadowFlareRemake.Loot;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory
@@ -13,6 +14,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
+        [SerializeField] private TMP_Text _goldText;
 
         [Header("Items Grids")]
         [SerializeField] private ItemsGridView _talismanItemsGridView;
