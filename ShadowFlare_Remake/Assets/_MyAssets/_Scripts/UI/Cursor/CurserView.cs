@@ -50,7 +50,9 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void HandleHoveredLoot()
         {
-            if(Model.CurentHoveredLootModel == null) // Continue from here!!!! Check if current hovered grid model is carry
+            var hoveredItemsGrid = Model.CurrentHoveredItemsGridType;
+
+            if(Model.CurentHoveredLootModel == null || hoveredItemsGrid == ItemsGridType.QuickItems || hoveredItemsGrid == ItemsGridType.None)
             {
                 _lootInfoView.SetIsActive(false);
                 return;

@@ -25,20 +25,19 @@ namespace ShadowFlareRemake.UI.Cursor
             if(lootModel.LootCategory == Enums.LootCategory.Equipment)
             {
                 var data = lootModel.LootData as EquipmentData_ScriptableObject;
-                HandleEquipmentData(data);
+                HandleSetInfoLines(data.GetStatsDict());
             }
 
             else if(lootModel.LootCategory == Enums.LootCategory.Potion)
             {
                 var data = lootModel.LootData as PotionData_ScriptableObject;
-                HandlePotionsData(data);
+                HandleSetInfoLines(data.GetStatsDict());
             }
         }
 
-        private void HandleEquipmentData(EquipmentData_ScriptableObject data)
+        private void HandleSetInfoLines(Dictionary<string, int> statsDict)
         {
             var index = 0;
-            var statsDict = data.GetStatsDict();
 
             foreach(var pair in statsDict)
             {
@@ -50,11 +49,6 @@ namespace ShadowFlareRemake.UI.Cursor
                 _lootInfoLines[index].gameObject.SetActive(true);
                 index++;
             }
-        }
-
-        private void HandlePotionsData(PotionData_ScriptableObject data)
-        {
-
         }
 
         private void SetInfoLine(LootInfoLine infoLine, string header, string text)

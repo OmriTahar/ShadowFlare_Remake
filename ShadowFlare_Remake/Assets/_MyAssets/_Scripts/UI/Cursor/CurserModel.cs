@@ -6,6 +6,7 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
+        public ItemsGridType CurrentHoveredItemsGridType { get; private set; } = ItemsGridType.None;  
         public LootModel CurentHoveredLootModel { get; private set; }
         public Vector2Int CurrentHoveredLootModelRootIndex { get; private set; }
         public LootModel CurrentHeldLootModel { get; private set; }
@@ -55,6 +56,12 @@ namespace ShadowFlareRemake.UI.Cursor
 
             CurentHoveredLootModel = lootModel;
             CurrentHoveredLootModelRootIndex = rootIndex;
+            Changed();
+        }
+
+        public void SetCurrentHoveredItemsGridType(ItemsGridType itemsGridType)
+        {
+            CurrentHoveredItemsGridType = itemsGridType;
             Changed();
         }
 

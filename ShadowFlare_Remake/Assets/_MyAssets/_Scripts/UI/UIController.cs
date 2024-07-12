@@ -199,6 +199,17 @@ namespace ShadowFlareRemake.UI
             OnIsPlayerHoldingLootChanged?.Invoke(isHoldingLoot);
         }
 
+        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
+            if(!isCursorOn)
+            {
+                _curserModel.SetCurrentHoveredItemsGridType(ItemsGridType.None);
+                return;
+            }
+
+            _curserModel.SetCurrentHoveredItemsGridType(itemsGridModel.ItemsGridType);
+        }
+
         #endregion
 
         #region Item Grids & Loot
@@ -597,6 +608,7 @@ namespace ShadowFlareRemake.UI
             {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
+                _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered += HandleLootViewHovered;
                 _inventoryView.OnTileClicked += HandleItemsGridClicked;
             }
@@ -604,6 +616,7 @@ namespace ShadowFlareRemake.UI
             {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
+                _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered -= HandleLootViewHovered;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
             }
