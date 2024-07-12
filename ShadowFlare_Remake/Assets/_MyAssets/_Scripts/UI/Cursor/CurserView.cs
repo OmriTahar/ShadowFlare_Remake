@@ -13,7 +13,7 @@ namespace ShadowFlareRemake.UI.Cursor
         [Header("Loot")]
         [SerializeField] private LootView _pickedUpLootView;
         [SerializeField] private Image _pickedUpLootImage;
-        [SerializeField] private LootInfoSubView _lootInfoView;
+        [SerializeField] private LootInfoTooltipView _lootInfoTooltipView;
 
         [Header("Curser Icons")]
         [SerializeField] private Texture2D _moveCursorIcon;
@@ -24,11 +24,15 @@ namespace ShadowFlareRemake.UI.Cursor
         [SerializeField] private Texture2D _npcCursorIcon;
         [SerializeField] private Texture2D _otherCursorIcon;
 
+        protected override void ModelReplaced()
+        {
+            _lootInfoTooltipView.SetModel(Model.LootInfoTooltipModel);
+        }
+
         protected override void ModelChanged()
         {
             HandleCurserIcon(Model.CurrentCursorIconState);
             HandlePickedUpLootView();
-            HandleHoveredLoot();
         }
 
         private void HandlePickedUpLootView()
@@ -46,20 +50,6 @@ namespace ShadowFlareRemake.UI.Cursor
             }
 
             OnCurserHoldingLootChange?.Invoke(isHoldingLoot);
-        }
-
-        private void HandleHoveredLoot()
-        {
-            var hoveredItemsGrid = Model.CurrentHoveredItemsGridType;
-
-            if(Model.CurentHoveredLootModel == null || hoveredItemsGrid == ItemsGridType.QuickItems || hoveredItemsGrid == ItemsGridType.None)
-            {
-                _lootInfoView.SetIsActive(false);
-                return;
-            }
-
-            _lootInfoView.SetData(Model.CurentHoveredLootModel);
-            _lootInfoView.SetIsActive(true);
         }
 
         private void HandleCurserIcon(CursorIconState newCurserIconState)

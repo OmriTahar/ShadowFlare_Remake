@@ -18985,7 +18985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pickedUpLootView: {fileID: 1359072668}
   _pickedUpLootImage: {fileID: 1359072669}
-  _lootInfoView: {fileID: 2146203235}
+  _lootInfoTooltipView: {fileID: 2146203235}
   _moveCursorIcon: {fileID: 2800000, guid: c0b55e16840fbb642b2d8836c473dc39, type: 3}
   _attackCursorIcon: {fileID: 2800000, guid: 78c4c396efdc18d44828d481a67c0b79, type: 3}
   _pickUpCursorIcon: {fileID: 2800000, guid: d40174d4d0697154c8eeead69c833bc9, type: 3}
@@ -23434,7 +23434,7 @@ GameObject:
   - component: {fileID: 2146203234}
   - component: {fileID: 2146203235}
   m_Layer: 5
-  m_Name: Loot Info Sub View
+  m_Name: Loot Info Tooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

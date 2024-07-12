@@ -199,17 +199,6 @@ namespace ShadowFlareRemake.UI
             OnIsPlayerHoldingLootChanged?.Invoke(isHoldingLoot);
         }
 
-        private void SetCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
-        {
-            if(!isCursorOn)
-            {
-                _curserModel.SetCurrentHoveredItemsGridType(ItemsGridType.None);
-                return;
-            }
-
-            _curserModel.SetCurrentHoveredItemsGridType(itemsGridModel.ItemsGridType);
-        }
-
         #endregion
 
         #region Item Grids & Loot
@@ -234,9 +223,20 @@ namespace ShadowFlareRemake.UI
             _curserModel.DropLoot();
         }
 
-        private void HandleLootViewHovered(LootModel lootModel, Vector2Int tileIndex)
+        private void HandleCurrentHoveredTileGrid(LootModel lootModel, Vector2Int tileIndex)
         {
             _curserModel.SetCurrentHoveredLootModel(lootModel, tileIndex);
+        }
+
+        private void HandleCurrentHoveredItemsGrid(ItemsGridModel itemsGridModel, bool isCursorOn)
+        {
+            if(!isCursorOn)
+            {
+                _curserModel.SetCurrentHoveredItemsGridType(ItemsGridType.None);
+                return;
+            }
+
+            _curserModel.SetCurrentHoveredItemsGridType(itemsGridModel.ItemsGridType);
         }
 
         private void HandleItemsGridClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
@@ -281,11 +281,8 @@ namespace ShadowFlareRemake.UI
 
         private void SetLootInfoPosition()
         {
-            // Check if loot info is closed => return;
-
             var mousePos = _inputManager.CurrentMousePosition;
-            bool isCursorOutOfScreen = mousePos.x < 0 || mousePos.x > _screenSizeX ||
-                                       mousePos.y < 0 || mousePos.y > _screenSizeY;
+            var isCursorOutOfScreen = mousePos.x < 0 || mousePos.x > _screenSizeX || mousePos.y < 0 || mousePos.y > _screenSizeY;
 
             if(isCursorOutOfScreen)
                 return;
@@ -294,7 +291,6 @@ namespace ShadowFlareRemake.UI
             var lootInfoY_HalfSize = _lootInfoRect.sizeDelta.y * 0.5f;
             var mousePosMinusScreenX = Mathf.Abs(mousePos.x - _screenSizeX);
             var mousePosMinusScreenY = Mathf.Abs(mousePos.y - _screenSizeY);
-
             Vector3 newPos = new Vector3();
 
             if(mousePosMinusScreenX < lootInfoX_HalfSize || (_screenSizeX - mousePosMinusScreenX) < lootInfoX_HalfSize)
@@ -608,16 +604,16 @@ namespace ShadowFlareRemake.UI
             {
                 _inventoryView.OnCurserEnterUI += CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI += CursorLeftUI;
-                _inventoryView.OnCursorChangedHoverOverGrid += SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileHovered += HandleLootViewHovered;
+                _inventoryView.OnCursorChangedHoverOverGrid += HandleCurrentHoveredItemsGrid;
+                _inventoryView.OnTileHovered += HandleCurrentHoveredTileGrid;
                 _inventoryView.OnTileClicked += HandleItemsGridClicked;
             }
             else
             {
                 _inventoryView.OnCurserEnterUI -= CursorEnteredUI;
                 _inventoryView.OnCurserLeftUI -= CursorLeftUI;
-                _inventoryView.OnCursorChangedHoverOverGrid -= SetCurrentHoveredItemsGrid;
-                _inventoryView.OnTileHovered -= HandleLootViewHovered;
+                _inventoryView.OnCursorChangedHoverOverGrid -= HandleCurrentHoveredItemsGrid;
+                _inventoryView.OnTileHovered -= HandleCurrentHoveredTileGrid;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
             }
         }

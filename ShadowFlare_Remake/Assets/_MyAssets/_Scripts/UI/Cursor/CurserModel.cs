@@ -6,17 +6,19 @@ namespace ShadowFlareRemake.UI.Cursor
 {
     public class CurserModel : Model
     {
-        public ItemsGridType CurrentHoveredItemsGridType { get; private set; } = ItemsGridType.None;  
+        public ItemsGridType CurrentHoveredItemsGridType { get; private set; } = ItemsGridType.None;
         public LootModel CurentHoveredLootModel { get; private set; }
         public Vector2Int CurrentHoveredLootModelRootIndex { get; private set; }
         public LootModel CurrentHeldLootModel { get; private set; }
         public CursorIconState CurrentCursorIconState { get; private set; }
+        public LootInfoTooltipModel LootInfoTooltipModel { get; private set; }
 
         #region Initialization
 
         public CurserModel(CursorIconState cursorState = CursorIconState.Move)
         {
             SetCursorIconState(cursorState);
+            LootInfoTooltipModel = new LootInfoTooltipModel();
         }
 
         #endregion
@@ -56,13 +58,27 @@ namespace ShadowFlareRemake.UI.Cursor
 
             CurentHoveredLootModel = lootModel;
             CurrentHoveredLootModelRootIndex = rootIndex;
+            HandleLootInfoTooltip();
             Changed();
         }
 
         public void SetCurrentHoveredItemsGridType(ItemsGridType itemsGridType)
         {
             CurrentHoveredItemsGridType = itemsGridType;
+            HandleLootInfoTooltip();
             Changed();
+        }
+
+        private void HandleLootInfoTooltip()
+        {
+            if(CurentHoveredLootModel == null || CurrentHoveredItemsGridType == ItemsGridType.QuickItems || CurrentHoveredItemsGridType == ItemsGridType.None)
+            {
+                LootInfoTooltipModel.SetIsActive(false);
+                return;
+            }
+
+            LootInfoTooltipModel.SetLootModel(CurentHoveredLootModel);
+            LootInfoTooltipModel.SetIsActive(true);
         }
 
         #endregion

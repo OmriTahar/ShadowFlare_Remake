@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using System.Collections.Generic;
 using TMPro;
@@ -5,30 +6,40 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Cursor
 {
-    public class LootInfoSubView : MonoBehaviour
+    public class LootInfoTooltipView : View<LootInfoTooltipModel>
     {
         [Header("References")]
         [SerializeField] private GameObject _panel;
         [SerializeField] private TMP_Text _nameText;
-        [SerializeField] private List<LootInfoLine> _lootInfoLines;
+        [SerializeField] private List<LootInfoTooltipLine> _lootInfoLines;
 
-        public void SetIsActive(bool isActive)
+        protected override void ModelChanged()
         {
-            _panel.SetActive(isActive);
+            SetData();
+            SetIsActive();
         }
 
-        public void SetData(LootModel lootModel)
+        private void SetIsActive()
+        {
+            _panel.SetActive(Model.IsActive);
+        }
+
+        public void SetData()
         {
             TurnOffLines();
+
+            if(Model.LootModel == null)
+                return;
+
+            var lootModel = Model.LootModel;
             _nameText.text = lootModel.LootData.Name;
 
-            if(lootModel.LootCategory == Enums.LootCategory.Equipment)
+            if(lootModel.LootCategory == LootCategory.Equipment)
             {
                 var data = lootModel.LootData as EquipmentData_ScriptableObject;
                 HandleSetInfoLines(data.GetStatsDict());
             }
-
-            else if(lootModel.LootCategory == Enums.LootCategory.Potion)
+            else if(lootModel.LootCategory == LootCategory.Potion)
             {
                 var data = lootModel.LootData as PotionData_ScriptableObject;
                 HandleSetInfoLines(data.GetStatsDict());
@@ -51,7 +62,7 @@ namespace ShadowFlareRemake.UI.Cursor
             }
         }
 
-        private void SetInfoLine(LootInfoLine infoLine, string header, string text)
+        private void SetInfoLine(LootInfoTooltipLine infoLine, string header, string text)
         {
             infoLine.Header.text = header;
             infoLine.Text.text = text;
