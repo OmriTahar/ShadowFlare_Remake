@@ -6,8 +6,6 @@ namespace ShadowFlareRemake.Loot
     [CreateAssetMenu(fileName = "NewEquipment", menuName = "Scriptable Objects/Create New Loot/Create New Equipment")]
     public class EquipmentData_ScriptableObject : LootData_ScriptableObject
     {
-        public Dictionary<string, int> StatsDict { get; private set; } = new();
-
         [Space(15)]
         [SerializeField] private string ______PHYSICAL_____ = _spaceLine;
         [field: SerializeField] public int MaxHP { get; private set; }
@@ -28,25 +26,46 @@ namespace ShadowFlareRemake.Loot
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
 
+        [Space(15)]
+        [SerializeField] private string ______INFO_____ = _spaceLine;
+        [field: SerializeField] public int Durability { get; private set; }
+        [field: SerializeField] public int RequiredLevel { get; private set; }
+        [field: SerializeField] public int SellPrice { get; private set; }
+
+
         private const string _spaceLine = "------------------------------------";
 
-        private void Awake()
-        {
-            StatsDict.Add("Max HP", MaxHP);
-            StatsDict.Add("Attack", Attack);
-            StatsDict.Add("Defense", Defense);
-            StatsDict.Add("HitRate", HitRate);
-            StatsDict.Add("Evasion Rate", EvasionRate);
-            StatsDict.Add("MovementSpeed", MovementSpeed);
-            StatsDict.Add("Attack Speed", AttackSpeed);
-            StatsDict.Add("Strength", Strength);
+        private Dictionary<string, int> _statsDict = new();
 
-            StatsDict.Add("Max MP", MaxMP);
-            StatsDict.Add("Magical Attack", MagicalAttack);
-            StatsDict.Add("Magical Defense", MagicalDefense);
-            StatsDict.Add("Magical Hit Rate", MagicalHitRate);
-            StatsDict.Add("Magical Evasion Rate", MagicalEvasionRate);
-            StatsDict.Add("Magical Attack Speed", MagicalAttackSpeed);
+        public Dictionary<string, int> GetStatsDict()
+        {
+            if(_statsDict.Count <= 0)
+                InitStatsDict();
+
+            return _statsDict;
+        }
+
+        private void InitStatsDict()
+        {
+            _statsDict.Add("Max HP", MaxHP);
+            _statsDict.Add("Attack", Attack);
+            _statsDict.Add("Defense", Defense);
+            _statsDict.Add("HitRate", HitRate);
+            _statsDict.Add("Evasion Rate", EvasionRate);
+            _statsDict.Add("Movement Speed", MovementSpeed);
+            _statsDict.Add("Attack Speed", AttackSpeed);
+            _statsDict.Add("Strength", Strength);
+
+            _statsDict.Add("Max MP", MaxMP);
+            _statsDict.Add("Magical Attack", MagicalAttack);
+            _statsDict.Add("Magical Defense", MagicalDefense);
+            _statsDict.Add("M. Hit Rate", MagicalHitRate);
+            _statsDict.Add("M. Evasion Rate", MagicalEvasionRate);
+            _statsDict.Add("M. Attack Speed", MagicalAttackSpeed);
+
+            _statsDict.Add("Durability", Durability);
+            _statsDict.Add("Required Level", RequiredLevel);
+            _statsDict.Add("Sell Price", SellPrice);
         }
     }
 }

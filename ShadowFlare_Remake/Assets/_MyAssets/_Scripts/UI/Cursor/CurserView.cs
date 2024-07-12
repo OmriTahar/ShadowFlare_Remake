@@ -50,13 +50,14 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void HandleHoveredLoot()
         {
-            if(Model.CurentHoveredLootModel == null)
+            if(Model.CurentHoveredLootModel == null) // Continue from here!!!! Check if current hovered grid model is carry
             {
-                _lootInfoView.gameObject.SetActive(false);
+                _lootInfoView.SetIsActive(false);
                 return;
             }
 
-            _lootInfoView.gameObject.SetActive(true);
+            _lootInfoView.SetData(Model.CurentHoveredLootModel);
+            _lootInfoView.SetIsActive(true);
         }
 
         private void HandleCurserIcon(CursorIconState newCurserIconState)

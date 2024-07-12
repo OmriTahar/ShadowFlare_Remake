@@ -94,7 +94,7 @@ namespace ShadowFlareRemake.UI.Inventory
             OnTileClicked?.Invoke(Model, index, lootModel);
         }
 
-        private void InovkeLootViewHovered(Vector2Int index, bool isHovered)
+        private void InovkeGridTileHovered(Vector2Int index, bool isHovered)
         {
             if(!isHovered)
             {
@@ -124,7 +124,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             foreach(var tileView in _gridTilesDict.Values)
             {
-                tileView.OnTileHovered += InovkeLootViewHovered;
+                tileView.OnTileHovered += InovkeGridTileHovered;
                 tileView.OnTileClicked += InovkeTileClicked;
             }
         }
@@ -133,7 +133,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             foreach(var tileView in _gridTilesDict.Values)
             {
-                tileView.OnTileHovered -= InovkeLootViewHovered;
+                tileView.OnTileHovered -= InovkeGridTileHovered;
                 tileView.OnTileClicked -= InovkeTileClicked;
             }
         }

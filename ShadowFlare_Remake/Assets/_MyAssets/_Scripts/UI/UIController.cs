@@ -344,7 +344,10 @@ namespace ShadowFlareRemake.UI
             if(_curserModel.CurentHoveredLootModel == null)
                 return;
 
-            OnPotionClicked?.Invoke(_curserModel.CurentHoveredLootModel, _curserModel.CurrentHoveredLootModelRootIndex);
+            if(_curserModel.CurentHoveredLootModel.LootCategory == LootCategory.Potion)
+            {
+                OnPotionClicked?.Invoke(_curserModel.CurentHoveredLootModel, _curserModel.CurrentHoveredLootModelRootIndex);
+            }
         }
 
         public void RemovePotionFromInventory(Vector2Int index, LootType lootType)

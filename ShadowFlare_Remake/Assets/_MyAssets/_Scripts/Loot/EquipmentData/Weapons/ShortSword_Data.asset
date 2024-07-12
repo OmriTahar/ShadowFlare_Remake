@@ -21,5 +21,23 @@ MonoBehaviour:
   _________SIZE_________: ------------------------------------
   <Width>k__BackingField: 1
   <Height>k__BackingField: 4
-  _________ATTRIBUTES_________: ------------------------------------
+  ______PHYSICAL_____: ------------------------------------
+  <MaxHP>k__BackingField: 0
   <Attack>k__BackingField: 5
+  <Defense>k__BackingField: 0
+  <HitRate>k__BackingField: 0
+  <EvasionRate>k__BackingField: 0
+  <MovementSpeed>k__BackingField: 0
+  <AttackSpeed>k__BackingField: 0
+  <Strength>k__BackingField: 0
+  ______MAGICAL_____: ------------------------------------
+  <MaxMP>k__BackingField: 0
+  <MagicalAttack>k__BackingField: 0
+  <MagicalDefense>k__BackingField: 0
+  <MagicalHitRate>k__BackingField: 0
+  <MagicalEvasionRate>k__BackingField: 0
+  <MagicalAttackSpeed>k__BackingField: 0
+  ______INFO_____: ------------------------------------
+  <Durability>k__BackingField: 100
+  <RequiredLevel>k__BackingField: 1
+  <SellPrice>k__BackingField: 50

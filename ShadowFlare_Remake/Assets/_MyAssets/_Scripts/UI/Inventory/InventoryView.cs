@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Loot;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Inventory
@@ -23,10 +24,13 @@ namespace ShadowFlareRemake.UI.Inventory
         [SerializeField] private ItemsGridView _carryItemsGridView;
         [SerializeField] private ItemsGridView _quickItemsGridView;
 
+        private List<ItemsGridView> _itemsGridViews = new();
+
         #region View Overrides
 
         protected override void Initialize()
         {
+            InitItemsGridViewsList();
             RegisterEvents();
             SetItemsGridModels();
         }
@@ -44,6 +48,18 @@ namespace ShadowFlareRemake.UI.Inventory
         #endregion
 
         #region Initialization
+
+        private void InitItemsGridViewsList()
+        {
+            _itemsGridViews.Add(_talismanItemsGridView);
+            _itemsGridViews.Add(_weaponItemsGridView);
+            _itemsGridViews.Add(_shieldItemsGridlView);
+            _itemsGridViews.Add(_helmetItemsGridView);
+            _itemsGridViews.Add(_armorItemsGridView);
+            _itemsGridViews.Add(_bootsItemsGridView);
+            _itemsGridViews.Add(_carryItemsGridView);
+            _itemsGridViews.Add(_quickItemsGridView);
+        }
 
         private void SetItemsGridModels()
         {
@@ -82,50 +98,22 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void RegisterEvents()
         {
-            _talismanItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _weaponItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _shieldItemsGridlView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _helmetItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _armorItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _bootsItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _carryItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-            _quickItemsGridView.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
-
-            _talismanItemsGridView.OnTileClicked += InvokeTileClicked;
-            _weaponItemsGridView.OnTileClicked += InvokeTileClicked;
-            _shieldItemsGridlView.OnTileClicked += InvokeTileClicked;
-            _helmetItemsGridView.OnTileClicked += InvokeTileClicked;
-            _armorItemsGridView.OnTileClicked += InvokeTileClicked;
-            _bootsItemsGridView.OnTileClicked += InvokeTileClicked;
-            _carryItemsGridView.OnTileClicked += InvokeTileClicked;
-            _quickItemsGridView.OnTileClicked += InvokeTileClicked;
-
-            _carryItemsGridView.OnTileHovered += InvokeTileHovered;
-            _quickItemsGridView.OnTileHovered += InvokeTileHovered;
+            foreach(var view in _itemsGridViews)
+            {
+                view.OnCursorChangedHoverOverGrid += InvokeCursorChangedHoverOverGrid;
+                view.OnTileHovered += InvokeTileHovered;
+                view.OnTileClicked += InvokeTileClicked;
+            }
         }
 
         private void DeregisterEvents()
         {
-            _talismanItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _weaponItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _shieldItemsGridlView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _helmetItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _armorItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _bootsItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _carryItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-            _quickItemsGridView.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
-
-            _talismanItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _weaponItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _shieldItemsGridlView.OnTileClicked -= InvokeTileClicked;
-            _helmetItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _armorItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _bootsItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _carryItemsGridView.OnTileClicked -= InvokeTileClicked;
-            _quickItemsGridView.OnTileClicked -= InvokeTileClicked;
-
-            _carryItemsGridView.OnTileHovered -= InvokeTileHovered;
-            _quickItemsGridView.OnTileHovered -= InvokeTileHovered;
+            foreach(var view in _itemsGridViews)
+            {
+                view.OnCursorChangedHoverOverGrid -= InvokeCursorChangedHoverOverGrid;
+                view.OnTileHovered -= InvokeTileHovered;
+                view.OnTileClicked -= InvokeTileClicked;
+            }
         }
 
         #endregion

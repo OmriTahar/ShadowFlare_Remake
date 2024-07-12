@@ -50,6 +50,9 @@ namespace ShadowFlareRemake.UI.Cursor
 
         public void SetCurrentHoveredLootModel(LootModel lootModel, Vector2Int rootIndex)
         {
+            if(lootModel == CurentHoveredLootModel)
+                return;
+
             CurentHoveredLootModel = lootModel;
             CurrentHoveredLootModelRootIndex = rootIndex;
             Changed();

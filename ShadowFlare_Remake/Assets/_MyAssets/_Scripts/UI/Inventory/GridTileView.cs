@@ -5,7 +5,7 @@ using ShadowFlareRemake.Loot;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
-    public class GridTileView : View<GridTileModel>, IPointerEnterHandler, IPointerExitHandler
+    public class GridTileView : UIView<GridTileModel>, IPointerEnterHandler, IPointerExitHandler
     {
         public event Action<Vector2Int, bool> OnTileHovered;
         public event Action<Vector2Int> OnTileClicked;
@@ -48,12 +48,12 @@ namespace ShadowFlareRemake.UI.Inventory
             _lootView.SetModel(Model.LootModel);
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void OnPointerEnter(PointerEventData eventData)
         {
             OnTileHovered?.Invoke(Index, true);
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public override void OnPointerExit(PointerEventData eventData)
         {
             OnTileHovered?.Invoke(Index, false);
         }

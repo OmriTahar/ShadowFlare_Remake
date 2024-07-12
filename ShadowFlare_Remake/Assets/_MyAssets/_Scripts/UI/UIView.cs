@@ -9,12 +9,12 @@ namespace ShadowFlareRemake.UI {
 
         protected override void ModelChanged() { }
 
-        public void OnPointerEnter(PointerEventData eventData) {
+        public virtual void OnPointerEnter(PointerEventData eventData) {
 
             OnCurserEnterUI?.Invoke(eventData);
         }
 
-        public void OnPointerExit(PointerEventData eventData) {
+        public virtual void OnPointerExit(PointerEventData eventData) {
 
             OnCurserLeftUI?.Invoke(eventData);
         }
