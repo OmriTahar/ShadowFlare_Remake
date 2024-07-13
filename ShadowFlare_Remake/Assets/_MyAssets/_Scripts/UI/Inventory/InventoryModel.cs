@@ -52,23 +52,24 @@ namespace ShadowFlareRemake.UI.Inventory
             Changed();
         }
 
-        public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
+        public bool TryAutoPlace_Loot(LootModel lootModel)
         {
             var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
-            bool isSuccess = false;
-            bool isGold = lootModel.LootCategory == LootCategory.Gold;
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
                 TryAddOrRemoveEquippedGearFromList(specificItemsGridModel.ItemsGridType, lootModel, true);
-                isSuccess = true;
-            }
-            else
-            {
-                isSuccess = CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
+                return true;
             }
 
-            if(isSuccess && isGold)
+            return CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
+        }
+
+        public bool TryAutoPlace_Gold(LootModel lootModel)
+        {
+            var isSuccess = CarryItemsGridModel.TryAutoPlaceGoldOnGrid(lootModel);
+
+            if(isSuccess)
             {
                 UpdateGoldAmount();
             }
@@ -138,7 +139,7 @@ namespace ShadowFlareRemake.UI.Inventory
             foreach(var model in goldLootModels)
             {
                 var data = model.LootData as GoldData_ScriptableObject;
-                amount += data.Amount;
+                amount += data.GoldAmount;
             }
 
             GoldAmount = amount;
@@ -166,12 +167,6 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             switch(lootType)
             {
-                case LootType.All:
-                    return CarryItemsGridModel;
-
-                case LootType.Gold:
-                    return CarryItemsGridModel;
-
                 case LootType.Weapon:
                     return WeaponItemsGridModel;
 
@@ -197,7 +192,7 @@ namespace ShadowFlareRemake.UI.Inventory
                     return QuickItemsGridModel;
 
                 default:
-                    return null;
+                    return CarryItemsGridModel;
             }
         }
 

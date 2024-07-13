@@ -211,7 +211,12 @@ namespace ShadowFlareRemake.UI
                 return true;
             }
 
-            return _inventoryModel.TryAutoPlaceLootOnGrid(lootModel);
+            if(lootModel.LootCategory == LootCategory.Gold)
+            {
+                return _inventoryModel.TryAutoPlace_Gold(lootModel);
+            }
+
+            return _inventoryModel.TryAutoPlace_Loot(lootModel);
         }
 
         private void DropLootToTheGround(InputAction.CallbackContext context)

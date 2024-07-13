@@ -10,9 +10,23 @@ namespace ShadowFlareRemake.Loot
 
         [Space(15)]
         [SerializeField] private string ______INFO_____ = SpaceLine;
-        [field: SerializeField] public int Amount { get; private set; }
+        [field: SerializeField] public int GoldAmount { get; private set; }
 
         private Dictionary<string, int> _statsDict = new();
+
+        public GoldData_ScriptableObject(int goldAmount)
+        {
+            GoldAmount = goldAmount;
+
+            if(GoldAmount < 0)
+            {
+                GoldAmount = 0;
+            }
+            else if(GoldAmount > MaxGoldAmount)
+            {
+                GoldAmount = MaxGoldAmount;
+            }
+        }
 
         public Dictionary<string, int> GetStatsDict()
         {
@@ -24,25 +38,7 @@ namespace ShadowFlareRemake.Loot
 
         private void InitStatsDict()
         {
-            _statsDict.Add("Amount", Amount);
-        }
-
-        public int CombineGoldData(GoldData_ScriptableObject other)
-        {
-            int spareGold = 0;
-
-            if(Amount + other.Amount <= MaxGoldAmount)
-            {
-                Amount += other.Amount;
-            }
-            else
-            {
-                var total = Amount + other.Amount;
-                Amount = MaxGoldAmount;
-                spareGold = total - Amount;
-            }
-
-            return spareGold;
+            _statsDict.Add("Amount", GoldAmount);
         }
     }
 }

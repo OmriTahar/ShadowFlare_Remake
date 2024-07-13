@@ -23,6 +23,26 @@ namespace ShadowFlareRemake.Loot
             SetLootCategory(lootData.LootType);
         }
 
+        public void SetLootData(LootData_ScriptableObject lootData)
+        {
+            switch(LootCategory)
+            {
+                case LootCategory.Equipment:
+                    LootData = lootData as EquipmentData_ScriptableObject;
+                    break;
+
+                case LootCategory.Potion:
+                    LootData = lootData as PotionData_ScriptableObject;
+                    break;
+
+                case LootCategory.Gold:
+                    LootData = lootData as GoldData_ScriptableObject;
+                    break;
+            }
+
+            Changed();
+        }
+
         public void SetIsSingleTile(bool isSingleTile)
         {
             IsSingleTile = isSingleTile;
@@ -34,6 +54,14 @@ namespace ShadowFlareRemake.Loot
             IsInvokeDropAnimation = true;
             Changed();
             IsInvokeDropAnimation = false;
+        }
+
+        public void SetGoldAmount()
+        {
+            if(LootCategory != LootCategory.Gold)
+            {
+                return;
+            }
         }
 
         private void SetLootCategory(LootType lootType)

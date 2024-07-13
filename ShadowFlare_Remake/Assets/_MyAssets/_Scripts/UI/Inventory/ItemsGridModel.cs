@@ -69,23 +69,62 @@ namespace ShadowFlareRemake.UI
 
             bool isSuccess;
 
-            if(lootModel.LootCategory == LootCategory.Gold)
+            foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
             {
-                TryAutoPlaceGoldLogic(lootModel);
-            }
-            else
-            {
-                foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
-                {
-                    isSuccess = TryAutoPlaceLogic(tileIndex, lootModel);
+                isSuccess = TryAutoPlaceLogic(tileIndex, lootModel);
 
-                    if(isSuccess)
-                        return true;
-                }
+                if(isSuccess)
+                    return true;
             }
 
             return false;
         }
+
+        public bool TryAutoPlaceGoldOnGrid(LootModel lootModel)
+        {
+            var goldLootModels = GetHeldGoldLootModels();
+            var spareGold = 0; // Use this to create another gold?
+
+            if(goldLootModels != null)
+            {
+                foreach(var model in goldLootModels)
+                {
+                    var existingData = model.LootData as GoldData_ScriptableObject;
+
+                    if(existingData.GoldAmount > existingData.MaxGoldAmount)
+                    {
+                        continue;
+                    }
+
+                    var data = lootModel.LootData as GoldData_ScriptableObject;
+
+                    var newGoldData = new GoldData_ScriptableObject(existingData.GoldAmount + data.GoldAmount);
+
+                    //spareGold = existingData.CombineGoldData(data); // YOU STOPPED HERE!!!!!! SET A MODEL WITH NEW GOLD DATA! 
+                    return true;
+                }
+            }
+
+            return TryAutoPlaceLootOnGrid(lootModel);
+        }
+
+        //public int CombineGoldData(GoldData_ScriptableObject other)
+        //{
+        //    int spareGold = 0;
+
+        //    if(Amount + other.Amount <= MaxGoldAmount)
+        //    {
+        //        Amount += other.Amount;
+        //    }
+        //    else
+        //    {
+        //        var total = Amount + other.Amount;
+        //        Amount = MaxGoldAmount;
+        //        spareGold = total - Amount;
+        //    }
+
+        //    return spareGold;
+        //}
 
         private bool IsAccepetedLootType(LootType lootType)
         {
@@ -113,34 +152,6 @@ namespace ShadowFlareRemake.UI
             {
                 return false;
             }
-
-            PlaceItemOnGrid(lootModel, true);
-            SetTopLeftValidIndex(_emptyTileIndex);
-            return true;
-        }
-
-        private bool TryAutoPlaceGoldLogic(LootModel lootModel)
-        {
-            var goldLootModels = GetHeldGoldLootModels();
-            var spareGold = 0;
-
-            if(goldLootModels != null)
-            {
-                foreach(var model in goldLootModels)
-                {
-                    var existingData = model.LootData as GoldData_ScriptableObject;
-
-                    if(existingData.Amount > existingData.MaxGoldAmount)
-                    {
-                        continue;
-                    }
-
-                    var data = lootModel.LootData as GoldData_ScriptableObject;
-                    spareGold = existingData.CombineGoldData(data);
-                }
-            }
-
-            // YOU STOPPED HEREEEEEEEEEE
 
             PlaceItemOnGrid(lootModel, true);
             SetTopLeftValidIndex(_emptyTileIndex);
