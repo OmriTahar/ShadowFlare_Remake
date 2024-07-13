@@ -44,6 +44,11 @@ namespace ShadowFlareRemake.UI.Cursor
                 var data = lootModel.LootData as PotionData_ScriptableObject;
                 HandleSetInfoLines(data.GetStatsDict());
             }
+            else if(lootModel.LootCategory == LootCategory.Gold)
+            {
+                var data = lootModel.LootData as GoldData_ScriptableObject;
+                HandleSetInfoLines(data.GetStatsDict());
+            }
         }
 
         private void HandleSetInfoLines(Dictionary<string, int> statsDict)

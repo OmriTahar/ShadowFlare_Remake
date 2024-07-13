@@ -67,7 +67,16 @@ namespace ShadowFlareRemake.Loot
         private void SetNameText()
         {
             if(_nameText != null && !string.IsNullOrEmpty(_name))
+            {
+                if(Model.LootCategory == Enums.LootCategory.Gold)
+                {
+                    var data = Model.LootData as GoldData_ScriptableObject;
+                    _nameText.text = $"{data.Amount} {_name}";
+                    return;
+                }
+
                 _nameText.text = _name;
+            }
         }
 
         private void HandleSetSprite()

@@ -21,6 +21,7 @@ namespace ShadowFlareRemake.UI
 
         private readonly Vector2Int _singleTileIndex = Vector2Int.zero;
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
+        private const int _goldPileMaxAmount = 10000;
 
         #region Initialization
 
@@ -68,12 +69,19 @@ namespace ShadowFlareRemake.UI
 
             bool isSuccess;
 
-            foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
+            if(lootModel.LootCategory == LootCategory.Gold)
             {
-                isSuccess = TryAutoPlaceLogic(tileIndex, lootModel);
+                TryAutoPlaceGoldLogic(lootModel);
+            }
+            else
+            {
+                foreach(var tileIndex in _heldLootRootIndexesDict.Keys)
+                {
+                    isSuccess = TryAutoPlaceLogic(tileIndex, lootModel);
 
-                if(isSuccess)
-                    return true;
+                    if(isSuccess)
+                        return true;
+                }
             }
 
             return false;
@@ -105,6 +113,34 @@ namespace ShadowFlareRemake.UI
             {
                 return false;
             }
+
+            PlaceItemOnGrid(lootModel, true);
+            SetTopLeftValidIndex(_emptyTileIndex);
+            return true;
+        }
+
+        private bool TryAutoPlaceGoldLogic(LootModel lootModel)
+        {
+            var goldLootModels = GetHeldGoldLootModels();
+            var spareGold = 0;
+
+            if(goldLootModels != null)
+            {
+                foreach(var model in goldLootModels)
+                {
+                    var existingData = model.LootData as GoldData_ScriptableObject;
+
+                    if(existingData.Amount > existingData.MaxGoldAmount)
+                    {
+                        continue;
+                    }
+
+                    var data = lootModel.LootData as GoldData_ScriptableObject;
+                    spareGold = existingData.CombineGoldData(data);
+                }
+            }
+
+            // YOU STOPPED HEREEEEEEEEEE
 
             PlaceItemOnGrid(lootModel, true);
             SetTopLeftValidIndex(_emptyTileIndex);
@@ -343,6 +379,29 @@ namespace ShadowFlareRemake.UI
                 }
             }
             return false;
+        }
+
+        public List<LootModel> GetHeldGoldLootModels()
+        {
+            if(ItemsGridType != ItemsGridType.Carry)
+                return null;
+
+            var goldLootModels = new List<LootModel>();
+
+            foreach(var gridTileModel in GridTileModelsDict.Values)
+            {
+                var lootModel = gridTileModel.LootModel;
+
+                if(lootModel == null)
+                    continue;
+
+                if(lootModel.LootCategory == LootCategory.Gold)
+                {
+                    goldLootModels.Add(lootModel);
+                }
+            }
+
+            return goldLootModels;
         }
 
         #endregion

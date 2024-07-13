@@ -16,7 +16,9 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel BootsItemsGridModel { get; private set; }
         public ItemsGridModel CarryItemsGridModel { get; private set; }
         public ItemsGridModel QuickItemsGridModel { get; private set; }
+
         public bool IsInventoryOpen { get; private set; }
+        public int GoldAmount { get; private set; }
 
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
 
@@ -48,20 +50,30 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             IsInventoryOpen = isInventoryOpen;
             Changed();
-
         }
 
         public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
         {
             var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
+            bool isSuccess = false;
+            bool isGold = lootModel.LootCategory == LootCategory.Gold;
 
             if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
             {
                 TryAddOrRemoveEquippedGearFromList(specificItemsGridModel.ItemsGridType, lootModel, true);
-                return true;
+                isSuccess = true;
+            }
+            else
+            {
+                isSuccess = CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
             }
 
-            return CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
+            if(isSuccess && isGold)
+            {
+                UpdateGoldAmount();
+            }
+
+            return isSuccess;
         }
 
         public (bool, LootModel) TryHandPlaceLootOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
@@ -73,6 +85,11 @@ namespace ShadowFlareRemake.UI.Inventory
             if(isLootPlaced)
             {
                 TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, lootModel, true);
+
+                if(lootModel.LootCategory == LootCategory.Gold)
+                {
+                    UpdateGoldAmount();
+                }
             }
 
             if(swappedLoot != null)
@@ -87,6 +104,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             var removedLootModel = itemsGridModel.RemoveItemFromGrid(tileIndex, true);
             TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, removedLootModel, false);
+            UpdateGoldAmount();
         }
 
         public LootModel GetQuickItemLootModel(Vector2Int index)
@@ -112,6 +130,21 @@ namespace ShadowFlareRemake.UI.Inventory
             return (itemsGridType != ItemsGridType.Carry && itemsGridType != ItemsGridType.QuickItems);
         }
 
+        private void UpdateGoldAmount()
+        {
+            var goldLootModels = CarryItemsGridModel.GetHeldGoldLootModels();
+            int amount = 0;
+
+            foreach(var model in goldLootModels)
+            {
+                var data = model.LootData as GoldData_ScriptableObject;
+                amount += data.Amount;
+            }
+
+            GoldAmount = amount;
+            Changed();
+        }
+
         private bool TryAddOrRemoveEquippedGearFromList(ItemsGridType itemsGridType, LootModel lootModel, bool isAddToList)
         {
             if(!IsEquippableItemsGrid(itemsGridType))
@@ -134,6 +167,9 @@ namespace ShadowFlareRemake.UI.Inventory
             switch(lootType)
             {
                 case LootType.All:
+                    return CarryItemsGridModel;
+
+                case LootType.Gold:
                     return CarryItemsGridModel;
 
                 case LootType.Weapon:

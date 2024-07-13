@@ -39,7 +39,8 @@ namespace ShadowFlareRemake.UI.Inventory
 
         protected override void ModelChanged()
         {
-            _inventoryPanel.SetActive(Model.IsInventoryOpen);
+            SetGoldAmount();
+            SetIsActive();
         }
 
         protected override void Clean()
@@ -92,6 +93,16 @@ namespace ShadowFlareRemake.UI.Inventory
         public void InvokeTileClicked(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
             OnTileClicked?.Invoke(itemsGridModel, tileIndex, lootModel);
+        }
+
+        private void SetGoldAmount()
+        {
+            _goldText.text = Model.GoldAmount.ToString();
+        }
+
+        private void SetIsActive()
+        {
+            _inventoryPanel.SetActive(Model.IsInventoryOpen);
         }
 
         #endregion
