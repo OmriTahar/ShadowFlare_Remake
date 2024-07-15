@@ -12,29 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
   m_Name: Skeleton_Stats
   m_EditorClassIdentifier: 
-  ______Enemy_Base_____: ------------------------------------
+  ______ENEMY_____: ------------------------------------
   <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
   <Scale>k__BackingField: 18
   <EvolutionLevel>k__BackingField: 1
-  ______Enemy_Rewards_____: ------------------------------------
+  ______REWARDS_____: ------------------------------------
   <ExpDrop>k__BackingField: 10
   <CoinsDrop>k__BackingField: 10
-  ______Base_____: ------------------------------------
+  ______BASE_____: ------------------------------------
   <Name>k__BackingField: Skeleton
   <Level>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 2
-  ______Physical_____: ------------------------------------
+  ______PHYSICAL_____: ------------------------------------
   <MaxHP>k__BackingField: 15
-  <Attack>k__BackingField: 11
+  <Attack>k__BackingField: 10
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
+  <MovementSpeed>k__BackingField: 2
   <AttackSpeed>k__BackingField: 1
   <AttackDistance>k__BackingField: 2.8
-  ______Magical_____: ------------------------------------
+  ______MAGICAL_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
-  <MagicalDefence>k__BackingField: 1
+  <MagicalDefense>k__BackingField: 0
   <MagicalHitRate>k__BackingField: 1
   <MagicalEvasionRate>k__BackingField: 1
   <MagicalAttackSpeed>k__BackingField: 1

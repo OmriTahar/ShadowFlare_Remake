@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
-  m_Name: RedSkeleton_Stats
+  m_Name: Your sister_Data
   m_EditorClassIdentifier: 
-  ______Enemy_Base_____: ------------------------------------
-  <Color>k__BackingField: {r: 1, g: 0.5882353, b: 0.5882353, a: 1}
+  ______ENEMY_____: ------------------------------------
+  <Color>k__BackingField: {r: 1, g: 0.89581734, b: 0.25943398, a: 1}
   <Scale>k__BackingField: 20
   <EvolutionLevel>k__BackingField: 2
-  ______Enemy_Rewards_____: ------------------------------------
+  ______REWARDS_____: ------------------------------------
   <ExpDrop>k__BackingField: 25
   <CoinsDrop>k__BackingField: 20
-  ______Base_____: ------------------------------------
-  <Name>k__BackingField: Red Skeleton
+  ______BASE_____: ------------------------------------
+  <Name>k__BackingField: Your sister
   <Level>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 4
-  ______Physical_____: ------------------------------------
+  ______PHYSICAL_____: ------------------------------------
   <MaxHP>k__BackingField: 50
-  <Attack>k__BackingField: 10
+  <Attack>k__BackingField: 40
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
+  <MovementSpeed>k__BackingField: 4
   <AttackSpeed>k__BackingField: 1
   <AttackDistance>k__BackingField: 3.8
-  ______Magical_____: ------------------------------------
+  ______MAGICAL_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1
-  <MagicalDefence>k__BackingField: 1
+  <MagicalDefense>k__BackingField: 0
   <MagicalHitRate>k__BackingField: 1
   <MagicalEvasionRate>k__BackingField: 1
   <MagicalAttackSpeed>k__BackingField: 1

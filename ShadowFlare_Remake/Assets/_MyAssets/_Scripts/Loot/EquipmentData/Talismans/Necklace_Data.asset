@@ -23,9 +23,9 @@ MonoBehaviour:
   <Height>k__BackingField: 1
   ______PHYSICAL_____: ------------------------------------
   <MaxHP>k__BackingField: 0
-  <Attack>k__BackingField: 0
-  <Defense>k__BackingField: 0
-  <HitRate>k__BackingField: 0
+  <Attack>k__BackingField: 3
+  <Defense>k__BackingField: 3
+  <HitRate>k__BackingField: 3
   <EvasionRate>k__BackingField: 0
   <MovementSpeed>k__BackingField: 3
   <AttackSpeed>k__BackingField: 0

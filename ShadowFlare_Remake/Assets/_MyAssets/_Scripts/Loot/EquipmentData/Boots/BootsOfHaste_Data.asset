@@ -27,7 +27,7 @@ MonoBehaviour:
   <Defense>k__BackingField: 5
   <HitRate>k__BackingField: 0
   <EvasionRate>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 1
   <AttackSpeed>k__BackingField: 0
   <Strength>k__BackingField: 0
   ______MAGICAL_____: ------------------------------------
