@@ -191,7 +191,7 @@ namespace ShadowFlareRemake.GameManager
 
         private void InitEnemyLogic(EnemyToSpawn enemyToSpawn, bool isEnemyActive, bool destroyEnemyToSpawn = true)
         {
-            if(enemyToSpawn == null || !enemyToSpawn.isActiveAndEnabled)
+            if(!IsValidEnemyToSpawn(enemyToSpawn))
                 return;
 
             var spawnPoint = enemyToSpawn.transform;
@@ -212,6 +212,16 @@ namespace ShadowFlareRemake.GameManager
             {
                 Destroy(enemyToSpawn.gameObject);
             }
+        }
+
+        private bool IsValidEnemyToSpawn(EnemyToSpawn enemyToSpawn)
+        {
+            if(enemyToSpawn == null || enemyToSpawn.EnemyPrefab == null || enemyToSpawn.EnemyUnit == null || !enemyToSpawn.isActiveAndEnabled)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void RegisterEnemyEvents(EnemyController enemyController)
@@ -370,8 +380,7 @@ namespace ShadowFlareRemake.GameManager
 
             if(lootModel.LootCategory == Enums.LootCategory.Gold)
             {
-                //lootModel.SetGoldAmountAndGetSpare(Random.Range(10, 100));
-                lootModel.SetGoldAmountAndGetSpare(4000, true);
+                lootModel.SetGoldAmountAndGetSpare(Random.Range(1, 10000), true);
             }
 
             var fuckme = Instantiate(_testLootPrefab, _testLootParent);
