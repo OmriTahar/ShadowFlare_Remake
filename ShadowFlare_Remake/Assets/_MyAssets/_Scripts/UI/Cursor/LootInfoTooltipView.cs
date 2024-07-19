@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace ShadowFlareRemake.UI.Cursor
         [SerializeField] private GameObject _panel;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private List<LootInfoTooltipLine> _lootInfoLines;
+
+        private const string _goldKey = "Amount";
 
         protected override void ModelChanged()
         {
@@ -46,8 +49,7 @@ namespace ShadowFlareRemake.UI.Cursor
             }
             else if(lootModel.LootCategory == LootCategory.Gold)
             {
-                var data = lootModel.LootData as GoldData_ScriptableObject;
-                HandleSetInfoLines(data.GetStatsDict());
+                HandleGoldSetInfoLine(lootModel.GoldAmount);
             }
         }
 
@@ -65,6 +67,13 @@ namespace ShadowFlareRemake.UI.Cursor
                 _lootInfoLines[index].gameObject.SetActive(true);
                 index++;
             }
+        }
+
+        private void HandleGoldSetInfoLine(int amount)
+        {
+            var infoLine = _lootInfoLines[0];
+            SetInfoLine(infoLine, _goldKey, amount.ToString());
+            _lootInfoLines[0].gameObject.SetActive(true);
         }
 
         private void SetInfoLine(LootInfoTooltipLine infoLine, string header, string text)

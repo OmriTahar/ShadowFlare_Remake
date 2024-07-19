@@ -70,8 +70,7 @@ namespace ShadowFlareRemake.Loot
             {
                 if(Model.LootCategory == Enums.LootCategory.Gold)
                 {
-                    var data = Model.LootData as GoldData_ScriptableObject;
-                    _nameText.text = $"{data.GoldAmount} {_name}";
+                    _nameText.text = $"{Model.GoldAmount} {_name}";
                     return;
                 }
 

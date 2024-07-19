@@ -1,3 +1,4 @@
+using log4net.Core;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Loot;
@@ -407,13 +408,14 @@ namespace ShadowFlareRemake.UI
             UpdateFullPlayerStats(unit, addedStats);
         }
 
-        public void UpdatePlayerVitalsAndExp(IUnit unit)
+        public void UpdatePlayerVitalsExpAndLevel(IUnit unit)
         {
             var stats = unit.Stats as IPlayerUnitStats;
 
             UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             UpdatePlayerStats(unit);
+            UpdatePlayerLevel(stats.Level);
         }
 
         public void UpdatePlayerVitals(int currentHP, int maxHP, int currentMP, int maxMP)

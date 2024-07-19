@@ -21,7 +21,6 @@ namespace ShadowFlareRemake.UI
 
         private readonly Vector2Int _singleTileIndex = Vector2Int.zero;
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
-        private const int _goldPileMaxAmount = 10000;
 
         #region Initialization
 
@@ -83,26 +82,31 @@ namespace ShadowFlareRemake.UI
         public bool TryAutoPlaceGoldOnGrid(LootModel lootModel)
         {
             var goldLootModels = GetHeldGoldLootModels();
-            var spareGold = 0; // Use this to create another gold?
+            var spareGold = 0;
 
-            if(goldLootModels != null)
+            if(goldLootModels.Count > 0)
             {
-                foreach(var model in goldLootModels)
-                {
-                    var existingData = model.LootData as GoldData_ScriptableObject;
+                var amountToAdd = lootModel.GoldAmount;
 
-                    if(existingData.GoldAmount > existingData.MaxGoldAmount)
+                foreach(var placedModel in goldLootModels)
+                {
+                    var newAmount = placedModel.GoldAmount + amountToAdd;
+                    spareGold = placedModel.SetGoldAmountAndGetSpare(newAmount, false);
+
+                    if(spareGold > 0)
                     {
+                        amountToAdd = spareGold;
                         continue;
                     }
 
-                    var data = lootModel.LootData as GoldData_ScriptableObject;
+                }
 
-                    var newGoldData = new GoldData_ScriptableObject(existingData.GoldAmount + data.GoldAmount);
-
-                    //spareGold = existingData.CombineGoldData(data); // YOU STOPPED HERE!!!!!! SET A MODEL WITH NEW GOLD DATA! 
+                if(spareGold == 0)
+                {
                     return true;
                 }
+
+                lootModel.SetGoldAmountAndGetSpare(spareGold, false);
             }
 
             return TryAutoPlaceLootOnGrid(lootModel);

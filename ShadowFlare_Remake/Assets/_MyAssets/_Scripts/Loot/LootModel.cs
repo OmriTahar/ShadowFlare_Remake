@@ -7,13 +7,17 @@ namespace ShadowFlareRemake.Loot
     {
         public LootData_ScriptableObject LootData { get; private set; }
         public LootCategory LootCategory { get; private set; }
+        public int GoldAmount { get; private set; } = 1;
+
         public Color Color { get; private set; }
         public Color HighlightColor { get; private set; }
+
         public bool IsSingleTile { get; private set; } = false;
         public bool IsInvokeDropAnimation { get; private set; }
 
         private const float _highlightAdder = 0.2f;
         private const float _alpha = 1;
+        private const int _maxGoldAmount = 10000;
 
         public LootModel(LootData_ScriptableObject lootData)
         {
@@ -21,26 +25,6 @@ namespace ShadowFlareRemake.Loot
             Color = new Color(lootData.Color.r, lootData.Color.g, lootData.Color.b, 1);
             HighlightColor = new Color(Color.r + _highlightAdder, Color.g + _highlightAdder, Color.b + _highlightAdder, _alpha);
             SetLootCategory(lootData.LootType);
-        }
-
-        public void SetLootData(LootData_ScriptableObject lootData)
-        {
-            switch(LootCategory)
-            {
-                case LootCategory.Equipment:
-                    LootData = lootData as EquipmentData_ScriptableObject;
-                    break;
-
-                case LootCategory.Potion:
-                    LootData = lootData as PotionData_ScriptableObject;
-                    break;
-
-                case LootCategory.Gold:
-                    LootData = lootData as GoldData_ScriptableObject;
-                    break;
-            }
-
-            Changed();
         }
 
         public void SetIsSingleTile(bool isSingleTile)
@@ -56,12 +40,33 @@ namespace ShadowFlareRemake.Loot
             IsInvokeDropAnimation = false;
         }
 
-        public void SetGoldAmount()
+        public int SetGoldAmountAndGetSpare(int newAmount, bool invokeChanged)
         {
+            int spare = 0;
+
             if(LootCategory != LootCategory.Gold)
             {
-                return;
+                return spare;
             }
+
+            GoldAmount = newAmount;
+
+            if(GoldAmount > _maxGoldAmount)
+            {
+                spare = GoldAmount - _maxGoldAmount;
+                GoldAmount = _maxGoldAmount;
+            }
+            else if(GoldAmount < 0)
+            {
+                GoldAmount = 0;
+            }
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
+
+            return spare;
         }
 
         private void SetLootCategory(LootType lootType)

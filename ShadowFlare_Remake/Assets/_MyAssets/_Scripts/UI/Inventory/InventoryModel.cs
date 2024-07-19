@@ -138,8 +138,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
             foreach(var model in goldLootModels)
             {
-                var data = model.LootData as GoldData_ScriptableObject;
-                amount += data.GoldAmount;
+                amount += model.GoldAmount;
             }
 
             GoldAmount = amount;

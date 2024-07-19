@@ -57,7 +57,7 @@ namespace ShadowFlareRemake.GameManager
 
             InitEnemies();
             InitPlayer();
-            InitUiController(); 
+            InitUiController();
             RegisterEvents();
 
             HandleTestSpawnLoot();
@@ -242,7 +242,7 @@ namespace ShadowFlareRemake.GameManager
                 _uiController.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
 
-            _uiController.UpdatePlayerVitalsAndExp(_playerUnit);
+            _uiController.UpdatePlayerVitalsExpAndLevel(_playerUnit);
         }
 
         #endregion
@@ -274,7 +274,11 @@ namespace ShadowFlareRemake.GameManager
             }
 
             _lastPickedUpLootView.gameObject.SetActive(false);
-            HandlePlayerEquippedGearStats(_uiController.GetPlayerCurrentlyEquippedGearData());
+
+            if(lootModel.LootCategory == Enums.LootCategory.Equipment)
+            {
+                HandlePlayerEquippedGearStats(_uiController.GetPlayerCurrentlyEquippedGearData());
+            }
         }
 
         private void HandlePlayerDropLootToTheGround(LootModel lootModel)
@@ -329,7 +333,7 @@ namespace ShadowFlareRemake.GameManager
             _playerUnitStats.SetEquippedGearAddedStats(_playerEquippedGearAddedStats);
             _uiController.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
         }
-        
+
         #endregion
 
         #region Loot
@@ -363,6 +367,12 @@ namespace ShadowFlareRemake.GameManager
         public void TestSpawnLoot(LootData_ScriptableObject lootData, float posX)
         {
             var lootModel = new LootModel(lootData);
+
+            if(lootModel.LootCategory == Enums.LootCategory.Gold)
+            {
+                //lootModel.SetGoldAmountAndGetSpare(Random.Range(10, 100));
+                lootModel.SetGoldAmountAndGetSpare(4000, true);
+            }
 
             var fuckme = Instantiate(_testLootPrefab, _testLootParent);
             var pos = fuckme.transform.position;
