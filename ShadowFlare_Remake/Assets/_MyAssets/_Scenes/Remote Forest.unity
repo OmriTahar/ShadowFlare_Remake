@@ -15871,7 +15871,7 @@ PrefabInstance:
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
       propertyPath: m_Name
-      value: Your sister
+      value: Red Skeleton
       objectReference: {fileID: 0}
     - target: {fileID: 3067932416887089533, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
@@ -15937,7 +15937,7 @@ PrefabInstance:
         type: 3}
       propertyPath: <EnemyUnit>k__BackingField
       value: 
-      objectReference: {fileID: 11400000, guid: 479817401f23dfc4fb4593490e3c9b8b,
+      objectReference: {fileID: 11400000, guid: 981f9fb69a174dd4ea65230185143bdc,
         type: 2}
     - target: {fileID: 3067932416887089535, guid: bf5072e62b826134db1b3aff1f3b0193,
         type: 3}
