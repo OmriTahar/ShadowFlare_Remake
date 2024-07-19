@@ -16,6 +16,7 @@ namespace ShadowFlareRemake.GameManager.Units
         [SerializeField] private string ______PLAYER_____ = _spaceLine;
         [field: SerializeField] public Vocation Vocation { get; private set; }
         [field: SerializeField] public int Strength { get; private set; }
+        [field: SerializeField] public int EquippedWeight { get; private set; }
         [field: SerializeField] public int CurrentExp { get; private set; }
         [field: SerializeField] public int ExpToLevelUp { get; private set; }
 
@@ -75,6 +76,7 @@ namespace ShadowFlareRemake.GameManager.Units
             MovementSpeed -= addedStats.MovementSpeed;
             AttackSpeed -= addedStats.AttackSpeed;
             Strength -= addedStats.Strength;
+            EquippedWeight -= addedStats.EquippedWeight;
             MaxMP -= addedStats.MaxMP;
             MagicalAttack -= addedStats.MagicalAttack;
             MagicalDefense -= addedStats.MagicalDefense;
@@ -85,6 +87,9 @@ namespace ShadowFlareRemake.GameManager.Units
 
         public void SetEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
+            MovementSpeed = 6;
+            AttackSpeed = 1; // Change this
+
             MaxHP += addedStats.MaxHP;
             Attack += addedStats.Attack;
             Defense += addedStats.Defense;
@@ -93,12 +98,19 @@ namespace ShadowFlareRemake.GameManager.Units
             MovementSpeed += addedStats.MovementSpeed;
             AttackSpeed += addedStats.AttackSpeed;
             Strength += addedStats.Strength;
+            EquippedWeight += addedStats.EquippedWeight;
             MaxMP += addedStats.MaxMP;
             MagicalAttack += addedStats.MagicalAttack;
             MagicalDefense += addedStats.MagicalDefense;
             MagicalHitRate += addedStats.MagicalHitRate;
             MagicalEvasionRate += addedStats.MagicalEvasionRate;
             MagicalAttackSpeed += addedStats.MagicalAttackSpeed;
+
+            if(EquippedWeight > Strength)
+            {
+                MovementSpeed = 1;
+                AttackSpeed = 1;
+            }
         }
     }
 }

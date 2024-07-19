@@ -18,6 +18,8 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel QuickItemsGridModel { get; private set; }
 
         public bool IsInventoryOpen { get; private set; }
+        public int Strength { get; private set; }
+        public int EquippedWeight { get; private set; }
         public int GoldAmount { get; private set; }
 
         private readonly Vector2Int _emptyTileIndex = new Vector2Int(-1, -1);
@@ -71,7 +73,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
             if(isSuccess)
             {
-                UpdateGoldAmount();
+                SetGoldAmount();
             }
 
             return isSuccess;
@@ -97,7 +99,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
             if(lootModel.LootCategory == LootCategory.Gold)
             {
-                UpdateGoldAmount();
+                SetGoldAmount();
             }
 
             if(swappedLoot != null)
@@ -112,7 +114,7 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             var removedLootModel = itemsGridModel.RemoveItemFromGrid(tileIndex, true);
             TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, removedLootModel, false);
-            UpdateGoldAmount();
+            SetGoldAmount();
         }
 
         public LootModel GetQuickItemLootModel(Vector2Int index)
@@ -138,7 +140,14 @@ namespace ShadowFlareRemake.UI.Inventory
             return (itemsGridType != ItemsGridType.Carry && itemsGridType != ItemsGridType.QuickItems);
         }
 
-        private void UpdateGoldAmount()
+        public void SetStrengthAndEquippedWeight(int strength, int equippedWeight)
+        {
+            Strength = strength;
+            EquippedWeight = equippedWeight;
+            Changed();
+        }
+
+        private void SetGoldAmount()
         {
             var goldLootModels = CarryItemsGridModel.GetHeldGoldLootModels();
             int amount = 0;

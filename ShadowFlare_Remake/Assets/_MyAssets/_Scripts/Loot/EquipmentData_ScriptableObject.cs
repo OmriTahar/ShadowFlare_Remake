@@ -28,6 +28,7 @@ namespace ShadowFlareRemake.Loot
 
         [Space(15)]
         [SerializeField] private string ______INFO_____ = SpaceLine;
+        [field: SerializeField] public int Weight { get; private set; }
         [field: SerializeField] public int Durability { get; private set; }
         [field: SerializeField] public int RequiredLevel { get; private set; }
         [field: SerializeField] public int SellPrice { get; private set; }
@@ -61,6 +62,7 @@ namespace ShadowFlareRemake.Loot
             _statsDict.Add("M. Evasion Rate", MagicalEvasionRate);
             _statsDict.Add("M. Attack Speed", MagicalAttackSpeed);
 
+            _statsDict.Add("Weight", Weight);
             _statsDict.Add("Durability", Durability);
             _statsDict.Add("Required Level", RequiredLevel);
             _statsDict.Add("Sell Price", SellPrice);

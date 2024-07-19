@@ -38,6 +38,7 @@ MonoBehaviour:
   <MagicalEvasionRate>k__BackingField: 0
   <MagicalAttackSpeed>k__BackingField: 0
   ______INFO_____: ------------------------------------
+  <Weight>k__BackingField: 30
   <Durability>k__BackingField: 100
   <RequiredLevel>k__BackingField: 1
   <SellPrice>k__BackingField: 1250

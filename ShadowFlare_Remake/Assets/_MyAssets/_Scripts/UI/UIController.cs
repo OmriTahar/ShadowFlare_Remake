@@ -329,17 +329,27 @@ namespace ShadowFlareRemake.UI
 
         #region Inventory
 
-        private void ToggleInventory()
+        public List<EquipmentData_ScriptableObject> GetPlayerCurrentlyEquippedGearData()
         {
-            DoToggleInventory();
+            return _inventoryModel.CurrentlyEquippedGearData;
         }
 
-        private void ToggleInventory(InputAction.CallbackContext context)
+        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
         {
-            DoToggleInventory();
+            _inventoryModel.RemovePotionFromInventory(index, lootType);
         }
 
-        private void DoToggleInventory()
+        private void InvokeToggleInventory()
+        {
+            ToggleInventoryLogic();
+        }
+
+        private void InvokeToggleInventory(InputAction.CallbackContext context)
+        {
+            ToggleInventoryLogic();
+        }
+
+        private void ToggleInventoryLogic()
         {
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
@@ -366,16 +376,6 @@ namespace ShadowFlareRemake.UI
             {
                 OnPotionClicked?.Invoke(_curserModel.CurentHoveredLootModel, _curserModel.CurrentHoveredLootModelRootIndex);
             }
-        }
-
-        public void RemovePotionFromInventory(Vector2Int index, LootType lootType)
-        {
-            _inventoryModel.RemovePotionFromInventory(index, lootType);
-        }
-
-        public List<EquipmentData_ScriptableObject> GetPlayerCurrentlyEquippedGearData()
-        {
-            return _inventoryModel.CurrentlyEquippedGearData;
         }
 
         #endregion
@@ -410,7 +410,7 @@ namespace ShadowFlareRemake.UI
             UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             UpdatePlayerLevel(stats.Level);
-            UpdateFullPlayerStats(unit, addedStats);
+            UpdateFullPlayerStats(unit, stats, addedStats);
         }
 
         public void UpdatePlayerVitalsExpAndLevel(IUnit unit)
@@ -438,9 +438,10 @@ namespace ShadowFlareRemake.UI
             _hudModel.SetLevel(level);
         }
 
-        private void UpdateFullPlayerStats(IUnit unit, IEquippedGearAddedStats addedStats)
+        private void UpdateFullPlayerStats(IUnit unit, IPlayerUnitStats stats, IEquippedGearAddedStats addedStats)
         {
             _statsModel.SetFullPlayerStats(unit, addedStats);
+            _inventoryModel.SetStrengthAndEquippedWeight(stats.Strength, addedStats.EquippedWeight);
         }
 
         private void UpdatePlayerStats(IUnit unit)
@@ -542,7 +543,7 @@ namespace ShadowFlareRemake.UI
                 _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
 
                 // Keyboard Letters
-                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
+                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
                 _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
                 // Keyboard Nums
@@ -561,7 +562,7 @@ namespace ShadowFlareRemake.UI
                 _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
 
                 // Keyboard Letters
-                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, ToggleInventory);
+                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
                 _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
                 // Keyboard Nums
@@ -598,14 +599,14 @@ namespace ShadowFlareRemake.UI
             {
                 _hudView.OnCurserEnterUI += CursorEnteredUI;
                 _hudView.OnCurserLeftUI += CursorLeftUI;
-                _hudView.OnInventoryButtonClicked += ToggleInventory;
+                _hudView.OnInventoryButtonClicked += InvokeToggleInventory;
                 _hudView.OnStatsClicked += ToggleStats;
             }
             else
             {
                 _hudView.OnCurserEnterUI -= CursorEnteredUI;
                 _hudView.OnCurserLeftUI -= CursorLeftUI;
-                _hudView.OnInventoryButtonClicked -= ToggleInventory;
+                _hudView.OnInventoryButtonClicked -= InvokeToggleInventory;
                 _hudView.OnStatsClicked -= ToggleStats;
             }
         }

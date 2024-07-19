@@ -1,8 +1,10 @@
 using ShadowFlareRemake.Loot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShadowFlareRemake.UI.Inventory
 {
@@ -15,6 +17,9 @@ namespace ShadowFlareRemake.UI.Inventory
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
         [SerializeField] private TMP_Text _goldText;
+        [SerializeField] private TMP_Text _equippedWeightText;
+        [SerializeField] private Slider _equippedWeightSlider;
+        [SerializeField] private Image _equippedWeightSlider_FillImage;
 
         [Header("Items Grids")]
         [SerializeField] private ItemsGridView _talismanItemsGridView;
@@ -26,7 +31,15 @@ namespace ShadowFlareRemake.UI.Inventory
         [SerializeField] private ItemsGridView _carryItemsGridView;
         [SerializeField] private ItemsGridView _quickItemsGridView;
 
+        [Header("Settings")]
+        [SerializeField] private Color _equippedWeightSlider_ValidColor;
+        [SerializeField] private Color _equippedWeightSlider_OverWeightColor;
+
+        private const float _sliderLerpDuration = 0.75f;
+
         private List<ItemsGridView> _itemsGridViews = new();
+        private Coroutine _lastEquippedWeightCoroutine;
+        private float _lastSeenEquippedWeight = 0f;
 
         #region View Overrides
 
@@ -39,6 +52,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         protected override void ModelChanged()
         {
+            SetEquippedWeight();
             SetGoldAmount();
             SetIsActive();
         }
@@ -98,6 +112,56 @@ namespace ShadowFlareRemake.UI.Inventory
         private void SetGoldAmount()
         {
             _goldText.text = Model.GoldAmount.ToString();
+        }
+
+        private void SetEquippedWeight()
+        {
+            if(_lastEquippedWeightCoroutine != null)
+            {
+                StopCoroutine(_lastEquippedWeightCoroutine);
+            }
+
+            _equippedWeightSlider.maxValue = Model.Strength;
+            _equippedWeightText.text = Model.EquippedWeight.ToString();
+
+            _equippedWeightSlider.value = _lastSeenEquippedWeight;
+            _lastEquippedWeightCoroutine = StartCoroutine(LerpSliderValue(_equippedWeightSlider, Model.EquippedWeight));
+        }
+
+        public IEnumerator LerpSliderValue(Slider slider, float targetValue)
+        {
+            float startValue = slider.value;
+            float timeElapsed = 0f;
+            var strength = Model.Strength;
+            bool isSliderValueDirectionIsUp = slider.value < targetValue;
+            bool hasChangedColor = false;
+
+            while(timeElapsed < _sliderLerpDuration)
+            {
+                timeElapsed += Time.deltaTime;
+                float lerpProgress = timeElapsed / _sliderLerpDuration;
+                slider.value = Mathf.Lerp(startValue, targetValue, lerpProgress);
+                _lastSeenEquippedWeight = slider.value;
+
+                if(!hasChangedColor)
+                {
+                    if(isSliderValueDirectionIsUp && _lastSeenEquippedWeight > strength)
+                    {
+                        _equippedWeightSlider_FillImage.color = _equippedWeightSlider_OverWeightColor;
+                        hasChangedColor = true;
+                    }
+                    else if(!isSliderValueDirectionIsUp && _lastSeenEquippedWeight < strength)
+                    {
+                        _equippedWeightSlider_FillImage.color = _equippedWeightSlider_ValidColor;
+                        hasChangedColor = true;
+                    }
+                }
+
+                yield return null;
+            }
+
+            slider.value = targetValue;
+            _lastSeenEquippedWeight = slider.value;
         }
 
         private void SetIsActive()

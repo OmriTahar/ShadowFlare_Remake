@@ -5,7 +5,6 @@ namespace ShadowFlareRemake.GameManager.Units
 {
     public class EquippedGearAddedStats : IEquippedGearAddedStats
     {
-        public int Strength { get; private set; }
         public int MaxHP { get; private set; }
         public int Attack { get; private set; }
         public int Defense { get; private set; }
@@ -13,6 +12,8 @@ namespace ShadowFlareRemake.GameManager.Units
         public int EvasionRate { get; private set; }
         public int MovementSpeed { get; private set; }
         public int AttackSpeed { get; private set; }
+        public int Strength { get; private set; }
+        public int EquippedWeight { get; private set; }
         public int MaxMP { get; private set; }
         public int MagicalAttack { get; private set; }
         public int MagicalDefense { get; private set; }
@@ -32,6 +33,7 @@ namespace ShadowFlareRemake.GameManager.Units
             MovementSpeed = 0;
             AttackSpeed = 0;
             Strength = 0;
+            EquippedWeight = 0;
             MaxMP = 0;
             MagicalAttack = 0;
             MagicalDefense = 0;
@@ -50,6 +52,7 @@ namespace ShadowFlareRemake.GameManager.Units
             MovementSpeed += addedStats.MovementSpeed;
             AttackSpeed += addedStats.AttackSpeed;
             Strength += addedStats.Strength;
+            EquippedWeight += addedStats.Weight;
             MaxMP += addedStats.MaxMP;
             MagicalAttack += addedStats.MagicalAttack;
             MagicalDefense += addedStats.MagicalDefense;
