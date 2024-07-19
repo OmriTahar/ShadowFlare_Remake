@@ -61,7 +61,7 @@ namespace ShadowFlareRemake.UI
 
         #region Place & Remove 
 
-        public bool TryAutoPlaceLootOnGrid(LootModel lootModel)
+        public bool TryAutoPlace_Loot(LootModel lootModel)
         {
             if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.LootType))
                 return false;
@@ -79,7 +79,7 @@ namespace ShadowFlareRemake.UI
             return false;
         }
 
-        public bool TryAutoPlaceGoldOnGrid(LootModel lootModel)
+        public bool TryAutoPlace_Gold(LootModel lootModel)
         {
             var goldLootModels = GetHeldGoldLootModels();
             var spareGold = 0;
@@ -109,60 +109,10 @@ namespace ShadowFlareRemake.UI
                 lootModel.SetGoldAmountAndGetSpare(spareGold, false);
             }
 
-            return TryAutoPlaceLootOnGrid(lootModel);
+            return TryAutoPlace_Loot(lootModel);
         }
 
-        //public int CombineGoldData(GoldData_ScriptableObject other)
-        //{
-        //    int spareGold = 0;
-
-        //    if(Amount + other.Amount <= MaxGoldAmount)
-        //    {
-        //        Amount += other.Amount;
-        //    }
-        //    else
-        //    {
-        //        var total = Amount + other.Amount;
-        //        Amount = MaxGoldAmount;
-        //        spareGold = total - Amount;
-        //    }
-
-        //    return spareGold;
-        //}
-
-        private bool IsAccepetedLootType(LootType lootType)
-        {
-            foreach(var acceptedLootType in _acceptedLootTypes)
-            {
-                if(acceptedLootType == LootType.All || acceptedLootType == lootType)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryAutoPlaceLogic(Vector2Int tileIndex, LootModel lootModel)
-        {
-            if(IsSingleTile)
-            {
-                if(_heldLootRootIndexesDict[_singleTileIndex].x != -1)
-                    return false;
-
-                SetTopLeftValidIndex(_singleTileIndex);
-            }
-            else if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
-            {
-                return false;
-            }
-
-            PlaceItemOnGrid(lootModel, true);
-            SetTopLeftValidIndex(_emptyTileIndex);
-            return true;
-        }
-
-        public (bool, LootModel) TryHandPlaceLootOnGrid(Vector2Int tileIndex, LootModel lootModel)
+        public (bool, LootModel) TryHandPlace_Loot(Vector2Int tileIndex, LootModel lootModel)
         {
             if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.LootType))
                 return (false, lootModel);
@@ -181,7 +131,7 @@ namespace ShadowFlareRemake.UI
             {
                 SetTopLeftValidIndex(_singleTileIndex);
             }
-            else if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            else if(!IsSingleTile && !GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 if(swappedLoot != null)
                 {
@@ -196,27 +146,60 @@ namespace ShadowFlareRemake.UI
             return (true, swappedLoot);
         }
 
-        private void PlaceItemOnGrid(LootModel lootModel, bool invokeChanged)
+        public (bool, LootModel) TryHandPlace_Gold(Vector2Int tileIndex, LootModel lootModel)
         {
-            GridTileModelsDict[_topLeftValidIndex].SetLootModel(lootModel);
+            if(lootModel == null || !IsAccepetedLootType(lootModel.LootData.LootType))
+                return (false, lootModel);
 
-            var lootOtherIndexesHolder = new Vector2Int();
+            _heldLootRootIndexesDict.TryGetValue(tileIndex, out Vector2Int rootLootIndex);
+            LootModel swappedLoot = null;
+            int spareGold = 0;
+            bool isPlacedGold = false;
 
-            for(int x = 0; x < lootModel.LootData.Width; x++)
+            if(rootLootIndex.x != -1)
             {
-                lootOtherIndexesHolder.x = _topLeftValidIndex.x + x;
+                GridTileModelsDict.TryGetValue(rootLootIndex, out GridTileModel gridTileModel);
+                var placedLootModel = gridTileModel.LootModel;
 
-                for(int y = 0; y < lootModel.LootData.Height; y++)
+                if(placedLootModel != null && placedLootModel.LootCategory != LootCategory.Gold)
                 {
-                    lootOtherIndexesHolder.y = _topLeftValidIndex.y + y;
-                    _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
+                    swappedLoot = placedLootModel;
+                    RemoveItemFromGrid(rootLootIndex, false);
+                }
+                else
+                {
+                    var newAmount = placedLootModel.GoldAmount + lootModel.GoldAmount;
+                    spareGold = placedLootModel.SetGoldAmountAndGetSpare(newAmount, false);
+                    isPlacedGold = true;
                 }
             }
 
-            if(invokeChanged)
+            if(isPlacedGold)
             {
-                Changed();
+                SetTopLeftValidIndex(_emptyTileIndex);
+
+                if(spareGold > 0)
+                {
+                    lootModel.SetGoldAmountAndGetSpare(spareGold, true);
+                    return (false, lootModel);
+                }
+
+                return (true, null);
             }
+
+            if(!GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            {
+                if(swappedLoot != null)
+                {
+                    SetTopLeftValidIndex(rootLootIndex);
+                    PlaceItemOnGrid(swappedLoot, false);
+                }
+                return (false, lootModel);
+            }
+
+            PlaceItemOnGrid(lootModel, true);
+            SetTopLeftValidIndex(_emptyTileIndex);
+            return (true, swappedLoot);
         }
 
         public LootModel RemoveItemFromGrid(Vector2Int tileIndex, bool invokeChanged)
@@ -251,7 +234,62 @@ namespace ShadowFlareRemake.UI
             return removedLootModel;
         }
 
-        private bool IsValidPlacement(int width, int height, Vector2Int tileIndex)
+        private void PlaceItemOnGrid(LootModel lootModel, bool invokeChanged)
+        {
+            GridTileModelsDict[_topLeftValidIndex].SetLootModel(lootModel);
+
+            var lootOtherIndexesHolder = new Vector2Int();
+
+            for(int x = 0; x < lootModel.LootData.Width; x++)
+            {
+                lootOtherIndexesHolder.x = _topLeftValidIndex.x + x;
+
+                for(int y = 0; y < lootModel.LootData.Height; y++)
+                {
+                    lootOtherIndexesHolder.y = _topLeftValidIndex.y + y;
+                    _heldLootRootIndexesDict[lootOtherIndexesHolder] = _topLeftValidIndex;
+                }
+            }
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
+        }
+
+        private bool IsAccepetedLootType(LootType lootType)
+        {
+            foreach(var acceptedLootType in _acceptedLootTypes)
+            {
+                if(acceptedLootType == LootType.All || acceptedLootType == lootType)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryAutoPlaceLogic(Vector2Int tileIndex, LootModel lootModel)
+        {
+            if(IsSingleTile)
+            {
+                if(_heldLootRootIndexesDict[_singleTileIndex].x != -1)
+                    return false;
+
+                SetTopLeftValidIndex(_singleTileIndex);
+            }
+            else if(!IsSingleTile && !GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            {
+                return false;
+            }
+
+            PlaceItemOnGrid(lootModel, true);
+            SetTopLeftValidIndex(_emptyTileIndex);
+            return true;
+        }
+
+        private bool GetIsValidPlacement(int width, int height, Vector2Int tileIndex)
         {
             SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
             var isValidHorizontally = IsValidPlacementHorizontally(width, tileIndex);

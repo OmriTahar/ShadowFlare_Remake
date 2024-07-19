@@ -1,4 +1,3 @@
-using log4net.Core;
 using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Loot;
@@ -254,13 +253,14 @@ namespace ShadowFlareRemake.UI
 
             if(cursorLootModel != null)
             {
-                var tuple = _inventoryModel.TryHandPlaceLootOnGrid(itemsGridModel, tileIndex, cursorLootModel);
+                var tuple = _inventoryModel.TryHandPlaceOnGrid(itemsGridModel, tileIndex, cursorLootModel);
                 var isLootPlaced = tuple.Item1;
                 var swappedLoot = tuple.Item2;
 
                 if(!isLootPlaced)
                     return;
 
+                _curserModel.LootInfoTooltipModel.InvokeChanged();
                 _curserModel.DropLoot();
 
                 if(swappedLoot != null)

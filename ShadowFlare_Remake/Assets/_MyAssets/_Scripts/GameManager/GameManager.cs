@@ -58,8 +58,8 @@ namespace ShadowFlareRemake.GameManager
             InitEnemies();
             InitPlayer();
             InitUiController();
-            RegisterEvents();
 
+            RegisterEvents();
             HandleTestSpawnLoot();
         }
 
@@ -265,15 +265,15 @@ namespace ShadowFlareRemake.GameManager
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
         {
             _lastPickedUpLootView = lootCollider.GetComponent<LootView>();
+            _lastPickedUpLootView.gameObject.SetActive(false);
             var lootModel = _lastPickedUpLootView.GetLootModel();
 
             if(!_uiController.TryPickUpLootFromTheGround(lootModel))
             {
+                _lastPickedUpLootView.gameObject.SetActive(true);
                 lootModel.InvokeDropAnimation();
                 return;
             }
-
-            _lastPickedUpLootView.gameObject.SetActive(false);
 
             if(lootModel.LootCategory == Enums.LootCategory.Equipment)
             {

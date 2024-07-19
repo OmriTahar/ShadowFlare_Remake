@@ -26,5 +26,10 @@ namespace ShadowFlareRemake.UI
             IsActive = isActive;
             Changed();
         }
+
+        public void InvokeChanged()
+        {
+            Changed();
+        }
     }
 }

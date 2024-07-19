@@ -56,18 +56,18 @@ namespace ShadowFlareRemake.UI.Inventory
         {
             var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
 
-            if(specificItemsGridModel.TryAutoPlaceLootOnGrid(lootModel))
+            if(specificItemsGridModel.TryAutoPlace_Loot(lootModel))
             {
                 TryAddOrRemoveEquippedGearFromList(specificItemsGridModel.ItemsGridType, lootModel, true);
                 return true;
             }
 
-            return CarryItemsGridModel.TryAutoPlaceLootOnGrid(lootModel);
+            return CarryItemsGridModel.TryAutoPlace_Loot(lootModel);
         }
 
         public bool TryAutoPlace_Gold(LootModel lootModel)
         {
-            var isSuccess = CarryItemsGridModel.TryAutoPlaceGoldOnGrid(lootModel);
+            var isSuccess = CarryItemsGridModel.TryAutoPlace_Gold(lootModel);
 
             if(isSuccess)
             {
@@ -77,20 +77,27 @@ namespace ShadowFlareRemake.UI.Inventory
             return isSuccess;
         }
 
-        public (bool, LootModel) TryHandPlaceLootOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
+        public (bool, LootModel) TryHandPlaceOnGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex, LootModel lootModel)
         {
-            var tuple = itemsGridModel.TryHandPlaceLootOnGrid(tileIndex, lootModel);
-            var isLootPlaced = tuple.Item1;
-            var swappedLoot = tuple.Item2;
+            (bool, LootModel) resultTuple;
+            var isGold = lootModel.LootCategory == LootCategory.Gold;
+
+            if(isGold)
+                resultTuple = itemsGridModel.TryHandPlace_Gold(tileIndex, lootModel);
+            else
+                resultTuple = itemsGridModel.TryHandPlace_Loot(tileIndex, lootModel);
+
+            var isLootPlaced = resultTuple.Item1;
+            var swappedLoot = resultTuple.Item2;
 
             if(isLootPlaced)
             {
                 TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, lootModel, true);
+            }
 
-                if(lootModel.LootCategory == LootCategory.Gold)
-                {
-                    UpdateGoldAmount();
-                }
+            if(lootModel.LootCategory == LootCategory.Gold)
+            {
+                UpdateGoldAmount();
             }
 
             if(swappedLoot != null)
@@ -98,7 +105,7 @@ namespace ShadowFlareRemake.UI.Inventory
                 TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, swappedLoot, false);
             }
 
-            return tuple;
+            return resultTuple;
         }
 
         public void RemoveItemFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex)

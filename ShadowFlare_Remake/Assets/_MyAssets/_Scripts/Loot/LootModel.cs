@@ -69,6 +69,11 @@ namespace ShadowFlareRemake.Loot
             return spare;
         }
 
+        public void InvokeChanged()
+        {
+            Changed();
+        }
+
         private void SetLootCategory(LootType lootType)
         {
             if(IsGear(lootType))
