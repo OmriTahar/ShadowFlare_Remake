@@ -32,8 +32,8 @@ namespace ShadowFlareRemake.GameManager.Units
         [field: SerializeField] public int Defense { get; private set; }
         [field: SerializeField] public int HitRate { get; private set; }
         [field: SerializeField] public int EvasionRate { get; private set; }
-        [field: SerializeField] public int MovementSpeed { get; private set; }
-        [field: SerializeField] public int AttackSpeed { get; private set; }
+        [field: SerializeField] public int MovementSpeed { get; private set; } = _defaultMovementSpeed;
+        [field: SerializeField] public int AttackSpeed { get; private set; } = _defaultAttackSpeed;
 
         [Space(15)]
         [SerializeField] private string ______MAGICAL_____ = _spaceLine;
@@ -45,6 +45,10 @@ namespace ShadowFlareRemake.GameManager.Units
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
 
         private const string _spaceLine = "------------------------------------";
+
+        private static readonly int _defaultMovementSpeed = 100;
+        private static readonly int _defaultAttackSpeed = 100;
+        private static readonly int _defaultOverWeightSpeed = 50;
 
         #endregion
 
@@ -87,8 +91,8 @@ namespace ShadowFlareRemake.GameManager.Units
 
         public void SetEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
-            MovementSpeed = 6;
-            AttackSpeed = 1; // Change this
+            MovementSpeed = _defaultMovementSpeed;
+            AttackSpeed = _defaultAttackSpeed;
 
             MaxHP += addedStats.MaxHP;
             Attack += addedStats.Attack;
@@ -108,8 +112,8 @@ namespace ShadowFlareRemake.GameManager.Units
 
             if(EquippedWeight > Strength)
             {
-                MovementSpeed = 1;
-                AttackSpeed = 1;
+                MovementSpeed = _defaultOverWeightSpeed;
+                AttackSpeed = _defaultOverWeightSpeed;
             }
         }
     }

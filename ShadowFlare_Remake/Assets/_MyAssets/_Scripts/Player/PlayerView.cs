@@ -16,9 +16,13 @@ namespace ShadowFlareRemake.Player
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private VisualEffectsSubView _vfxView;
 
+        private readonly int _movementAnimSpeedParam = Animator.StringToHash("MovementAnimSpeed");
+        private readonly int _attackAnimSpeedParam = Animator.StringToHash("AttackAnimSpeed");
+
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
         private const string _isMovingBool = "IsMoving";
+        private const int _oneHundred = 100;
 
         private int _lastSeenHP;
 
@@ -37,8 +41,8 @@ namespace ShadowFlareRemake.Player
 
         protected override void ModelChanged()
         {
-            _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
-
+            SetAnimationsSpeed();
+            SetIsMovingAnimation();
             HandleHitEffect();
             HandleHP();
 
@@ -93,6 +97,17 @@ namespace ShadowFlareRemake.Player
         #endregion
 
         #region Meat & Potatos
+
+        private void SetAnimationsSpeed()
+        {
+            _playerAnimator.SetFloat(_movementAnimSpeedParam, Model.GetMovementSpeedForMoveAnimation());
+            _playerAnimator.SetFloat(_attackAnimSpeedParam, Model.GetAttackSpeedForAttackAnimations());
+        }
+
+        private void SetIsMovingAnimation()
+        {
+            _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
+        }
 
         private void HandleAttackAnimations()
         {

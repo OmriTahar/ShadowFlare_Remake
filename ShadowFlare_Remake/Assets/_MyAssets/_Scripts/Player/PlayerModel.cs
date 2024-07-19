@@ -14,6 +14,9 @@ namespace ShadowFlareRemake.Player
         public bool IsMoving { get; private set; }
         public bool CanTakeDamage { get; private set; } = true;
 
+        private const int _movementSpeedLogicAdjuster = 20;
+        private const float _animationsSpeedAdjuster = 100;
+
         public PlayerModel(IUnit unit)
         {
             Unit = unit;
@@ -41,6 +44,21 @@ namespace ShadowFlareRemake.Player
         {
             IsLastHitWasCritialHit = isLastHitWasCritialHit;
             Changed();
+        }
+
+        public int GetMovementSpeedForMoveLogic()
+        {
+            return Stats.MovementSpeed / _movementSpeedLogicAdjuster;
+        }
+
+        public float GetMovementSpeedForMoveAnimation()
+        {
+            return Stats.MovementSpeed / _animationsSpeedAdjuster;
+        }
+
+        public float GetAttackSpeedForAttackAnimations()
+        {
+            return Stats.AttackSpeed / _animationsSpeedAdjuster;
         }
     }
 }

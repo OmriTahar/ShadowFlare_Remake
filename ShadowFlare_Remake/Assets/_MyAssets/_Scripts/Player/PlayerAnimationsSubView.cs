@@ -9,17 +9,17 @@ namespace ShadowFlareRemake.Player
         public event Action OnFinished_MeleeSingleAttack;
         public event Action OnFinished_MeleeTripleAttack;
 
-        public void DoStepForward()
+        public void DoStepForward()                   // Called from an animation enent (Melee Triple 1-3)
         {
             OnDo_StepForwardAnimationEvent?.Invoke();
         }
 
-        public void FinishedMeleeSingleAttack()
+        public void FinishedMeleeSingleAttack()       // Called from an animation enent (Melee Single)
         {
             OnFinished_MeleeSingleAttack?.Invoke();
         }
 
-        public void FinishedMeleeTripleAttack()
+        public void FinishedMeleeTripleAttack()       // Called from an animation enent (Melee Triple_3)
         {
             OnFinished_MeleeTripleAttack?.Invoke();
         }

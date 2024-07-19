@@ -193,7 +193,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveLogic(Vector3 targetPos)
         {
             targetPos.y = 0f;
-            var movementSpeed = _model.Stats.MovementSpeed;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             _model.SetIsMoving(true);
 
@@ -212,7 +212,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos)
         {
             targetPos.y = 0f;
-            var movementSpeed = _model.Stats.MovementSpeed;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance)
             {
@@ -272,7 +272,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator AttackStepForwardLogic(float timeToComplete)
         {
             float timer = 0;
-            var movementSpeed = _model.Stats.MovementSpeed;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
             _forwardRay = new Ray(_frontRayOrigin.position, transform.forward);
 
             while(timer < timeToComplete)
@@ -300,7 +300,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveAndPickUpLogic(Vector3 targetPos, Collider lootCollider)
         {
             targetPos.y = 0f;
-            var movementSpeed = _model.Stats.MovementSpeed;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             if(Vector3.Distance(transform.position, targetPos) <= _pickUpDistance)
             {
