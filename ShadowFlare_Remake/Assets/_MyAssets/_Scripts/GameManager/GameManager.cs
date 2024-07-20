@@ -370,14 +370,31 @@ namespace ShadowFlareRemake.GameManager
         private void HandleTestSpawnLoot()
         {
             float spawnPosX = _testLootParent.transform.position.x;
+            float spawnPosZ = _testLootParent.transform.position.z;
+            bool isSecondRow = false;
+
+            var offset_X = 1.5f;
+            var offset_Z = 2f;
+
             foreach(var lootData in _testLootData)
             {
-                TestSpawnLoot(lootData, spawnPosX);
-                spawnPosX += 1.25f;
+                TestSpawnLoot(lootData, spawnPosX, spawnPosZ);
+
+                if(isSecondRow)
+                {
+                    spawnPosX += offset_X;
+                    spawnPosZ -= offset_Z;
+                }
+                else
+                {
+                    spawnPosZ += offset_Z;
+                }
+
+                isSecondRow = !isSecondRow;
             }
         }
 
-        public void TestSpawnLoot(LootData_ScriptableObject lootData, float posX)
+        public void TestSpawnLoot(LootData_ScriptableObject lootData, float posX, float posZ)
         {
             var lootModel = new LootModel(lootData);
 
@@ -392,7 +409,7 @@ namespace ShadowFlareRemake.GameManager
 
             var fuckme = Instantiate(_testLootPrefab, _testLootParent);
             var pos = fuckme.transform.position;
-            fuckme.transform.position = new Vector3(posX, pos.y, pos.z);
+            fuckme.transform.position = new Vector3(posX, pos.y, posZ);
 
             var lootView = fuckme.GetComponentInChildren<LootView>();
 
@@ -407,7 +424,7 @@ namespace ShadowFlareRemake.GameManager
 
         public void TestSpawnLootItem()
         {
-            TestSpawnLoot(_testLootDataToSpawn, 0);
+            TestSpawnLoot(_testLootDataToSpawn, 0, 0);
         }
 
         public void TestHitPlayer()

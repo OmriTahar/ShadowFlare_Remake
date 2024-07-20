@@ -9,10 +9,12 @@ namespace ShadowFlareRemake.GameManager
         public bool IsHighlighted { get; private set; }
 
         [Header("References")]
-        [SerializeField] private EnemyView _enemyView;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
         [SerializeField] private GameObject _nameHolder;
+
+        [Header("Other")]
+        [SerializeField] private EnemyView _enemyView;
 
         [Header("Settings")]
         [SerializeField] private float _highlightIntensity = 0.2f;

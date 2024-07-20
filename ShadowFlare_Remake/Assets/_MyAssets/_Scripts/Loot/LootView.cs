@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using ShadowFlareRemake.Enums;
 using System;
 using TMPro;
@@ -15,6 +16,12 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private Image _image;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Image _nameBackgroundImage;
+
+        [Header("Settings")]
+        [SerializeField] private Color _nameBG_EquipmentColor;
+        [SerializeField] private Color _nameBG_GoldColor;
+        [SerializeField] private Color _nameBG_PotionsColor;
 
         private readonly int _dropAnimHash = Animator.StringToHash("Drop");
         private const int _sizeMultiplier = 62;
@@ -34,6 +41,7 @@ namespace ShadowFlareRemake.Loot
 
             SetData();
             SetNameText();
+            SetNameBackgroundColor();
             HandleSetSprite();
             HandleAnimation();
         }
@@ -76,6 +84,27 @@ namespace ShadowFlareRemake.Loot
                 }
 
                 _nameText.text = _name;
+            }
+        }
+
+        private void SetNameBackgroundColor()
+        {
+            if(_nameBackgroundImage == null)
+                return;
+
+            switch(Model.LootCategory)
+            {
+                case LootCategory.Equipment:
+                    _nameBackgroundImage.color = _nameBG_EquipmentColor;
+                    break;
+
+                case LootCategory.Potion:
+                    _nameBackgroundImage.color = _nameBG_PotionsColor;
+                    break;
+
+                case LootCategory.Gold:
+                    _nameBackgroundImage.color = _nameBG_GoldColor;
+                    break;
             }
         }
 
@@ -143,7 +172,7 @@ namespace ShadowFlareRemake.Loot
                 _image.sprite = data.GoldImage_1;
             }
 
-            else if(amount >= 3 && amount < 100) 
+            else if(amount >= 3 && amount < 100)
             {
                 _image.sprite = data.GoldImage_2_to_99;
             }
