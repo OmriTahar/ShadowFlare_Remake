@@ -21,8 +21,8 @@ namespace ShadowFlareRemake.GameManager.Units
 
         [Space(15)]
         [SerializeField] private string ______REWARDS_____ = _spaceLine;
-        [field: SerializeField] public int ExpDrop { get; private set; }
-        [field: SerializeField] public int CoinsDrop { get; private set; }
+        [field: SerializeField] public int ExpReward { get; private set; }
+        [field: SerializeField] public int LootDropChance { get; private set; }
 
         [Space(15)]
         [SerializeField] private string ______PHYSICAL_____ = _spaceLine;

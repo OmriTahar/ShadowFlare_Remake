@@ -1,8 +1,9 @@
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.Rewards;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Rewards {
+namespace ShadowFlareRemake.GameManager {
 
     public class RewardsManager : MonoBehaviour {
 
@@ -11,7 +12,7 @@ namespace ShadowFlareRemake.Rewards {
 
         public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) { // Todo: Do this better
 
-            var expDrop = enemyUnit.ExpDrop;
+            var expDrop = enemyUnit.ExpReward;
             var expReward = new ExpReward();
 
             if(expDrop <= 0) {

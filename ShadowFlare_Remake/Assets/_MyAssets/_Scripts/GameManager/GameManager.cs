@@ -3,7 +3,6 @@ using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.GameManager.Units;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
-using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +12,10 @@ namespace ShadowFlareRemake.GameManager
     public class GameManager : MonoBehaviour
     {
         [Header("Managers")]
+        [SerializeField] private UIController _uiController;
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private RewardsManager _rewardsManager;
-        [SerializeField] private UIController _uiController;
+        [SerializeField] private LootManager _lootManager;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -24,17 +24,11 @@ namespace ShadowFlareRemake.GameManager
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStats;
 
-        [Header("--------------- Loot Tests ---------------")]
-        [SerializeField] private Transform _testLootParent;
-        [SerializeField] private GameObject _testLootPrefab;
-        [SerializeField] private List<LootData_ScriptableObject> _testLootData;
-        [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
-
-        [Header("--------------- Enemies Tests ---------------")]
+        [Header("--------------- TESTS: Enemies ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
 
-        [Header("--------------- Player Tests ---------------")]
+        [Header("--------------- TESTS: Player ---------------")]
         [SerializeField] private int _healOrDamageAmount = 10;
 
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
@@ -45,9 +39,6 @@ namespace ShadowFlareRemake.GameManager
         private GameObject _lastHighlighted_GameObject;
         private HighlightableObject _lastHighlightable;
         private LootView _lastPickedUpLootView;
-
-        private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 3576 };
-        private int _testGoldSpawnIndex = 0;
 
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
@@ -61,9 +52,9 @@ namespace ShadowFlareRemake.GameManager
             InitEnemies();
             InitPlayer();
             InitUiController();
-
             RegisterEvents();
-            HandleTestSpawnLoot();
+
+            _lootManager.HandleTestSpawnLoot();
         }
 
         private void Update()
@@ -242,7 +233,7 @@ namespace ShadowFlareRemake.GameManager
             enemyController.SetEnemyUnitAfterHit(unit, isCritialHit);
         }
 
-        private void HandleEnemyDied(IEnemyUnitStats enemyStats)
+        private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)
         {
             var expReward = _rewardsManager.GetExpReward(_playerUnitStats, enemyStats);
             _playerUnitStats.GiveExpReward(expReward);
@@ -256,6 +247,7 @@ namespace ShadowFlareRemake.GameManager
             }
 
             _uiController.UpdatePlayerVitalsExpAndLevel(_playerUnit);
+            _lootManager.HandleLootDrop(enemyStats.Level, enemyStats.LootDropChance, enemyPosition);
         }
 
         #endregion
@@ -296,8 +288,8 @@ namespace ShadowFlareRemake.GameManager
 
         private void HandlePlayerDropLootToTheGround(LootModel lootModel)
         {
-            var worldLoot = Instantiate(_testLootPrefab);
-            worldLoot.transform.position = GetLootDropPos();
+            var worldLoot = _lootManager.InstantiateLootPrefab();
+            worldLoot.transform.position = GetPlayerDroppingLootPos();
 
             var lootView = worldLoot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
@@ -351,7 +343,7 @@ namespace ShadowFlareRemake.GameManager
 
         #region Loot
 
-        private Vector3 GetLootDropPos()
+        private Vector3 GetPlayerDroppingLootPos()
         {
             var playerPos = _playerController.transform.position;
             var rayCastPos = _inputManager.CurrentRaycastHit.point;
@@ -367,64 +359,10 @@ namespace ShadowFlareRemake.GameManager
 
         #region Tests
 
-        private void HandleTestSpawnLoot()
-        {
-            float spawnPosX = _testLootParent.transform.position.x;
-            float spawnPosZ = _testLootParent.transform.position.z;
-            bool isSecondRow = false;
-
-            var offset_X = 1.5f;
-            var offset_Z = 2f;
-
-            foreach(var lootData in _testLootData)
-            {
-                TestSpawnLoot(lootData, spawnPosX, spawnPosZ);
-
-                if(isSecondRow)
-                {
-                    spawnPosX += offset_X;
-                    spawnPosZ -= offset_Z;
-                }
-                else
-                {
-                    spawnPosZ += offset_Z;
-                }
-
-                isSecondRow = !isSecondRow;
-            }
-        }
-
-        public void TestSpawnLoot(LootData_ScriptableObject lootData, float posX, float posZ)
-        {
-            var lootModel = new LootModel(lootData);
-
-            if(lootModel.LootCategory == Enums.LootCategory.Gold)
-            {
-                if(_testGoldSpawnIndex <= _testGoldSpawnList.Count - 1)
-                {
-                    lootModel.SetAmountAndGetSpareWhenMaxed(_testGoldSpawnList[_testGoldSpawnIndex]);
-                    _testGoldSpawnIndex++;
-                }
-            }
-
-            var fuckme = Instantiate(_testLootPrefab, _testLootParent);
-            var pos = fuckme.transform.position;
-            fuckme.transform.position = new Vector3(posX, pos.y, posZ);
-
-            var lootView = fuckme.GetComponentInChildren<LootView>();
-
-            lootView.SetModel(lootModel);
-        }
-
         public void TestSpawnEnemy()
         {
             _testEnemyToSpawn.SetGameobjectNameAsEnemy();
             InitEnemyLogic(_testEnemyToSpawn, _isEnemyActiveOnSpawn, false);
-        }
-
-        public void TestSpawnLootItem()
-        {
-            TestSpawnLoot(_testLootDataToSpawn, 0, 0);
         }
 
         public void TestHitPlayer()
@@ -451,13 +389,6 @@ namespace ShadowFlareRemake.GameManager
                 GUILayout.Space(20);
 
                 var gameManager = target as GameManager;
-
-                if(GUILayout.Button("Spawn Loot"))
-                {
-                    gameManager.TestSpawnLootItem();
-                }
-
-                GUILayout.Space(15);
 
                 if(GUILayout.Button("Spawn Enemy"))
                 {

@@ -9,7 +9,7 @@ namespace ShadowFlareRemake.Enemies
     public abstract class EnemyController : Controller
     {
         public event Action<Attack, EnemyController> OnIGotHit;
-        public event Action<IEnemyUnitStats> OnDeath;
+        public event Action<IEnemyUnitStats, Vector3> OnDeath;
 
         [Header("Base References")]
         [SerializeField] protected EnemyView View;
@@ -122,7 +122,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleDeath()
         {
-            OnDeath?.Invoke(Model.Stats);
+            OnDeath?.Invoke(Model.Stats, transform.position);
             Model.SetEnemyState(EnemyState.Dead);
         }
 
