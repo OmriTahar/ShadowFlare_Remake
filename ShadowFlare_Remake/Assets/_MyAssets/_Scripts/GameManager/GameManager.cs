@@ -228,7 +228,7 @@ namespace ShadowFlareRemake.GameManager
         {
             var unit = _enemyUnitsDict[enemyController];
 
-            var isCritialHit = CombatLogic.HandleTakeDamageAndReturnIsCritialHit(attack, unit);
+            var isCritialHit = CombatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit);
 
             enemyController.SetEnemyUnitAfterHit(unit, isCritialHit);
         }
@@ -262,7 +262,7 @@ namespace ShadowFlareRemake.GameManager
 
         private void HandlePlayerGotHit(Attack attack)
         {
-            var isCritialHit = CombatLogic.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
+            var isCritialHit = CombatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
             _playerController.SetIsLastHitWasCritialHit(isCritialHit);
             _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
