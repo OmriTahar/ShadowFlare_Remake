@@ -46,7 +46,7 @@ namespace ShadowFlareRemake.GameManager
         private HighlightableObject _lastHighlightable;
         private LootView _lastPickedUpLootView;
 
-        private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 1576 };
+        private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 3576 };
         private int _testGoldSpawnIndex = 0;
 
         private const string _highlightableTag = "Highlightable";

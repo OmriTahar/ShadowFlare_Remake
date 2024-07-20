@@ -34,6 +34,7 @@ namespace ShadowFlareRemake.UI.Stats {
         [Header("Settings")]
         [SerializeField] private Color _statDefaultColor;
         [SerializeField] private Color _statBuffedColor;
+        [SerializeField] private Color _statNerfedColor;
 
         protected override void ModelChanged() {
 
@@ -47,9 +48,11 @@ namespace ShadowFlareRemake.UI.Stats {
 
             if(Model.IsFullStatsUpdate)
             {
+                var isNerfed = Model.Stats.EquippedWeight > Model.Stats.Strength;
+
                 SetBaseStats();
-                SetPhysicalStats();
-                SetMagicalStats();
+                SetPhysicalStats(isNerfed);
+                SetMagicalStats(isNerfed);
             }
         }
 
@@ -65,7 +68,7 @@ namespace ShadowFlareRemake.UI.Stats {
             _vocationText.text = Model.Stats.Vocation.ToString();
         }
 
-        private void SetPhysicalStats()
+        private void SetPhysicalStats(bool isNerfed)
         {
             _hpText.text = $"{Model.Unit.CurrentHP} / {Model.Stats.MaxHP}";
             _strengthText.text = Model.Stats.Strength.ToString();
@@ -81,11 +84,11 @@ namespace ShadowFlareRemake.UI.Stats {
             SetBuffedTextColor(_defenseText, Model.EquippedGearAddedStats.Defense);
             SetBuffedTextColor(_hitRateText, Model.EquippedGearAddedStats.HitRate);
             SetBuffedTextColor(_evasionRateText, Model.EquippedGearAddedStats.EvasionRate);
-            SetBuffedTextColor(_movementSpeedText, Model.EquippedGearAddedStats.MovementSpeed);
-            SetBuffedTextColor(_attackSpeedText, Model.EquippedGearAddedStats.AttackSpeed);
+            SetBuffedTextColor(_movementSpeedText, Model.EquippedGearAddedStats.MovementSpeed, isNerfed);
+            SetBuffedTextColor(_attackSpeedText, Model.EquippedGearAddedStats.AttackSpeed, isNerfed);
         }
 
-        private void SetMagicalStats()
+        private void SetMagicalStats(bool isNerfed)
         {
             _mpText.text = $"{Model.Unit.CurrentMP} / {Model.Stats.MaxMP}";
             _magicalAttackText.text = Model.Stats.MagicalAttack.ToString();
@@ -96,13 +99,19 @@ namespace ShadowFlareRemake.UI.Stats {
 
             SetBuffedTextColor(_magicalAttackText, Model.EquippedGearAddedStats.MagicalAttack);
             SetBuffedTextColor(_magicalDefenseText, Model.EquippedGearAddedStats.MagicalDefense);
-            SetBuffedTextColor(_magicalAttackSpeedText, Model.EquippedGearAddedStats.MagicalAttackSpeed);
+            SetBuffedTextColor(_magicalAttackSpeedText, Model.EquippedGearAddedStats.MagicalAttackSpeed, isNerfed);
             SetBuffedTextColor(_magicalHitRateText, Model.EquippedGearAddedStats.MagicalHitRate);
             SetBuffedTextColor(_magicalEvasionRateText, Model.EquippedGearAddedStats.MagicalEvasionRate);
         }
 
-        private void SetBuffedTextColor(TMP_Text text, int equippedGearAddedStat)
+        private void SetBuffedTextColor(TMP_Text text, int equippedGearAddedStat, bool isNerfed = false)
         {
+            if(isNerfed)
+            {
+                text.color = _statNerfedColor;
+                return;
+            }
+
             text.color = equippedGearAddedStat > 0 ? _statBuffedColor : _statDefaultColor;
         }
     }

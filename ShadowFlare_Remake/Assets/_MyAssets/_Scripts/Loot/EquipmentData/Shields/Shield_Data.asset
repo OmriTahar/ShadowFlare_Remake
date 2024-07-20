@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4796bdbfdfdcd8428034c279c4af31c, type: 3}
-  m_Name: Helmet
+  m_Name: Shield_Data
   m_EditorClassIdentifier: 
   _________BASE_________: ------------------------------------
-  <Name>k__BackingField: Helment
-  <LootType>k__BackingField: 3
+  <Name>k__BackingField: Shield
+  <LootType>k__BackingField: 2
   <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 334b7085edbca194d91ceafd85fa49f5,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 718255a38331c384085e74f65ece70ae,
     type: 3}
   _________SIZE_________: ------------------------------------
   <Width>k__BackingField: 2
-  <Height>k__BackingField: 2
+  <Height>k__BackingField: 3
   ______PHYSICAL_____: ------------------------------------
   <MaxHP>k__BackingField: 0
   <Attack>k__BackingField: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   <MagicalEvasionRate>k__BackingField: 0
   <MagicalAttackSpeed>k__BackingField: 0
   ______INFO_____: ------------------------------------
-  <Weight>k__BackingField: 20
+  <Weight>k__BackingField: 30
   <Durability>k__BackingField: 100
-  <RequiredLevel>k__BackingField: 5
+  <RequiredLevel>k__BackingField: 1
   <SellPrice>k__BackingField: 1250

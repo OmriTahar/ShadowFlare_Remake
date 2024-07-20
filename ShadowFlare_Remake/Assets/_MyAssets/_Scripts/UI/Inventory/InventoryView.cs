@@ -52,7 +52,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         protected override void ModelChanged()
         {
-            SetEquippedWeight();
+            HandleEquippedWeight();
             SetGoldAmount();
             SetIsActive();
         }
@@ -114,7 +114,7 @@ namespace ShadowFlareRemake.UI.Inventory
             _goldText.text = Model.GoldAmount.ToString();
         }
 
-        private void SetEquippedWeight()
+        private void HandleEquippedWeight()
         {
             if(_lastEquippedWeightCoroutine != null)
             {
@@ -125,16 +125,19 @@ namespace ShadowFlareRemake.UI.Inventory
             _equippedWeightText.text = Model.EquippedWeight.ToString();
 
             _equippedWeightSlider.value = _lastSeenEquippedWeight;
-            _lastEquippedWeightCoroutine = StartCoroutine(LerpSliderValue(_equippedWeightSlider, Model.EquippedWeight));
+            _lastEquippedWeightCoroutine = StartCoroutine(HandleLerpWeightSliderValueAndSetWeightColors(_equippedWeightSlider, Model.EquippedWeight));
         }
 
-        public IEnumerator LerpSliderValue(Slider slider, float targetValue)
+        public IEnumerator HandleLerpWeightSliderValueAndSetWeightColors(Slider slider, float targetValue)
         {
             float startValue = slider.value;
             float timeElapsed = 0f;
-            var strength = Model.Strength;
-            bool isSliderValueDirectionIsUp = slider.value < targetValue;
-            bool hasChangedColor = false;
+
+            bool isLastSeenOverWeight = _lastSeenEquippedWeight > Model.EquippedWeight;
+            bool isCurrentlyOverWeight = Model.EquippedWeight > Model.Strength;
+            bool isSliderValueDirectionIsUp = startValue < targetValue;
+
+            SetEquippedWeightTextAndSliderColors(isLastSeenOverWeight, isCurrentlyOverWeight, isSliderValueDirectionIsUp);
 
             while(timeElapsed < _sliderLerpDuration)
             {
@@ -142,26 +145,28 @@ namespace ShadowFlareRemake.UI.Inventory
                 float lerpProgress = timeElapsed / _sliderLerpDuration;
                 slider.value = Mathf.Lerp(startValue, targetValue, lerpProgress);
                 _lastSeenEquippedWeight = slider.value;
-
-                if(!hasChangedColor)
-                {
-                    if(isSliderValueDirectionIsUp && _lastSeenEquippedWeight > strength)
-                    {
-                        _equippedWeightSlider_FillImage.color = _equippedWeightSlider_OverWeightColor;
-                        hasChangedColor = true;
-                    }
-                    else if(!isSliderValueDirectionIsUp && _lastSeenEquippedWeight < strength)
-                    {
-                        _equippedWeightSlider_FillImage.color = _equippedWeightSlider_ValidColor;
-                        hasChangedColor = true;
-                    }
-                }
-
                 yield return null;
             }
 
+            SetEquippedWeightTextAndSliderColors(isLastSeenOverWeight, isCurrentlyOverWeight, isSliderValueDirectionIsUp);
+
             slider.value = targetValue;
             _lastSeenEquippedWeight = slider.value;
+        }
+
+        private void SetEquippedWeightTextAndSliderColors(bool isLastSeenOverWeight, bool isCurrentlyOverWeight, bool isSliderValueDirectionIsUp)
+        {
+            if(isLastSeenOverWeight && !isCurrentlyOverWeight && !isSliderValueDirectionIsUp)
+            {
+                _equippedWeightSlider_FillImage.color = _equippedWeightSlider_ValidColor;
+                _equippedWeightText.color = _equippedWeightSlider_ValidColor;
+            }
+
+            else if(!isLastSeenOverWeight && isCurrentlyOverWeight && isSliderValueDirectionIsUp)
+            {
+                _equippedWeightSlider_FillImage.color = _equippedWeightSlider_OverWeightColor;
+                _equippedWeightText.color = _equippedWeightSlider_OverWeightColor;
+            }
         }
 
         private void SetIsActive()

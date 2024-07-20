@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4796bdbfdfdcd8428034c279c4af31c, type: 3}
-  m_Name: Shield
+  m_Name: SpeedShield_Data
   m_EditorClassIdentifier: 
   _________BASE_________: ------------------------------------
-  <Name>k__BackingField: Shield
+  <Name>k__BackingField: Speed Shield
   <LootType>k__BackingField: 2
   <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <Sprite>k__BackingField: {fileID: 21300000, guid: ed1e4bbce05b0cc438171d626534a8d2,
@@ -27,7 +27,7 @@ MonoBehaviour:
   <Defense>k__BackingField: 10
   <HitRate>k__BackingField: 0
   <EvasionRate>k__BackingField: 0
-  <MovementSpeed>k__BackingField: 0
+  <MovementSpeed>k__BackingField: 50
   <AttackSpeed>k__BackingField: 0
   <Strength>k__BackingField: 0
   ______MAGICAL_____: ------------------------------------

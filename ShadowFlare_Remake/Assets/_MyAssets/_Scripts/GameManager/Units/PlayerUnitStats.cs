@@ -48,7 +48,7 @@ namespace ShadowFlareRemake.GameManager.Units
 
         private static readonly int _defaultMovementSpeed = 100;
         private static readonly int _defaultAttackSpeed = 100;
-        private static readonly int _defaultOverWeightSpeed = 50;
+        private static readonly int _defaultOverWeightSpeed = 60;
 
         #endregion
 
