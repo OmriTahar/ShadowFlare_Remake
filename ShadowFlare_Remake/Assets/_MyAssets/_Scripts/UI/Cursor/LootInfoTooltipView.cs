@@ -49,7 +49,7 @@ namespace ShadowFlareRemake.UI.Cursor
             }
             else if(lootModel.LootCategory == LootCategory.Gold)
             {
-                HandleGoldSetInfoLine(lootModel.GoldAmount);
+                HandleGoldSetInfoLine(lootModel.Amount);
             }
         }
 

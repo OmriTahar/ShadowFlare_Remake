@@ -3,7 +3,6 @@ using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.Loot
 {
-    [CreateAssetMenu(fileName = "NewLoot", menuName = "Scriptable Objects/Create New Loot/Create Base Loot")]
     public class LootData_ScriptableObject : ScriptableObject
     {
         protected const string SpaceLine = "------------------------------------";

@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Enums;
 using System;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private Animator _animator;
 
         private readonly int _dropAnimHash = Animator.StringToHash("Drop");
-        private const int _sizeMultiplier = 58;
+        private const int _sizeMultiplier = 62;
         private const int _posHelper = 35;
 
         private string _name;
@@ -70,7 +71,7 @@ namespace ShadowFlareRemake.Loot
             {
                 if(Model.LootCategory == Enums.LootCategory.Gold)
                 {
-                    _nameText.text = $"{Model.GoldAmount} {_name}";
+                    _nameText.text = $"{Model.Amount} {_name}";
                     return;
                 }
 
@@ -89,8 +90,16 @@ namespace ShadowFlareRemake.Loot
 
         private void SetSprite()
         {
-            _image.sprite = _sprite;
             _image.preserveAspect = true;
+
+            if(Model.LootCategory == LootCategory.Gold)
+            {
+                SetGoldSprite();
+                return;
+            }
+
+            _image.sprite = _sprite;
+
         }
 
         private void SetSpriteSize()
@@ -122,6 +131,40 @@ namespace ShadowFlareRemake.Loot
         public void UILootViewClicked()  // Called from a UI button clicked event
         {
             OnLootViewClicked?.Invoke();
+        }
+
+        private void SetGoldSprite()
+        {
+            var data = Model.LootData as GoldData_ScriptableObject;
+            var amount = Model.Amount;
+
+            if(amount < 3)
+            {
+                _image.sprite = data.GoldImage_1;
+            }
+
+            else if(amount >= 3 && amount < 100) 
+            {
+                _image.sprite = data.GoldImage_2_to_99;
+            }
+
+            else if(amount >= 100 && amount < 500)
+            {
+                _image.sprite = data.GoldImage_100_to_499;
+            }
+
+            else if(amount >= 500 && amount < 1000)
+            {
+                _image.sprite = data.GoldImage_500_to_999;
+            }
+
+            else if(amount >= 1000 && amount < 10000)
+            {
+                _image.sprite = data.GoldImage_1000_to_9999;
+            }
+
+            else
+                _image.sprite = data.GoldImage_10000;
         }
 
         #endregion

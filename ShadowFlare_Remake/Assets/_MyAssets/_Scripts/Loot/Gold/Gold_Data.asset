@@ -9,15 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2dd6755e8811a4db2394ecbfe7f91e, type: 3}
+  m_Script: {fileID: 11500000, guid: a56e8ebc00443cd46b06a858d95f06eb, type: 3}
   m_Name: Gold_Data
   m_EditorClassIdentifier: 
   _________BASE_________: ------------------------------------
   <Name>k__BackingField: Gold
   <LootType>k__BackingField: 9
-  <Color>k__BackingField: {r: 1, g: 0.88914996, b: 0, a: 1}
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 17cf3004557d069488c117f0d1f93184,
+  <Color>k__BackingField: {r: 1, g: 0.8938142, b: 0, a: 1}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 204f3fea9dacc5940a98cbe6357665c0,
     type: 3}
   _________SIZE_________: ------------------------------------
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  _________IMAGES_________: ------------------------------------
+  <GoldImage_1>k__BackingField: {fileID: 21300000, guid: 56fe0bee03a521d478c43ef86b001df1,
+    type: 3}
+  <GoldImage_2_to_99>k__BackingField: {fileID: 21300000, guid: 82b87637bd1384f41bcb48ddabd37ac2,
+    type: 3}
+  <GoldImage_100_to_499>k__BackingField: {fileID: 21300000, guid: c14bad3e70d35ed46beb09cd93497761,
+    type: 3}
+  <GoldImage_500_to_999>k__BackingField: {fileID: 21300000, guid: a44362b4ab5a6d14ea00221a10901134,
+    type: 3}
+  <GoldImage_1000_to_9999>k__BackingField: {fileID: 21300000, guid: c08e5ca35e5edc54493663f56c01f0a4,
+    type: 3}
+  <GoldImage_10000>k__BackingField: {fileID: 21300000, guid: c3501d83fb4598342ad0b808e02ff124,
+    type: 3}

@@ -46,6 +46,9 @@ namespace ShadowFlareRemake.GameManager
         private HighlightableObject _lastHighlightable;
         private LootView _lastPickedUpLootView;
 
+        private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 1576 };
+        private int _testGoldSpawnIndex = 0;
+
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
@@ -380,7 +383,11 @@ namespace ShadowFlareRemake.GameManager
 
             if(lootModel.LootCategory == Enums.LootCategory.Gold)
             {
-                lootModel.SetGoldAmountAndGetSpare(Random.Range(1, 10000), true);
+                if(_testGoldSpawnIndex <= _testGoldSpawnList.Count - 1)
+                {
+                    lootModel.SetAmountAndGetSpareWhenMaxed(_testGoldSpawnList[_testGoldSpawnIndex]);
+                    _testGoldSpawnIndex++;
+                }
             }
 
             var fuckme = Instantiate(_testLootPrefab, _testLootParent);

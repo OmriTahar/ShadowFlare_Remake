@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.Loot
     {
         public LootData_ScriptableObject LootData { get; private set; }
         public LootCategory LootCategory { get; private set; }
-        public int GoldAmount { get; private set; } = 1;
+        public int Amount { get; private set; } = 1;
 
         public Color Color { get; private set; }
         public Color HighlightColor { get; private set; }
@@ -40,7 +40,7 @@ namespace ShadowFlareRemake.Loot
             IsInvokeDropAnimation = false;
         }
 
-        public int SetGoldAmountAndGetSpare(int newAmount, bool invokeChanged)
+        public int SetAmountAndGetSpareWhenMaxed(int newAmount)
         {
             int spare = 0;
 
@@ -49,22 +49,19 @@ namespace ShadowFlareRemake.Loot
                 return spare;
             }
 
-            GoldAmount = newAmount;
+            Amount = newAmount;
 
-            if(GoldAmount > _maxGoldAmount)
+            if(Amount > _maxGoldAmount)
             {
-                spare = GoldAmount - _maxGoldAmount;
-                GoldAmount = _maxGoldAmount;
+                spare = Amount - _maxGoldAmount;
+                Amount = _maxGoldAmount;
             }
-            else if(GoldAmount < 0)
+            else if(Amount < 0)
             {
-                GoldAmount = 0;
+                Amount = 0;
             }
 
-            if(invokeChanged)
-            {
-                Changed();
-            }
+            Changed();
 
             return spare;
         }

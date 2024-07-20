@@ -86,12 +86,12 @@ namespace ShadowFlareRemake.UI
 
             if(goldLootModels.Count > 0)
             {
-                var amountToAdd = lootModel.GoldAmount;
+                var amountToAdd = lootModel.Amount;
 
                 foreach(var placedModel in goldLootModels)
                 {
-                    var newAmount = placedModel.GoldAmount + amountToAdd;
-                    spareGold = placedModel.SetGoldAmountAndGetSpare(newAmount, false);
+                    var newAmount = placedModel.Amount + amountToAdd;
+                    spareGold = placedModel.SetAmountAndGetSpareWhenMaxed(newAmount);
 
                     if(spareGold > 0)
                     {
@@ -106,7 +106,7 @@ namespace ShadowFlareRemake.UI
                     return true;
                 }
 
-                lootModel.SetGoldAmountAndGetSpare(spareGold, false);
+                lootModel.SetAmountAndGetSpareWhenMaxed(spareGold);
             }
 
             return TryAutoPlace_Loot(lootModel);
@@ -168,8 +168,8 @@ namespace ShadowFlareRemake.UI
                 }
                 else
                 {
-                    var newAmount = placedLootModel.GoldAmount + lootModel.GoldAmount;
-                    spareGold = placedLootModel.SetGoldAmountAndGetSpare(newAmount, false);
+                    var newAmount = placedLootModel.Amount + lootModel.Amount;
+                    spareGold = placedLootModel.SetAmountAndGetSpareWhenMaxed(newAmount);
                     isPlacedGold = true;
                 }
             }
@@ -180,7 +180,7 @@ namespace ShadowFlareRemake.UI
 
                 if(spareGold > 0)
                 {
-                    lootModel.SetGoldAmountAndGetSpare(spareGold, true);
+                    lootModel.SetAmountAndGetSpareWhenMaxed(spareGold);
                     return (false, lootModel);
                 }
 
