@@ -62,9 +62,14 @@ namespace ShadowFlareRemake.GameManager
         private void DropLootReward(LootModel lootModel, Vector3 pos)
         {
             var loot = Instantiate(_lootPrefab, _lootParent);
-            loot.transform.position = new Vector3(pos.x, pos.y, pos.z);
+
+            var randomOffsetX = Random.Range(-1f, 1f);
+            var randomOffsetZ = Random.Range(-1f, 1f);
+            loot.transform.position = new Vector3(pos.x + randomOffsetX, pos.y, pos.z + randomOffsetZ);
+
             var lootView = loot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
+            lootModel.InvokeDropAnimation();
         }
 
         #endregion

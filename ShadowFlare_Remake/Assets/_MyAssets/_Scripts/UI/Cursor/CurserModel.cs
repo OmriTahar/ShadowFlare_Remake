@@ -69,6 +69,11 @@ namespace ShadowFlareRemake.UI.Cursor
             Changed();
         }
 
+        public void DeactivateInfoTooltip()
+        {
+            LootInfoTooltipModel.SetIsActive(false);
+        }
+
         private void HandleLootInfoTooltip()
         {
             if(CurentHoveredLootModel == null || CurrentHoveredItemsGridType == ItemsGridType.QuickItems || CurrentHoveredItemsGridType == ItemsGridType.None)

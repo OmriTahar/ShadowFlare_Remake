@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ______BASE_____: ------------------------------------
   <Name>k__BackingField: Red Skeleton
-  <Level>k__BackingField: 1
+  <Level>k__BackingField: 2
   ______ENEMY_____: ------------------------------------
   <Color>k__BackingField: {r: 0.990566, g: 0.3317462, b: 0.3317462, a: 1}
   <Scale>k__BackingField: 22
   <EvolutionLevel>k__BackingField: 2
   ______REWARDS_____: ------------------------------------
-  <ExpReward>k__BackingField: 0
-  <LootDropChance>k__BackingField: 0
+  <ExpReward>k__BackingField: 15
+  <LootDropChance>k__BackingField: 100
   ______PHYSICAL_____: ------------------------------------
-  <MaxHP>k__BackingField: 15
+  <MaxHP>k__BackingField: 25
   <Attack>k__BackingField: 20
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1

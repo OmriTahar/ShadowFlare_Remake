@@ -1662,7 +1662,7 @@ MonoBehaviour:
     <Level>k__BackingField: 1
     ______PHYSICAL_____: ------------------------------------
     <MaxHP>k__BackingField: 50
-    <Attack>k__BackingField: 1
+    <Attack>k__BackingField: 5
     <Defense>k__BackingField: 1
     <HitRate>k__BackingField: 1
     <EvasionRate>k__BackingField: 1

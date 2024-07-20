@@ -353,6 +353,12 @@ namespace ShadowFlareRemake.UI
         {
             var toggledState = !_inventoryModel.IsInventoryOpen;
             _inventoryModel.SetIsInventoryOpen(toggledState);
+
+            if(!_inventoryModel.IsInventoryOpen)
+            {
+                _curserModel.DeactivateInfoTooltip();
+            }
+
             HandleUiScreenCover();
         }
 
