@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake.PlayerInput
+namespace ShadowFlareRemake
 {
-    public interface IInputManager
+    public interface IPlayerInputReader
     {
         Collider CurrentRaycastHitCollider { get; }
         RaycastHit CurrentRaycastHit { get; }

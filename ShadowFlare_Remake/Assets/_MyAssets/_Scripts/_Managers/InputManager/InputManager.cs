@@ -1,30 +1,32 @@
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.PlayerInput;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.GameManager
+namespace ShadowFlareRemake.Managers.GameManager
 {
-    public class InputManager : Controller, IInputManager
+    public class InputManager : LayersAndTagsReader, IPlayerInputReader
     {
         [Header("Camera")]
         [SerializeField] private Camera _mainCamera;
 
         [Space(5)]
-        [Header("Mouse Input Actions")]
+        [Header("----- Mouse Input Actions -----")]
+        [Space(5)]
         [SerializeField] private InputAction LeftMouseClickAction;
         [SerializeField] private InputAction RightMouseClickAction;
 
         [Space(10)]
-        [Header("Keyboard Letters Input Actions")]
+        [Header("----- Keyboard Letters Input Actions -----")]
+        [Space(5)]
         [SerializeField] private InputAction I_KeyboardClickAction;
         [SerializeField] private InputAction S_KeyboardClickAction;
         [SerializeField] private InputAction H_KeyboardClickAction;
 
         [Space(10)]
-        [Header("Keyboard Nums Input Actions")]
+        [Header("----- Keyboard Nums Input Actions -----")]
+        [Space(5)]
         [SerializeField] private InputAction NumOne_KeyboardClickAction;
         [SerializeField] private InputAction NumTwo_KeyboardClickAction;
         [SerializeField] private InputAction NumThree_KeyboardClickAction;

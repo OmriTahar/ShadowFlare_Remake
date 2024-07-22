@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace ShadowFlareRemake.Enemies
 {
-    public abstract class EnemyController : Controller
+    public abstract class EnemyController : LayersAndTagsReader
     {
         public event Action<Attack, EnemyController> OnIGotHit;
         public event Action<IEnemyUnitStats, Vector3> OnDeath;

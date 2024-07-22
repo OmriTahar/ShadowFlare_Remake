@@ -1,6 +1,6 @@
 {
-    "name": "ShadowFlareRemake.PlayerInput",
-    "rootNamespace": "ShadowFlareRemake.PlayerInput",
+    "name": "ShadowFlareRemake.Managers.InputManager",
+    "rootNamespace": "ShadowFlareRemake.Managers.InputManager",
     "references": [
         "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:e8733038a827d4741897f7e335845f44",

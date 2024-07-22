@@ -1,8 +1,6 @@
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.Events;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
-using ShadowFlareRemake.PlayerInput;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI.Cursor;
 using ShadowFlareRemake.UI.Hud;
@@ -17,13 +15,14 @@ using UnityEngine.InputSystem;
 
 namespace ShadowFlareRemake.UI
 {
-    public class UIController : Controller
+    public class UIManager : LayersAndTagsReader
     {
-        public event Action<LootModel, Vector2Int> OnPotionClicked;
-        public event Action<LootModel> OnDropLootToTheGround;
+        public event Action<List<EquipmentData_ScriptableObject>> OnPlayerGearChanged;
         public event Action<bool> OnIsCurserOnUiChanged;
         public event Action<bool> OnIsPlayerHoldingLootChanged;
-        public event Action<List<EquipmentData_ScriptableObject>> OnPlayerGearChanged;
+        public event Action<LootModel> OnDropLootToTheGround;
+        public event Action<LootModel, Vector2Int> OnPotionClicked;
+        public event Action<UIScreenCover> OnUIScreenCoverChange;
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
@@ -45,8 +44,7 @@ namespace ShadowFlareRemake.UI
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
 
-        private IInputManager _inputManager;
-        private Camera _mainCamera;
+        private IPlayerInputReader _inputReader;
         private float _screenSizeX;
         private float _screenSizeY;
 
@@ -101,9 +99,9 @@ namespace ShadowFlareRemake.UI
 
         #region Initialization
 
-        public void InitUiController(IInputManager inputManager)
+        public void InitUiController(IPlayerInputReader inputReader)
         {
-            _inputManager = inputManager;
+            _inputReader = inputReader;
             RegisterEvents();
         }
 
@@ -117,8 +115,6 @@ namespace ShadowFlareRemake.UI
             {
                 _hudView = GetComponentInChildren<HudView>();
             }
-
-            _mainCamera = Camera.main;
         }
 
         private void InitModels()
@@ -163,19 +159,19 @@ namespace ShadowFlareRemake.UI
 
         private void SetCurserIcon()
         {
-            if(_inputManager.IsCursorOnUI || _curserModel.IsHoldingLoot())
+            if(_inputReader.IsCursorOnUI || _curserModel.IsHoldingLoot())
             {
                 _curserModel.SetCursorIconState(CursorIconState.UI);
             }
-            else if(_inputManager.IsCursorOnGround)
+            else if(_inputReader.IsCursorOnGround)
             {
                 _curserModel.SetCursorIconState(CursorIconState.Move);
             }
-            else if(_inputManager.IsCursorOnEnemy)
+            else if(_inputReader.IsCursorOnEnemy)
             {
                 _curserModel.SetCursorIconState(CursorIconState.Attack);
             }
-            else if(_inputManager.IsCursorOnItem)
+            else if(_inputReader.IsCursorOnItem)
             {
                 _curserModel.SetCursorIconState(CursorIconState.PickUp);
             }
@@ -221,7 +217,7 @@ namespace ShadowFlareRemake.UI
 
         private void DropLootToTheGround(InputAction.CallbackContext context)
         {
-            if(!_curserModel.IsHoldingLoot() || _inputManager.IsCursorOnUI)
+            if(!_curserModel.IsHoldingLoot() || _inputReader.IsCursorOnUI)
                 return;
 
             OnDropLootToTheGround?.Invoke(_curserModel.CurrentHeldLootModel);
@@ -287,12 +283,12 @@ namespace ShadowFlareRemake.UI
 
         private void SetPickedUpLootPosition()
         {
-            _pickedUpLootTranform.position = _inputManager.CurrentMousePosition;
+            _pickedUpLootTranform.position = _inputReader.CurrentMousePosition;
         }
 
         private void SetLootInfoPosition()
         {
-            var mousePos = _inputManager.CurrentMousePosition;
+            var mousePos = _inputReader.CurrentMousePosition;
             var isCursorOutOfScreen = mousePos.x < 0 || mousePos.x > _screenSizeX || mousePos.y < 0 || mousePos.y > _screenSizeY;
 
             if(isCursorOutOfScreen)
@@ -463,22 +459,22 @@ namespace ShadowFlareRemake.UI
         {
             if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
-                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.BothAreCovered));
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.BothAreCovered);
                 _closeButton.SetActive(true);
             }
             else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
             {
-                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.RightIsCovered));
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.RightIsCovered);
                 _closeButton.SetActive(true);
             }
             else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
-                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.LeftIsCovered));
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.LeftIsCovered);
                 _closeButton.SetActive(true);
             }
             else
             {
-                Dispatcher.Dispatch(new UIScreenCoverEvent(UIScreenCover.None));
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.None);
                 _closeButton.SetActive(false);
             }
         }
@@ -546,49 +542,49 @@ namespace ShadowFlareRemake.UI
             if(isRegister)
             {
                 // Mouse
-                _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
+                _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
 
                 // Keyboard Letters
-                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
-                _inputManager.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
+                _inputReader.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
+                _inputReader.ResigterToKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
                 // Keyboard Nums
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
-                _inputManager.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
+                _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
             }
             else
             {
                 // Mouse
-                _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
+                _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, HandleMouseRightClickOnLoot);
 
                 // Keyboard Letters
-                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
-                _inputManager.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
+                _inputReader.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.I_Keyboard, InvokeToggleInventory);
+                _inputReader.DeresigterFromKeyboardLettersInputAction(PlayerKeyboardLettersInputType.S_Keyboard, ToggleStats);
 
                 // Keyboard Nums
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
-                _inputManager.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumOne, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumTwo, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumThree, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFour, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumFive, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
+                _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
             }
         }
 
         private void DropLootLeftMouseClickEvent(bool isRegister)
         {
             if(isRegister)
-                _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
+                _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
             else
-                _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
+                _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
         }
 
         private void CursorEvents(bool isRegister)

@@ -1,7 +1,7 @@
 using ShadowFlareRemake.Combat;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager
+namespace ShadowFlareRemake.Managers.GameManager
 {
     public static class CombatManager
     {

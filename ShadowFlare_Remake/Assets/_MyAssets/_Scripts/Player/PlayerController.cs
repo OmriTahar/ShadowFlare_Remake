@@ -1,6 +1,5 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.PlayerInput;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -9,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace ShadowFlareRemake.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerController : Controller
+    public class PlayerController : LayersAndTagsReader
     {
         public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
@@ -31,7 +30,7 @@ namespace ShadowFlareRemake.Player
 
         private PlayerModel _model;
         private CharacterController _characterController;
-        private IInputManager _inputManager;
+        private IPlayerInputReader _inputManager;
 
         private Coroutine _lastMoveCoroutine;
         private Vector3 _lastTargetPos;
@@ -82,7 +81,7 @@ namespace ShadowFlareRemake.Player
                 _view = GetComponentInChildren<PlayerView>();
         }
 
-        public void InitPlayer(IUnit unit, IInputManager inputManager)
+        public void InitPlayer(IUnit unit, IPlayerInputReader inputManager)
         {
             _model = new PlayerModel(unit);
             _view.SetModel(_model);

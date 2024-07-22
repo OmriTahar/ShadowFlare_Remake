@@ -1,5 +1,8 @@
+using ShadowFlareRemake.Behaviours;
+using ShadowFlareRemake.Cameras;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.GameManager.Units;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
@@ -7,15 +10,18 @@ using ShadowFlareRemake.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager
+namespace ShadowFlareRemake.Managers.GameManager
 {
     public class GameManager : MonoBehaviour
     {
         [Header("Managers")]
-        [SerializeField] private UIController _uiController;
+        [SerializeField] private UIManager _uiManager;
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private RewardsManager _rewardsManager;
         [SerializeField] private LootManager _lootManager;
+
+        [Header("Camera")]
+        [SerializeField] private CamerasView _camerasView;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -34,10 +40,11 @@ namespace ShadowFlareRemake.GameManager
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
+        private CamerasModel _camerasModel;
         private Unit _playerUnit;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
         private GameObject _lastHighlighted_GameObject;
-        private HighlightableObject _lastHighlightable;
+        private HighlightableBehaviour _lastHighlightable;
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
@@ -49,6 +56,7 @@ namespace ShadowFlareRemake.GameManager
         {
             await _inputManager.WaitForInitFinish();
 
+            InitCameras();
             InitEnemies();
             InitPlayer();
             InitUiController();
@@ -73,8 +81,14 @@ namespace ShadowFlareRemake.GameManager
 
         private void InitUiController()
         {
-            _uiController.InitUiController(_inputManager);
-            _uiController.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
+            _uiManager.InitUiController(_inputManager);
+            _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
+        }
+
+        private void InitCameras()
+        {
+            _camerasModel = new CamerasModel();
+            _camerasView.SetModel(_camerasModel);
         }
 
         #endregion
@@ -86,11 +100,12 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnIGotHit += HandlePlayerGotHit;
             _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
 
-            _uiController.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
-            _uiController.OnPotionClicked += HandlePlayerUsedQuickItem;
-            _uiController.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
-            _uiController.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
-            _uiController.OnPlayerGearChanged += HandlePlayerEquippedGearStats;
+            _uiManager.OnPlayerGearChanged += HandlePlayerEquippedGearStats;
+            _uiManager.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
+            _uiManager.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
+            _uiManager.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
+            _uiManager.OnPotionClicked += HandlePlayerUsedQuickItem;
+            _uiManager.OnUIScreenCoverChange += HandleCamerasOnUiCoverChange;
         }
 
         private void DergisterEvents()
@@ -98,11 +113,12 @@ namespace ShadowFlareRemake.GameManager
             _playerController.OnIGotHit -= HandlePlayerGotHit;
             _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
 
-            _uiController.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
-            _uiController.OnPotionClicked -= HandlePlayerUsedQuickItem;
-            _uiController.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
-            _uiController.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
-            _uiController.OnPlayerGearChanged -= HandlePlayerEquippedGearStats;
+            _uiManager.OnPlayerGearChanged -= HandlePlayerEquippedGearStats;
+            _uiManager.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
+            _uiManager.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
+            _uiManager.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
+            _uiManager.OnPotionClicked -= HandlePlayerUsedQuickItem;
+            _uiManager.OnUIScreenCoverChange -= HandleCamerasOnUiCoverChange;
 
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
@@ -144,7 +160,7 @@ namespace ShadowFlareRemake.GameManager
             if(_lastHighlightable != null)
                 _lastHighlightable.SetIsHighlighted(false);
 
-            var newHighlightable = newObject.GetComponent<HighlightableObject>();
+            var newHighlightable = newObject.GetComponent<HighlightableBehaviour>();
 
             if(!newHighlightable.IsHighlightable)
                 return;
@@ -167,6 +183,15 @@ namespace ShadowFlareRemake.GameManager
         private void HandleIsCurserOnUI(bool isCurserOnUI)
         {
             _inputManager.SetIsCursorOnUI(isCurserOnUI);
+        }
+
+        #endregion
+
+        #region Cameras
+
+        private void HandleCamerasOnUiCoverChange(UIScreenCover uIScreenCover)
+        {
+            _camerasModel.SetCurrentScreenCover(uIScreenCover);
         }
 
         #endregion
@@ -243,10 +268,10 @@ namespace ShadowFlareRemake.GameManager
                 var levelUpReward = _rewardsManager.GetLevelUpReward(_playerUnitStats);
                 _playerUnitStats.GiveLevelUpReward(levelUpReward);
                 _playerUnit.FullHeal();
-                _uiController.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
+                _uiManager.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
 
-            _uiController.UpdatePlayerVitalsExpAndLevel(_playerUnit);
+            _uiManager.UpdatePlayerVitalsExpAndLevel(_playerUnit);
             _lootManager.HandleLootDrop(enemyStats.Level, enemyStats.LootDropChance, enemyPosition);
         }
 
@@ -264,7 +289,7 @@ namespace ShadowFlareRemake.GameManager
         {
             var isCritialHit = CombatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
             _playerController.SetIsLastHitWasCritialHit(isCritialHit);
-            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
@@ -273,7 +298,7 @@ namespace ShadowFlareRemake.GameManager
             _lastPickedUpLootView.gameObject.SetActive(false);
             var lootModel = _lastPickedUpLootView.GetLootModel();
 
-            if(!_uiController.TryPickUpLootFromTheGround(lootModel))
+            if(!_uiManager.TryPickUpLootFromTheGround(lootModel))
             {
                 _lastPickedUpLootView.gameObject.SetActive(true);
                 lootModel.InvokeDropAnimation();
@@ -282,7 +307,7 @@ namespace ShadowFlareRemake.GameManager
 
             if(lootModel.LootCategory == Enums.LootCategory.Equipment)
             {
-                HandlePlayerEquippedGearStats(_uiController.GetPlayerCurrentlyEquippedGearData());
+                HandlePlayerEquippedGearStats(_uiManager.GetPlayerCurrentlyEquippedGearData());
             }
         }
 
@@ -321,8 +346,8 @@ namespace ShadowFlareRemake.GameManager
             if(!hasHealed)
                 return;
 
-            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
-            _uiController.RemovePotionFromInventory(index, lootModel.LootData.LootType);
+            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.RemovePotionFromInventory(index, lootModel.LootData.LootType);
         }
 
         private void HandlePlayerEquippedGearStats(List<EquipmentData_ScriptableObject> currentlyEquippedGear)
@@ -336,7 +361,7 @@ namespace ShadowFlareRemake.GameManager
             }
 
             _playerUnitStats.SetEquippedGearAddedStats(_playerEquippedGearAddedStats);
-            _uiController.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
+            _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
         }
 
         #endregion
@@ -369,13 +394,13 @@ namespace ShadowFlareRemake.GameManager
         {
             _playerUnit.TakeDamage(_healOrDamageAmount);
             _playerController.SetIsLastHitWasCritialHit(true);
-            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void TestHealPlayer()
         {
             _playerUnit.HealHP(_healOrDamageAmount);
-            _uiController.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
 #if UNITY_EDITOR

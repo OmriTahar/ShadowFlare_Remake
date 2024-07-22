@@ -1,9 +1,9 @@
 using ShadowFlareRemake.Enemies;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager
+namespace ShadowFlareRemake.Behaviours
 {
-    public class HighlightableObject : MonoBehaviour
+    public class HighlightableBehaviour : MonoBehaviour
     {
         public bool IsHighlightable { get; private set; } = true;
         public bool IsHighlighted { get; private set; }
