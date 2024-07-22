@@ -41,12 +41,14 @@ namespace ShadowFlareRemake.UI.Cursor
 
         public void PickUpLoot(LootModel lootModel)
         {
+            lootModel.SetIsAllowedToSetLocalPosition(false);
             CurrentHeldLootModel = lootModel;
             Changed();
         }
 
         public void DropLoot()
         {
+            CurrentHeldLootModel.SetIsAllowedToSetLocalPosition(true);
             CurrentHeldLootModel = null;
             Changed();
         }

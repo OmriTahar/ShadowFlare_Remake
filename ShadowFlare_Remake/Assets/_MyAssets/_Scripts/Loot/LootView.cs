@@ -1,4 +1,3 @@
-using Codice.CM.Common;
 using ShadowFlareRemake.Enums;
 using System;
 using TMPro;
@@ -42,7 +41,7 @@ namespace ShadowFlareRemake.Loot
             SetData();
             SetNameText();
             SetNameBackgroundColor();
-            HandleSetSprite();
+            HandleSprite();
             HandleAnimation();
         }
 
@@ -108,13 +107,14 @@ namespace ShadowFlareRemake.Loot
             }
         }
 
-        private void HandleSetSprite()
+        private void HandleSprite()
         {
             if(_image == null)
                 return;
 
             SetSprite();
             SetSpriteSize();
+            SetSpriteLocalPosition();
         }
 
         private void SetSprite()
@@ -134,16 +134,24 @@ namespace ShadowFlareRemake.Loot
         private void SetSpriteSize()
         {
             _rect.sizeDelta = new Vector2(_width * _sizeMultiplier, _height * _sizeMultiplier);
+        }
+
+        private void SetSpriteLocalPosition()
+        {
+            if(!Model.IsAllowedToSetLocalPosition)
+                return;
 
             if(Model.IsSingleTile)
             {
                 _rect.localPosition = new Vector2(0, 0);
+                print("Local Position: " + _rect.localPosition);
                 return;
             }
 
             var x = (_width - 1) * _posHelper;
             var y = (_height - 1) * -_posHelper;
             _rect.localPosition = new Vector2(x, y);
+            print("Local Position: " + _rect.localPosition);
         }
 
         private void HandleAnimation()
