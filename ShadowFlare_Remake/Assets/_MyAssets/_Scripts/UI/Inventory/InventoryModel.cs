@@ -56,13 +56,13 @@ namespace ShadowFlareRemake.UI.Inventory
 
         public bool TryAutoPlace_Loot(LootModel lootModel)
         {
-            var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
+            //var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
 
-            if(specificItemsGridModel.TryAutoPlace_Loot(lootModel))
-            {
-                TryAddOrRemoveEquippedGearFromList(specificItemsGridModel.ItemsGridType, lootModel, true);
-                return true;
-            }
+            //if(specificItemsGridModel.TryAutoPlace_Loot(lootModel))
+            //{
+            //    TryAddLootToCurrentlyEquippedGearList(specificItemsGridModel.ItemsGridType, lootModel);
+            //    return true;
+            //}
 
             return CarryItemsGridModel.TryAutoPlace_Loot(lootModel);
         }
@@ -94,17 +94,17 @@ namespace ShadowFlareRemake.UI.Inventory
 
             if(isLootPlaced)
             {
-                TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, lootModel, true);
+                TryAddLootToCurrentlyEquippedGearList(itemsGridModel.ItemsGridType, lootModel);
             }
 
-            if(lootModel.LootCategory == LootCategory.Gold)
+            if(lootModel.LootCategory == LootCategory.Gold || (swappedLoot != null && swappedLoot.LootCategory == LootCategory.Gold))
             {
                 SetGoldAmount();
             }
 
             if(swappedLoot != null)
             {
-                TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, swappedLoot, false);
+                TryRemoveLootFromCurrentlyEquippedGearList(itemsGridModel.ItemsGridType, swappedLoot);
             }
 
             return resultTuple;
@@ -113,7 +113,7 @@ namespace ShadowFlareRemake.UI.Inventory
         public void RemoveItemFromGrid(ItemsGridModel itemsGridModel, Vector2Int tileIndex)
         {
             var removedLootModel = itemsGridModel.RemoveItemFromGrid(tileIndex, true);
-            TryAddOrRemoveEquippedGearFromList(itemsGridModel.ItemsGridType, removedLootModel, false);
+            TryRemoveLootFromCurrentlyEquippedGearList(itemsGridModel.ItemsGridType, removedLootModel);
             SetGoldAmount();
         }
 
@@ -161,19 +161,22 @@ namespace ShadowFlareRemake.UI.Inventory
             Changed();
         }
 
-        private bool TryAddOrRemoveEquippedGearFromList(ItemsGridType itemsGridType, LootModel lootModel, bool isAddToList)
+        private bool TryAddLootToCurrentlyEquippedGearList(ItemsGridType itemsGridType, LootModel lootModel)
         {
             if(!IsEquippableItemsGrid(itemsGridType))
                 return false;
 
             var equipmentData = lootModel.LootData as EquipmentData_ScriptableObject;
+            CurrentlyEquippedGearData.Add(equipmentData);
+            return true;
+        }
 
-            if(isAddToList)
-            {
-                CurrentlyEquippedGearData.Add(equipmentData);
-                return true;
-            }
+        private bool TryRemoveLootFromCurrentlyEquippedGearList(ItemsGridType itemsGridType, LootModel lootModel)
+        {
+            if(!IsEquippableItemsGrid(itemsGridType))
+                return false;
 
+            var equipmentData = lootModel.LootData as EquipmentData_ScriptableObject;
             CurrentlyEquippedGearData.Remove(equipmentData);
             return true;
         }

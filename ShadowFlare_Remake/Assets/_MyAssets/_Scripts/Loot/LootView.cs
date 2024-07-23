@@ -144,14 +144,12 @@ namespace ShadowFlareRemake.Loot
             if(Model.IsSingleTile)
             {
                 _rect.localPosition = new Vector2(0, 0);
-                print("Local Position: " + _rect.localPosition);
                 return;
             }
 
             var x = (_width - 1) * _posHelper;
             var y = (_height - 1) * -_posHelper;
             _rect.localPosition = new Vector2(x, y);
-            print("Local Position: " + _rect.localPosition);
         }
 
         private void HandleAnimation()

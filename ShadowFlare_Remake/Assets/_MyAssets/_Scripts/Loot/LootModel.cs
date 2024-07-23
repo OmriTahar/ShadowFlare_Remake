@@ -25,8 +25,11 @@ namespace ShadowFlareRemake.Loot
         public LootModel(LootData_ScriptableObject lootData)
         {
             LootData = lootData;
+            IsAllowedToSetLocalPosition = true;
+
             Color = new Color(lootData.Color.r, lootData.Color.g, lootData.Color.b, 1);
             HighlightColor = new Color(Color.r + _highlightAdder, Color.g + _highlightAdder, Color.b + _highlightAdder, _alpha);
+
             SetLootCategory(lootData.LootType);
         }
 

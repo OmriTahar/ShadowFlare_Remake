@@ -12,11 +12,11 @@ namespace ShadowFlareRemake.Managers.Loot
         [SerializeField] private GameObject _lootPrefab;
 
         [Header("Data")]
-        [SerializeField] private List<LootData_ScriptableObject> _lootData;
+        [SerializeField] private List<LootData_ScriptableObject> _lootDropsData;
 
         [Header("Test")]
         [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
-        [SerializeField] private List<LootData_ScriptableObject> _testLootData;
+        [SerializeField] private List<LootData_ScriptableObject> _testLootDataToSpawnOnAwake;
 
         private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 3576 };
         private int _testGoldSpawnIndex = 0;
@@ -40,8 +40,8 @@ namespace ShadowFlareRemake.Managers.Loot
 
         private LootModel GenerateLoot(int level) // TODO: Guess
         {
-            var randomIndex = Random.Range(0, _lootData.Count - 1);
-            var lootData = _lootData[randomIndex];
+            var randomIndex = Random.Range(0, _lootDropsData.Count - 1);
+            var lootData = _lootDropsData[randomIndex];
             var lootModel = new LootModel(lootData);
 
             if(lootModel.LootCategory == LootCategory.Gold)
@@ -85,7 +85,7 @@ namespace ShadowFlareRemake.Managers.Loot
             var offset_X = 1.5f;
             var offset_Z = 2f;
 
-            foreach(var lootData in _testLootData)
+            foreach(var lootData in _testLootDataToSpawnOnAwake)
             {
                 TestSpawnLootLogic(lootData, spawnPosX, spawnPosZ);
 

@@ -131,13 +131,14 @@ namespace ShadowFlareRemake.UI
             {
                 SetTopLeftValidIndex(_singleTileIndex);
             }
-            else if(!IsSingleTile && !GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            else if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 if(swappedLoot != null)
                 {
                     SetTopLeftValidIndex(rootLootIndex);
                     PlaceItemOnGrid(swappedLoot, false);
                 }
+
                 return (false, lootModel);
             }
 
@@ -187,7 +188,7 @@ namespace ShadowFlareRemake.UI
                 return (true, null);
             }
 
-            if(!GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            if(!IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 if(swappedLoot != null)
                 {
@@ -279,7 +280,7 @@ namespace ShadowFlareRemake.UI
 
                 SetTopLeftValidIndex(_singleTileIndex);
             }
-            else if(!IsSingleTile && !GetIsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
+            else if(!IsSingleTile && !IsValidPlacement(lootModel.LootData.Width, lootModel.LootData.Height, tileIndex))
             {
                 return false;
             }
@@ -289,82 +290,123 @@ namespace ShadowFlareRemake.UI
             return true;
         }
 
-        private bool GetIsValidPlacement(int width, int height, Vector2Int tileIndex)
+        private bool IsValidPlacement(int lootWidth, int lootHeight, Vector2Int clickedTileIndex)
         {
-            SetTopLeftValidIndex(tileIndex.x, tileIndex.y);
-            var isValidHorizontally = IsValidPlacementHorizontally(width, tileIndex);
-            var isValidVertically = IsValidPlacementVertically(height, tileIndex);
-            return isValidHorizontally && isValidVertically;
-        }
-
-        private bool IsValidPlacementHorizontally(int width, Vector2Int tileIndex)
-        {
+            var totalTilesToCheck = GetTotalTilesForPlacementValidation(lootWidth, lootHeight, clickedTileIndex);
+            var consecutiveTilesGoal = GetConsecutiveTilesGoalForPlacementValidation(lootWidth, lootHeight);
             var tileIndexCheck = new Vector2Int();
             var consecutiveTilesCounter = 0;
 
-            tileIndexCheck.y = tileIndex.y;
-
-            for(int i = -width + 1; i < width; i++)
+            foreach(var tile in totalTilesToCheck)
             {
-                tileIndexCheck.x = tileIndex.x + i;
-
-                if(!IsValidTileIndex(tileIndexCheck))
-                    continue;
-
-                _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
-
-                if(lootIRootndex.x == -1)
-                {
-                    if(tileIndexCheck.x < _topLeftValidIndex.x)
-                        SetTopLeftValidIndex(tileIndexCheck.x, _topLeftValidIndex.y);
-
-                    consecutiveTilesCounter++;
-
-                    if(consecutiveTilesCounter >= width)
-                        return true;
-                }
-                else
-                    consecutiveTilesCounter = 0;
-            }
-
-            SetTopLeftValidIndex(_emptyTileIndex);
-            return false;
-        }
-
-        private bool IsValidPlacementVertically(int height, Vector2Int tileIndex)
-        {
-            var tileIndexCheck = new Vector2Int();
-            var consecutiveTilesCounter = 0;
-
-            tileIndexCheck.x = tileIndex.x;
-
-            for(int i = -height + 1; i < height; i++)
-            {
-                tileIndexCheck.y = tileIndex.y + i;
+                SetTopLeftValidIndex(tile);
+                tileIndexCheck = tile;
+                consecutiveTilesCounter = 0;
 
                 if(!IsValidTileIndex(tileIndexCheck))
                 {
                     continue;
                 }
 
-                _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
+                var x = tileIndexCheck.x;
+                var y = tileIndexCheck.y;
+                var finalX = x + lootWidth;
+                var finalY = y + lootHeight;
 
-                if(lootIRootndex.x == -1)
+                for(int i = x; i < finalX; i++)
                 {
-                    if(tileIndexCheck.y < _topLeftValidIndex.y)
-                        SetTopLeftValidIndex(_topLeftValidIndex.x, tileIndexCheck.y);
+                    tileIndexCheck.x = i;
 
-                    consecutiveTilesCounter++;
+                    for(int j = y; j < finalY; j++)
+                    {
+                        tileIndexCheck.y = j;
 
-                    if(consecutiveTilesCounter >= height)
-                        return true;
+                        if(!IsValidTileIndex(tileIndexCheck))
+                        {
+                            continue;
+                        }
+
+                        _heldLootRootIndexesDict.TryGetValue(tileIndexCheck, out Vector2Int lootIRootndex);
+
+                        if(lootIRootndex == _emptyTileIndex)
+                        {
+                            if(tileIndexCheck.x < _topLeftValidIndex.x)
+                            {
+                                SetTopLeftValidIndex(tileIndexCheck.x, _topLeftValidIndex.y);
+                            }
+                            if(tileIndexCheck.y < _topLeftValidIndex.y)
+                            {
+                                SetTopLeftValidIndex(_topLeftValidIndex.x, tileIndexCheck.y);
+                            }
+
+                            consecutiveTilesCounter++;
+
+                            if(consecutiveTilesCounter >= consecutiveTilesGoal)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            consecutiveTilesCounter = 0;
+                        }
+                    }
                 }
-                else
-                    consecutiveTilesCounter = 0;
             }
 
             SetTopLeftValidIndex(_emptyTileIndex);
             return false;
+        }
+
+        private List<Vector2Int> GetTotalTilesForPlacementValidation(int lootWidth, int lootHeight, Vector2Int clickedTileIndex)
+        {
+            var totalTilesToCheck = new List<Vector2Int>();
+            var tileIndexCheck = new Vector2Int();
+
+            if(lootWidth == 1 && lootHeight == 1)
+            {
+                totalTilesToCheck.Add(clickedTileIndex);
+            }
+            else
+            {
+                for(int i = -lootWidth + 1; i < 1; i++)
+                {
+                    tileIndexCheck.x = clickedTileIndex.x + i;
+
+                    for(int j = -lootHeight + 1; j < 1; j++)
+                    {
+                        tileIndexCheck.y = clickedTileIndex.y + j;
+                        totalTilesToCheck.Add(tileIndexCheck);
+                    }
+                }
+            }
+
+            return totalTilesToCheck;
+        }
+
+        private int GetConsecutiveTilesGoalForPlacementValidation(int lootWidth, int lootHeight)
+        {
+            if(lootWidth == 1 && lootHeight == 1)
+            {
+                return 1;
+            }
+
+            if(lootWidth > 1 && lootHeight == 1)
+            {
+                return lootWidth;
+            }
+
+            if(lootWidth == 1 && lootHeight > 1)
+            {
+                return lootHeight;
+            }
+
+            if(lootWidth > 1 && lootHeight > 1)
+            {
+                return lootWidth * lootHeight;
+            }
+
+            return 100;
         }
 
         private bool IsValidTileIndex(Vector2Int indexCheck)
