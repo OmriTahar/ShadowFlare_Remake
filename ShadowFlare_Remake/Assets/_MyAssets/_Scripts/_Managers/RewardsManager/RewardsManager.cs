@@ -3,7 +3,7 @@ using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.GameManager {
+namespace ShadowFlareRemake.Managers.Rewards {
 
     public class RewardsManager : MonoBehaviour {
 

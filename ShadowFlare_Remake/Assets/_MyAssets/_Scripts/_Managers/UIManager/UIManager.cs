@@ -2,6 +2,7 @@ using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
+using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
 using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
@@ -13,7 +14,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.UI
+namespace ShadowFlareRemake.Managers.UI
 {
     public class UIManager : LayersAndTagsReader
     {
@@ -459,7 +460,7 @@ namespace ShadowFlareRemake.UI
         {
             if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
-                OnUIScreenCoverChange?.Invoke(UIScreenCover.BothAreCovered);
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.FullCover);
                 _closeButton.SetActive(true);
             }
             else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
@@ -474,7 +475,7 @@ namespace ShadowFlareRemake.UI
             }
             else
             {
-                OnUIScreenCoverChange?.Invoke(UIScreenCover.None);
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.NoCover);
                 _closeButton.SetActive(false);
             }
         }

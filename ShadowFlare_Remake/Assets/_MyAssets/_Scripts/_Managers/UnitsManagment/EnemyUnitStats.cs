@@ -1,7 +1,7 @@
 using ShadowFlareRemake.Enemies;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager.Units
+namespace ShadowFlareRemake.Managers.UnitsManagement
 {
     [CreateAssetMenu(fileName = "NewEnemyStats", menuName = "Scriptable Objects/Create New Enemy Stats")]
     public class EnemyUnitStats : ScriptableObject, IEnemyUnitStats

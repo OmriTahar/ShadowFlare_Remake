@@ -1,8 +1,8 @@
 namespace ShadowFlareRemake.Enums {
     public enum UIScreenCover {
-        None,
+        NoCover,
         RightIsCovered,
         LeftIsCovered,
-        BothAreCovered
+        FullCover
     }
 }

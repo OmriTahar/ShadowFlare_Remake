@@ -3,7 +3,7 @@ using ShadowFlareRemake.Loot;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.GameManager
+namespace ShadowFlareRemake.Managers.Loot
 {
     public class LootManager : MonoBehaviour
     {

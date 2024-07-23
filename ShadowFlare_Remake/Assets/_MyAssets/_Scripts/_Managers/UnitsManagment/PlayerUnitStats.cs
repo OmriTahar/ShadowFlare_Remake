@@ -5,7 +5,7 @@ using ShadowFlareRemake.UI.Stats;
 using System;
 using UnityEngine;
 
-namespace ShadowFlareRemake.GameManager.Units
+namespace ShadowFlareRemake.Managers.UnitsManagement
 {
     [Serializable]
     public class PlayerUnitStats : IPlayerUnitStats

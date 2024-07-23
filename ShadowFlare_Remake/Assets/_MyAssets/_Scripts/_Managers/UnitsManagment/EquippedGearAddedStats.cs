@@ -1,7 +1,7 @@
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Stats;
 
-namespace ShadowFlareRemake.GameManager.Units
+namespace ShadowFlareRemake.Managers.UnitsManagement
 {
     public class EquippedGearAddedStats : IEquippedGearAddedStats
     {

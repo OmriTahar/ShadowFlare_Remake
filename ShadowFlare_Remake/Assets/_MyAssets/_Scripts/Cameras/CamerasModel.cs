@@ -1,16 +1,19 @@
 using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake.Cameras {
-    public class CamerasModel : Model {
+namespace ShadowFlareRemake.Cameras
+{
+    public class CamerasModel : Model
+    {
+        public ActiveCamera CurrentActiveCamera { get; private set; }
 
-        public UIScreenCover CurrentScreenCover { get; private set; }
-
-        public CamerasModel() {
-            CurrentScreenCover = UIScreenCover.None;
+        public CamerasModel()
+        {
+            CurrentActiveCamera = ActiveCamera.CenteredCamera;
         }
 
-        public void SetCurrentScreenCover(UIScreenCover currentScreenCover) {
-            CurrentScreenCover = currentScreenCover;
+        public void SetCurrentScreenCover(ActiveCamera currentActiveCamera)
+        {
+            CurrentActiveCamera = currentActiveCamera;
             Changed();
         }
     }

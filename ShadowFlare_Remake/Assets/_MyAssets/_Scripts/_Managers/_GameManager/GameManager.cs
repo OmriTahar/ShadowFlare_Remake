@@ -1,12 +1,16 @@
 using ShadowFlareRemake.Behaviours;
-using ShadowFlareRemake.Cameras;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Enums;
-using ShadowFlareRemake.GameManager.Units;
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.Managers.Cameras;
+using ShadowFlareRemake.Managers.Combat;
+using ShadowFlareRemake.Managers.Input;
+using ShadowFlareRemake.Managers.Loot;
+using ShadowFlareRemake.Managers.Rewards;
+using ShadowFlareRemake.Managers.UI;
+using ShadowFlareRemake.Managers.UnitsManagement;
 using ShadowFlareRemake.Player;
-using ShadowFlareRemake.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,12 +20,10 @@ namespace ShadowFlareRemake.Managers.GameManager
     {
         [Header("Managers")]
         [SerializeField] private UIManager _uiManager;
+        [SerializeField] private CamerasManager _camerasManager;
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private RewardsManager _rewardsManager;
         [SerializeField] private LootManager _lootManager;
-
-        [Header("Camera")]
-        [SerializeField] private CamerasView _camerasView;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -40,7 +42,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
-        private CamerasModel _camerasModel;
+        private CombatManager _combatManager;
         private Unit _playerUnit;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
         private GameObject _lastHighlighted_GameObject;
@@ -56,10 +58,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         {
             await _inputManager.WaitForInitFinish();
 
-            InitCameras();
-            InitEnemies();
-            InitPlayer();
-            InitUiController();
+            HandleInitializtion();
             RegisterEvents();
 
             _lootManager.HandleTestSpawnLoot();
@@ -79,16 +78,23 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         #region Initialization
 
-        private void InitUiController()
+        private void HandleInitializtion()
+        {
+            InitEnemies();
+            InitPlayer();
+            InitUiManager();
+            InitCombatManager();
+        }
+
+        private void InitUiManager()
         {
             _uiManager.InitUiController(_inputManager);
             _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
         }
 
-        private void InitCameras()
+        private void InitCombatManager()
         {
-            _camerasModel = new CamerasModel();
-            _camerasView.SetModel(_camerasModel);
+            _combatManager = new CombatManager();
         }
 
         #endregion
@@ -191,7 +197,7 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void HandleCamerasOnUiCoverChange(UIScreenCover uIScreenCover)
         {
-            _camerasModel.SetCurrentScreenCover(uIScreenCover);
+            _camerasManager.SetActiveCamera(uIScreenCover);
         }
 
         #endregion
@@ -253,7 +259,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         {
             var unit = _enemyUnitsDict[enemyController];
 
-            var isCritialHit = CombatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit);
+            var isCritialHit = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit);
 
             enemyController.SetEnemyUnitAfterHit(unit, isCritialHit);
         }
@@ -287,7 +293,7 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void HandlePlayerGotHit(Attack attack)
         {
-            var isCritialHit = CombatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
+            var isCritialHit = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
             _playerController.SetIsLastHitWasCritialHit(isCritialHit);
             _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }

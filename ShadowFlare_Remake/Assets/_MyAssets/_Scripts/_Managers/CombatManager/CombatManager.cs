@@ -1,23 +1,20 @@
 using ShadowFlareRemake.Combat;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.GameManager
+namespace ShadowFlareRemake.Managers.Combat
 {
-    public static class CombatManager
+    public class CombatManager
     {
-        public static bool HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnit receiverUnit)
+        public bool HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnit receiverUnit)
         {
             var damage = 0;
 
             if(attack.AttackType is Enums.AttackType.Physical)
             {
-
                 damage = GetPhysicalDamage(attack.Stats, receiverUnit.Stats);
-
             }
             else if(attack.AttackType is Enums.AttackType.Magical)
             {
-
                 damage = GetMagicalDamage(attack.Stats, receiverUnit.Stats);
             }
 
@@ -26,16 +23,14 @@ namespace ShadowFlareRemake.Managers.GameManager
             return Random.value >= 0.75f; // Improve this
         }
 
-        private static int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) // Todo: Expand this.
+        private int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) // Todo: Expand this.
         { 
-
             var damage = AttackerStats.Attack - receiverStats.Defense;
             return damage > 1 ? damage : 1;
         }
 
-        private static int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) // Todo: Expand this.
+        private int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) // Todo: Expand this.
         {  
-
             var damage = Attacker.MagicalAttack - receiverUnit.MagicalDefense;
             return damage > 1 ? damage : 1;
         }

@@ -1,9 +1,9 @@
 {
-    "name": "ShadowFlareRemake.Managers.InputManager",
-    "rootNamespace": "ShadowFlareRemake.Managers.InputManager",
+    "name": "ShadowFlareRemake.Managers.Loot",
+    "rootNamespace": "ShadowFlareRemake.Managers.Loot",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:73d6e1f2a914a064aaa9989d8f67e872",
         "GUID:b63d40ec02fb5d7428f15323e3f00768"
     ],
     "includePlatforms": [],

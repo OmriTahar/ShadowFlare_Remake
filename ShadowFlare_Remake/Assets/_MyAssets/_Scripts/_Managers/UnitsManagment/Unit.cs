@@ -1,5 +1,5 @@
 
-namespace ShadowFlareRemake.GameManager.Units
+namespace ShadowFlareRemake.Managers.UnitsManagement
 {
     public class Unit : IUnit
     {
