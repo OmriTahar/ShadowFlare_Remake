@@ -1,6 +1,6 @@
-using ShadowFlare_Remake.VFX;
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Tools;
+using ShadowFlareRemake.VFX;
 using System;
 using System.Collections;
 using TMPro;

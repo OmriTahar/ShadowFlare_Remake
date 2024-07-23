@@ -1,5 +1,4 @@
-using ShadowFlare_Remake.VFX;
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.VFX;
 using System;
 using UnityEngine;
 

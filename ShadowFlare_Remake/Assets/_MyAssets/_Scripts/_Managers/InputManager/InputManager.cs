@@ -1,4 +1,4 @@
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.PlayerInputReader;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;

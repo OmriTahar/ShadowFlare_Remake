@@ -1,4 +1,5 @@
-namespace ShadowFlareRemake.Enums
+
+namespace ShadowFlareRemake.UI.Cursor
 {
     public enum CursorIconState
     {

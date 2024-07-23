@@ -1,5 +1,5 @@
 
-namespace ShadowFlareRemake.Enums
+namespace ShadowFlareRemake.PlayerInputReader
 {
     public enum PlayerMouseInputType
     {

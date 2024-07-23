@@ -1,5 +1,4 @@
 using ShadowFlareRemake.Combat;
-using ShadowFlareRemake.Enums;
 using System;
 using UnityEngine;
 using UnityEngine.AI;

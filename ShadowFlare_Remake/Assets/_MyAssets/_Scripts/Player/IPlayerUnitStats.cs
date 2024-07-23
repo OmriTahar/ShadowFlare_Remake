@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 
 namespace ShadowFlareRemake.Player
 {

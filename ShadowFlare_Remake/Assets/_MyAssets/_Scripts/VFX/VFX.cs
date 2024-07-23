@@ -1,8 +1,7 @@
-using ShadowFlareRemake.Enums;
 using System;
 using UnityEngine;
 
-namespace ShadowFlare_Remake.VFX
+namespace ShadowFlareRemake.VFX
 {
     [Serializable]
     public class VFX

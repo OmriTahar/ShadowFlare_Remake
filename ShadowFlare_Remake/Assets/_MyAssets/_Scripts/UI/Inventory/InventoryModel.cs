@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,13 +55,13 @@ namespace ShadowFlareRemake.UI.Inventory
 
         public bool TryAutoPlace_Loot(LootModel lootModel)
         {
-            //var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
+            var specificItemsGridModel = GetItemsGridModel(lootModel.LootData.LootType);
 
-            //if(specificItemsGridModel.TryAutoPlace_Loot(lootModel))
-            //{
-            //    TryAddLootToCurrentlyEquippedGearList(specificItemsGridModel.ItemsGridType, lootModel);
-            //    return true;
-            //}
+            if(specificItemsGridModel.TryAutoPlace_Loot(lootModel))
+            {
+                TryAddLootToCurrentlyEquippedGearList(specificItemsGridModel.ItemsGridType, lootModel);
+                return true;
+            }
 
             return CarryItemsGridModel.TryAutoPlace_Loot(lootModel);
         }

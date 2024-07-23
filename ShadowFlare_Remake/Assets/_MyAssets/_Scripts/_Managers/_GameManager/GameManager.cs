@@ -1,7 +1,6 @@
 using ShadowFlareRemake.Behaviours;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.Enemies;
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Managers.Cameras;
 using ShadowFlareRemake.Managers.Combat;
@@ -11,6 +10,7 @@ using ShadowFlareRemake.Managers.Rewards;
 using ShadowFlareRemake.Managers.UI;
 using ShadowFlareRemake.Managers.UnitsManagement;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,7 +52,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
-        #region Unity Callbacks
+        #region MonoBehaviour
 
         private async void Start()
         {
@@ -88,7 +88,7 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void InitUiManager()
         {
-            _uiManager.InitUiController(_inputManager);
+            _uiManager.InitUiManager(_inputManager);
             _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
         }
 
@@ -311,7 +311,7 @@ namespace ShadowFlareRemake.Managers.GameManager
                 return;
             }
 
-            if(lootModel.LootCategory == Enums.LootCategory.Equipment)
+            if(lootModel.LootCategory == LootCategory.Equipment)
             {
                 HandlePlayerEquippedGearStats(_uiManager.GetPlayerCurrentlyEquippedGearData());
             }

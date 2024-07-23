@@ -1,6 +1,6 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
@@ -100,7 +100,7 @@ namespace ShadowFlareRemake.Managers.UI
 
         #region Initialization
 
-        public void InitUiController(IPlayerInputReader inputReader)
+        public void InitUiManager(IPlayerInputReader inputReader)
         {
             _inputReader = inputReader;
             RegisterEvents();

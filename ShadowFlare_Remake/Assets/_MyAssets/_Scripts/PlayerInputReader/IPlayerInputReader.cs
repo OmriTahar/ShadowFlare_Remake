@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ShadowFlareRemake.Enums;
 
-namespace ShadowFlareRemake
+namespace ShadowFlareRemake.PlayerInputReader
 {
     public interface IPlayerInputReader
     {

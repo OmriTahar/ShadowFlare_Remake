@@ -1,4 +1,4 @@
-namespace ShadowFlareRemake.Enums
+namespace ShadowFlareRemake.Enemies
 {
     public enum EnemyState
     {

@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;

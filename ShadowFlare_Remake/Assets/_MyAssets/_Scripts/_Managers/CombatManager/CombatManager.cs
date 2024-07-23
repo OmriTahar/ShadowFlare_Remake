@@ -9,11 +9,11 @@ namespace ShadowFlareRemake.Managers.Combat
         {
             var damage = 0;
 
-            if(attack.AttackType is Enums.AttackType.Physical)
+            if(attack.AttackType is AttackType.Physical)
             {
                 damage = GetPhysicalDamage(attack.Stats, receiverUnit.Stats);
             }
-            else if(attack.AttackType is Enums.AttackType.Magical)
+            else if(attack.AttackType is AttackType.Magical)
             {
                 damage = GetMagicalDamage(attack.Stats, receiverUnit.Stats);
             }

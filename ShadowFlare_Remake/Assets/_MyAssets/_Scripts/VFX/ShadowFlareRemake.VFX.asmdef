@@ -1,9 +1,8 @@
 {
-    "name": "ShadowFlare_Remake.VFX",
-    "rootNamespace": "ShadowFlare_Remake.VFX",
+    "name": "ShadowFlareRemake.VFX",
+    "rootNamespace": "ShadowFlareRemake.VFX",
     "references": [
         "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:b63d40ec02fb5d7428f15323e3f00768",
         "GUID:1dae7a1839fafb348b52d3ad5acf3628"
     ],
     "includePlatforms": [],

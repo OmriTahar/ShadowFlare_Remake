@@ -1,6 +1,8 @@
-namespace ShadowFlareRemake.Enums {
-    public enum Vocation {
 
+namespace ShadowFlareRemake.Player
+{
+    public enum Vocation
+    {
         Mercenary,
         Warrior,
         Hunter,

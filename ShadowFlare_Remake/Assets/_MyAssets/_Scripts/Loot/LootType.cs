@@ -1,4 +1,5 @@
-namespace ShadowFlareRemake.Enums
+
+namespace ShadowFlareRemake.Loot
 {
     public enum LootType
     {

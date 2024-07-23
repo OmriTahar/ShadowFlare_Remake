@@ -1,9 +1,7 @@
-using ShadowFlareRemake;
-using ShadowFlareRemake.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShadowFlare_Remake.VFX
+namespace ShadowFlareRemake.VFX
 {
     public class VisualEffectsSubView : MonoBehaviour
     {

@@ -1,4 +1,5 @@
-namespace ShadowFlareRemake.Enums
+
+namespace ShadowFlareRemake.Player
 {
     public enum PlayerAttack
     {

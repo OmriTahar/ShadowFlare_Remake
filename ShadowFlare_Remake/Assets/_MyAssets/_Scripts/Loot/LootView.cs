@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using System;
 using TMPro;
 using UnityEngine;
@@ -76,7 +75,7 @@ namespace ShadowFlareRemake.Loot
         {
             if(_nameText != null && !string.IsNullOrEmpty(_name))
             {
-                if(Model.LootCategory == Enums.LootCategory.Gold)
+                if(Model.LootCategory == LootCategory.Gold)
                 {
                     _nameText.text = $"{Model.Amount} {_name}";
                     return;

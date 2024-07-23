@@ -3,7 +3,6 @@
     "rootNamespace": "ShadowFlareRemake.Managers.Combat",
     "references": [
         "ShadowFlareRemake",
-        "ShadowFlareRemake.Enums",
         "ShadowFlareRemake.Combat"
     ],
     "includePlatforms": [],

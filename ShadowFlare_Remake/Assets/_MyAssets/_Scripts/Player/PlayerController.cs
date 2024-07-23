@@ -1,5 +1,5 @@
 using ShadowFlareRemake.Combat;
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.PlayerInputReader;
 using System;
 using System.Collections;
 using UnityEngine;

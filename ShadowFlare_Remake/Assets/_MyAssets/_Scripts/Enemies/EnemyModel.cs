@@ -1,4 +1,4 @@
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.Combat;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Enemies

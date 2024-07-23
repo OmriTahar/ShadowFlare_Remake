@@ -1,5 +1,5 @@
 using ShadowFlareRemake.Cameras;
-using ShadowFlareRemake.Enums;
+using ShadowFlareRemake.UI;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Managers.Cameras

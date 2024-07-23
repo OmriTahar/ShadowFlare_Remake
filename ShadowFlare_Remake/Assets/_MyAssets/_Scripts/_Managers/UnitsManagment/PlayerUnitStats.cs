@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI.Stats;

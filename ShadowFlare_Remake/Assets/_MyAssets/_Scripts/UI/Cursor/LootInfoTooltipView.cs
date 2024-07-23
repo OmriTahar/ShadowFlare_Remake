@@ -1,6 +1,4 @@
-using ShadowFlareRemake.Enums;
 using ShadowFlareRemake.Loot;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -84,7 +82,7 @@ namespace ShadowFlareRemake.UI.Cursor
 
         private void TurnOffLines()
         {
-            foreach (var line in _lootInfoLines)
+            foreach(var line in _lootInfoLines)
             {
                 line.gameObject.SetActive(false);
             }

@@ -1,4 +1,5 @@
-namespace ShadowFlareRemake.Enums
+
+namespace ShadowFlareRemake.VFX
 {
     public enum VfxType
     {

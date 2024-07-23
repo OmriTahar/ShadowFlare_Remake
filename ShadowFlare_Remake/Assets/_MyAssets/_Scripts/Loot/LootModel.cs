@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Enums;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Loot
