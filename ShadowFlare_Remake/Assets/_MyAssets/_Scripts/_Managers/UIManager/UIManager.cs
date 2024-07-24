@@ -2,12 +2,14 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Rewards;
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
 using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
+using ShadowFlareRemake.Units;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -447,6 +449,11 @@ namespace ShadowFlareRemake.Managers.UI
         {
             _statsModel.SetFullPlayerStats(unit, addedStats);
             _inventoryModel.SetStrengthAndEquippedWeight(stats.Strength, addedStats.EquippedWeight);
+        }
+
+        public void SetPlayerSkills(List<SkillModel> playerSkillModels)
+        {
+            _hudModel.SetSkillModels(playerSkillModels);
         }
 
         #endregion

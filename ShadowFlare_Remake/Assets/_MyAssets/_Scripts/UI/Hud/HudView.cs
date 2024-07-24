@@ -1,6 +1,8 @@
 using ShadowFlareRemake.Tools;
+using ShadowFlareRemake.Skills;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +33,9 @@ namespace ShadowFlareRemake.UI.Hud
         [Header("EXP Sliders")]
         [SerializeField] private Slider _expSlider;
 
+        [Header("Skills")]
+        [SerializeField] private List<SkillView> _skillViews;
+
         private const float _sliderLerpDuration = 1.5f;
 
         private Coroutine _lastHpCoroutine;
@@ -51,6 +56,8 @@ namespace ShadowFlareRemake.UI.Hud
             SetMP();
             SetExp();
             SetLevel();
+            SetSkillsBar();
+            SetActiveSkill();
         }
 
         #endregion
@@ -63,6 +70,25 @@ namespace ShadowFlareRemake.UI.Hud
             _hpSlider.value = Model.CurrentHP;
             _lastSeenHP = _hpSlider.value;
             _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+        }
+
+        private void SetSkillsBar()
+        {
+            if(Model.SkillModels == null || Model.SkillModels.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < Model.SkillModels.Count; i++)
+            {
+                var view = _skillViews[i];
+                var model = Model.SkillModels[i];
+
+                if(model == null)
+                    continue;
+
+                view.SetModel(model);
+            }
         }
 
         #endregion
@@ -155,6 +181,19 @@ namespace ShadowFlareRemake.UI.Hud
         {
             _levelText.text = Model.Level.ToString();
         }
+
+        private void SetActiveSkill()
+        {
+            if(Model.SkillModels == null || Model.SkillModels.Count == 0)
+            {
+                return;
+            }
+
+        }
+
+        #endregion
+
+        #region Buttons
 
         public void InventoryClicked() // Called from a UI button clicked event
         {

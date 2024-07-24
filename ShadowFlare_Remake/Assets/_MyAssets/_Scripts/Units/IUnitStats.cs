@@ -1,6 +1,8 @@
-namespace ShadowFlareRemake {
-    public interface IUnitStats {
 
+namespace ShadowFlareRemake.Units
+{
+    public interface IUnitStats
+    {
         public string Name { get; }
         public int Level { get; }
 

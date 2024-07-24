@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.Units;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Managers.Combat
@@ -9,11 +10,11 @@ namespace ShadowFlareRemake.Managers.Combat
         {
             var damage = 0;
 
-            if(attack.AttackType is AttackType.Physical)
+            if(attack.AttackType is AttackDamageType.Physical)
             {
                 damage = GetPhysicalDamage(attack.Stats, receiverUnit.Stats);
             }
-            else if(attack.AttackType is AttackType.Magical)
+            else if(attack.AttackType is AttackDamageType.Magical)
             {
                 damage = GetMagicalDamage(attack.Stats, receiverUnit.Stats);
             }

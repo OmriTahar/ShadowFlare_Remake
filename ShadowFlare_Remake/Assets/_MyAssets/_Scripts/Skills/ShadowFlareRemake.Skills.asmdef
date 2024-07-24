@@ -1,10 +1,8 @@
 {
-    "name": "ShadowFlareRemake.Combat",
-    "rootNamespace": "ShadowFlareRemake.Combat",
+    "name": "ShadowFlareRemake.Skills",
+    "rootNamespace": "ShadowFlareRemake.Skills",
     "references": [
-        "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:ea5a5c6ec90b8bf47bc781bc5ae259ff",
-        "GUID:b093cd969c3ba9c44ad2acd6543fccf6"
+        "GUID:e8733038a827d4741897f7e335845f44"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

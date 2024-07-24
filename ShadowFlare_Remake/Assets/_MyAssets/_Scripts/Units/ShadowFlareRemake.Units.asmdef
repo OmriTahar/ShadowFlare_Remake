@@ -1,13 +1,9 @@
 {
-    "name": "ShadowFlareRemake.Player",
-    "rootNamespace": "ShadowFlareRemake.Player",
+    "name": "ShadowFlareRemake.Units",
+    "rootNamespace": "ShadowFlareRemake.Units",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
         "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:b093cd969c3ba9c44ad2acd6543fccf6",
-        "GUID:1838ac37eb198754bb62abb62ef1abb2",
-        "GUID:2f78cd38c97748743ac6bb861ba247bf",
-        "GUID:697bd1fb8fb67f44bb6ff6b50f3f506e"
+        "GUID:ea5a5c6ec90b8bf47bc781bc5ae259ff"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

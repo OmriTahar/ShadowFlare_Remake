@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.Units;
 
 namespace ShadowFlareRemake.UI.Stats
 {

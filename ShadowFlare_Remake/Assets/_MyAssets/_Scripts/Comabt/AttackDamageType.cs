@@ -1,7 +1,7 @@
 
 namespace ShadowFlareRemake.Combat
 {
-    public enum AttackType
+    public enum AttackDamageType
     {
         Physical,
         Magical

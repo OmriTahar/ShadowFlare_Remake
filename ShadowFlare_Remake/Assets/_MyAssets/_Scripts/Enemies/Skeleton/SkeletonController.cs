@@ -38,7 +38,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void HandleIdleState()
         {
-            Model.SetAttackState(false, AttackMethod.None);
+            Model.SetAttackState(false, AttackMethodType.None);
             Agent.isStopped = true;
 
             if(!IsActive)
@@ -70,7 +70,7 @@ namespace ShadowFlareRemake.Enemies
 
             if(!Model.IsAttacking)
             {
-                Model.SetAttackState(true, AttackMethod.Close);
+                Model.SetAttackState(true, AttackMethodType.Close);
             }
         }
 

@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Units;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Enemies

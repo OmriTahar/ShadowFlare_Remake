@@ -1,3 +1,5 @@
+using ShadowFlareRemake.Skills;
+using System.Collections.Generic;
 
 namespace ShadowFlareRemake.UI.Hud
 {
@@ -14,6 +16,10 @@ namespace ShadowFlareRemake.UI.Hud
         public int CurrentExp { get; private set; }
         public int ExpToLevelUp { get; private set; }
         public int Level { get; private set; }
+
+        public List<SkillModel> SkillModels { get; private set; }
+        public SkillType ActiveSkill { get; private set; }
+
         public bool IsCloseButtonActive { get; private set; }
 
         #region Initialization
@@ -52,6 +58,18 @@ namespace ShadowFlareRemake.UI.Hud
         public void SetIsCloseButtonActive(bool isCloseButtonActive)
         {
             IsCloseButtonActive = isCloseButtonActive;
+            Changed();
+        }
+
+        public void SetSkillModels(List<SkillModel> skillModels)
+        {
+            SkillModels = skillModels;
+            Changed();
+        }
+
+        public void SetActiveSkill(SkillType activeSkill)
+        {
+            ActiveSkill = activeSkill;
             Changed();
         }
 

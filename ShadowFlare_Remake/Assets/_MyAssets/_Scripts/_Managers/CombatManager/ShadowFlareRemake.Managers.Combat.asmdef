@@ -3,7 +3,9 @@
     "rootNamespace": "ShadowFlareRemake.Managers.Combat",
     "references": [
         "ShadowFlareRemake",
-        "ShadowFlareRemake.Combat"
+        "ShadowFlareRemake.Combat",
+        "ShadowFlareRemake.Units",
+        "ShadowFlareRemake.Skills"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

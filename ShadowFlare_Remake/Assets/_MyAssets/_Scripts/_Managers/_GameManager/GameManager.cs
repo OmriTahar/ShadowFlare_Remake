@@ -90,6 +90,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         {
             _uiManager.InitUiManager(_inputManager);
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
+            //_uiManager.SetPlayerSkills();
         }
 
         private void InitCombatManager()

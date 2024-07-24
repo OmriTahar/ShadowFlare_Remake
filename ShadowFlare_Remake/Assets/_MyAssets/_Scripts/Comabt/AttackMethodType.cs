@@ -1,7 +1,7 @@
 
 namespace ShadowFlareRemake.Combat
 {
-    public enum AttackMethod
+    public enum AttackMethodType
     {
         None,
         Close,
