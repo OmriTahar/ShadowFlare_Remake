@@ -1,10 +1,10 @@
 
 namespace ShadowFlareRemake.Combat
 {
-    public enum AttackMethodType
+    public enum AttackRange
     {
         None,
         Close,
-        Range
+        Ranged
     }
 }

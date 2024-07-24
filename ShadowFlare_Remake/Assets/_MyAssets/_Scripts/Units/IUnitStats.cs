@@ -20,5 +20,7 @@ namespace ShadowFlareRemake.Units
         public int MagicalHitRate { get; }
         public int MagicalEvasionRate { get; }
         public int MagicalAttackSpeed { get; }
+
+        public IUnitSkills UnitSkills { get; }
     }
 }

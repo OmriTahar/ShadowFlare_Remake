@@ -216,9 +216,9 @@ namespace ShadowFlareRemake.Enemies
             if(!Model.IsAttacking)
                 return;
 
-            switch(Model.CurrentAttackMethod)
+            switch(Model.CurrentAttackRange)
             {
-                case AttackMethodType.Close:
+                case AttackRange.Close:
                     DoCloseAttack();
                     break;
             }

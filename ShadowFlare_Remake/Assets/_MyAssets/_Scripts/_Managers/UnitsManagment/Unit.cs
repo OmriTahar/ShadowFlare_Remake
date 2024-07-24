@@ -5,7 +5,6 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
     public class Unit : IUnit
     {
         public IUnitStats Stats { get; private set; }
-        public IUnitSkills Skills { get; private set; }
         public int CurrentHP { get; private set; }
         public int CurrentMP { get; private set; }
 

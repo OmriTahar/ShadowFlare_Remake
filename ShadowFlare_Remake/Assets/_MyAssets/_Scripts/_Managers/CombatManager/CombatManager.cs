@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.Units;
 using UnityEngine;
 
@@ -6,22 +7,21 @@ namespace ShadowFlareRemake.Managers.Combat
 {
     public class CombatManager
     {
-        public bool HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnit receiverUnit)
+        public ReceivedAttackData HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnitStats receiverStats)
         {
-            var damage = 0;
+            var inflictedDamage = 0;
+            var isCriticalHit = Random.value >= 0.75f; // Improve this
 
-            if(attack.AttackType is AttackDamageType.Physical)
+            if(attack.DamageType is SkillDamageType.Physical)
             {
-                damage = GetPhysicalDamage(attack.Stats, receiverUnit.Stats);
+                inflictedDamage = GetPhysicalDamage(attack.Stats, receiverStats);
             }
-            else if(attack.AttackType is AttackDamageType.Magical)
+            else if(attack.DamageType is SkillDamageType.Magical)
             {
-                damage = GetMagicalDamage(attack.Stats, receiverUnit.Stats);
+                inflictedDamage = GetMagicalDamage(attack.Stats, receiverStats);
             }
 
-            receiverUnit.TakeDamage(damage);
-
-            return Random.value >= 0.75f; // Improve this
+            return new ReceivedAttackData(inflictedDamage, isCriticalHit);
         }
 
         private int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) // Todo: Expand this.

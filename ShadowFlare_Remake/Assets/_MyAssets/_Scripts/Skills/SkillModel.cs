@@ -1,12 +1,11 @@
-using UnityEngine;
 
 namespace ShadowFlareRemake.Skills
 {
     public class SkillModel : Model
     {
-        public SkillData_ScriptableObject SkillData { get; private set; }
+        public ISkillData SkillData { get; private set; }
 
-        public SkillModel(SkillData_ScriptableObject skillData)
+        public SkillModel(ISkillData skillData)
         {
             SkillData = skillData;
         }

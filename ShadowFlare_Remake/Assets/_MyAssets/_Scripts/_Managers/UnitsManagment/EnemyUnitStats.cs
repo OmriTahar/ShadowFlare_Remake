@@ -1,4 +1,7 @@
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Skills;
+using ShadowFlareRemake.Units;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Managers.UnitsManagement
@@ -43,5 +46,9 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
         [field: SerializeField] public int MagicalHitRate { get; private set; }
         [field: SerializeField] public int MagicalEvasionRate { get; private set; }
         [field: SerializeField] public int MagicalAttackSpeed { get; private set; }
+
+        [Space(15)]
+        [SerializeField] private string ______SKILLS_____ = _spaceLine;
+        [field: SerializeField] public IUnitSkills UnitSkills { get; private set; }
     }
 }

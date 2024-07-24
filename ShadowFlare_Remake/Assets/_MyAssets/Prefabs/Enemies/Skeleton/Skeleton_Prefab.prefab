@@ -1449,10 +1449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyView: {fileID: 7970543067481453309}
   _meshRenderer: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
   _nameHolder: {fileID: 5388307940072675350}
+  _enemyView: {fileID: 7970543067481453309}
   _highlightIntensity: 0.4
   _useSkinnedMeshRenderer: 1
 --- !u!114 &7970543067481453309
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7babf075910109045965916a0a4a7cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AttackType>k__BackingField: 0
+  <DamageType>k__BackingField: 1
 --- !u!137 &1929619644779240721 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13700002, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0,

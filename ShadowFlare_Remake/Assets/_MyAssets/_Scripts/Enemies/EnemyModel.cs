@@ -13,8 +13,7 @@ namespace ShadowFlareRemake.Enemies
         public string Name { get; private set; }
         public Color Color { get; private set; }
 
-        public AttackDamageType CurrentAttackType { get; private set; }
-        public AttackMethodType CurrentAttackMethod { get; private set; }
+        public AttackRange CurrentAttackRange { get; private set; }
         public bool IsAttacking { get; private set; }
         public bool IsReceivedCritialHit { get; private set; }
 
@@ -34,10 +33,10 @@ namespace ShadowFlareRemake.Enemies
             Changed();
         }
 
-        public void SetAttackState(bool isAttacking, AttackMethodType attackMethod)
+        public void SetAttackState(bool isAttacking, AttackRange attackRange)
         {
             IsAttacking = isAttacking;
-            CurrentAttackMethod = attackMethod;
+            CurrentAttackRange = attackRange;
             Changed();
         }
 

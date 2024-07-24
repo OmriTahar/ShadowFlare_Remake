@@ -261,10 +261,10 @@ namespace ShadowFlareRemake.Managers.GameManager
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)
         {
             var unit = _enemyUnitsDict[enemyController];
+            var hitData = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit.Stats);
 
-            var isCritialHit = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit);
-
-            enemyController.SetEnemyUnitAfterHit(unit, isCritialHit);
+            unit.TakeDamage(hitData.InflictedDamage);
+            enemyController.SetEnemyUnitAfterHit(unit, hitData.IsCritialHit);
         }
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)
@@ -299,8 +299,11 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void HandlePlayerGotHit(Attack attack)
         {
-            var isCritialHit = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
-            _playerController.SetIsLastHitWasCritialHit(isCritialHit);
+            var hitData = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnitStats);
+
+            _playerUnit.TakeDamage(hitData.InflictedDamage);
+            _playerController.SetIsLastHitWasCritialHit(hitData.IsCritialHit);
+
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
