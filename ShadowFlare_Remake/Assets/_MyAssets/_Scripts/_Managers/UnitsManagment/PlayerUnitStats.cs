@@ -1,10 +1,7 @@
-using ShadowFlareRemake.Managers.SkillsManagement;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
-using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI.Stats;
 using ShadowFlareRemake.Units;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Managers.UnitsManagement
@@ -68,7 +65,7 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
             ExpToLevelUp = statsToCopy.ExpToLevelUp;
 
             Name = statsToCopy.Name;
-            Level = statsToCopy.Level;  
+            Level = statsToCopy.Level;
 
             MaxHP = statsToCopy.MaxHP;
             Attack = statsToCopy.Attack;

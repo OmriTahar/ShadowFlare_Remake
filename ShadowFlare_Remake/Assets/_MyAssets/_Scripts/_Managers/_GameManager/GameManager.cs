@@ -6,7 +6,7 @@ using ShadowFlareRemake.Managers.Cameras;
 using ShadowFlareRemake.Managers.Combat;
 using ShadowFlareRemake.Managers.Input;
 using ShadowFlareRemake.Managers.Loot;
-using ShadowFlareRemake.Managers.Rewards;
+using ShadowFlareRemake.Managers.RewardsManagement;
 using ShadowFlareRemake.Managers.UI;
 using ShadowFlareRemake.Managers.UnitsManagement;
 using ShadowFlareRemake.Player;
@@ -261,10 +261,10 @@ namespace ShadowFlareRemake.Managers.GameManager
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)
         {
             var unit = _enemyUnitsDict[enemyController];
-            var hitData = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, unit.Stats);
+            var receivedAttackData = _combatManager.GetReceivedAttackData(attack, unit.Stats);
 
-            unit.TakeDamage(hitData.InflictedDamage);
-            enemyController.SetEnemyUnitAfterHit(unit, hitData.IsCritialHit);
+            unit.TakeDamage(receivedAttackData.InflictedDamage);
+            enemyController.SetEnemyUnitAfterHit(unit, receivedAttackData.IsCritialHit);
         }
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)
@@ -299,10 +299,10 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void HandlePlayerGotHit(Attack attack)
         {
-            var hitData = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnitStats);
+            var receivedAttackData = _combatManager.GetReceivedAttackData(attack, _playerUnitStats);
 
-            _playerUnit.TakeDamage(hitData.InflictedDamage);
-            _playerController.SetIsLastHitWasCritialHit(hitData.IsCritialHit);
+            _playerUnit.TakeDamage(receivedAttackData.InflictedDamage);
+            _playerController.SetIsLastHitWasCritialHit(receivedAttackData.IsCritialHit);
 
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }

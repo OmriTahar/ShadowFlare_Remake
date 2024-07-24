@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.Managers.Combat
 {
     public class CombatManager
     {
-        public ReceivedAttackData HandleTakeDamageAndReturnIsCritialHit(Attack attack, IUnitStats receiverStats)
+        public ReceivedAttackData GetReceivedAttackData(Attack attack, IUnitStats receiverStats)
         {
             var inflictedDamage = 0;
             var isCriticalHit = Random.value >= 0.75f; // Improve this

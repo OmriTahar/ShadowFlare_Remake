@@ -1,6 +1,7 @@
+using ShadowFlareRemake.Rewards;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Rewards {
+namespace ShadowFlareRemake.Managers.Rewards {
 
     [CreateAssetMenu(fileName = "NewLevelUpReward", menuName = "Scriptable Objects/Create New Level Up Reward")]
     public class LevelUpReward_ScriptableObject : ScriptableObject, ILevelUpReward {

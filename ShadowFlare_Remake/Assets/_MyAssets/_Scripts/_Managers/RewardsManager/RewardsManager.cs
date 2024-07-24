@@ -1,10 +1,11 @@
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Managers.Rewards;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.Rewards {
-
+namespace ShadowFlareRemake.Managers.RewardsManagement
+{
     public class RewardsManager : MonoBehaviour {
 
         [Header("Rewards")]
@@ -13,31 +14,27 @@ namespace ShadowFlareRemake.Managers.Rewards {
         public ExpReward GetExpReward(IPlayerUnitStats playerUnit, IEnemyUnitStats enemyUnit) { // Todo: Do this better
 
             var expDrop = enemyUnit.ExpReward;
-            var expReward = new ExpReward();
-
-            if(expDrop <= 0) {
-                return expReward;
-            }
-
+            var newCurrentExp = 0;
+            var newExpToLevelUp = 0;
+            var newLevel = 0;
             var isPendingLevelUp = playerUnit.CurrentExp + expDrop >= playerUnit.ExpToLevelUp;
-            expReward.IsPendingLevelUp = isPendingLevelUp;
 
             if(isPendingLevelUp) {
 
                 var totalExp = playerUnit.CurrentExp + expDrop;
 
-                expReward.NewCurrentExp = totalExp - playerUnit.ExpToLevelUp;
-                expReward.NewExpToLevelUp = playerUnit.ExpToLevelUp * 2;
-                expReward.NewLevel = playerUnit.Level + 1;
+                newCurrentExp = totalExp - playerUnit.ExpToLevelUp;
+                newExpToLevelUp = playerUnit.ExpToLevelUp * 2;
+                newLevel = playerUnit.Level + 1;
 
             } else {
 
-                expReward.NewCurrentExp = playerUnit.CurrentExp + expDrop;
-                expReward.NewExpToLevelUp = playerUnit.ExpToLevelUp;
-                expReward.NewLevel = playerUnit.Level;
+                newCurrentExp = playerUnit.CurrentExp + expDrop;
+                newExpToLevelUp = playerUnit.ExpToLevelUp;
+                newLevel = playerUnit.Level;
             }
 
-            return expReward;
+            return new ExpReward(newCurrentExp, newExpToLevelUp, newLevel, isPendingLevelUp);
         }
 
         public LevelUpReward_ScriptableObject GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
