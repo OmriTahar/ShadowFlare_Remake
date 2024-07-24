@@ -30,7 +30,7 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         [Header("Player")]
         [SerializeField] private PlayerController _playerController;
-        [SerializeField] private PlayerUnitStats _playerUnitStats;
+        [SerializeField] private PlayerUnitStats _playerUnitStatsToCopy;
 
         [Header("--------------- TESTS: Enemies ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
@@ -42,8 +42,10 @@ namespace ShadowFlareRemake.Managers.GameManager
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
-        private CombatManager _combatManager;
         private Unit _playerUnit;
+        private PlayerUnitStats _playerUnitStats;
+
+        private CombatManager _combatManager;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
@@ -290,6 +292,7 @@ namespace ShadowFlareRemake.Managers.GameManager
 
         private void InitPlayer()
         {
+            _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
             _playerUnit = new Unit(_playerUnitStats);
             _playerController.InitPlayer(_playerUnit, _inputManager);
         }

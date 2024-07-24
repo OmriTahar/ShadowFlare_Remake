@@ -1,13 +1,12 @@
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.UI.Stats;
-using System;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Managers.UnitsManagement
 {
-    [Serializable]
-    public class PlayerUnitStats : IPlayerUnitStats
+    [CreateAssetMenu(fileName = "NewPlayerStats", menuName = "Scriptable Objects/Create New Player Stats")]
+    public class PlayerUnitStats : ScriptableObject, IPlayerUnitStats
     {
         #region Stats Fields
 
@@ -50,6 +49,33 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
         private static readonly int _defaultOverWeightSpeed = 60;
 
         #endregion
+
+        public PlayerUnitStats(PlayerUnitStats statsToCopy)
+        {
+            Vocation = statsToCopy.Vocation;
+            Strength = statsToCopy.Strength;
+            EquippedWeight = statsToCopy.EquippedWeight;
+            CurrentExp = statsToCopy.CurrentExp;
+            ExpToLevelUp = statsToCopy.ExpToLevelUp;
+
+            Name = statsToCopy.Name;
+            Level = statsToCopy.Level;  
+
+            MaxHP = statsToCopy.MaxHP;
+            Attack = statsToCopy.Attack;
+            Defense = statsToCopy.Defense;
+            HitRate = statsToCopy.HitRate;
+            EvasionRate = statsToCopy.EvasionRate;
+            MovementSpeed = statsToCopy.MovementSpeed;
+            AttackSpeed = statsToCopy.AttackSpeed;
+
+            MaxMP = statsToCopy.MaxMP;
+            MagicalAttack = statsToCopy.MagicalAttack;
+            MagicalDefense = statsToCopy.MagicalDefense;
+            MagicalHitRate = statsToCopy.MagicalHitRate;
+            MagicalEvasionRate = statsToCopy.MagicalEvasionRate;
+            MagicalAttackSpeed = statsToCopy.MagicalAttackSpeed;
+        }
 
         public void GiveExpReward(ExpReward reward)
         {

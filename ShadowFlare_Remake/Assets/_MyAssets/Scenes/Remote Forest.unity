@@ -1810,31 +1810,8 @@ MonoBehaviour:
   _lootManager: {fileID: 514450252}
   _enemiesParent: {fileID: 1054742629}
   _playerController: {fileID: 972601921}
-  _playerUnitStats:
-    ______PLAYER_____: ------------------------------------
-    <Vocation>k__BackingField: 0
-    <Strength>k__BackingField: 100
-    <EquippedWeight>k__BackingField: 0
-    <CurrentExp>k__BackingField: 0
-    <ExpToLevelUp>k__BackingField: 25
-    ______BASE_____: ------------------------------------
-    <Name>k__BackingField: Ronen
-    <Level>k__BackingField: 1
-    ______PHYSICAL_____: ------------------------------------
-    <MaxHP>k__BackingField: 50
-    <Attack>k__BackingField: 5
-    <Defense>k__BackingField: 1
-    <HitRate>k__BackingField: 1
-    <EvasionRate>k__BackingField: 1
-    <MovementSpeed>k__BackingField: 100
-    <AttackSpeed>k__BackingField: 100
-    ______MAGICAL_____: ------------------------------------
-    <MaxMP>k__BackingField: 20
-    <MagicalAttack>k__BackingField: 1
-    <MagicalDefense>k__BackingField: 0
-    <MagicalHitRate>k__BackingField: 1
-    <MagicalEvasionRate>k__BackingField: 1
-    <MagicalAttackSpeed>k__BackingField: 1
+  _playerUnitStatsToCopy: {fileID: 11400000, guid: 49710c2a48b6f3249b289e02ac6503c9,
+    type: 2}
   _testEnemyToSpawn: {fileID: 1302082256}
   _isEnemyActiveOnSpawn: 0
   _healOrDamageAmount: 10
