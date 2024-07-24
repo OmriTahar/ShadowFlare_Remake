@@ -60,17 +60,29 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
 
         public void GiveLevelUpReward(ILevelUpReward reward)
         {
-            MaxHP += reward.HP;
-            MaxMP += reward.MP;
             Strength += reward.Strength;
+
+            MaxHP += reward.MaxHP;
             Attack += reward.Attack;
             Defense += reward.Defense;
+            HitRate += reward.HitRate;
+            EvasionRate += reward.EvasionRate;
+            MovementSpeed += reward.MovementSpeed;
+            AttackSpeed += reward.AttackSpeed;
+
+            MaxMP += reward.MaxMP;
             MagicalAttack += reward.MagicalAttack;
-            MagicalDefense += reward.MagicalDefence;
+            MagicalDefense += reward.MagicalDefense;
+            MagicalHitRate += reward.MagicalHitRate;
+            MagicalEvasionRate += reward.MagicalEvasionRate;
+            MagicalAttackSpeed += reward.MagicalAttackSpeed;
         }
 
         public void RemoveEquippedGearAddedStats(IEquippedGearAddedStats addedStats)
         {
+            Strength -= addedStats.Strength;
+            EquippedWeight -= addedStats.EquippedWeight;
+
             MaxHP -= addedStats.MaxHP;
             Attack -= addedStats.Attack;
             Defense -= addedStats.Defense;
@@ -78,8 +90,7 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
             EvasionRate -= addedStats.EvasionRate;
             MovementSpeed -= addedStats.MovementSpeed;
             AttackSpeed -= addedStats.AttackSpeed;
-            Strength -= addedStats.Strength;
-            EquippedWeight -= addedStats.EquippedWeight;
+
             MaxMP -= addedStats.MaxMP;
             MagicalAttack -= addedStats.MagicalAttack;
             MagicalDefense -= addedStats.MagicalDefense;
@@ -93,6 +104,9 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
             MovementSpeed = _defaultMovementSpeed;
             AttackSpeed = _defaultAttackSpeed;
 
+            Strength += addedStats.Strength;
+            EquippedWeight += addedStats.EquippedWeight;
+
             MaxHP += addedStats.MaxHP;
             Attack += addedStats.Attack;
             Defense += addedStats.Defense;
@@ -100,8 +114,7 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
             EvasionRate += addedStats.EvasionRate;
             MovementSpeed += addedStats.MovementSpeed;
             AttackSpeed += addedStats.AttackSpeed;
-            Strength += addedStats.Strength;
-            EquippedWeight += addedStats.EquippedWeight;
+
             MaxMP += addedStats.MaxMP;
             MagicalAttack += addedStats.MagicalAttack;
             MagicalDefense += addedStats.MagicalDefense;

@@ -16,6 +16,12 @@ namespace ShadowFlareRemake.UI.Stats
             IsPanelOpen = isPanelOpen;
         }
 
+        public void SetIsStatsOpen(bool isPanelOpen)
+        {
+            IsPanelOpen = isPanelOpen;
+            Changed();
+        }
+
         public void SetFullPlayerStats(IUnit unit, IEquippedGearAddedStats addedStats)
         {
             Unit = unit;
@@ -26,17 +32,9 @@ namespace ShadowFlareRemake.UI.Stats
             Changed();
         }
 
-        public void SetPlayerStats(IUnit unit)
+        public void SetPlayerStats(bool isFullUpdate)
         {
-            Unit = unit;
-
-            SetIsFullStatsUpdate(false);
-            Changed();
-        }
-
-        public void SetIsStatsOpen(bool isPanelOpen)
-        {
-            IsPanelOpen = isPanelOpen;
+            SetIsFullStatsUpdate(isFullUpdate);
             Changed();
         }
 

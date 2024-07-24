@@ -6274,6 +6274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hudPanel: {fileID: 1037904875}
+  _closeButton: {fileID: 1205873426}
   _levelText: {fileID: 1797078154}
   _hpSlider: {fileID: 1348963864}
   _hpSlider_MSV: {fileID: 472470047}
@@ -9354,7 +9355,6 @@ MonoBehaviour:
   _levelUpView: {fileID: 71009184}
   _pickedUpLootTranform: {fileID: 1359072667}
   _lootInfoRect: {fileID: 2146203232}
-  _closeButton: {fileID: 1205873426}
 --- !u!224 &921169934 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5333997295841694864, guid: bd16a1d93787a6b478adaa3b47813dd4,

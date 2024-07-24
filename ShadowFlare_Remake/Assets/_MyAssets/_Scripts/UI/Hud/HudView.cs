@@ -14,6 +14,7 @@ namespace ShadowFlareRemake.UI.Hud
 
         [Header("Game Objects")]
         [SerializeField] private GameObject _hudPanel;
+        [SerializeField] private GameObject _closeButton; 
 
         [Header("Texts")]
         [SerializeField] private TMP_Text _levelText;
@@ -45,6 +46,7 @@ namespace ShadowFlareRemake.UI.Hud
 
         protected override void ModelChanged()
         {
+            SetCloseButton();
             SetHP();
             SetMP();
             SetExp();
@@ -67,6 +69,11 @@ namespace ShadowFlareRemake.UI.Hud
 
         #region Meat & Potatos
 
+        private void SetCloseButton()
+        {
+            _closeButton.SetActive(Model.IsCloseButtonActive);
+        }
+
         private void SetHP()
         {
             SetHpSlidersMaxValue();
@@ -80,11 +87,11 @@ namespace ShadowFlareRemake.UI.Hud
 
             switch(Model.CurrentHpEffectSlider)
             {
-                case HudModel.SliderEffectType.Fill:
+                case SliderEffectType.Fill:
                     HandleHpHealEffect();
                     break;
 
-                case HudModel.SliderEffectType.Reduce:
+                case SliderEffectType.Reduce:
                     HandleHpHitEffect();
                     break;
 

@@ -39,14 +39,14 @@ namespace ShadowFlareRemake.UI.LevelUp
         private void SetTexts()
         {
             _levelText.text = Model.Level.ToString();
-            _hpText.text = Model.HP.ToString();
-            _mpText.text = Model.MP.ToString();
+            _hpText.text = Model.MaxHP.ToString();
+            _mpText.text = Model.MaxMP.ToString();
             _strengthText.text = Model.Strength.ToString();
 
             _attackText.text = Model.Attack.ToString();
             _defenseText.text = Model.Defense.ToString();
             _magicalAttackText.text = Model.MagicalAttack.ToString();
-            _magicalDefenseText.text = Model.MagicalDefence.ToString();
+            _magicalDefenseText.text = Model.MagicalDefense.ToString();
         }
 
         private void HandlePanelState()

@@ -89,7 +89,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         private void InitUiManager()
         {
             _uiManager.InitUiManager(_inputManager);
-            _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
+            _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
         }
 
         private void InitCombatManager()
@@ -277,7 +277,9 @@ namespace ShadowFlareRemake.Managers.GameManager
                 _uiManager.ShowLevelUpPopup(_playerUnitStats.Level, levelUpReward);
             }
 
-            _uiManager.UpdatePlayerVitalsExpAndLevel(_playerUnit);
+            _uiManager.SetPlayerVitalsExpAndLevel(_playerUnit);
+            _uiManager.SetPlayerStats(expReward.IsPendingLevelUp);
+
             _lootManager.HandleLootDrop(enemyStats.Level, enemyStats.LootDropChance, enemyPosition);
         }
 
@@ -295,7 +297,7 @@ namespace ShadowFlareRemake.Managers.GameManager
         {
             var isCritialHit = _combatManager.HandleTakeDamageAndReturnIsCritialHit(attack, _playerUnit);
             _playerController.SetIsLastHitWasCritialHit(isCritialHit);
-            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
@@ -352,7 +354,7 @@ namespace ShadowFlareRemake.Managers.GameManager
             if(!hasHealed)
                 return;
 
-            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
             _uiManager.RemovePotionFromInventory(index, lootModel.LootData.LootType);
         }
 
@@ -367,7 +369,7 @@ namespace ShadowFlareRemake.Managers.GameManager
             }
 
             _playerUnitStats.SetEquippedGearAddedStats(_playerEquippedGearAddedStats);
-            _uiManager.UpdatePlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
+            _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
         }
 
         #endregion
@@ -400,13 +402,13 @@ namespace ShadowFlareRemake.Managers.GameManager
         {
             _playerUnit.TakeDamage(_healOrDamageAmount);
             _playerController.SetIsLastHitWasCritialHit(true);
-            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void TestHealPlayer()
         {
             _playerUnit.HealHP(_healOrDamageAmount);
-            _uiManager.UpdatePlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
 #if UNITY_EDITOR

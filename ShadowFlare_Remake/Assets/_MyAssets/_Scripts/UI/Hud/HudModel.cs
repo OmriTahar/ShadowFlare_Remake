@@ -14,8 +14,7 @@ namespace ShadowFlareRemake.UI.Hud
         public int CurrentExp { get; private set; }
         public int ExpToLevelUp { get; private set; }
         public int Level { get; private set; }
-
-        public enum SliderEffectType { Fill, Reduce };
+        public bool IsCloseButtonActive { get; private set; }
 
         #region Initialization
 
@@ -47,6 +46,12 @@ namespace ShadowFlareRemake.UI.Hud
         public void SetLevel(int newLevel, bool invokeChanged = true)
         {
             Level = newLevel;
+            Changed();
+        }
+
+        public void SetIsCloseButtonActive(bool isCloseButtonActive)
+        {
+            IsCloseButtonActive = isCloseButtonActive;
             Changed();
         }
 

@@ -12,10 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd209d53b9016d54ab6882fef5cc4a4e, type: 3}
   m_Name: MercenaryLevelUpReward
   m_EditorClassIdentifier: 
-  <HP>k__BackingField: 40
-  <MP>k__BackingField: 0
+  ______PHYSICAL_____: ------------------------------------
   <Strength>k__BackingField: 10
+  <MaxHP>k__BackingField: 40
   <Attack>k__BackingField: 4
   <Defense>k__BackingField: 4
+  <HitRate>k__BackingField: 0
+  <EvasionRate>k__BackingField: 0
+  <MovementSpeed>k__BackingField: 0
+  <AttackSpeed>k__BackingField: 0
+  ______MAGICAL_____: ------------------------------------
+  <MaxMP>k__BackingField: 10
   <MagicalAttack>k__BackingField: 2
-  <MagicalDefence>k__BackingField: 2
+  <MagicalDefense>k__BackingField: 1
+  <MagicalHitRate>k__BackingField: 0
+  <MagicalEvasionRate>k__BackingField: 0
+  <MagicalAttackSpeed>k__BackingField: 0

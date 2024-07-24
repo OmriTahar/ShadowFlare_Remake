@@ -36,9 +36,6 @@ namespace ShadowFlareRemake.Managers.UI
         [SerializeField] private Transform _pickedUpLootTranform;
         [SerializeField] private RectTransform _lootInfoRect;
 
-        [Header("Other")]
-        [SerializeField] private GameObject _closeButton; // Can this be somewhere else?
-
         private CurserModel _curserModel;
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
@@ -406,50 +403,50 @@ namespace ShadowFlareRemake.Managers.UI
 
         #region Update Player Stats & HUD
 
-        public void UpdatePlayerFullUI(IUnit unit, IEquippedGearAddedStats addedStats)
+        public void SetPlayerFullUI(IUnit unit, IEquippedGearAddedStats addedStats)
         {
             var stats = unit.Stats as IPlayerUnitStats;
 
-            UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
-            UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
-            UpdatePlayerLevel(stats.Level);
-            UpdateFullPlayerStats(unit, stats, addedStats);
+            SetPlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
+            SetPlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
+            SetPlayerLevel(stats.Level);
+            SetFullPlayerStatsWithEquippedGear(unit, stats, addedStats);
         }
 
-        public void UpdatePlayerVitalsExpAndLevel(IUnit unit)
+        public void SetPlayerVitalsExpAndLevel(IUnit unit)
         {
             var stats = unit.Stats as IPlayerUnitStats;
 
-            UpdatePlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
-            UpdatePlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
-            UpdatePlayerStats(unit);
-            UpdatePlayerLevel(stats.Level);
+            SetPlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
+            SetPlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
+            SetPlayerStats(false);
+            SetPlayerLevel(stats.Level);
         }
 
-        public void UpdatePlayerVitals(int currentHP, int maxHP, int currentMP, int maxMP)
+        public void SetPlayerVitals(int currentHP, int maxHP, int currentMP, int maxMP)
         {
             _hudModel.SetHPAndMP(currentHP, maxHP, currentMP, maxMP);
         }
 
-        private void UpdatePlayerExp(int currentExp, int expToLevelUp)
+        public void SetPlayerStats(bool isFullUpdate)
+        {
+            _statsModel.SetPlayerStats(isFullUpdate);
+        }
+
+        private void SetPlayerExp(int currentExp, int expToLevelUp)
         {
             _hudModel.SetExp(currentExp, expToLevelUp);
         }
 
-        private void UpdatePlayerLevel(int level)
+        private void SetPlayerLevel(int level)
         {
             _hudModel.SetLevel(level);
         }
 
-        private void UpdateFullPlayerStats(IUnit unit, IPlayerUnitStats stats, IEquippedGearAddedStats addedStats)
+        private void SetFullPlayerStatsWithEquippedGear(IUnit unit, IPlayerUnitStats stats, IEquippedGearAddedStats addedStats)
         {
             _statsModel.SetFullPlayerStats(unit, addedStats);
             _inventoryModel.SetStrengthAndEquippedWeight(stats.Strength, addedStats.EquippedWeight);
-        }
-
-        private void UpdatePlayerStats(IUnit unit)
-        {
-            _statsModel.SetPlayerStats(unit);
         }
 
         #endregion
@@ -461,22 +458,22 @@ namespace ShadowFlareRemake.Managers.UI
             if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.FullCover);
-                _closeButton.SetActive(true);
+                _hudModel.SetIsCloseButtonActive(true);
             }
             else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.RightIsCovered);
-                _closeButton.SetActive(true);
+                _hudModel.SetIsCloseButtonActive(true);
             }
             else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.LeftIsCovered);
-                _closeButton.SetActive(true);
+                _hudModel.SetIsCloseButtonActive(true);
             }
             else
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.NoCover);
-                _closeButton.SetActive(false);
+                _hudModel.SetIsCloseButtonActive(false);
             }
         }
 
