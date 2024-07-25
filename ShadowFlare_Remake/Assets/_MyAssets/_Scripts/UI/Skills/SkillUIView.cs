@@ -1,11 +1,14 @@
 using ShadowFlareRemake.Skills;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ShadowFlareRemake.UI.Skills
 {
-    public class SkillUIView : View<SkillModel>
+    public class SkillUIView : UIView<SkillModel>
     {
+        public event Action<SkillType> OnSkillClicked;
+
         [Header("References")]
         [SerializeField] private RectTransform _rect;
         [SerializeField] private Image _image;
@@ -34,5 +37,17 @@ namespace ShadowFlareRemake.UI.Skills
             var size = Model.IsSelected? _selectedSize : _idleSize;
             _rect.sizeDelta = new Vector2(size, size);
         }
+
+        #region Buttons
+
+        public void SkillItemClicked() // Invoked from the Inspector
+        {
+            if (Model.SkillData == null)
+                return;
+
+            OnSkillClicked?.Invoke(Model.SkillData.SkillType);
+        }
+
+        #endregion
     }
 }

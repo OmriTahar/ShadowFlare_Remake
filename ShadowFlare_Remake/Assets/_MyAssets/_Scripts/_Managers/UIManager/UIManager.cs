@@ -26,6 +26,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action<bool> OnIsPlayerHoldingLootChanged;
         public event Action<LootModel> OnDropLootToTheGround;
         public event Action<LootModel, Vector2Int> OnPotionClicked;
+        public event Action<SkillType> OnHudSkillItemClicked;
         public event Action<UIScreenCover> OnUIScreenCoverChange;
 
         [Header("Views")]
@@ -192,7 +193,7 @@ namespace ShadowFlareRemake.UIManagement
 
         private void HandleIsCurserHoldingLoot(bool isHoldingLoot)
         {
-            DropLootLeftMouseClickEvent(isHoldingLoot);
+            RegisterDropLootLeftMouseClickEvent(isHoldingLoot);
             OnIsPlayerHoldingLootChanged?.Invoke(isHoldingLoot);
         }
 
@@ -478,6 +479,11 @@ namespace ShadowFlareRemake.UIManagement
             return skillModels;
         }
 
+        private void HandleHudSkillItemClicked(SkillType skillType)
+        {
+            OnHudSkillItemClicked?.Invoke(skillType);
+        }
+
         #endregion
 
         #region UI Screen Cover
@@ -546,25 +552,25 @@ namespace ShadowFlareRemake.UIManagement
 
         private void RegisterEvents()
         {
-            InputManagerEvents(true);
-            CursorEvents(true);
-            HudEvents(true);
-            InventoryEvents(true);
-            StatsEvents(true);
-            LevelUpEvents(true);
+            RegisterInputManagerEvents(true);
+            RegisterCursorEvents(true);
+            RegisterHudEvents(true);
+            RegisterInventoryEvents(true);
+            RegisterStatsEvents(true);
+            RegisterLevelUpEvents(true);
         }
 
         private void DeregisterEvents()
         {
-            InputManagerEvents(false);
-            CursorEvents(false);
-            HudEvents(false);
-            InventoryEvents(false);
-            StatsEvents(false);
-            LevelUpEvents(false);
+            RegisterInputManagerEvents(false);
+            RegisterCursorEvents(false);
+            RegisterHudEvents(false);
+            RegisterInventoryEvents(false);
+            RegisterStatsEvents(false);
+            RegisterLevelUpEvents(false);
         }
 
-        private void InputManagerEvents(bool isRegister)
+        private void RegisterInputManagerEvents(bool isRegister)
         {
             if(isRegister)
             {
@@ -606,15 +612,7 @@ namespace ShadowFlareRemake.UIManagement
             }
         }
 
-        private void DropLootLeftMouseClickEvent(bool isRegister)
-        {
-            if(isRegister)
-                _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
-            else
-                _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
-        }
-
-        private void CursorEvents(bool isRegister)
+        private void RegisterCursorEvents(bool isRegister)
         {
             if(isRegister)
                 _curserView.OnCurserHoldingLootChange += HandleIsCurserHoldingLoot;
@@ -622,14 +620,23 @@ namespace ShadowFlareRemake.UIManagement
                 _curserView.OnCurserHoldingLootChange -= HandleIsCurserHoldingLoot;
         }
 
-        private void HudEvents(bool isRegister)
+        private void RegisterHudEvents(bool isRegister)
         {
+            var skillUIViews = _hudView.GetSkillUIViews();
+
             if(isRegister)
             {
                 _hudView.OnCurserEnterUI += CursorEnteredUI;
                 _hudView.OnCurserLeftUI += CursorLeftUI;
                 _hudView.OnInventoryButtonClicked += InvokeToggleInventory;
                 _hudView.OnStatsClicked += ToggleStats;
+                _hudView.OnSkillItemClicked += HandleHudSkillItemClicked;
+
+                foreach(var view in skillUIViews)
+                {
+                    view.OnCurserEnterUI += CursorEnteredUI;
+                    view.OnCurserLeftUI += CursorLeftUI;
+                }
             }
             else
             {
@@ -637,10 +644,17 @@ namespace ShadowFlareRemake.UIManagement
                 _hudView.OnCurserLeftUI -= CursorLeftUI;
                 _hudView.OnInventoryButtonClicked -= InvokeToggleInventory;
                 _hudView.OnStatsClicked -= ToggleStats;
+                _hudView.OnSkillItemClicked += HandleHudSkillItemClicked;
+
+                foreach(var view in skillUIViews)
+                {
+                    view.OnCurserEnterUI -= CursorEnteredUI;
+                    view.OnCurserLeftUI -= CursorLeftUI;
+                }
             }
         }
 
-        private void InventoryEvents(bool isRegister)
+        private void RegisterInventoryEvents(bool isRegister)
         {
             if(isRegister)
             {
@@ -660,7 +674,7 @@ namespace ShadowFlareRemake.UIManagement
             }
         }
 
-        private void StatsEvents(bool isRegister)
+        private void RegisterStatsEvents(bool isRegister)
         {
             if(isRegister)
             {
@@ -674,7 +688,7 @@ namespace ShadowFlareRemake.UIManagement
             }
         }
 
-        private void LevelUpEvents(bool isRegister)
+        private void RegisterLevelUpEvents(bool isRegister)
         {
             if(isRegister)
             {
@@ -688,6 +702,14 @@ namespace ShadowFlareRemake.UIManagement
                 _levelUpView.OnCurserLeftUI -= CursorLeftUI;
                 _levelUpView.OnPanelClicked -= HandleLevelUpPanelClicked;
             }
+        }
+
+        private void RegisterDropLootLeftMouseClickEvent(bool isRegister) // Registering and Deregistering based on Curser.OnHoldingLootChanged
+        {
+            if(isRegister)
+                _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
+            else
+                _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, DropLootToTheGround);
         }
 
         #endregion

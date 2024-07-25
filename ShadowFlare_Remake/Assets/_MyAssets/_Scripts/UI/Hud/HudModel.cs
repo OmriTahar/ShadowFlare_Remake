@@ -85,7 +85,7 @@ namespace ShadowFlareRemake.UI.Hud
 
             foreach(var skill in playerSkills)
             {
-                if(skill.SkillType == SkillType.Melee)
+                if(skill.SkillType == SkillType.MeleeTriple)
                 {
                     meleeSkill = skill;
                     continue;
@@ -124,7 +124,7 @@ namespace ShadowFlareRemake.UI.Hud
                     continue;
                 }
 
-                if(skillModel.SkillData.SkillType == SkillType.Melee)
+                if(skillModel.SkillData.SkillType == skillType)
                 {
                    return skillModel;
                 }

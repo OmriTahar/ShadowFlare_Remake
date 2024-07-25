@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.VFX;
 using System;
 using UnityEngine;
@@ -110,17 +111,20 @@ namespace ShadowFlareRemake.Player
 
         private void HandleAttackAnimations()
         {
-            if(Model.CurrentPlayerAttack == PlayerAttack.None)
+            if(!Model.IsAttacking)
                 return;
 
-            switch(Model.CurrentPlayerAttack)
+            switch(Model.ActiveSkill)
             {
-                case PlayerAttack.MeleeSingle:
+                case SkillType.MeleeSingle:
                     DoMeleeSingleAttack();
                     break;
 
-                case PlayerAttack.MeleeTriple:    
+                case SkillType.MeleeTriple:
                     DoMeleeTripleAttack();
+                    break;
+
+                case SkillType.Teleport:
                     break;
             }
         }

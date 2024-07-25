@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.Units;
 
 namespace ShadowFlareRemake.Player
@@ -7,15 +8,15 @@ namespace ShadowFlareRemake.Player
         public IUnit Unit { get; private set; }
         public IPlayerUnitStats Stats { get; private set; }
 
-        public PlayerAttack CurrentPlayerAttack { get; private set; }
+        public SkillType ActiveSkill { get; private set; }
         public bool IsAttacking { get; private set; } = false;
         public bool IsLastHitWasCritialHit { get; private set; }
-
         public bool IsMoving { get; private set; }
-        public bool CanTakeDamage { get; private set; } = true;
 
         private const int _movementSpeedLogicAdjuster = 20;
         private const float _animationsSpeedAdjuster = 100;
+
+        #region Initialization
 
         public PlayerModel(IUnit unit)
         {
@@ -23,15 +24,26 @@ namespace ShadowFlareRemake.Player
             Stats = unit.Stats as IPlayerUnitStats;
         }
 
-        public void SetAttackState(bool isAttacking, PlayerAttack playerAttack)
+        #endregion
+
+        #region Meat & Potatos
+
+        public void SetAttackState(bool isAttacking, SkillType activeSkill)
         {
             IsAttacking = isAttacking;
-            CurrentPlayerAttack = playerAttack;
+            ActiveSkill = activeSkill;
 
-            if(playerAttack != PlayerAttack.None)
+            if(isAttacking)
+            {
                 IsMoving = false;
+            }
 
             Changed();
+
+            if(ActiveSkill == SkillType.MeleeSingle) // Todo: Change this when granting threeStrike upon level 5
+            {
+                ActiveSkill = SkillType.MeleeTriple;
+            }
         }
 
         public void SetIsMoving(bool isMoving)
@@ -45,6 +57,16 @@ namespace ShadowFlareRemake.Player
             IsLastHitWasCritialHit = isLastHitWasCritialHit;
             Changed();
         }
+
+        public void SetActiveSkill(SkillType activeSkill)
+        {
+            ActiveSkill = activeSkill;
+            Changed();
+        }
+
+        #endregion
+
+        #region Getters
 
         public int GetMovementSpeedForMoveLogic()
         {
@@ -60,6 +82,8 @@ namespace ShadowFlareRemake.Player
         {
             return Stats.AttackSpeed / _animationsSpeedAdjuster;
         }
+
+        #endregion
     }
 }
 

@@ -1,23 +1,24 @@
-using ShadowFlareRemake.Tools;
 using ShadowFlareRemake.Skills;
+using ShadowFlareRemake.Tools;
+using ShadowFlareRemake.UI.Skills;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using ShadowFlareRemake.UI.Skills;
 
 namespace ShadowFlareRemake.UI.Hud
 {
     public class HudView : UIView<HudModel>
     {
+        public event Action<SkillType> OnSkillItemClicked;
         public event Action OnInventoryButtonClicked;
         public event Action OnStatsClicked;
 
         [Header("Game Objects")]
         [SerializeField] private GameObject _hudPanel;
-        [SerializeField] private GameObject _closeButton; 
+        [SerializeField] private GameObject _closeButton;
 
         [Header("Texts")]
         [SerializeField] private TMP_Text _levelText;
@@ -60,6 +61,14 @@ namespace ShadowFlareRemake.UI.Hud
             SetLevel();
         }
 
+        protected override void Clean()
+        {
+            foreach(var view in _skillViews)
+            {
+                view.OnSkillClicked -= InvokeSkillItemClicked;
+            }
+        }
+
         #endregion
 
         #region Initialization
@@ -77,6 +86,7 @@ namespace ShadowFlareRemake.UI.Hud
             for(int i = 0; i < _skillViews.Count; i++)
             {
                 _skillViews[i].SetModel(Model.SkillModels[i]);
+                _skillViews[i].OnSkillClicked += InvokeSkillItemClicked;
             }
         }
 
@@ -183,6 +193,24 @@ namespace ShadowFlareRemake.UI.Hud
         public void StatsClicked() // Called from a UI button clicked event
         {
             OnStatsClicked?.Invoke();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public List<SkillUIView> GetSkillUIViews()
+        {
+            return _skillViews;
+        }
+
+        #endregion
+
+        #region Events
+
+        private void InvokeSkillItemClicked(SkillType skillType)
+        {
+            OnSkillItemClicked?.Invoke(skillType);
         }
 
         #endregion

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0249987cc459d2a43a3db2deaff9a39f, type: 3}
-  m_Name: FireBall_SkillData
+  m_Name: Teleport_SkillData
   m_EditorClassIdentifier: 
   ______DATA_____: ------------------------------------
-  <SkillType>k__BackingField: 3
+  <SkillType>k__BackingField: 2
   <DamageType>k__BackingField: 2
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 00fbb4588136cde4fbf9001df788bcfb,
     type: 3}
   <MpCost>k__BackingField: 20
-  <AddedDamage>k__BackingField: 30
+  <AddedDamage>k__BackingField: 0

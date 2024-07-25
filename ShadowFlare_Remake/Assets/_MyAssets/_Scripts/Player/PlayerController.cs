@@ -1,5 +1,6 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.PlayerInputReader;
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.Units;
 using System;
 using System.Collections;
@@ -24,6 +25,7 @@ namespace ShadowFlareRemake.Player
 
         [Header("Attack Settings")]
         [SerializeField] private float _attackDistance = 2f;
+        [SerializeField] private float _stepForwardDistance = 1.5f;
         [SerializeField] private float _pickUpDistance = 1.5f;
 
         private const int _rotationSpeed = 10;
@@ -36,7 +38,6 @@ namespace ShadowFlareRemake.Player
         private Coroutine _lastMoveCoroutine;
         private Vector3 _lastTargetPos;
         private Ray _forwardRay;
-        private bool _isAttacking = false;
         private bool _isLastActionWasMove = false;
 
         #region MonoBehaviour
@@ -132,6 +133,11 @@ namespace ShadowFlareRemake.Player
             _model.SetIsLastHitWasCritialHit(isCritialHit);
         }
 
+        public void SetActiveSkill(SkillType activeSkill)
+        {
+            _model.SetActiveSkill(activeSkill);
+        }
+
         #endregion
 
         #region Meat & Potatos
@@ -171,7 +177,7 @@ namespace ShadowFlareRemake.Player
 
         private bool IsValidLeftMouseClick(bool isLeftMouseHeldDown)
         {
-            if(_isAttacking || _inputReader.IsCursorOnUI || (isLeftMouseHeldDown && !_isLastActionWasMove) || _inputReader.IsHoldingLoot)
+            if(_model.IsAttacking || _inputReader.IsCursorOnUI || (isLeftMouseHeldDown && !_isLastActionWasMove) || _inputReader.IsHoldingLoot)
             {
                 return false;
             }
@@ -218,7 +224,7 @@ namespace ShadowFlareRemake.Player
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
                 transform.LookAt(targetDirection);
-                Attack(PlayerAttack.MeleeSingle);
+                Attack(SkillType.MeleeSingle);
                 yield break;
             }
 
@@ -235,12 +241,12 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
 
-            Attack(PlayerAttack.MeleeSingle);
+            Attack(SkillType.MeleeSingle);
         }
 
         private void AttackAtDirection(InputAction.CallbackContext context)
         {
-            if(_isAttacking || _inputReader.IsCursorOnUI)
+            if(_model.IsAttacking || _inputReader.IsCursorOnUI)
                 return;
 
             if(_lastMoveCoroutine != null)
@@ -252,13 +258,12 @@ namespace ShadowFlareRemake.Player
             _lastTargetPos = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
             transform.LookAt(_lastTargetPos);
 
-            Attack(PlayerAttack.MeleeTriple);
+            Attack(SkillType.MeleeTriple);
         }
 
-        private void Attack(PlayerAttack playerAttack)
+        private void Attack(SkillType skillType)
         {
-            _model.SetAttackState(true, playerAttack);
-            _isAttacking = true;
+            _model.SetAttackState(true, skillType);
         }
 
         public void HandleAttackStepForward()
@@ -277,7 +282,7 @@ namespace ShadowFlareRemake.Player
 
             while(timer < timeToComplete)
             {
-                if(Physics.Raycast(_forwardRay, out RaycastHit hit, _attackDistance))
+                if(Physics.Raycast(_forwardRay, out RaycastHit hit, _stepForwardDistance))
                 {
                     if(hit.collider.gameObject.layer == EnemyLayer)
                         break;
@@ -293,8 +298,7 @@ namespace ShadowFlareRemake.Player
 
         private void ResetAttackCooldown()
         {
-            _model.SetAttackState(false, PlayerAttack.None);
-            _isAttacking = false;
+            _model.SetAttackState(false, _model.ActiveSkill);
         }
 
         private IEnumerator MoveAndPickUpLogic(Vector3 targetPos, Collider lootCollider)

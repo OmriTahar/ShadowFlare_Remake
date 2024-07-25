@@ -95,7 +95,7 @@ namespace ShadowFlareRemake.GameManagement
             _uiManager.InitUiManager(_inputManager);
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
             _uiManager.SetPlayerSkills(GetPlayerSkills());
-            _uiManager.SetPlayerActiveSkill(SkillType.Melee);
+            _uiManager.SetPlayerActiveSkill(SkillType.MeleeTriple);
         }
 
         private void InitCombatManager()
@@ -109,29 +109,58 @@ namespace ShadowFlareRemake.GameManagement
 
         private void RegisterEvents()
         {
-            _playerController.OnIGotHit += HandlePlayerGotHit;
-            _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
-
-            _uiManager.OnPlayerGearChanged += HandlePlayerEquippedGearStats;
-            _uiManager.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
-            _uiManager.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
-            _uiManager.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
-            _uiManager.OnPotionClicked += HandlePlayerUsedQuickItem;
-            _uiManager.OnUIScreenCoverChange += HandleCamerasOnUiCoverChange;
+            RegisterPlayerControllerEvents(true);
+            RegisterUIEvents(true);
         }
 
         private void DergisterEvents()
         {
-            _playerController.OnIGotHit -= HandlePlayerGotHit;
-            _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
+            RegisterPlayerControllerEvents(false);
+            RegisterUIEvents(false);
+            DeregisterFromEnemiesEvents();
+        }
 
-            _uiManager.OnPlayerGearChanged -= HandlePlayerEquippedGearStats;
-            _uiManager.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
-            _uiManager.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
-            _uiManager.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
-            _uiManager.OnPotionClicked -= HandlePlayerUsedQuickItem;
-            _uiManager.OnUIScreenCoverChange -= HandleCamerasOnUiCoverChange;
+        private void RegisterPlayerControllerEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
+                _playerController.OnIGotHit += HandlePlayerGotHit;
+                _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
+            }
+            else
+            {
+                _playerController.OnIGotHit -= HandlePlayerGotHit;
+                _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
+            }
+        }
 
+        private void RegisterUIEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
+                _uiManager.OnPlayerGearChanged += HandlePlayerEquippedGearStats;
+                _uiManager.OnIsCurserOnUiChanged += HandleIsCurserOnUI;
+                _uiManager.OnIsPlayerHoldingLootChanged += HandlePlayerHoldingLoot;
+                _uiManager.OnDropLootToTheGround += HandlePlayerDropLootToTheGround;
+                _uiManager.OnPotionClicked += HandlePlayerUsedQuickItem;
+                _uiManager.OnUIScreenCoverChange += HandleCamerasOnUiCoverChange;
+                _uiManager.OnHudSkillItemClicked += HandleHudSkillItemClicked;
+
+            }
+            else
+            {
+                _uiManager.OnPlayerGearChanged -= HandlePlayerEquippedGearStats;
+                _uiManager.OnIsCurserOnUiChanged -= HandleIsCurserOnUI;
+                _uiManager.OnIsPlayerHoldingLootChanged -= HandlePlayerHoldingLoot;
+                _uiManager.OnDropLootToTheGround -= HandlePlayerDropLootToTheGround;
+                _uiManager.OnPotionClicked -= HandlePlayerUsedQuickItem;
+                _uiManager.OnUIScreenCoverChange -= HandleCamerasOnUiCoverChange;
+                _uiManager.OnHudSkillItemClicked -= HandleHudSkillItemClicked;
+            }
+        }
+
+        private void DeregisterFromEnemiesEvents()
+        {
             foreach(var enemy in _enemyUnitsDict.Keys)
             {
                 enemy.OnIGotHit -= HandleEnemyGotHit;
@@ -195,6 +224,16 @@ namespace ShadowFlareRemake.GameManagement
         private void HandleIsCurserOnUI(bool isCurserOnUI)
         {
             _inputManager.SetIsCursorOnUI(isCurserOnUI);
+        }
+
+        #endregion
+
+        #region UI
+
+        private void HandleHudSkillItemClicked(SkillType activeSkill)
+        {
+            _playerController.SetActiveSkill(activeSkill);
+            _uiManager.SetPlayerActiveSkill(activeSkill);
         }
 
         #endregion
