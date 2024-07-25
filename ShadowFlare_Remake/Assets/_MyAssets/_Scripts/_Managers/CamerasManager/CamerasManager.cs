@@ -2,7 +2,7 @@ using ShadowFlareRemake.Cameras;
 using ShadowFlareRemake.UI;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.Cameras
+namespace ShadowFlareRemake.CamerasManagement
 {
     public class CamerasManager : MonoBehaviour
     {

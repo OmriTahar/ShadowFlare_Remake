@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.Managers.Input
+namespace ShadowFlareRemake.InputManagement
 {
     public class InputManager : LayersAndTagsReader, IPlayerInputReader
     {

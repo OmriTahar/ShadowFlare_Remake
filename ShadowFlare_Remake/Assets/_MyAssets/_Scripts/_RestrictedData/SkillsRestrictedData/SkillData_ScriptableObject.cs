@@ -1,7 +1,7 @@
 using ShadowFlareRemake.Skills;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.SkillsManagement
+namespace ShadowFlareRemake.SkillsRestrictedData
 {
     [CreateAssetMenu(fileName = "NewSkill", menuName = "Scriptable Objects/Create New Skill")]
     public class SkillData_ScriptableObject : ScriptableObject, ISkillData

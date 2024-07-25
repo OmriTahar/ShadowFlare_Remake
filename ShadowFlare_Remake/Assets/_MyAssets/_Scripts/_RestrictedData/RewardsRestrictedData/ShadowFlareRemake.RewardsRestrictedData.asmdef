@@ -1,10 +1,8 @@
 {
-    "name": "ShadowFlareRemake.Managers.Input",
-    "rootNamespace": "ShadowFlareRemake.Managers.Input",
+    "name": "ShadowFlareRemake.RewardsRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.RewardsRestrictedData",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:697bd1fb8fb67f44bb6ff6b50f3f506e"
+        "GUID:c4e6bed5ea66a1242bea647d70f470a3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

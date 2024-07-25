@@ -1,20 +1,20 @@
 using ShadowFlareRemake.Behaviours;
+using ShadowFlareRemake.CamerasManagement;
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.CombatManagement;
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
-using ShadowFlareRemake.Managers.Cameras;
-using ShadowFlareRemake.Managers.Combat;
-using ShadowFlareRemake.Managers.Input;
-using ShadowFlareRemake.Managers.Loot;
-using ShadowFlareRemake.Managers.RewardsManagement;
-using ShadowFlareRemake.Managers.UI;
-using ShadowFlareRemake.Managers.UnitsManagement;
+using ShadowFlareRemake.LootManagement;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.RewardsManagement;
 using ShadowFlareRemake.UI;
+using ShadowFlareRemake.UIManagement;
+using ShadowFlareRemake.UnitsRestrictedData;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.GameManager
+namespace ShadowFlareRemake.GameManagement
 {
     public class GameManager : MonoBehaviour
     {
@@ -39,14 +39,15 @@ namespace ShadowFlareRemake.Managers.GameManager
         [Header("--------------- TESTS: Player ---------------")]
         [SerializeField] private int _healOrDamageAmount = 10;
 
+        private CombatManager _combatManager;
+
         private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
         private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
 
         private Unit _playerUnit;
         private PlayerUnitStats _playerUnitStats;
-
-        private CombatManager _combatManager;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
+
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
         private LootView _lastPickedUpLootView;

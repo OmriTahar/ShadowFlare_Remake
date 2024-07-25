@@ -1,7 +1,8 @@
+using ShadowFlareRemake.Rewards;
 
-namespace ShadowFlareRemake.Rewards
+namespace ShadowFlareRemake.RewardsRestrictedData
 {
-    public struct ExpReward
+    public struct ExpReward : IExpReward
     {
         public int NewCurrentExp {  get; private set; }
         public int NewExpToLevelUp { get; private set; }

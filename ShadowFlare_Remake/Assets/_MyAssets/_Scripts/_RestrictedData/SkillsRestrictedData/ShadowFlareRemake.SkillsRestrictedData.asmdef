@@ -1,0 +1,16 @@
+{
+    "name": "ShadowFlareRemake.SkillsRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.SkillsRestrictedData",
+    "references": [
+        "GUID:ea5a5c6ec90b8bf47bc781bc5ae259ff"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

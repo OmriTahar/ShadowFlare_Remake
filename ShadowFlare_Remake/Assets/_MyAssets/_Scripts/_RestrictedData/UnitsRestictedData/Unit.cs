@@ -1,6 +1,6 @@
 using ShadowFlareRemake.Units;
 
-namespace ShadowFlareRemake.Managers.UnitsManagement
+namespace ShadowFlareRemake.UnitsRestrictedData
 {
     public class Unit : IUnit
     {

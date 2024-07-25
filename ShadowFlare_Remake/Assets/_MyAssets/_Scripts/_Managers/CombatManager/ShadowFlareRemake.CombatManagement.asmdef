@@ -1,8 +1,12 @@
 {
-    "name": "ShadowFlareRemake.Managers",
-    "rootNamespace": "ShadowFlareRemake.Managers",
+    "name": "ShadowFlareRemake.CombatManagement",
+    "rootNamespace": "ShadowFlareRemake.CombatManagement",
     "references": [
-        "GUID:e8733038a827d4741897f7e335845f44"
+        "ShadowFlareRemake",
+        "ShadowFlareRemake.Combat",
+        "ShadowFlareRemake.CombatRestrictedData",
+        "ShadowFlareRemake.Units",
+        "ShadowFlareRemake.Skills"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

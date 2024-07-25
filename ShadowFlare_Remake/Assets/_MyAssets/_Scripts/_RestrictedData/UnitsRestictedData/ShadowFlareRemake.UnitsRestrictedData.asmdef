@@ -1,6 +1,6 @@
 {
-    "name": "ShadowFlareRemake.Managers.UnitsManagement",
-    "rootNamespace": "ShadowFlareRemake.Managers.UnitsManagement",
+    "name": "ShadowFlareRemake.UnitsRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.UnitsRestrictedData",
     "references": [
         "GUID:e8733038a827d4741897f7e335845f44",
         "GUID:b093cd969c3ba9c44ad2acd6543fccf6",

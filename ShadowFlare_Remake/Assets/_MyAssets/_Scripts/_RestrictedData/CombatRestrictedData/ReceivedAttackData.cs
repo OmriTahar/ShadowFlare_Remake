@@ -1,4 +1,4 @@
-namespace ShadowFlareRemake.Managers.Combat
+namespace ShadowFlareRemake.CombatRestrictedData
 {
     public struct ReceivedAttackData
     {

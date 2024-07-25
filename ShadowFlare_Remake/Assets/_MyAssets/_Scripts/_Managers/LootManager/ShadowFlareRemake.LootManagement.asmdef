@@ -1,10 +1,9 @@
 {
-    "name": "ShadowFlareRemake.Managers.Cameras",
-    "rootNamespace": "ShadowFlareRemake.Managers.Cameras",
+    "name": "ShadowFlareRemake.LootManagement",
+    "rootNamespace": "ShadowFlareRemake.LootManagement",
     "references": [
         "GUID:e8733038a827d4741897f7e335845f44",
-        "GUID:5cf82d23a65b8d44da2a5e7f037b4317",
-        "GUID:5cfda05a4b29ccc4fa82470ebdb42a1e"
+        "GUID:73d6e1f2a914a064aaa9989d8f67e872"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

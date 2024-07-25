@@ -1,9 +1,10 @@
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.CombatRestrictedData;
 using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.Units;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.Combat
+namespace ShadowFlareRemake.CombatManagement
 {
     public class CombatManager
     {

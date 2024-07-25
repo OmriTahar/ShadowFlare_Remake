@@ -1,10 +1,10 @@
 using ShadowFlareRemake.Enemies;
-using ShadowFlareRemake.Managers.Rewards;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Rewards;
+using ShadowFlareRemake.RewardsRestrictedData;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.RewardsManagement
+namespace ShadowFlareRemake.RewardsManagement
 {
     public class RewardsManager : MonoBehaviour {
 
@@ -37,7 +37,7 @@ namespace ShadowFlareRemake.Managers.RewardsManagement
             return new ExpReward(newCurrentExp, newExpToLevelUp, newLevel, isPendingLevelUp);
         }
 
-        public LevelUpReward_ScriptableObject GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
+        public ILevelUpReward GetLevelUpReward(IPlayerUnitStats playerUnit) {  // Todo: Do this better
 
             if(playerUnit.Level < 5) {
                 return _mercenaryLevelUpReward;

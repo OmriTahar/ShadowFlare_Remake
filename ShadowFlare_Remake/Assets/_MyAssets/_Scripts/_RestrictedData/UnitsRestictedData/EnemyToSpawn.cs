@@ -1,7 +1,7 @@
 using ShadowFlareRemake.Enemies;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.UnitsManagement
+namespace ShadowFlareRemake.UnitsRestrictedData
 {
     public class EnemyToSpawn : MonoBehaviour
     {

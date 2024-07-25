@@ -1,9 +1,7 @@
 {
-    "name": "ShadowFlareRemake.Managers.SkillsManagement",
-    "rootNamespace": "ShadowFlareRemake.Managers.SkillsManagement",
-    "references": [
-        "GUID:ea5a5c6ec90b8bf47bc781bc5ae259ff"
-    ],
+    "name": "ShadowFlareRemake.CombatRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.CombatRestrictedData",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

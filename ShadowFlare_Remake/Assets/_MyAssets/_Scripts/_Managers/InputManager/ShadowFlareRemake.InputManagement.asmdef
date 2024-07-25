@@ -1,11 +1,10 @@
 {
-    "name": "ShadowFlareRemake.Managers.Combat",
-    "rootNamespace": "ShadowFlareRemake.Managers.Combat",
+    "name": "ShadowFlareRemake.InputManagement",
+    "rootNamespace": "ShadowFlareRemake.InputManagement",
     "references": [
-        "ShadowFlareRemake",
-        "ShadowFlareRemake.Combat",
-        "ShadowFlareRemake.Units",
-        "ShadowFlareRemake.Skills"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:697bd1fb8fb67f44bb6ff6b50f3f506e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

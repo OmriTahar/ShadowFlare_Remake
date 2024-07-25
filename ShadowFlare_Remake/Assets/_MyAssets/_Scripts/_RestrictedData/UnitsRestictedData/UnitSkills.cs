@@ -1,9 +1,9 @@
-using ShadowFlareRemake.Managers.SkillsManagement;
 using ShadowFlareRemake.Skills;
+using ShadowFlareRemake.SkillsRestrictedData;
 using ShadowFlareRemake.Units;
 using System.Collections.Generic;
 
-namespace ShadowFlareRemake.Managers.UnitsManagement
+namespace ShadowFlareRemake.UnitsRestrictedData
 {
     public class UnitSkills : IUnitSkills
     {

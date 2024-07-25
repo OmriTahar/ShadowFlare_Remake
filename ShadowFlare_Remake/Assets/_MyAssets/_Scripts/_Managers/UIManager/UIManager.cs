@@ -16,7 +16,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace ShadowFlareRemake.Managers.UI
+namespace ShadowFlareRemake.UIManagement
 {
     public class UIManager : LayersAndTagsReader
     {

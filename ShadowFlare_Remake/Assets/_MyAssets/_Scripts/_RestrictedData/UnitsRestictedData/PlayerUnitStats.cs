@@ -4,7 +4,7 @@ using ShadowFlareRemake.UI.Stats;
 using ShadowFlareRemake.Units;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Managers.UnitsManagement
+namespace ShadowFlareRemake.UnitsRestrictedData
 {
     [CreateAssetMenu(fileName = "NewPlayerStats", menuName = "Scriptable Objects/Create New Player Stats")]
     public class PlayerUnitStats : ScriptableObject, IPlayerUnitStats
@@ -83,7 +83,7 @@ namespace ShadowFlareRemake.Managers.UnitsManagement
             MagicalAttackSpeed = statsToCopy.MagicalAttackSpeed;
         }
 
-        public void GiveExpReward(ExpReward reward)
+        public void GiveExpReward(IExpReward reward)
         {
             CurrentExp = reward.NewCurrentExp;
             ExpToLevelUp = reward.NewExpToLevelUp;
