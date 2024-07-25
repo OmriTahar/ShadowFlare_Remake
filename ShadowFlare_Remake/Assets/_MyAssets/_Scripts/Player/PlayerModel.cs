@@ -9,7 +9,8 @@ namespace ShadowFlareRemake.Player
         public IPlayerUnitStats Stats { get; private set; }
 
         public SkillType ActiveSkill { get; private set; }
-        public bool IsAttacking { get; private set; } = false;
+        public bool IsAttacking { get; private set; }
+        public bool IsSingleMeleeAttack { get; private set; }
         public bool IsLastHitWasCritialHit { get; private set; }
         public bool IsMoving { get; private set; }
 
@@ -28,10 +29,10 @@ namespace ShadowFlareRemake.Player
 
         #region Meat & Potatos
 
-        public void SetAttackState(bool isAttacking, SkillType activeSkill)
+        public void SetAttackState(bool isAttacking, bool isSingleMeleeAttack)
         {
             IsAttacking = isAttacking;
-            ActiveSkill = activeSkill;
+            IsSingleMeleeAttack = isSingleMeleeAttack;
 
             if(isAttacking)
             {
@@ -39,11 +40,6 @@ namespace ShadowFlareRemake.Player
             }
 
             Changed();
-
-            if(ActiveSkill == SkillType.MeleeSingle) // Todo: Change this when granting threeStrike upon level 5
-            {
-                ActiveSkill = SkillType.MeleeTriple;
-            }
         }
 
         public void SetIsMoving(bool isMoving)

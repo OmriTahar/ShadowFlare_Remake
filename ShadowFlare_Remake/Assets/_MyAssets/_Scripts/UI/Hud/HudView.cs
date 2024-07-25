@@ -16,7 +16,7 @@ namespace ShadowFlareRemake.UI.Hud
         public event Action OnInventoryButtonClicked;
         public event Action OnStatsClicked;
 
-        [Header("Game Objects")]
+        [Header("General")]
         [SerializeField] private GameObject _hudPanel;
         [SerializeField] private GameObject _closeButton;
 
@@ -36,11 +36,15 @@ namespace ShadowFlareRemake.UI.Hud
         [SerializeField] private Slider _expSlider;
 
         [Header("Skills")]
+        [SerializeField] private GameObject _skillsBar;
+        [SerializeField] private int _skillsBarSidePosition_X;
+        [SerializeField] private int _skillsBarPosition_Y;
         [SerializeField] private List<SkillUIView> _skillViews;
 
         private const float _sliderLerpDuration = 1.5f;
 
         private Coroutine _lastHpCoroutine;
+        private SkillsBarPosition _lastSkillBarPosition;
         private float _lastSeenHP;
 
         #region View Overrides
@@ -55,6 +59,7 @@ namespace ShadowFlareRemake.UI.Hud
         protected override void ModelChanged()
         {
             SetCloseButton();
+            SetSkillsBarPosition();
             SetHP();
             SetMP();
             SetExp();
@@ -97,6 +102,44 @@ namespace ShadowFlareRemake.UI.Hud
         private void SetCloseButton()
         {
             _closeButton.SetActive(Model.IsCloseButtonActive);
+        }
+
+        private void SetSkillsBarPosition()
+        {
+            if(_lastSkillBarPosition == Model.CurrentSkillsBarPosition)
+                return;
+
+            var newPos = new Vector3(0, _skillsBarPosition_Y, 0);
+
+            switch(Model.CurrentSkillsBarPosition)
+            {
+                case SkillsBarPosition.Middle:
+
+                    _skillsBar.transform.localPosition = newPos;
+                    _skillsBar.SetActive(true);
+                    break;
+
+                case SkillsBarPosition.Left:
+
+                    newPos.x = -_skillsBarSidePosition_X;
+                    _skillsBar.transform.localPosition = newPos;
+                    _skillsBar.SetActive(true);
+                    break;
+
+                case SkillsBarPosition.Right:
+
+                    newPos.x = _skillsBarSidePosition_X;
+                    _skillsBar.transform.localPosition = newPos;
+                    _skillsBar.SetActive(true);
+                    break;
+
+                case SkillsBarPosition.None:
+
+                    _skillsBar.SetActive(false);
+                    break;
+            }
+
+            _lastSkillBarPosition = Model.CurrentSkillsBarPosition;
         }
 
         private void SetHP()

@@ -114,17 +114,31 @@ namespace ShadowFlareRemake.Player
             if(!Model.IsAttacking)
                 return;
 
+            if(Model.IsSingleMeleeAttack)
+            {
+                DoMeleeSingleAttack();
+                return;
+            }
+
+            // Todo: Add here the level 5 tripe condition
+
             switch(Model.ActiveSkill)
             {
-                case SkillType.MeleeSingle:
-                    DoMeleeSingleAttack();
-                    break;
+                case SkillType.MeleeAttack:
 
-                case SkillType.MeleeTriple:
                     DoMeleeTripleAttack();
                     break;
 
                 case SkillType.Teleport:
+
+                    print("Teleport!");
+                    InvokeOnAttackAnimationEnded();
+                    break;
+
+                case SkillType.FireBall:
+
+                    print("Fire Ball!");
+                    InvokeOnAttackAnimationEnded();
                     break;
             }
         }

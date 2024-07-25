@@ -95,7 +95,7 @@ namespace ShadowFlareRemake.GameManagement
             _uiManager.InitUiManager(_inputManager);
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
             _uiManager.SetPlayerSkills(GetPlayerSkills());
-            _uiManager.SetPlayerActiveSkill(SkillType.MeleeTriple);
+            _uiManager.SetPlayerActiveSkill(SkillType.MeleeAttack);
         }
 
         private void InitCombatManager()

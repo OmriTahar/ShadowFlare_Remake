@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeAttack_SkillData
   m_EditorClassIdentifier: 
   ______DATA_____: ------------------------------------
-  <SkillType>k__BackingField: 1
+  <SkillType>k__BackingField: 0
   <DamageType>k__BackingField: 1
   <Sprite>k__BackingField: {fileID: 21300000, guid: 3a88d46ed00b9214a8cc55ba6e67ab09,
     type: 3}

@@ -1,8 +1,5 @@
-using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Skills;
-using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 
 namespace ShadowFlareRemake.UI.Hud
 {
@@ -22,6 +19,7 @@ namespace ShadowFlareRemake.UI.Hud
 
         public List<SkillModel> SkillModels { get; private set; }
         public SkillModel ActiveSkill { get; private set; }
+        public SkillsBarPosition CurrentSkillsBarPosition { get; private set; }
 
         public bool IsCloseButtonActive { get; private set; }
 
@@ -29,7 +27,7 @@ namespace ShadowFlareRemake.UI.Hud
 
         #region Initialization
 
-        public HudModel() 
+        public HudModel()
         {
             InitSkillModels();
         }
@@ -38,7 +36,7 @@ namespace ShadowFlareRemake.UI.Hud
         {
             SkillModels = new List<SkillModel>(_skillsAmount);
 
-            for (int i = 0; i < _skillsAmount; i++)
+            for(int i = 0; i < _skillsAmount; i++)
             {
                 SkillModels.Add(new SkillModel(null));
             }
@@ -72,9 +70,19 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetIsCloseButtonActive(bool isCloseButtonActive)
+        public void SetIsCloseButtonActive(bool isCloseButtonActive, bool InvokeChanged = false)
         {
             IsCloseButtonActive = isCloseButtonActive;
+
+            if(InvokeChanged)
+            {
+                Changed();
+            }
+        }
+
+        public void SetSkillsBarPosition(SkillsBarPosition skillsBarPosition)
+        {
+            CurrentSkillsBarPosition = skillsBarPosition;
             Changed();
         }
 
@@ -85,7 +93,7 @@ namespace ShadowFlareRemake.UI.Hud
 
             foreach(var skill in playerSkills)
             {
-                if(skill.SkillType == SkillType.MeleeTriple)
+                if(skill.SkillType == SkillType.MeleeAttack)
                 {
                     meleeSkill = skill;
                     continue;
@@ -103,7 +111,7 @@ namespace ShadowFlareRemake.UI.Hud
         {
             var skillModel = GetSkillModelFromSkillType(skillType);
 
-            if (skillModel == null)
+            if(skillModel == null)
                 return;
 
             if(ActiveSkill != null)
@@ -126,7 +134,7 @@ namespace ShadowFlareRemake.UI.Hud
 
                 if(skillModel.SkillData.SkillType == skillType)
                 {
-                   return skillModel;
+                    return skillModel;
                 }
             }
 

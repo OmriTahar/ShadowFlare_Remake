@@ -549,7 +549,7 @@ MonoBehaviour:
   _skinnedMeshRenderer: {fileID: 0}
   _nameHolder: {fileID: 9197321906997652547}
   _enemyView: {fileID: 0}
-  _highlightIntensity: 0.2
+  _highlightIntensity: 0.5
   _useSkinnedMeshRenderer: 0
 --- !u!4 &3336864765410818638 stripped
 Transform:

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Teleport_SkillData
   m_EditorClassIdentifier: 
   ______DATA_____: ------------------------------------
-  <SkillType>k__BackingField: 2
+  <SkillType>k__BackingField: 1
   <DamageType>k__BackingField: 2
   <Sprite>k__BackingField: {fileID: 21300000, guid: 00fbb4588136cde4fbf9001df788bcfb,
     type: 3}

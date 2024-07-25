@@ -3,8 +3,7 @@ namespace ShadowFlareRemake.Skills
 {
     public enum SkillType
     {
-        MeleeSingle,
-        MeleeTriple,
+        MeleeAttack,
         Teleport,
         FireBall
     }

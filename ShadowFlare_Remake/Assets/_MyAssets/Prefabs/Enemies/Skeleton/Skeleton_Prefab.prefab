@@ -1453,7 +1453,7 @@ MonoBehaviour:
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
   _nameHolder: {fileID: 5388307940072675350}
   _enemyView: {fileID: 7970543067481453309}
-  _highlightIntensity: 0.4
+  _highlightIntensity: 0.5
   _useSkinnedMeshRenderer: 1
 --- !u!114 &7970543067481453309
 MonoBehaviour:

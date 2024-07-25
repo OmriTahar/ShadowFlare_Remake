@@ -107,7 +107,7 @@ namespace ShadowFlareRemake.Player
         private void RegisterEvents()
         {
             _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
-            _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
+            _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, UseSkillAtDirection);
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleAttackStepForward;
@@ -117,7 +117,7 @@ namespace ShadowFlareRemake.Player
         private void DeregisterEvents()
         {
             _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
-            _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
+            _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, UseSkillAtDirection);
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;
@@ -224,7 +224,7 @@ namespace ShadowFlareRemake.Player
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
                 transform.LookAt(targetDirection);
-                Attack(SkillType.MeleeSingle);
+                Attack(true);
                 yield break;
             }
 
@@ -241,10 +241,10 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
 
-            Attack(SkillType.MeleeSingle);
+            Attack(true);
         }
 
-        private void AttackAtDirection(InputAction.CallbackContext context)
+        private void UseSkillAtDirection(InputAction.CallbackContext context)
         {
             if(_model.IsAttacking || _inputReader.IsCursorOnUI)
                 return;
@@ -258,12 +258,12 @@ namespace ShadowFlareRemake.Player
             _lastTargetPos = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
             transform.LookAt(_lastTargetPos);
 
-            Attack(SkillType.MeleeTriple);
+            Attack(false);
         }
 
-        private void Attack(SkillType skillType)
+        private void Attack(bool isSingleMeleeAttack)
         {
-            _model.SetAttackState(true, skillType);
+            _model.SetAttackState(true, isSingleMeleeAttack);
         }
 
         public void HandleAttackStepForward()
@@ -298,7 +298,7 @@ namespace ShadowFlareRemake.Player
 
         private void ResetAttackCooldown()
         {
-            _model.SetAttackState(false, _model.ActiveSkill);
+            _model.SetAttackState(false, false);
         }
 
         private IEnumerator MoveAndPickUpLogic(Vector3 targetPos, Collider lootCollider)

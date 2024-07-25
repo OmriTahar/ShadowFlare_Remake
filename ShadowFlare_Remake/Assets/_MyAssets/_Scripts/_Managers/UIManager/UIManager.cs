@@ -494,21 +494,26 @@ namespace ShadowFlareRemake.UIManagement
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.FullCover);
                 _hudModel.SetIsCloseButtonActive(true);
+                _hudModel.SetSkillsBarPosition(SkillsBarPosition.None);
+
             }
             else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.RightIsCovered);
                 _hudModel.SetIsCloseButtonActive(true);
+                _hudModel.SetSkillsBarPosition(SkillsBarPosition.Left);
             }
             else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.LeftIsCovered);
                 _hudModel.SetIsCloseButtonActive(true);
+                _hudModel.SetSkillsBarPosition(SkillsBarPosition.Right);
             }
             else
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.NoCover);
                 _hudModel.SetIsCloseButtonActive(false);
+                _hudModel.SetSkillsBarPosition(SkillsBarPosition.Middle);
             }
         }
 
