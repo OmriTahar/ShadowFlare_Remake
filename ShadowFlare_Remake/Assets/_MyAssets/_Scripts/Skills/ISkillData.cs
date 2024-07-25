@@ -8,6 +8,6 @@ namespace ShadowFlareRemake.Skills
         public SkillDamageType DamageType { get; }
         public Sprite Sprite { get; }
         public int MpCost { get; }
-        public int Damage { get; }
+        public int AddedDamage { get; }
     }
 }

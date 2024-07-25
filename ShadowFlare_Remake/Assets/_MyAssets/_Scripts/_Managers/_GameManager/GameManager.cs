@@ -8,6 +8,7 @@ using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.RewardsManagement;
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UIManagement;
 using ShadowFlareRemake.UnitsRestrictedData;
@@ -227,7 +228,8 @@ namespace ShadowFlareRemake.GameManagement
             var enemyController = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
 
             var enemyUnitStats = enemyToSpawn.EnemyUnit;
-            var enemyUnit = new Unit(enemyUnitStats);
+            var enemySkills = GetEnemySkills(enemyUnitStats);
+            var enemyUnit = new Unit(enemyUnitStats, enemySkills);
 
             var enemyModel = enemyController.InitEnemy(enemyUnit, _playerController.transform, isEnemyActive);
             _enemyUnitsDict.Add(enemyController, enemyUnit);
@@ -242,6 +244,20 @@ namespace ShadowFlareRemake.GameManagement
                 Destroy(enemyToSpawn.gameObject);
             }
         }
+
+
+        private List<ISkillData> GetEnemySkills(EnemyUnitStats enemyUnitStats)
+        {
+            var skillsList = new List<ISkillData>();
+
+            foreach(var skillData in enemyUnitStats.Skills)
+            {
+                skillsList.Add(skillData);
+            }
+
+            return skillsList;
+        }
+
 
         private bool IsValidEnemyToSpawn(EnemyToSpawn enemyToSpawn)
         {
@@ -294,8 +310,21 @@ namespace ShadowFlareRemake.GameManagement
         private void InitPlayer()
         {
             _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
-            _playerUnit = new Unit(_playerUnitStats);
+            var playerSkills = GetPlayerSkills();
+            _playerUnit = new Unit(_playerUnitStats, playerSkills);
             _playerController.InitPlayer(_playerUnit, _inputManager);
+        }
+
+        private List<ISkillData> GetPlayerSkills()
+        {
+            var skillsList = new List<ISkillData>();
+
+            foreach(var skillData in _playerUnitStats.Skills)
+            {
+                skillsList.Add(skillData);
+            }
+
+            return skillsList;
         }
 
         private void HandlePlayerGotHit(Attack attack)

@@ -1,16 +1,21 @@
+using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.Units;
+using System.Collections.Generic;
 
 namespace ShadowFlareRemake.UnitsRestrictedData
 {
     public class Unit : IUnit
     {
         public IUnitStats Stats { get; private set; }
+        public List<ISkillData> Skills { get; private set; }
         public int CurrentHP { get; private set; }
         public int CurrentMP { get; private set; }
 
-        public Unit(IUnitStats stats)
+        public Unit(IUnitStats stats, List<ISkillData> skills)
         {
             Stats = stats;
+            Skills = skills;
+
             CurrentHP = stats.MaxHP;
             CurrentMP = stats.MaxMP;
         }

@@ -6954,7 +6954,7 @@ PrefabInstance:
     - target: {fileID: 1852971226192705579, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_Name
-      value: Melee Skill
+      value: Melee Attack
       objectReference: {fileID: 0}
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
@@ -6989,12 +6989,12 @@ PrefabInstance:
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
@@ -7034,12 +7034,12 @@ PrefabInstance:
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 254.99995
+      value: 244.99997
       objectReference: {fileID: 0}
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -5.000003
+      value: -14.999992
       objectReference: {fileID: 0}
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
@@ -7054,6 +7054,17 @@ PrefabInstance:
     - target: {fileID: 6677670566944023565, guid: 2136d6572827cab44a8105fdbfebe3b3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7260715789341658328, guid: 2136d6572827cab44a8105fdbfebe3b3,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a88d46ed00b9214a8cc55ba6e67ab09,
+        type: 3}
+    - target: {fileID: 7260715789341658328, guid: 2136d6572827cab44a8105fdbfebe3b3,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

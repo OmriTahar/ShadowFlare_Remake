@@ -1,5 +1,5 @@
 using ShadowFlareRemake.Enemies;
-using ShadowFlareRemake.Skills;
+using ShadowFlareRemake.SkillsRestrictedData;
 using ShadowFlareRemake.Units;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +49,6 @@ namespace ShadowFlareRemake.UnitsRestrictedData
 
         [Space(15)]
         [SerializeField] private string ______SKILLS_____ = _spaceLine;
-        [field: SerializeField] public IUnitSkills UnitSkills { get; private set; }
+        [field: SerializeField] public List<SkillData_ScriptableObject> Skills { get; private set; }
     }
 }

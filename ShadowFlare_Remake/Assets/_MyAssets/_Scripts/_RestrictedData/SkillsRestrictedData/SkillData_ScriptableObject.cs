@@ -12,7 +12,7 @@ namespace ShadowFlareRemake.SkillsRestrictedData
         [field: SerializeField] public SkillDamageType DamageType { get; private set; }
         [field: SerializeField] public Sprite Sprite { get; private set; }
         [field: SerializeField] public int MpCost { get; private set; }
-        [field: SerializeField] public int Damage { get; private set; }
+        [field: SerializeField] public int AddedDamage { get; private set; }
 
         private const string _spaceLine = "------------------------------------";
     }
