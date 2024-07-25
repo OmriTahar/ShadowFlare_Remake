@@ -403,7 +403,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region Update Player Stats & HUD
+        #region Set Player Stats
 
         public void SetPlayerFullUI(IUnit unit, IEquippedGearAddedStats addedStats)
         {
@@ -451,9 +451,25 @@ namespace ShadowFlareRemake.UIManagement
             _inventoryModel.SetStrengthAndEquippedWeight(stats.Strength, addedStats.EquippedWeight);
         }
 
-        public void SetPlayerSkills(List<SkillModel> playerSkillModels)
+        #endregion
+
+        #region HUD
+
+        public void SetPlayerSkills(List<ISkillData> playerSkills)
         {
-            _hudModel.SetSkillModels(playerSkillModels);
+            _hudModel.SetPlayerSkills(playerSkills);
+        }
+
+        private List<SkillModel> GetPlayerSkillModels(List<ISkillData> playerSkills)
+        {
+            var skillModels = new List<SkillModel>();
+
+            foreach(var skillData in playerSkills)
+            {
+                skillModels.Add(new SkillModel(skillData));
+            }
+
+            return skillModels;
         }
 
         #endregion

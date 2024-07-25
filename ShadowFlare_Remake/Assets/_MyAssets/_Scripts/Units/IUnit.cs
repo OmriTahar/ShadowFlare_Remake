@@ -1,4 +1,3 @@
-
 namespace ShadowFlareRemake.Units
 {
     public interface IUnit

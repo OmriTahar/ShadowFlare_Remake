@@ -82,6 +82,8 @@ namespace ShadowFlareRemake.UnitsRestrictedData
             MagicalHitRate = statsToCopy.MagicalHitRate;
             MagicalEvasionRate = statsToCopy.MagicalEvasionRate;
             MagicalAttackSpeed = statsToCopy.MagicalAttackSpeed;
+
+            Skills = statsToCopy.Skills;
         }
 
         public void GiveExpReward(IExpReward reward)

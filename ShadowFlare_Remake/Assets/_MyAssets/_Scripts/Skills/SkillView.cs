@@ -23,7 +23,8 @@ namespace ShadowFlareRemake.Skills
         {
             if (_image == null || Model.SkillData == null || Model.SkillData.Sprite == null)
                 return;
-            
+
+            _image.enabled = true;
             _image.sprite = Model.SkillData.Sprite;
         }
 

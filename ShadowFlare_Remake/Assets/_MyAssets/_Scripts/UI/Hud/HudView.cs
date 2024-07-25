@@ -47,6 +47,7 @@ namespace ShadowFlareRemake.UI.Hud
         {
             _hudPanel.SetActive(true);
             InitHpSliders();
+            InitSkillsBar();
         }
 
         protected override void ModelChanged()
@@ -56,8 +57,6 @@ namespace ShadowFlareRemake.UI.Hud
             SetMP();
             SetExp();
             SetLevel();
-            SetSkillsBar();
-            SetActiveSkill();
         }
 
         #endregion
@@ -72,22 +71,11 @@ namespace ShadowFlareRemake.UI.Hud
             _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
         }
 
-        private void SetSkillsBar()
+        private void InitSkillsBar()
         {
-            if(Model.SkillModels == null || Model.SkillModels.Count == 0)
+            for(int i = 0; i < _skillViews.Count; i++)
             {
-                return;
-            }
-
-            for (int i = 0; i < Model.SkillModels.Count; i++)
-            {
-                var view = _skillViews[i];
-                var model = Model.SkillModels[i];
-
-                if(model == null)
-                    continue;
-
-                view.SetModel(model);
+                _skillViews[i].SetModel(Model.SkillModels[i]);
             }
         }
 
@@ -180,15 +168,6 @@ namespace ShadowFlareRemake.UI.Hud
         private void SetLevel()
         {
             _levelText.text = Model.Level.ToString();
-        }
-
-        private void SetActiveSkill()
-        {
-            if(Model.SkillModels == null || Model.SkillModels.Count == 0)
-            {
-                return;
-            }
-
         }
 
         #endregion

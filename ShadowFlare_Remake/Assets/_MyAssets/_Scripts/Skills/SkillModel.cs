@@ -11,6 +11,12 @@ namespace ShadowFlareRemake.Skills
             SkillData = skillData;
         }
 
+        public void SetSkillData(ISkillData skillData)
+        {
+            SkillData = skillData;
+            Changed();
+        }
+
         public void SetIsSelected(bool isSelected)
         {
             IsSelected = isSelected;

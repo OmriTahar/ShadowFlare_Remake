@@ -31,7 +31,7 @@ namespace ShadowFlareRemake.Player
 
         private PlayerModel _model;
         private CharacterController _characterController;
-        private IPlayerInputReader _inputManager;
+        private IPlayerInputReader _inputReader;
 
         private Coroutine _lastMoveCoroutine;
         private Vector3 _lastTargetPos;
@@ -49,7 +49,7 @@ namespace ShadowFlareRemake.Player
 
         private void Update()
         {
-            if(_inputManager.IsLeftMouseHeldDown)
+            if(_inputReader.IsLeftMouseHeldDown)
             {
                 HandleLeftClickActions(true);
             }
@@ -87,7 +87,7 @@ namespace ShadowFlareRemake.Player
             _model = new PlayerModel(unit);
             _view.SetModel(_model);
 
-            _inputManager = inputManager;
+            _inputReader = inputManager;
 
             RegisterEvents();
 
@@ -105,8 +105,8 @@ namespace ShadowFlareRemake.Player
 
         private void RegisterEvents()
         {
-            _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
-            _inputManager.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
+            _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
+            _inputReader.ResigterToMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded += ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent += HandleAttackStepForward;
@@ -115,8 +115,8 @@ namespace ShadowFlareRemake.Player
 
         private void DeregisterEvents()
         {
-            _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
-            _inputManager.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
+            _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.LeftMouse, RegisterLeftClickActions);
+            _inputReader.DeresigterFromMouseInputAction(PlayerMouseInputType.RightMouse, AttackAtDirection);
 
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;
@@ -141,26 +141,26 @@ namespace ShadowFlareRemake.Player
             if(!IsValidLeftMouseClick(isLeftMouseHeldDown))
                 return;
 
-            var hit = _inputManager.CurrentRaycastHit;
+            var hit = _inputReader.CurrentRaycastHit;
 
             if(hit.collider == null)
                 return;
 
             IEnumerator selectedCoroutine = null;
 
-            if((isLeftMouseHeldDown && _isLastActionWasMove) || _inputManager.IsCursorOnGround)
+            if((isLeftMouseHeldDown && _isLastActionWasMove) || _inputReader.IsCursorOnGround)
             {
                 selectedCoroutine = MoveLogic(hit.point);
                 SetIsLastActionWasMove(true);
             }
-            else if(_inputManager.IsCursorOnEnemy)
+            else if(_inputReader.IsCursorOnEnemy)
             {
-                var hitCollider = _inputManager.CurrentRaycastHitCollider;
+                var hitCollider = _inputReader.CurrentRaycastHitCollider;
                 var enemyPos = hitCollider.transform.position;
                 selectedCoroutine = MoveAndAttackLogic(enemyPos);
                 SetIsLastActionWasMove(false);
             }
-            else if(_inputManager.IsCursorOnItem)
+            else if(_inputReader.IsCursorOnItem)
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
                 SetIsLastActionWasMove(false);
@@ -171,7 +171,7 @@ namespace ShadowFlareRemake.Player
 
         private bool IsValidLeftMouseClick(bool isLeftMouseHeldDown)
         {
-            if(_isAttacking || _inputManager.IsCursorOnUI || (isLeftMouseHeldDown && !_isLastActionWasMove) || _inputManager.IsHoldingLoot)
+            if(_isAttacking || _inputReader.IsCursorOnUI || (isLeftMouseHeldDown && !_isLastActionWasMove) || _inputReader.IsHoldingLoot)
             {
                 return false;
             }
@@ -240,7 +240,7 @@ namespace ShadowFlareRemake.Player
 
         private void AttackAtDirection(InputAction.CallbackContext context)
         {
-            if(_isAttacking || _inputManager.IsCursorOnUI)
+            if(_isAttacking || _inputReader.IsCursorOnUI)
                 return;
 
             if(_lastMoveCoroutine != null)
@@ -248,7 +248,7 @@ namespace ShadowFlareRemake.Player
                 StopCoroutine(_lastMoveCoroutine);
             }
 
-            var raycastHit = _inputManager.CurrentRaycastHit;
+            var raycastHit = _inputReader.CurrentRaycastHit;
             _lastTargetPos = new Vector3(raycastHit.point.x, 0, raycastHit.point.z);
             transform.LookAt(_lastTargetPos);
 

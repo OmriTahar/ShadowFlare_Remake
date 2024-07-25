@@ -22,9 +22,24 @@ namespace ShadowFlareRemake.UI.Hud
 
         public bool IsCloseButtonActive { get; private set; }
 
+        private const int _skillsAmount = 9;
+
         #region Initialization
 
-        public HudModel() { }
+        public HudModel() 
+        {
+            InitSkillModels();
+        }
+
+        private void InitSkillModels()
+        {
+            SkillModels = new List<SkillModel>(_skillsAmount);
+
+            for (int i = 0; i < _skillsAmount; i++)
+            {
+                SkillModels.Add(new SkillModel(null));
+            }
+        }
 
         #endregion
 
@@ -38,7 +53,6 @@ namespace ShadowFlareRemake.UI.Hud
             MaxHP = maxHP;
             CurrentMP = currentMP;
             MaxMP = maxMP;
-
             Changed();
         }
 
@@ -61,9 +75,24 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetSkillModels(List<SkillModel> skillModels)
+        public void SetPlayerSkills(List<ISkillData> playerSkills)
         {
-            SkillModels = skillModels;
+            ISkillData meleeSkill = null;
+            var barIndex = 0;
+
+            foreach(var skill in playerSkills)
+            {
+                if(skill.SkillType == SkillType.Melee)
+                {
+                    meleeSkill = skill;
+                    continue;
+                }
+
+                SkillModels[barIndex].SetSkillData(skill);
+                barIndex++;
+            }
+
+            SkillModels[_skillsAmount - 1].SetSkillData(meleeSkill);
             Changed();
         }
 
