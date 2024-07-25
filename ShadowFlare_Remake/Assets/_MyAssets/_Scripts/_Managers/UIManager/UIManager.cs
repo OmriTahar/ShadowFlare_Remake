@@ -7,6 +7,7 @@ using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
 using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
+using ShadowFlareRemake.UI.ItemsGrid;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
 using ShadowFlareRemake.Units;

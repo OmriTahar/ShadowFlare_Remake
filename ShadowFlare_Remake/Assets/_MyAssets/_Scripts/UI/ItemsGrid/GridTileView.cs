@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using ShadowFlareRemake.Loot;
 
-namespace ShadowFlareRemake.UI.Inventory
+namespace ShadowFlareRemake.UI.ItemsGrid
 {
     public class GridTileView : UIView<GridTileModel>, IPointerEnterHandler, IPointerExitHandler
     {

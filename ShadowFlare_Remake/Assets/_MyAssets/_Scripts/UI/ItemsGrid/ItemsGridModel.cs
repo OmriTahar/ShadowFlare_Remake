@@ -1,9 +1,8 @@
 using ShadowFlareRemake.Loot;
-using ShadowFlareRemake.UI.Inventory;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI
+namespace ShadowFlareRemake.UI.ItemsGrid
 {
     public class ItemsGridModel : Model
     {

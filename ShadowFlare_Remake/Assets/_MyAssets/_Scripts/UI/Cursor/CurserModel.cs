@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.UI.ItemsGrid;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Cursor

@@ -1,5 +1,5 @@
 
-namespace ShadowFlareRemake.UI
+namespace ShadowFlareRemake.UI.ItemsGrid
 {
     public enum ItemsGridType
     {

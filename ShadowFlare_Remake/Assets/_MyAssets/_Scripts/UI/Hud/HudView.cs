@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ShadowFlareRemake.UI.Skills;
 
 namespace ShadowFlareRemake.UI.Hud
 {
@@ -34,7 +35,7 @@ namespace ShadowFlareRemake.UI.Hud
         [SerializeField] private Slider _expSlider;
 
         [Header("Skills")]
-        [SerializeField] private List<SkillView> _skillViews;
+        [SerializeField] private List<SkillUIView> _skillViews;
 
         private const float _sliderLerpDuration = 1.5f;
 

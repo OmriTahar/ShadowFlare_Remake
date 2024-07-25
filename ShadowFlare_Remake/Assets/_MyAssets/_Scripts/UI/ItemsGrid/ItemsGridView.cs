@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ShadowFlareRemake.UI.Inventory
+namespace ShadowFlareRemake.UI.ItemsGrid
 {
     public class ItemsGridView : View<ItemsGridModel>, IPointerEnterHandler, IPointerExitHandler
     {

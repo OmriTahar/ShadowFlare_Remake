@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.UI.ItemsGrid;
 using System;
 using System.Collections;
 using System.Collections.Generic;

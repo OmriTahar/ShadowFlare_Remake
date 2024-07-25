@@ -1,7 +1,7 @@
 using UnityEngine;
 using ShadowFlareRemake.Loot;
 
-namespace ShadowFlareRemake.UI.Inventory
+namespace ShadowFlareRemake.UI.ItemsGrid
 {
     public class GridTileModel : Model
     {

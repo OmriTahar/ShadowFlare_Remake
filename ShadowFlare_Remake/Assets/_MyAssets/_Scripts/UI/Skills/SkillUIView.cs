@@ -1,9 +1,10 @@
+using ShadowFlareRemake.Skills;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShadowFlareRemake.Skills
+namespace ShadowFlareRemake.UI.Skills
 {
-    public class SkillView : View<SkillModel>
+    public class SkillUIView : View<SkillModel>
     {
         [Header("References")]
         [SerializeField] private RectTransform _rect;
