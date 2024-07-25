@@ -1,5 +1,8 @@
+using ShadowFlareRemake.Player;
 using ShadowFlareRemake.Skills;
+using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 
 namespace ShadowFlareRemake.UI.Hud
 {
@@ -18,7 +21,7 @@ namespace ShadowFlareRemake.UI.Hud
         public int Level { get; private set; }
 
         public List<SkillModel> SkillModels { get; private set; }
-        public SkillType ActiveSkill { get; private set; }
+        public SkillModel ActiveSkill { get; private set; }
 
         public bool IsCloseButtonActive { get; private set; }
 
@@ -96,10 +99,38 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetActiveSkill(SkillType activeSkill)
+        public void SetActiveSkill(SkillType skillType)
         {
-            ActiveSkill = activeSkill;
-            Changed();
+            var skillModel = GetSkillModelFromSkillType(skillType);
+
+            if (skillModel == null)
+                return;
+
+            if(ActiveSkill != null)
+            {
+                ActiveSkill.SetIsSelected(false);
+            }
+
+            ActiveSkill = skillModel;
+            ActiveSkill.SetIsSelected(true);
+        }
+
+        private SkillModel GetSkillModelFromSkillType(SkillType skillType)
+        {
+            foreach(var skillModel in SkillModels)
+            {
+                if(skillModel.SkillData == null)
+                {
+                    continue;
+                }
+
+                if(skillModel.SkillData.SkillType == SkillType.Melee)
+                {
+                   return skillModel;
+                }
+            }
+
+            return null;
         }
 
         #endregion

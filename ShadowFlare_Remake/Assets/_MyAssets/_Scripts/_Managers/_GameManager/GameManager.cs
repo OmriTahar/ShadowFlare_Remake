@@ -95,6 +95,7 @@ namespace ShadowFlareRemake.GameManagement
             _uiManager.InitUiManager(_inputManager);
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
             _uiManager.SetPlayerSkills(GetPlayerSkills());
+            _uiManager.SetPlayerActiveSkill(SkillType.Melee);
         }
 
         private void InitCombatManager()
@@ -315,18 +316,6 @@ namespace ShadowFlareRemake.GameManagement
             _playerController.InitPlayer(_playerUnit, _inputManager);
         }
 
-        private List<ISkillData> GetPlayerSkills()
-        {
-            var skillsList = new List<ISkillData>();
-
-            foreach(var skillData in _playerUnitStats.Skills)
-            {
-                skillsList.Add(skillData);
-            }
-
-            return skillsList;
-        }
-
         private void HandlePlayerGotHit(Attack attack)
         {
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, _playerUnitStats);
@@ -407,6 +396,19 @@ namespace ShadowFlareRemake.GameManagement
 
             _playerUnitStats.SetEquippedGearAddedStats(_playerEquippedGearAddedStats);
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
+        }
+
+
+        private List<ISkillData> GetPlayerSkills()
+        {
+            var skillsList = new List<ISkillData>();
+
+            foreach(var skillData in _playerUnitStats.Skills)
+            {
+                skillsList.Add(skillData);
+            }
+
+            return skillsList;
         }
 
         #endregion

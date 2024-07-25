@@ -460,6 +460,11 @@ namespace ShadowFlareRemake.UIManagement
             _hudModel.SetPlayerSkills(playerSkills);
         }
 
+        public void SetPlayerActiveSkill(SkillType skillType)
+        {
+            _hudModel.SetActiveSkill(skillType);
+        }
+
         private List<SkillModel> GetPlayerSkillModels(List<ISkillData> playerSkills)
         {
             var skillModels = new List<SkillModel>();
