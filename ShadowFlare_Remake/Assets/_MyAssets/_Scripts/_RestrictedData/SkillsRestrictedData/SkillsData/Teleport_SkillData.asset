@@ -17,5 +17,5 @@ MonoBehaviour:
   <DamageType>k__BackingField: 2
   <Sprite>k__BackingField: {fileID: 21300000, guid: 00fbb4588136cde4fbf9001df788bcfb,
     type: 3}
-  <MpCost>k__BackingField: 20
+  <MpCost>k__BackingField: 2
   <AddedDamage>k__BackingField: 0

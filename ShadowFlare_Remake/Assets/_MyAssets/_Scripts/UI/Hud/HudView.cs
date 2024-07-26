@@ -23,17 +23,17 @@ namespace ShadowFlareRemake.UI.Hud
         [Header("Texts")]
         [SerializeField] private TMP_Text _levelText;
 
-        [Header("HP Sliders")]
-        [SerializeField] private Slider _hpSlider;
-        [SerializeField] private MultiStateView _hpSlider_MSV;
-        [SerializeField] private Slider _hpHealSlider;
-        [SerializeField] private Slider _hpHitSlider;
+        [Header("Health Sliders")]
+        [SerializeField] private Slider _healthSlider;
+        [SerializeField] private MultiStateView _healthSlider_MSV;
+        [SerializeField] private Slider _health_RestoreSlider;
+        [SerializeField] private Slider _health_ReduceSlider;
 
-        [Header("MP Sliders")]
-        [SerializeField] private Slider _mpSlider;
-        [SerializeField] private MultiStateView _mpSlider_MSV;
-        [SerializeField] private Slider _mpHealSlider;
-        [SerializeField] private Slider _mpHitSlider;
+        [Header("Mana Sliders")]
+        [SerializeField] private Slider _manaSlider;
+        [SerializeField] private MultiStateView _manaSlider_MSV;
+        [SerializeField] private Slider _mana_RestoreSlider;
+        [SerializeField] private Slider _manaRecudeSlider;
 
         [Header("EXP Sliders")]
         [SerializeField] private Slider _expSlider;
@@ -46,10 +46,10 @@ namespace ShadowFlareRemake.UI.Hud
 
         private const float _sliderLerpDuration = 1.5f;
 
-        private Coroutine _lastHpCoroutine;
-        private Coroutine _lastMpCoroutine;
-        private float _lastSeenHP;
-        private float _lastSeenMP;
+        private Coroutine _lastHealthCoroutine;
+        private Coroutine _lastManaCoroutine;
+        private float _lastSeenHealth;
+        private float _lastSeenMana;
         private SkillsBarPosition _lastSkillBarPosition;
 
         #region View Overrides
@@ -57,8 +57,8 @@ namespace ShadowFlareRemake.UI.Hud
         protected override void ModelReplaced()
         {
             _hudPanel.SetActive(true);
-            InitHpSliders();
-            InitMpSliders();
+            InitHealthSliders();
+            InitManaSliders();
             InitSkillsBar();
         }
 
@@ -66,38 +66,41 @@ namespace ShadowFlareRemake.UI.Hud
         {
             SetCloseButton();
             SetSkillsBarPosition();
-            SetHP();
-            SetMP();
+            SetHealth();
+            SetMana();
             SetExp();
             SetLevel();
         }
 
         protected override void Clean()
         {
-            foreach(var view in _skillViews)
-            {
-                view.OnSkillClicked -= InvokeSkillItemClicked;
-            }
+            DeregisterFromSkillViewsEvents();
         }
 
         #endregion
 
         #region Initialization
 
-        private void InitHpSliders()
+        private void InitVitalsSliders()
         {
-            SetVitalsSlidersMaxValue(_hpSlider, _hpHealSlider, _hpHitSlider);
-            _hpSlider.value = Model.CurrentHP;
-            _lastSeenHP = _hpSlider.value;
-            _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+            InitHealthSliders();
+            InitManaSliders();
         }
 
-        private void InitMpSliders()
+        private void InitHealthSliders()
         {
-            SetVitalsSlidersMaxValue(_mpSlider, _mpHealSlider, _mpHitSlider);
-            _mpSlider.value = Model.CurrentMP;
-            _lastSeenMP = _mpSlider.value;
-            _mpSlider_MSV.ChangeState((int)Model.CurrentMpEffectSlider);
+            SetVitalSlidersMaxValue(_healthSlider, _health_RestoreSlider, _health_ReduceSlider, true);
+            _healthSlider.value = Model.CurrentHP;
+            _lastSeenHealth = _healthSlider.value;
+            _healthSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+        }
+
+        private void InitManaSliders()
+        {
+            SetVitalSlidersMaxValue(_manaSlider, _mana_RestoreSlider, _manaRecudeSlider, false);
+            _manaSlider.value = Model.CurrentMP;
+            _lastSeenMana = _manaSlider.value;
+            _manaSlider_MSV.ChangeState((int)Model.CurrentMpEffectSlider);
         }
 
         private void InitSkillsBar()
@@ -156,20 +159,20 @@ namespace ShadowFlareRemake.UI.Hud
             _lastSkillBarPosition = Model.CurrentSkillsBarPosition;
         }
 
-        private void SetHP()
+        private void SetHealth()
         {
-            SetVitalsSlidersMaxValue(_hpSlider,_hpHealSlider,_hpHitSlider);
-            StopLastVitalCoroutine(_lastHpCoroutine);
-            _hpSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
+            SetVitalSlidersMaxValue(_healthSlider,_health_RestoreSlider,_health_ReduceSlider, true);
+            StopLastVitalCoroutine(_lastHealthCoroutine);
+            _healthSlider_MSV.ChangeState((int)Model.CurrentHpEffectSlider);
 
             switch(Model.CurrentHpEffectSlider)
             {
-                case SliderEffectType.Fill:
-                    HandleHealEffect(_hpHealSlider, _hpSlider, _lastHpCoroutine, Model.CurrentHP,true);
+                case SliderEffectType.Restore:
+                    HandleRestoreEffect(_health_RestoreSlider, _healthSlider, _lastHealthCoroutine, Model.CurrentHP, true);
                     break;
 
                 case SliderEffectType.Reduce:
-                    HandleHitEffect(_hpHitSlider, _hpSlider, _lastHpCoroutine, Model.CurrentHP, true);
+                    HandleReduceEffect(_health_ReduceSlider, _healthSlider, _lastHealthCoroutine, Model.CurrentHP, true);
                     break;
 
                 default:
@@ -177,20 +180,20 @@ namespace ShadowFlareRemake.UI.Hud
             }
         }
 
-        private void SetMP()
+        private void SetMana()
         {
-            SetVitalsSlidersMaxValue(_mpSlider, _mpHealSlider, _mpHitSlider);
-            StopLastVitalCoroutine(_lastMpCoroutine);
-            _mpSlider_MSV.ChangeState((int)Model.CurrentMpEffectSlider);
+            SetVitalSlidersMaxValue(_manaSlider, _mana_RestoreSlider, _manaRecudeSlider, false);
+            StopLastVitalCoroutine(_lastManaCoroutine);
+            _manaSlider_MSV.ChangeState((int)Model.CurrentMpEffectSlider);
 
             switch(Model.CurrentMpEffectSlider)
             {
-                case SliderEffectType.Fill:
-                    HandleHealEffect(_mpHealSlider, _mpSlider, _lastMpCoroutine, Model.CurrentMP, false);
+                case SliderEffectType.Restore:
+                    HandleRestoreEffect(_mana_RestoreSlider, _manaSlider, _lastManaCoroutine, Model.CurrentMP, false);
                     break;
 
                 case SliderEffectType.Reduce:
-                    HandleHitEffect(_mpHitSlider, _mpSlider, _lastMpCoroutine, Model.CurrentMP, false);
+                    HandleReduceEffect(_manaRecudeSlider, _manaSlider, _lastManaCoroutine, Model.CurrentMP, false);
                     break;
 
                 default:
@@ -199,11 +202,13 @@ namespace ShadowFlareRemake.UI.Hud
         }
 
 
-        private void SetVitalsSlidersMaxValue(Slider vitalSlider, Slider healSlider, Slider hitSlider)
+        private void SetVitalSlidersMaxValue(Slider vitalSlider, Slider restoreSlider, Slider reduceSlider, bool isHealthSlider)
         {
-            vitalSlider.maxValue = Model.MaxHP;
-            healSlider.maxValue = Model.MaxHP;
-            hitSlider.maxValue = Model.MaxHP;
+            var amount = isHealthSlider ? Model.MaxHP : Model.MaxMP;
+
+            vitalSlider.maxValue = amount;
+            restoreSlider.maxValue = amount;
+            reduceSlider.maxValue = amount;
         }
 
         private void StopLastVitalCoroutine(Coroutine lastCoroutine)
@@ -214,21 +219,21 @@ namespace ShadowFlareRemake.UI.Hud
             }
         }
 
-        private void HandleHealEffect(Slider healSlider, Slider vitalSlider, Coroutine lastCoroutine, float sliderTargetValue, bool isHP)
+        private void HandleRestoreEffect(Slider restoreSlider, Slider vitalSlider, Coroutine lastCoroutine, float sliderTargetValue, bool isHealthSlider)
         {
-            healSlider.value = Model.CurrentHP;
-            vitalSlider.value = _lastSeenHP;
-            lastCoroutine = StartCoroutine(LerpSliderValue(vitalSlider, sliderTargetValue, isHP));
+            restoreSlider.value = sliderTargetValue;
+            vitalSlider.value = isHealthSlider? _lastSeenHealth : _lastSeenMana;
+            lastCoroutine = StartCoroutine(LerpSliderValue(vitalSlider, sliderTargetValue, isHealthSlider));
         }
 
-        private void HandleHitEffect(Slider hitSlider, Slider vitalSlider, Coroutine lastCoroutine, float sliderTargetValue, bool isHP)
+        private void HandleReduceEffect(Slider reduceSlider, Slider vitalSlider, Coroutine lastCoroutine, float sliderTargetValue, bool isHealthSlider)
         {
-            vitalSlider.value = Model.CurrentHP;
-            hitSlider.value = _lastSeenHP;
-            lastCoroutine = StartCoroutine(LerpSliderValue(hitSlider, sliderTargetValue, isHP));
+            vitalSlider.value = sliderTargetValue;
+            reduceSlider.value = isHealthSlider ? _lastSeenHealth : _lastSeenMana;
+            lastCoroutine = StartCoroutine(LerpSliderValue(reduceSlider, sliderTargetValue, isHealthSlider));
         }
 
-        public IEnumerator LerpSliderValue(Slider slider, float targetValue, bool isHpSlider)
+        public IEnumerator LerpSliderValue(Slider slider, float targetValue, bool isHealthSlider)
         {
             float startValue = slider.value;
             float timeElapsed = 0f;
@@ -239,21 +244,20 @@ namespace ShadowFlareRemake.UI.Hud
                 float lerpProgress = timeElapsed / _sliderLerpDuration;
                 slider.value = Mathf.Lerp(startValue, targetValue, lerpProgress);
 
-                if(isHpSlider)
-                    _lastSeenHP = slider.value;
+                if(isHealthSlider)
+                    _lastSeenHealth = slider.value;
                 else
-                    _lastSeenHP = slider.value;
+                    _lastSeenMana = slider.value;
 
                 yield return null;
             }
 
-            if(isHpSlider)
-                _lastSeenHP = slider.value;
-            else
-                _lastSeenHP = slider.value;
-
             slider.value = targetValue;
-            _lastSeenHP = slider.value;
+
+            if(isHealthSlider)
+                _lastSeenHealth = slider.value;
+            else
+                _lastSeenMana = slider.value;
         }
 
         private void SetExp()
@@ -297,6 +301,14 @@ namespace ShadowFlareRemake.UI.Hud
         private void InvokeSkillItemClicked(ISkillData skillData)
         {
             OnSkillItemClicked?.Invoke(skillData);
+        }
+
+        private void DeregisterFromSkillViewsEvents()
+        {
+            foreach(var view in _skillViews)
+            {
+                view.OnSkillClicked -= InvokeSkillItemClicked;
+            }
         }
 
         #endregion

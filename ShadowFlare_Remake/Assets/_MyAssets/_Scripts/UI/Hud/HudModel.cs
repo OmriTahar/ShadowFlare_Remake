@@ -44,12 +44,15 @@ namespace ShadowFlareRemake.UI.Hud
 
         #endregion
 
-        #region Meat & Potatos
+        #region HUD Panel
 
         public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP)
         {
-            CurrentHpEffectSlider = currentHP > CurrentHP ? SliderEffectType.Fill : SliderEffectType.Reduce;
-            CurrentMpEffectSlider = currentMP > CurrentMP ? SliderEffectType.Fill : SliderEffectType.Reduce;
+            CurrentHpEffectSlider = currentHP > CurrentHP ? SliderEffectType.Restore : SliderEffectType.Reduce;
+            CurrentMpEffectSlider = currentMP > CurrentMP ? SliderEffectType.Restore : SliderEffectType.Reduce;
+
+            if(!IsVitalsChanged(currentHP, maxHP, currentMP, maxMP))
+                return;
 
             CurrentHP = currentHP;
             MaxHP = maxHP;
@@ -60,6 +63,11 @@ namespace ShadowFlareRemake.UI.Hud
 
         public void SetExp(int currentExp, int expToNextLevel, bool invokeChanged = true)
         {
+            var isExpChanged = CurrentExp == currentExp && ExpToLevelUp == expToNextLevel;
+
+            if(!isExpChanged)
+                return;
+
             CurrentExp = currentExp;
             ExpToLevelUp = expToNextLevel;
             Changed();
@@ -67,12 +75,18 @@ namespace ShadowFlareRemake.UI.Hud
 
         public void SetLevel(int newLevel, bool invokeChanged = true)
         {
+            if(Level == newLevel)
+                return;
+
             Level = newLevel;
             Changed();
         }
 
         public void SetIsCloseButtonActive(bool isCloseButtonActive, bool InvokeChanged = false)
         {
+            if(IsCloseButtonActive == isCloseButtonActive)
+                return;
+
             IsCloseButtonActive = isCloseButtonActive;
 
             if(InvokeChanged)
@@ -81,8 +95,28 @@ namespace ShadowFlareRemake.UI.Hud
             }
         }
 
+        private bool IsVitalsChanged(int currentHP, int maxHP, int currentMP, int maxMP)
+        {
+            var isTheSameHP = CurrentHP == currentHP && MaxHP == maxHP;
+            var isTheSameMP = CurrentMP == currentMP && MaxMP == maxMP;
+
+            if(isTheSameHP && isTheSameMP)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        #region Skills Bar
+
         public void SetSkillsBarPosition(SkillsBarPosition skillsBarPosition)
         {
+            if(CurrentSkillsBarPosition == skillsBarPosition)
+                return;
+
             CurrentSkillsBarPosition = skillsBarPosition;
             Changed();
         }
@@ -117,6 +151,9 @@ namespace ShadowFlareRemake.UI.Hud
 
             if(ActiveSkill != null)
             {
+                if(ActiveSkill.SkillData != null && ActiveSkill.SkillData.SkillType == skillType)
+                    return;
+
                 ActiveSkill.SetIsSelected(false);
             }
 

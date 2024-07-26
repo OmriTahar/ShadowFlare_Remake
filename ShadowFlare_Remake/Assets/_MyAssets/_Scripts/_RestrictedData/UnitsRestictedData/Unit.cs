@@ -26,16 +26,36 @@ namespace ShadowFlareRemake.UnitsRestrictedData
             CurrentMP = Stats.MaxMP;
         }
 
-        public void HealHP(int Amount)
+        public void RestoreHP(int amount)
         {
-            var afterHealAmount = CurrentHP + Amount;
-            CurrentHP = afterHealAmount > Stats.MaxHP? Stats.MaxHP : afterHealAmount;
+            var postRestoreAmount = CurrentHP + amount;
+            CurrentHP = postRestoreAmount > Stats.MaxHP? Stats.MaxHP : postRestoreAmount;
         }
 
-        public void HealMP(int Amount)
+        public void ReduceHP(int amount)
         {
-            var afterHealAmount = CurrentHP + Amount;
-            CurrentHP = afterHealAmount > Stats.MaxMP ? Stats.MaxMP : afterHealAmount;
+            CurrentHP -= amount;
+
+            if(CurrentHP < 0)
+            {
+                CurrentHP = 0;
+            }
+        }
+
+        public void RestoreMP(int amount)
+        {
+            var postRestoreAmount = CurrentMP + amount;
+            CurrentMP = postRestoreAmount > Stats.MaxMP ? Stats.MaxMP : postRestoreAmount;
+        }
+
+        public void ReduceMP(int amount)
+        {
+            CurrentMP -= amount;
+
+            if(CurrentMP < 0)
+            {
+                CurrentMP = 0;
+            }
         }
 
         public bool IsHpFull()
@@ -48,24 +68,5 @@ namespace ShadowFlareRemake.UnitsRestrictedData
             return CurrentMP == Stats.MaxMP;
         }
 
-        public void TakeDamage(int damage)
-        {
-            CurrentHP -= damage;
-
-            if (CurrentHP < 0)
-            {
-                CurrentHP = 0;
-            }
-        }
-
-        public void UseMP(int mp)
-        {
-            CurrentMP -= mp;
-
-            if(CurrentHP < 0)
-            {
-                CurrentHP = 0;
-            }
-        }
     }
 }

@@ -41,7 +41,7 @@ namespace ShadowFlareRemake.GameManagement
         [SerializeField] private bool _isEnemyActiveOnSpawn;
 
         [Header("--------------- TESTS: Player ---------------")]
-        [SerializeField] private int _healOrDamageAmount = 10;
+        [SerializeField] private int _restoreOrReduceAmount = 5;
 
         private CombatManager _combatManager;
         private Dictionary<EnemyController, EnemyDataContainer> _enemiesDict = new();
@@ -319,7 +319,7 @@ namespace ShadowFlareRemake.GameManagement
         {
             var enemyData = _enemiesDict[enemyController];
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, enemyData.EnemyUnit.Stats);
-            enemyData.EnemyUnit.TakeDamage(receivedAttackData.InflictedDamage);
+            enemyData.EnemyUnit.ReduceHP(receivedAttackData.InflictedDamage);
             enemyData.EnemyModel.SetIsReceivedCritialHit(receivedAttackData.IsCritialHit);
         }
 
@@ -359,7 +359,7 @@ namespace ShadowFlareRemake.GameManagement
         {
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, _playerUnitStats);
 
-            _playerUnit.TakeDamage(receivedAttackData.InflictedDamage);
+            _playerUnit.ReduceHP(receivedAttackData.InflictedDamage);
             _playerModel.SetIsLastHitWasCritialHit(receivedAttackData.IsCritialHit);
 
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
@@ -400,23 +400,23 @@ namespace ShadowFlareRemake.GameManagement
         private void HandlePlayerUsedQuickItem(LootModel lootModel, Vector2Int index)
         {
             var potionData = lootModel.LootData as PotionData_ScriptableObject;
-            var hpHealAmount = potionData.HpRestoreAmount;
-            var mpHealAmount = potionData.MpRestoreAmount;
-            bool hasHealed = false;
+            var hpRestoreAmount = potionData.HpRestoreAmount;
+            var mpRestoreAmount = potionData.MpRestoreAmount;
+            bool hasRestored = false;
 
-            if(!_playerUnit.IsHpFull() && hpHealAmount > 0)
+            if(!_playerUnit.IsHpFull() && hpRestoreAmount > 0)
             {
-                _playerUnit.HealHP(hpHealAmount);
-                hasHealed = true;
+                _playerUnit.RestoreHP(hpRestoreAmount);
+                hasRestored = true;
             }
 
-            if(!_playerUnit.IsMpFull() && mpHealAmount > 0)
+            if(!_playerUnit.IsMpFull() && mpRestoreAmount > 0)
             {
-                _playerUnit.HealMP(mpHealAmount);
-                hasHealed = true;
+                _playerUnit.RestoreMP(mpRestoreAmount);
+                hasRestored = true;
             }
 
-            if(!hasHealed)
+            if(!hasRestored)
                 return;
 
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
@@ -451,18 +451,19 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerAttack(bool isUsingSkill)
         {
-            if(isUsingSkill && _playerModel.ActiveSkill != null)
-            {
-                if(_playerModel.ActiveSkill.MpCost <= _playerUnit.CurrentMP)
-                {
-                    _playerUnit.UseMP(_playerModel.ActiveSkill.MpCost);
-                    _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
-                    _playerModel.SetAttackState(true, true);
-                }
-            }
-            else
+            if(!isUsingSkill)
             {
                 _playerModel.SetAttackState(true, false);
+                return;
+            }
+
+            var hasEnoughMana = _playerModel.ActiveSkill.MpCost <= _playerUnit.CurrentMP;
+
+            if(_playerModel.ActiveSkill != null && hasEnoughMana)
+            {
+                _playerUnit.ReduceMP(_playerModel.ActiveSkill.MpCost);
+                _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+                _playerModel.SetAttackState(true, true);
             }
         }
 
@@ -492,16 +493,28 @@ namespace ShadowFlareRemake.GameManagement
             InitEnemyLogic(_testEnemyToSpawn, _isEnemyActiveOnSpawn, false);
         }
 
-        public void TestHitPlayer()
+        public void TestReducePlayerHealth()
         {
-            _playerUnit.TakeDamage(_healOrDamageAmount);
+            _playerUnit.ReduceHP(_restoreOrReduceAmount);
             _playerModel.SetIsLastHitWasCritialHit(true);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
-        public void TestHealPlayer()
+        public void TestRestorePlayerHealth()
         {
-            _playerUnit.HealHP(_healOrDamageAmount);
+            _playerUnit.RestoreHP(_restoreOrReduceAmount);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+        }
+
+        public void TestReducePlayerMana()
+        {
+            _playerUnit.ReduceMP(_restoreOrReduceAmount);
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+        }
+
+        public void TestRestorePlayerMana()
+        {
+            _playerUnit.RestoreMP(_restoreOrReduceAmount);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
@@ -524,16 +537,30 @@ namespace ShadowFlareRemake.GameManagement
 
                 GUILayout.Space(15);
 
-                if(GUILayout.Button("Hit Player"))
+                if(GUILayout.Button("Reduce Player Health"))
                 {
-                    gameManager.TestHitPlayer();
+                    gameManager.TestReducePlayerHealth();
                 }
 
                 GUILayout.Space(15);
 
-                if(GUILayout.Button("Heal Player"))
+                if(GUILayout.Button("Restore Player Health"))
                 {
-                    gameManager.TestHealPlayer();
+                    gameManager.TestRestorePlayerHealth();
+                }
+
+                GUILayout.Space(15);
+
+                if(GUILayout.Button("Reduce Player Mana"))
+                {
+                    gameManager.TestReducePlayerMana();
+                }
+
+                GUILayout.Space(15);
+
+                if(GUILayout.Button("Restore Player Mana"))
+                {
+                    gameManager.TestRestorePlayerMana();
                 }
 
                 GUILayout.Space(10);
