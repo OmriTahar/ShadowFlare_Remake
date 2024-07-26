@@ -129,11 +129,6 @@ namespace ShadowFlareRemake.Enemies
             _lastSeenHP = Model.Unit.CurrentHP;
         }
 
-        public Collider GetEnemyCollider()
-        {
-            return _myCollider;
-        }
-
         private void CacheNulls()
         {
             if(_myCollider == null)

@@ -1,6 +1,7 @@
 using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.VFX;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Player
@@ -16,12 +17,18 @@ namespace ShadowFlareRemake.Player
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private VisualEffectsSubView _vfxView;
 
+        [Header("Settings")]
+        [SerializeField] private float _meteorSkillWait = 0.75f;
+
         private readonly int _movementAnimSpeedParam = Animator.StringToHash("MovementAnimSpeed");
         private readonly int _attackAnimSpeedParam = Animator.StringToHash("AttackAnimSpeed");
+        private readonly int _magicAttackAnimSpeedParam = Animator.StringToHash("MagicAttackAnimSpeed");
 
+        private const string _isMovingBool = "IsMoving";
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
-        private const string _isMovingBool = "IsMoving";
+        private const string _castSpellMeteorTrigger = "CastSpell_Meteor";
+
         private const int _oneHundred = 100;
 
         private int _lastSeenHP;
@@ -85,6 +92,7 @@ namespace ShadowFlareRemake.Player
             _animaionsSubView.OnDo_StepForwardAnimationEvent += InvokeDoStepForward;
             _animaionsSubView.OnFinished_MeleeSingleAttack += InvokeOnAttackAnimationEnded;
             _animaionsSubView.OnFinished_MeleeTripleAttack += InvokeOnAttackAnimationEnded;
+            _animaionsSubView.OnFinishedAttackAnimation += InvokeOnAttackAnimationEnded;
         }
         
         private void DeregisterEvents()
@@ -92,6 +100,7 @@ namespace ShadowFlareRemake.Player
             _animaionsSubView.OnDo_StepForwardAnimationEvent -= InvokeDoStepForward;
             _animaionsSubView.OnFinished_MeleeSingleAttack -= InvokeOnAttackAnimationEnded;
             _animaionsSubView.OnFinished_MeleeTripleAttack -= InvokeOnAttackAnimationEnded;
+            _animaionsSubView.OnFinishedAttackAnimation -= InvokeOnAttackAnimationEnded;
         }
 
         #endregion
@@ -119,34 +128,13 @@ namespace ShadowFlareRemake.Player
                 DoMeleeSingleAttack();
                 return;
             }
-
-            // Todo: Add here the level 5 tripe condition
-
-            switch(Model.ActiveSkill)
+            else if(Model.ActiveSkill == SkillType.MeleeAttack)
             {
-                case SkillType.MeleeAttack:
-
-                    DoMeleeTripleAttack();
-                    break;
-
-                case SkillType.Teleport:
-
-                    DoSummonPortal();
-                    InvokeOnAttackAnimationEnded();
-                    break;
-
-                case SkillType.LightningShield:
-
-                    DoLightningShield();
-                    InvokeOnAttackAnimationEnded();
-                    break;
-
-                case SkillType.Meteor:
-
-                    DoFireBallSkill();
-                    InvokeOnAttackAnimationEnded();
-                    break;
+                DoMeleeTripleAttack();
+                return;
             }
+
+            HandleDoSkill();
         }
 
         private void DoMeleeSingleAttack()
@@ -164,8 +152,39 @@ namespace ShadowFlareRemake.Player
             OnDoStepForwardAnimationEvent?.Invoke();
         }
 
-        private void DoFireBallSkill()
+        private async void HandleDoSkill()
         {
+            switch(Model.ActiveSkill)
+            {
+                case SkillType.Meteor:
+
+                    await DoMeteorSkill();
+                    break;
+
+                case SkillType.Teleport:
+
+                    DoSummonPortal();
+                    InvokeOnAttackAnimationEnded();
+                    break;
+
+                case SkillType.LightningShield:
+
+                    DoLightningShield();
+                    InvokeOnAttackAnimationEnded();
+                    break;
+            }
+
+
+            _vfxView.SetIsPlayingEffect(VfxType.RedExplosion, true);
+        }
+
+        private async Task DoMeteorSkill()
+        {
+            _playerAnimator.SetTrigger(_castSpellMeteorTrigger);
+
+            var delay = (int)(_meteorSkillWait * 1000);
+            await Task.Delay(delay);
+
             _vfxView.SetIsPlayingEffect(VfxType.RedExplosion, true);
         }
 

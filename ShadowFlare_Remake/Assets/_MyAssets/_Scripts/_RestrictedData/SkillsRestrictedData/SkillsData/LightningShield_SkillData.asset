@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: LightningShield_SkillData
   m_EditorClassIdentifier: 
   ______DATA_____: ------------------------------------
-  <SkillType>k__BackingField: 2
+  <SkillType>k__BackingField: 3
   <DamageType>k__BackingField: 2
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3,
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 4637953d65a24364aab3372a525b9ed2,
     type: 3}
   <MpCost>k__BackingField: 20
   <AddedDamage>k__BackingField: 30

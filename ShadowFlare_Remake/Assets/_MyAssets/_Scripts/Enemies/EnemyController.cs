@@ -24,7 +24,7 @@ namespace ShadowFlareRemake.Enemies
 
         #region Initialization
 
-        public Collider InitEnemyAndGetItsCollider(BaseEnemyModel baseEnemyModel, Transform playerTransform, bool isActive)
+        public void InitEnemyAndGetItsCollider(BaseEnemyModel baseEnemyModel, Transform playerTransform, bool isActive)
         {
             Model = baseEnemyModel;
             PlayerTransform = playerTransform;
@@ -39,8 +39,6 @@ namespace ShadowFlareRemake.Enemies
             View.SetModel(Model);
 
             SetNavMeshAgent();
-
-            return View.GetEnemyCollider();
         }
 
         private void CacheNulls()
