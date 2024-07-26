@@ -26,7 +26,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action<bool> OnIsPlayerHoldingLootChanged;
         public event Action<LootModel> OnDropLootToTheGround;
         public event Action<LootModel, Vector2Int> OnPotionClicked;
-        public event Action<SkillType> OnHudSkillItemClicked;
+        public event Action<ISkillData> OnHudSkillItemClicked;
         public event Action<UIScreenCover> OnUIScreenCoverChange;
 
         [Header("Views")]
@@ -479,9 +479,9 @@ namespace ShadowFlareRemake.UIManagement
             return skillModels;
         }
 
-        private void HandleHudSkillItemClicked(SkillType skillType)
+        private void HandleHudSkillItemClicked(ISkillData skillData)
         {
-            OnHudSkillItemClicked?.Invoke(skillType);
+            OnHudSkillItemClicked?.Invoke(skillData);
         }
 
         #endregion

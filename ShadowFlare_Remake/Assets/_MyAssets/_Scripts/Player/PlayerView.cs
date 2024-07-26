@@ -123,14 +123,9 @@ namespace ShadowFlareRemake.Player
             if(!Model.IsAttacking)
                 return;
 
-            if(Model.IsSingleMeleeAttack)
+            if(!Model.IsUsingSkill)
             {
                 DoMeleeSingleAttack();
-                return;
-            }
-            else if(Model.ActiveSkill == SkillType.MeleeAttack)
-            {
-                DoMeleeTripleAttack();
                 return;
             }
 
@@ -154,8 +149,13 @@ namespace ShadowFlareRemake.Player
 
         private async void HandleDoSkill()
         {
-            switch(Model.ActiveSkill)
+            switch(Model.ActiveSkill.SkillType)
             {
+                case SkillType.MeleeAttack:
+
+                    DoMeleeTripleAttack();
+                    break;
+
                 case SkillType.Meteor:
 
                     await DoMeteorSkill();

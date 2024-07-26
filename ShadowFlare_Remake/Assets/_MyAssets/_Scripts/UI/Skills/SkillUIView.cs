@@ -7,7 +7,7 @@ namespace ShadowFlareRemake.UI.Skills
 {
     public class SkillUIView : UIView<SkillModel>
     {
-        public event Action<SkillType> OnSkillClicked;
+        public event Action<ISkillData> OnSkillClicked;
 
         [Header("References")]
         [SerializeField] private RectTransform _rect;
@@ -45,7 +45,7 @@ namespace ShadowFlareRemake.UI.Skills
             if (Model.SkillData == null)
                 return;
 
-            OnSkillClicked?.Invoke(Model.SkillData.SkillType);
+            OnSkillClicked?.Invoke(Model.SkillData);
         }
 
         #endregion

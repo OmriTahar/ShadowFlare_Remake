@@ -27,26 +27,33 @@ namespace ShadowFlareRemake.PlayerRestrictedData
             Changed();
         }
 
-        public void SetActiveSkill(SkillType activeSkill)
+        public void SetActiveSkill(ISkillData activeSkill)
         {
             ActiveSkill = activeSkill;
             Changed();
         }
 
-        #endregion
-
-        #region Meat & Potatos - Overrides
-
-        public override void SetAttackState(bool isAttacking, bool isSingleMeleeAttack)
+        public void SetAttackState(bool isAttacking, bool isUsingSkill)
         {
             IsAttacking = isAttacking;
-            IsSingleMeleeAttack = isSingleMeleeAttack;
+            IsUsingSkill = isUsingSkill;
 
             if(isAttacking)
             {
                 IsMoving = false;
             }
 
+            Changed();
+        }
+
+
+        #endregion
+
+        #region Meat & Potatos - Overrides
+
+        public override void SetIsAttackingToFalse()
+        {
+            IsAttacking = false;
             Changed();
         }
 

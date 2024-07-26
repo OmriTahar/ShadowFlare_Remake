@@ -49,6 +49,7 @@ namespace ShadowFlareRemake.UI.Hud
         public void SetHPAndMP(int currentHP, int maxHP, int currentMP, int maxMP)
         {
             CurrentHpEffectSlider = currentHP > CurrentHP ? SliderEffectType.Fill : SliderEffectType.Reduce;
+            CurrentMpEffectSlider = currentMP > CurrentMP ? SliderEffectType.Fill : SliderEffectType.Reduce;
 
             CurrentHP = currentHP;
             MaxHP = maxHP;

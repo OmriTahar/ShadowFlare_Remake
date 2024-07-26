@@ -57,5 +57,15 @@ namespace ShadowFlareRemake.UnitsRestrictedData
                 CurrentHP = 0;
             }
         }
+
+        public void UseMP(int mp)
+        {
+            CurrentMP -= mp;
+
+            if(CurrentHP < 0)
+            {
+                CurrentHP = 0;
+            }
+        }
     }
 }

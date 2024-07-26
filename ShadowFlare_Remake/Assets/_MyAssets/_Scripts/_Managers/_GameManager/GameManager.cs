@@ -128,11 +128,13 @@ namespace ShadowFlareRemake.GameManagement
             {
                 _playerController.OnIGotHit += HandlePlayerGotHit;
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
+                _playerController.OnPlayerAttack += HandlePlayerAttack;
             }
             else
             {
                 _playerController.OnIGotHit -= HandlePlayerGotHit;
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
+                _playerController.OnPlayerAttack -= HandlePlayerAttack;
             }
         }
 
@@ -232,10 +234,10 @@ namespace ShadowFlareRemake.GameManagement
 
         #region UI
 
-        private void HandleHudSkillItemClicked(SkillType activeSkill)
+        private void HandleHudSkillItemClicked(ISkillData activeSkill)
         {
             _playerModel.SetActiveSkill(activeSkill);
-            _uiManager.SetPlayerActiveSkill(activeSkill);
+            _uiManager.SetPlayerActiveSkill(activeSkill.SkillType);
         }
 
         #endregion
@@ -435,7 +437,6 @@ namespace ShadowFlareRemake.GameManagement
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
         }
 
-
         private List<ISkillData> GetPlayerSkills()
         {
             var skillsList = new List<ISkillData>();
@@ -446,6 +447,23 @@ namespace ShadowFlareRemake.GameManagement
             }
 
             return skillsList;
+        }
+
+        private void HandlePlayerAttack(bool isUsingSkill)
+        {
+            if(isUsingSkill && _playerModel.ActiveSkill != null)
+            {
+                if(_playerModel.ActiveSkill.MpCost <= _playerUnit.CurrentMP)
+                {
+                    _playerUnit.UseMP(_playerModel.ActiveSkill.MpCost);
+                    _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+                    _playerModel.SetAttackState(true, true);
+                }
+            }
+            else
+            {
+                _playerModel.SetAttackState(true, false);
+            }
         }
 
         #endregion
