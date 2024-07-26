@@ -22,7 +22,8 @@ namespace ShadowFlareRemake.Loot
         [SerializeField] private Color _nameBG_PotionsColor;
 
         private readonly int _dropAnimHash = Animator.StringToHash("Drop");
-        private const int _sizeMultiplier = 62;
+        private const int _generalSizeMultiplier = 58;
+        private const int _goldSizeMultiplier = 62;
         private const int _posHelper = 35;
 
         private string _name;
@@ -132,7 +133,8 @@ namespace ShadowFlareRemake.Loot
 
         private void SetSpriteSize()
         {
-            _rect.sizeDelta = new Vector2(_width * _sizeMultiplier, _height * _sizeMultiplier);
+            var size = Model.LootCategory == LootCategory.Gold ? _goldSizeMultiplier : _generalSizeMultiplier;
+            _rect.sizeDelta = new Vector2(_width * size, _height * size);
         }
 
         private void SetSpriteLocalPosition()

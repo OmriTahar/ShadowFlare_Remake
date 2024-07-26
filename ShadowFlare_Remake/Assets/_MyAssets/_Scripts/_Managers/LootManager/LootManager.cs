@@ -10,7 +10,10 @@ namespace ShadowFlareRemake.LootManagement
         [SerializeField] private Transform _lootParent;
         [SerializeField] private GameObject _lootPrefab;
 
-        [Header("Data")]
+        [Header("Player Starting Loot")]
+        [SerializeField] private List<LootData_ScriptableObject> _playerStartingLoot;
+
+        [Header("Enemies Drop")]
         [SerializeField] private List<LootData_ScriptableObject> _lootDropsData;
 
         [Header("Test")]
@@ -21,6 +24,11 @@ namespace ShadowFlareRemake.LootManagement
         private int _testGoldSpawnIndex = 0;
 
         #region Meat & Potatos
+
+        public List<LootData_ScriptableObject> GetPlayerStartingLoot()
+        {
+            return _playerStartingLoot;
+        }
 
         public void HandleLootDrop(int level, int lootDropChance, Vector3 enemyPosition)
         {
