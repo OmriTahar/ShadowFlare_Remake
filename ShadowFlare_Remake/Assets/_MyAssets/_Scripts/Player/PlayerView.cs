@@ -131,13 +131,19 @@ namespace ShadowFlareRemake.Player
 
                 case SkillType.Teleport:
 
-                    print("Teleport!");
+                    DoSummonPortal();
                     InvokeOnAttackAnimationEnded();
                     break;
 
-                case SkillType.FireBall:
+                case SkillType.LightningShield:
 
-                    print("Fire Ball!");
+                    DoLightningShield();
+                    InvokeOnAttackAnimationEnded();
+                    break;
+
+                case SkillType.Meteor:
+
+                    DoFireBallSkill();
                     InvokeOnAttackAnimationEnded();
                     break;
             }
@@ -156,6 +162,21 @@ namespace ShadowFlareRemake.Player
         private void InvokeDoStepForward() 
         {
             OnDoStepForwardAnimationEvent?.Invoke();
+        }
+
+        private void DoFireBallSkill()
+        {
+            _vfxView.SetIsPlayingEffect(VfxType.RedExplosion, true);
+        }
+
+        private void DoSummonPortal()
+        {
+            _vfxView.SetIsPlayingEffect(VfxType.Portal, true);
+        }
+
+        private void DoLightningShield()
+        {
+            _vfxView.SetIsPlayingEffect(VfxType.LightningShield, true);
         }
 
         private void InvokeOnAttackAnimationEnded()

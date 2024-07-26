@@ -6,6 +6,9 @@ namespace ShadowFlareRemake.VFX
         None,
         Hit,
         HitBlood,
-        DeathBlood
+        DeathBlood,
+        RedExplosion,
+        LightningShield,
+        Portal
     }
 }

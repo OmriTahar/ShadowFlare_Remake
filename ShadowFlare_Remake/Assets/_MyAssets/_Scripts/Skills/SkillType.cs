@@ -5,6 +5,7 @@ namespace ShadowFlareRemake.Skills
     {
         MeleeAttack,
         Teleport,
-        FireBall
+        Meteor,
+        LightningShield
     }
 }
