@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace ShadowFlareRemake.Enemies
 {
-    public class EnemyView : View<EnemyModel>
+    public class EnemyView : View<IEnemyModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;
@@ -43,7 +43,6 @@ namespace ShadowFlareRemake.Enemies
         private readonly int _isMovingAnimHash = Animator.StringToHash("Is Moving");
         private readonly int _attackAnimHash = Animator.StringToHash("Attack");
         private readonly int _dieAnimHash = Animator.StringToHash("Die");
-
 
         #region View Overrides
 

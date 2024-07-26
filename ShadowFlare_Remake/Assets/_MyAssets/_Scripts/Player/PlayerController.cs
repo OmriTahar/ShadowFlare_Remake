@@ -1,7 +1,6 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Skills;
-using ShadowFlareRemake.Units;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -31,7 +30,7 @@ namespace ShadowFlareRemake.Player
         private const int _rotationSpeed = 10;
         private const float _destinationReachedThreshold = 0.1f;
 
-        private PlayerModel _model;
+        private IPlayerModel _model;
         private CharacterController _characterController;
         private IPlayerInputReader _inputReader;
 
@@ -83,16 +82,16 @@ namespace ShadowFlareRemake.Player
                 _view = GetComponentInChildren<PlayerView>();
         }
 
-        public void InitPlayer(IUnit unit, IPlayerInputReader inputManager)
+        public void InitPlayer(IPlayerModel iPlayerModel, IPlayerInputReader inputManager)
         {
-            _model = new PlayerModel(unit);
+            _model = iPlayerModel;
             _view.SetModel(_model);
 
             _inputReader = inputManager;
 
             RegisterEvents();
 
-            _meleeAttack.SetUnitStats(unit.Stats);
+            _meleeAttack.SetUnitStats(_model.Stats);
         }
 
         private void RegisterLeftClickActions(InputAction.CallbackContext context)
@@ -122,20 +121,6 @@ namespace ShadowFlareRemake.Player
             _view.OnAttackAnimationEnded -= ResetAttackCooldown;
             _view.OnDoStepForwardAnimationEvent -= HandleAttackStepForward;
             _view.OnTriggerEnterEvent -= HandleTriggerEnter;
-        }
-
-        #endregion
-
-        #region GameManager Helpers
-
-        public void SetIsLastHitWasCritialHit(bool isCritialHit)
-        {
-            _model.SetIsLastHitWasCritialHit(isCritialHit);
-        }
-
-        public void SetActiveSkill(SkillType activeSkill)
-        {
-            _model.SetActiveSkill(activeSkill);
         }
 
         #endregion

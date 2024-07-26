@@ -1,5 +1,4 @@
 using ShadowFlareRemake.Combat;
-using ShadowFlareRemake.Units;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,30 +19,28 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] protected bool IsActive = true;
         [SerializeField] protected float DistanceFromPlayer;
 
-        protected EnemyModel Model;
+        protected IEnemyModel Model;
         protected Transform PlayerTransform;
 
         #region Initialization
 
-        public EnemyModel InitEnemy(IUnit unit, Transform playerTransform, bool isActive)
+        public Collider InitEnemyAndGetItsCollider(IEnemyModel iEnemyModel, Transform playerTransform, bool isActive)
         {
+            Model = iEnemyModel;
             PlayerTransform = playerTransform;
-            name = unit.Stats.Name;
+
+            name = Model.Stats.Name;
             IsActive = isActive;
-            MeleeAttack.SetUnitStats(unit.Stats);
+            MeleeAttack.SetUnitStats(Model.Stats);
 
             CacheNulls();
             RegisterEvents();
-            SetModel(unit);
+
+            View.SetModel(Model);
+
             SetNavMeshAgent();
 
-            return Model;
-        }
-
-        protected virtual void SetModel(IUnit unit)
-        {
-            Model = new EnemyModel(unit);
-            View.SetModel(Model);
+            return View.GetEnemyCollider();
         }
 
         private void CacheNulls()
@@ -69,20 +66,6 @@ namespace ShadowFlareRemake.Enemies
         private void OnDisable()
         {
             DeregisterEvents();
-        }
-
-        #endregion
-
-        #region Game Manager Helpers
-
-        public void SetEnemyUnitAfterHit(IUnit unit, bool isCritialHit)
-        {
-            Model.SetEnemyUnitAfterHit(unit, isCritialHit);
-        }
-
-        public Collider GetEnemyCollider()
-        {
-            return View.GetEnemyCollider();
         }
 
         #endregion

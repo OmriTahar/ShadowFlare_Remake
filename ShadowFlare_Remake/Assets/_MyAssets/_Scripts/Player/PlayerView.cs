@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.Player
 {
-    public class PlayerView : View<PlayerModel>
+    public class PlayerView : View<IPlayerModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnDoStepForwardAnimationEvent;

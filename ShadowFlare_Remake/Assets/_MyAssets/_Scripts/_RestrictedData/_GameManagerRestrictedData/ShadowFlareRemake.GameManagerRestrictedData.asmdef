@@ -1,0 +1,18 @@
+{
+    "name": "ShadowFlareRemake.GameManagerRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.GameManagerRestrictedData",
+    "references": [
+        "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:f12ebb93ad09ab14d9e54d355e20fc24",
+        "GUID:146e726169c820d4dbb8c18ec93716ae"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

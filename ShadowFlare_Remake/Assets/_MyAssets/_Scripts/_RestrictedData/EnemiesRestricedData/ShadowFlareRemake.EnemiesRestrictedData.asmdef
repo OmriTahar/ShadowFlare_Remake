@@ -1,0 +1,19 @@
+{
+    "name": "ShadowFlareRemake.EnemiesRestrictedData",
+    "rootNamespace": "ShadowFlareRemake.EnemiesRestrictedData",
+    "references": [
+        "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:1838ac37eb198754bb62abb62ef1abb2",
+        "GUID:b093cd969c3ba9c44ad2acd6543fccf6",
+        "GUID:d0510f8c5b1c7e44fae34b517bb526dd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

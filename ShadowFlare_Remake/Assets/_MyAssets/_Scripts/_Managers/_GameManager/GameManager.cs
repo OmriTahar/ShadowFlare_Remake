@@ -3,10 +3,13 @@ using ShadowFlareRemake.CamerasManagement;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.CombatManagement;
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.EnemiesRestrictedData;
+using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
 using ShadowFlareRemake.Player;
+using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
 using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
@@ -41,11 +44,10 @@ namespace ShadowFlareRemake.GameManagement
         [SerializeField] private int _healOrDamageAmount = 10;
 
         private CombatManager _combatManager;
-
-        private Dictionary<EnemyController, Unit> _enemyUnitsDict = new();
-        private Dictionary<Collider, EnemyModel> _enemiesCollidersDict = new();
+        private Dictionary<EnemyController, EnemyDataContainer> _enemiesDict = new();
 
         private Unit _playerUnit;
+        private PlayerModel _playerModel;
         private PlayerUnitStats _playerUnitStats;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
 
@@ -161,7 +163,7 @@ namespace ShadowFlareRemake.GameManagement
 
         private void DeregisterFromEnemiesEvents()
         {
-            foreach(var enemy in _enemyUnitsDict.Keys)
+            foreach(var enemy in _enemiesDict.Keys)
             {
                 enemy.OnIGotHit -= HandleEnemyGotHit;
                 enemy.OnDeath -= HandleEnemyDied;
@@ -232,7 +234,7 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandleHudSkillItemClicked(SkillType activeSkill)
         {
-            _playerController.SetActiveSkill(activeSkill);
+            _playerModel.SetActiveSkill(activeSkill);
             _uiManager.SetPlayerActiveSkill(activeSkill);
         }
 
@@ -266,16 +268,14 @@ namespace ShadowFlareRemake.GameManagement
 
             var spawnPoint = enemyToSpawn.transform;
             var enemyController = Instantiate(enemyToSpawn.EnemyPrefab, spawnPoint.position, spawnPoint.rotation, _enemiesParent);
-
             var enemyUnitStats = enemyToSpawn.EnemyUnit;
             var enemySkills = GetEnemySkills(enemyUnitStats);
             var enemyUnit = new Unit(enemyUnitStats, enemySkills);
+            var enemyModel = new EnemyModel(enemyUnit);
+            var enemyCollider = enemyController.InitEnemyAndGetItsCollider(enemyModel, _playerController.transform, isEnemyActive);
 
-            var enemyModel = enemyController.InitEnemy(enemyUnit, _playerController.transform, isEnemyActive);
-            _enemyUnitsDict.Add(enemyController, enemyUnit);
-
-            var enemyCollider = enemyController.GetEnemyCollider();
-            _enemiesCollidersDict.Add(enemyCollider, enemyModel);
+            var enemyDataContainer = new EnemyDataContainer(enemyUnit, enemyModel, enemyCollider);
+            _enemiesDict.Add(enemyController, enemyDataContainer);
 
             RegisterEnemyEvents(enemyController);
 
@@ -284,7 +284,6 @@ namespace ShadowFlareRemake.GameManagement
                 Destroy(enemyToSpawn.gameObject);
             }
         }
-
 
         private List<ISkillData> GetEnemySkills(EnemyUnitStats enemyUnitStats)
         {
@@ -317,11 +316,10 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)
         {
-            var unit = _enemyUnitsDict[enemyController];
-            var receivedAttackData = _combatManager.GetReceivedAttackData(attack, unit.Stats);
-
-            unit.TakeDamage(receivedAttackData.InflictedDamage);
-            enemyController.SetEnemyUnitAfterHit(unit, receivedAttackData.IsCritialHit);
+            var enemyData = _enemiesDict[enemyController];
+            var receivedAttackData = _combatManager.GetReceivedAttackData(attack, enemyData.EnemyUnit.Stats);
+            enemyData.EnemyUnit.TakeDamage(receivedAttackData.InflictedDamage);
+            enemyData.EnemyModel.SetIsReceivedCritialHit(receivedAttackData.IsCritialHit);
         }
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)
@@ -352,7 +350,8 @@ namespace ShadowFlareRemake.GameManagement
             _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
             var playerSkills = GetPlayerSkills();
             _playerUnit = new Unit(_playerUnitStats, playerSkills);
-            _playerController.InitPlayer(_playerUnit, _inputManager);
+            _playerModel = new PlayerModel(_playerUnit);
+            _playerController.InitPlayer(_playerModel, _inputManager);
         }
 
         private void HandlePlayerGotHit(Attack attack)
@@ -360,7 +359,7 @@ namespace ShadowFlareRemake.GameManagement
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, _playerUnitStats);
 
             _playerUnit.TakeDamage(receivedAttackData.InflictedDamage);
-            _playerController.SetIsLastHitWasCritialHit(receivedAttackData.IsCritialHit);
+            _playerModel.SetIsLastHitWasCritialHit(receivedAttackData.IsCritialHit);
 
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
@@ -479,7 +478,7 @@ namespace ShadowFlareRemake.GameManagement
         public void TestHitPlayer()
         {
             _playerUnit.TakeDamage(_healOrDamageAmount);
-            _playerController.SetIsLastHitWasCritialHit(true);
+            _playerModel.SetIsLastHitWasCritialHit(true);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 

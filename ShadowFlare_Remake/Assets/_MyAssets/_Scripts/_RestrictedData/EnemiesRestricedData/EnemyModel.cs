@@ -1,22 +1,12 @@
 using ShadowFlareRemake.Combat;
+using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Units;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Enemies
+namespace ShadowFlareRemake.EnemiesRestrictedData
 {
-    public class EnemyModel : Model
+    public class EnemyModel : IEnemyModel
     {
-        public IUnit Unit { get; private set; }
-        public IEnemyUnitStats Stats { get; private set; }
-        public EnemyState CurrentEnemyState { get; private set; }
-
-        public string Name { get; private set; }
-        public Color Color { get; private set; }
-
-        public AttackRange CurrentAttackRange { get; private set; }
-        public bool IsAttacking { get; private set; }
-        public bool IsReceivedCritialHit { get; private set; }
-
         public EnemyModel(IUnit unit)
         {
             Unit = unit;
@@ -25,22 +15,26 @@ namespace ShadowFlareRemake.Enemies
             Color = new Color(Stats.Color.r, Stats.Color.g, Stats.Color.b, 1);
         }
 
-        public void SetEnemyUnitAfterHit(IUnit unit, bool isReceivedCritialHit = false)
+        #region Meat & Potatos
+
+        public void SetIsReceivedCritialHit(bool isReceivedCritialHit)
         {
-            Unit = unit;
-            Stats = Unit.Stats as IEnemyUnitStats;
             IsReceivedCritialHit = isReceivedCritialHit;
             Changed();
         }
 
-        public void SetAttackState(bool isAttacking, AttackRange attackRange)
+        #endregion
+
+        #region Meat & Potatos - Overrides
+
+        public override void SetAttackState(bool isAttacking, AttackRange attackRange)
         {
             IsAttacking = isAttacking;
             CurrentAttackRange = attackRange;
             Changed();
         }
 
-        public void SetEnemyState(EnemyState enemyState)
+        public override void SetEnemyState(EnemyState enemyState)
         {
             if(CurrentEnemyState == enemyState)
                 return;
@@ -49,12 +43,18 @@ namespace ShadowFlareRemake.Enemies
             Changed();
         }
 
+        #endregion
+
+        #region Test
+
         private void PrintEnemyStateTransition(EnemyState enemyState)
         {
             string oldState = CurrentEnemyState.ToString().ToUpper();
             string newState = enemyState.ToString().ToUpper();
             Debug.Log($"{Name} is switching from {oldState} to {newState}.");
         }
+
+        #endregion
     }
 }
 
