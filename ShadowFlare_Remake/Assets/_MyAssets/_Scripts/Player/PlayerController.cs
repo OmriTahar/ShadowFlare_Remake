@@ -30,7 +30,7 @@ namespace ShadowFlareRemake.Player
         private const int _rotationSpeed = 10;
         private const float _destinationReachedThreshold = 0.1f;
 
-        private IPlayerModel _model;
+        private BasePlayerModel _model;
         private CharacterController _characterController;
         private IPlayerInputReader _inputReader;
 
@@ -82,9 +82,9 @@ namespace ShadowFlareRemake.Player
                 _view = GetComponentInChildren<PlayerView>();
         }
 
-        public void InitPlayer(IPlayerModel iPlayerModel, IPlayerInputReader inputManager)
+        public void InitPlayer(BasePlayerModel basePlayerModel, IPlayerInputReader inputManager)
         {
-            _model = iPlayerModel;
+            _model = basePlayerModel;
             _view.SetModel(_model);
 
             _inputReader = inputManager;

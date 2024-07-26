@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.Enemies
 {
-    public abstract class IEnemyModel : Model
+    public abstract class BaseEnemyModel : Model
     {
         public IUnit Unit { get; protected set; }
         public IEnemyUnitStats Stats { get; protected set; }

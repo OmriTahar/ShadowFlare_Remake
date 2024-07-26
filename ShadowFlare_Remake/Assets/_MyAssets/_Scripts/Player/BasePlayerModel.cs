@@ -3,7 +3,7 @@ using ShadowFlareRemake.Units;
 
 namespace ShadowFlareRemake.Player
 {
-    public abstract class IPlayerModel : Model
+    public abstract class BasePlayerModel : Model
     {
         public IUnit Unit { get; protected set; }
         public IPlayerUnitStats Stats { get; protected set; }

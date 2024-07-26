@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace ShadowFlareRemake.Enemies
 {
-    public class EnemyView : View<IEnemyModel>
+    public class EnemyView : View<BaseEnemyModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
         public event Action OnAttackAnimationEnded;

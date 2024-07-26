@@ -4,7 +4,7 @@ using ShadowFlareRemake.Units;
 
 namespace ShadowFlareRemake.PlayerRestrictedData
 {
-    public class PlayerModel : IPlayerModel
+    public class PlayerModel : BasePlayerModel
     {
         private const int _movementSpeedLogicAdjuster = 20;
         private const float _animationsSpeedAdjuster = 100;

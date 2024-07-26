@@ -19,14 +19,14 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] protected bool IsActive = true;
         [SerializeField] protected float DistanceFromPlayer;
 
-        protected IEnemyModel Model;
+        protected BaseEnemyModel Model;
         protected Transform PlayerTransform;
 
         #region Initialization
 
-        public Collider InitEnemyAndGetItsCollider(IEnemyModel iEnemyModel, Transform playerTransform, bool isActive)
+        public Collider InitEnemyAndGetItsCollider(BaseEnemyModel baseEnemyModel, Transform playerTransform, bool isActive)
         {
-            Model = iEnemyModel;
+            Model = baseEnemyModel;
             PlayerTransform = playerTransform;
 
             name = Model.Stats.Name;

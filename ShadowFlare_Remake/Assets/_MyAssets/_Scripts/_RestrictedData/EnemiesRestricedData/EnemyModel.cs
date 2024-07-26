@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.EnemiesRestrictedData
 {
-    public class EnemyModel : IEnemyModel
+    public class EnemyModel : BaseEnemyModel
     {
         public EnemyModel(IUnit unit)
         {
