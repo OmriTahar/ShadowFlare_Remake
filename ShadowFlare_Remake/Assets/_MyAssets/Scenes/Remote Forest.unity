@@ -5214,7 +5214,6 @@ MonoBehaviour:
   _lootPrefab: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
     type: 3}
   _playerStartingLoot:
-  - {fileID: 11400000, guid: 06af98c5cc82f81469db023132ce3e38, type: 2}
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
