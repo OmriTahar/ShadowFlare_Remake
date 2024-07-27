@@ -36,7 +36,7 @@ MonoBehaviour:
   <MagicalDefense>k__BackingField: 10
   <MagicalHitRate>k__BackingField: 0
   <MagicalEvasionRate>k__BackingField: 0
-  <MagicalAttackSpeed>k__BackingField: 0
+  <MagicalAttackSpeed>k__BackingField: 50
   ______INFO_____: ------------------------------------
   <Weight>k__BackingField: 20
   <Durability>k__BackingField: 100

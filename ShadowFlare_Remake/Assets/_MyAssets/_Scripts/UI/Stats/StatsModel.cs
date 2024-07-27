@@ -17,18 +17,22 @@ namespace ShadowFlareRemake.UI.Stats
             IsPanelOpen = isPanelOpen;
         }
 
+        public void InitPlayerFullStats(IUnit unit, IEquippedGearAddedStats addedStats)
+        {
+            Unit = unit;
+            Stats = unit.Stats as IPlayerUnitStats;
+            EquippedGearAddedStats = addedStats;
+            Changed();
+        }
+
         public void SetIsStatsOpen(bool isPanelOpen)
         {
             IsPanelOpen = isPanelOpen;
             Changed();
         }
 
-        public void SetFullPlayerStats(IUnit unit, IEquippedGearAddedStats addedStats)
+        public void SetFullPlayerStats()
         {
-            Unit = unit;
-            Stats = unit.Stats as IPlayerUnitStats;
-            EquippedGearAddedStats = addedStats;
-
             SetIsFullStatsUpdate(true);
             Changed();
         }

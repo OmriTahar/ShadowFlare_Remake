@@ -18,6 +18,7 @@ namespace ShadowFlareRemake.Player
         public abstract void SetIsMoving(bool isMoving);
         public abstract int GetMovementSpeedForMoveLogic();
         public abstract float GetMovementSpeedForMoveAnimation();
-        public abstract float GetAttackSpeedForAttackAnimations();
+        public abstract float GetAttackSpeedForPhysicalAttackAnimations();
+        public abstract float GetAttackSpeedForMagicalAttackAnimations();
     }
 }

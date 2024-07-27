@@ -407,6 +407,11 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Set Player Stats
 
+        public void InitPlayerFullStats(IUnit unit, IEquippedGearAddedStats addedStats)
+        {
+            _statsModel.InitPlayerFullStats(unit, addedStats);
+        }
+
         public void SetPlayerFullUI(IUnit unit, IEquippedGearAddedStats addedStats)
         {
             var stats = unit.Stats as IPlayerUnitStats;
@@ -414,7 +419,7 @@ namespace ShadowFlareRemake.UIManagement
             SetPlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             SetPlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
             SetPlayerLevel(stats.Level);
-            SetFullPlayerStatsWithEquippedGear(unit, stats, addedStats);
+            SetFullPlayerStatsWithEquippedGear(stats, addedStats);
         }
 
         public void SetPlayerVitalsExpAndLevel(IUnit unit)
@@ -447,9 +452,9 @@ namespace ShadowFlareRemake.UIManagement
             _hudModel.SetLevel(level);
         }
 
-        private void SetFullPlayerStatsWithEquippedGear(IUnit unit, IPlayerUnitStats stats, IEquippedGearAddedStats addedStats)
+        private void SetFullPlayerStatsWithEquippedGear(IPlayerUnitStats stats, IEquippedGearAddedStats addedStats)
         {
-            _statsModel.SetFullPlayerStats(unit, addedStats);
+            _statsModel.SetFullPlayerStats();
             _inventoryModel.SetStrengthAndEquippedWeight(stats.Strength, addedStats.EquippedWeight);
         }
 

@@ -22,7 +22,7 @@ namespace ShadowFlareRemake.Player
 
         private readonly int _movementAnimSpeedParam = Animator.StringToHash("MovementAnimSpeed");
         private readonly int _attackAnimSpeedParam = Animator.StringToHash("AttackAnimSpeed");
-        private readonly int _magicAttackAnimSpeedParam = Animator.StringToHash("MagicAttackAnimSpeed");
+        private readonly int _magicalAttackAnimSpeedParam = Animator.StringToHash("MagicalAttackAnimSpeed");
 
         private const string _isMovingBool = "IsMoving";
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
@@ -30,7 +30,10 @@ namespace ShadowFlareRemake.Player
         private const string _castSpellMeteorTrigger = "CastSpell_Meteor";
 
         private const int _oneHundred = 100;
+        private const int _oneSecondInMilliSeconds = 1000;
 
+        private float _magicalAttackSpeed;
+        private int _meteorSkillWaitInMilliSeconds;
         private int _lastSeenHP;
 
         #region View Overrides
@@ -43,7 +46,8 @@ namespace ShadowFlareRemake.Player
 
         protected override void ModelReplaced()
         {
-            _lastSeenHP = Model.Unit.CurrentHP;
+            InitLastSeenHP();
+            SetDelaysInMilliSeconds();
         }
 
         protected override void ModelChanged()
@@ -83,6 +87,16 @@ namespace ShadowFlareRemake.Player
                 _playerAnimator = GetComponent<Animator>();
         }
 
+        private void InitLastSeenHP()
+        {
+            _lastSeenHP = Model.Unit.CurrentHP;
+        }
+
+        private void SetDelaysInMilliSeconds()
+        {
+            _meteorSkillWaitInMilliSeconds = (int)(_meteorSkillWait * _oneSecondInMilliSeconds);
+        }
+
         #endregion
 
         #region Events
@@ -94,7 +108,7 @@ namespace ShadowFlareRemake.Player
             _animaionsSubView.OnFinished_MeleeTripleAttack += InvokeOnAttackAnimationEnded;
             _animaionsSubView.OnFinishedAttackAnimation += InvokeOnAttackAnimationEnded;
         }
-        
+
         private void DeregisterEvents()
         {
             _animaionsSubView.OnDo_StepForwardAnimationEvent -= InvokeDoStepForward;
@@ -105,12 +119,15 @@ namespace ShadowFlareRemake.Player
 
         #endregion
 
-        #region Meat & Potatos
+        #region Attacks & Animations
 
         private void SetAnimationsSpeed()
         {
+            _magicalAttackSpeed = Model.GetAttackSpeedForMagicalAttackAnimations();
+
             _playerAnimator.SetFloat(_movementAnimSpeedParam, Model.GetMovementSpeedForMoveAnimation());
-            _playerAnimator.SetFloat(_attackAnimSpeedParam, Model.GetAttackSpeedForAttackAnimations());
+            _playerAnimator.SetFloat(_attackAnimSpeedParam, Model.GetAttackSpeedForPhysicalAttackAnimations());
+            _playerAnimator.SetFloat(_magicalAttackAnimSpeedParam, _magicalAttackSpeed);
         }
 
         private void SetIsMovingAnimation()
@@ -131,7 +148,7 @@ namespace ShadowFlareRemake.Player
 
             HandleDoSkill();
         }
-    
+
         private async void HandleDoSkill()
         {
             switch(Model.ActiveSkill.SkillType)
@@ -179,7 +196,7 @@ namespace ShadowFlareRemake.Player
         {
             _playerAnimator.SetTrigger(_castSpellMeteorTrigger);
 
-            var delay = (int)(_meteorSkillWait * 1000);
+            var delay = (int)(_meteorSkillWaitInMilliSeconds / _magicalAttackSpeed);
             await Task.Delay(delay);
 
             _vfxView.SetIsPlayingEffect(VfxType.RedExplosion, true);
@@ -199,6 +216,10 @@ namespace ShadowFlareRemake.Player
         {
             OnAttackAnimationEnded?.Invoke();
         }
+
+        #endregion
+
+        #region HP & Hit Effect
 
         private void HandleHP()
         {

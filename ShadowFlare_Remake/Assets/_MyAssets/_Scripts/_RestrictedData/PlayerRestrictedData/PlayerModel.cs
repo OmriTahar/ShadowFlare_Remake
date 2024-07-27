@@ -73,9 +73,14 @@ namespace ShadowFlareRemake.PlayerRestrictedData
             return Stats.MovementSpeed / _animationsSpeedAdjuster;
         }
 
-        public override float GetAttackSpeedForAttackAnimations()
+        public override float GetAttackSpeedForPhysicalAttackAnimations()
         {
             return Stats.AttackSpeed / _animationsSpeedAdjuster;
+        }
+
+        public override float GetAttackSpeedForMagicalAttackAnimations()
+        {
+            return Stats.MagicalAttackSpeed / _animationsSpeedAdjuster;
         }
 
         #endregion
