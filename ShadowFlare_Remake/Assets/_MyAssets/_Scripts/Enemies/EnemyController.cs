@@ -72,16 +72,18 @@ namespace ShadowFlareRemake.Enemies
 
         private void RegisterEvents()
         {
-            View.OnAttackAnimationEnded += HandleAttackAnimationEnded;
             View.OnTriggerEnterEvent += HandleTriggerEnter;
+            View.OnParticleCollisionEvent += HandleParticleTriggerEnter;
+            View.OnAttackAnimationEnded += HandleAttackAnimationEnded;
             View.OnDeath += HandleDeath;
             View.OnFinishedFadeOutAnimation += HandleDeathAnimationFinished;
         }
 
         private void DeregisterEvents()
         {
-            View.OnAttackAnimationEnded -= HandleAttackAnimationEnded;
             View.OnTriggerEnterEvent -= HandleTriggerEnter;
+            View.OnParticleCollisionEvent += HandleParticleTriggerEnter;
+            View.OnAttackAnimationEnded -= HandleAttackAnimationEnded;
             View.OnDeath -= HandleDeath;
             View.OnFinishedFadeOutAnimation -= HandleDeathAnimationFinished;
         }
@@ -97,6 +99,16 @@ namespace ShadowFlareRemake.Enemies
                 var attack = other.GetComponent<Attack>();
                 OnIGotHit?.Invoke(attack, this);
             }
+        }
+
+        private void HandleParticleTriggerEnter(GameObject other)
+        {
+            var attack = other.GetComponent<Attack>();
+
+            if(attack.AttackerStats is IEnemyUnitStats)
+                return;
+
+            OnIGotHit?.Invoke(attack, this);
         }
 
         protected abstract void HandleAttackAnimationEnded();

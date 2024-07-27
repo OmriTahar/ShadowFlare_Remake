@@ -6,13 +6,13 @@ namespace ShadowFlareRemake.Combat
 {
     public class Attack : MonoBehaviour
     {
-        [field: SerializeField] public SkillDamageType DamageType { get; private set; }
+        [field: SerializeField] public SkillType SkillType { get; private set; }
 
-        public IUnitStats Stats { get; private set; }
+        public IUnitStats AttackerStats { get; private set; }
 
         public void SetUnitStats(IUnitStats stats)
         {
-            Stats = stats;
+            AttackerStats = stats;
         }
     }
 }

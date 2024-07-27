@@ -266,6 +266,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3020474967610497864}
     m_Modifications:
+    - target: {fileID: 216100240727808727, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      propertyPath: m_TagString
+      value: Attack
+      objectReference: {fileID: 0}
     - target: {fileID: 503385641847414234, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: playOnAwake
@@ -279,6 +284,26 @@ PrefabInstance:
     - target: {fileID: 2208576233791906499, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208576233791906499, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208576233791906499, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208576233791906499, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2208576233791906499, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByCollisionAngle
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2285755066653096070, guid: 867c572a5be680d42a042d2349f10143,
@@ -314,7 +339,7 @@ PrefabInstance:
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
@@ -324,27 +349,27 @@ PrefabInstance:
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9999685
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.007941151
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: -0.91
       objectReference: {fileID: 0}
     - target: {fileID: 5182820693866792781, guid: 867c572a5be680d42a042d2349f10143,
         type: 3}
@@ -384,8 +409,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 216100240727808727, guid: 867c572a5be680d42a042d2349f10143,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3925496000652022047}
   m_SourcePrefab: {fileID: 100100000, guid: 867c572a5be680d42a042d2349f10143, type: 3}
+--- !u!1 &3454843331069782292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 216100240727808727, guid: 867c572a5be680d42a042d2349f10143,
+    type: 3}
+  m_PrefabInstance: {fileID: 3246444086978130883}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3925496000652022047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454843331069782292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7babf075910109045965916a0a4a7cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <SkillType>k__BackingField: 0
 --- !u!198 &7096345312601731980 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5726018809045565519, guid: 867c572a5be680d42a042d2349f10143,

@@ -23,7 +23,7 @@ MonoBehaviour:
   <Height>k__BackingField: 4
   ______PHYSICAL_____: ------------------------------------
   <MaxHP>k__BackingField: 0
-  <Attack>k__BackingField: 5
+  <Attack>k__BackingField: 1
   <Defense>k__BackingField: 0
   <HitRate>k__BackingField: 0
   <EvasionRate>k__BackingField: 0
@@ -38,6 +38,7 @@ MonoBehaviour:
   <MagicalEvasionRate>k__BackingField: 0
   <MagicalAttackSpeed>k__BackingField: 0
   ______INFO_____: ------------------------------------
+  <Weight>k__BackingField: 10
   <Durability>k__BackingField: 100
   <RequiredLevel>k__BackingField: 1
-  <SellPrice>k__BackingField: 50
+  <SellPrice>k__BackingField: 10

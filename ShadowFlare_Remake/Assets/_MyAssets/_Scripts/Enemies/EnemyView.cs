@@ -12,6 +12,7 @@ namespace ShadowFlareRemake.Enemies
     public class EnemyView : View<BaseEnemyModel>
     {
         public event Action<Collider> OnTriggerEnterEvent;
+        public event Action<GameObject> OnParticleCollisionEvent;
         public event Action OnAttackAnimationEnded;
         public event Action OnDeath;
         public event Action OnFinishedDeathAnimation;
@@ -88,6 +89,11 @@ namespace ShadowFlareRemake.Enemies
                 return;
 
             OnTriggerEnterEvent?.Invoke(other);
+        }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            OnParticleCollisionEvent?.Invoke(other);
         }
 
         #endregion

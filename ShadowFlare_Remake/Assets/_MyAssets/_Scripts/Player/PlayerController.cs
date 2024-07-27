@@ -3,6 +3,7 @@ using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Skills;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,7 +19,7 @@ namespace ShadowFlareRemake.Player
         [Header("References")]
         [SerializeField] private PlayerView _view;
         [SerializeField] private Transform _frontRayOrigin;
-        [SerializeField] private Attack _meleeAttack;
+        [SerializeField] private List<Attack> _attacks;
 
         [Header("Movement Settings")]
         [SerializeField] private float _stepForwardDuration = 0.2f;
@@ -91,13 +92,20 @@ namespace ShadowFlareRemake.Player
             _inputReader = inputManager;
 
             RegisterEvents();
-
-            _meleeAttack.SetUnitStats(_model.Stats);
+            SetStatsInAttacks();
         }
 
         private void RegisterLeftClickActions(InputAction.CallbackContext context)
         {
             HandleLeftClickActions(false);
+        }
+
+        private void SetStatsInAttacks()
+        {
+            foreach(var attack in _attacks)
+            {
+                attack.SetUnitStats(_model.Stats);
+            }
         }
 
         #endregion

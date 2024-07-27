@@ -131,22 +131,7 @@ namespace ShadowFlareRemake.Player
 
             HandleDoSkill();
         }
-
-        private void DoMeleeSingleAttack()
-        {
-            _playerAnimator.SetTrigger(_meleeSingleAttackTrigger);
-        }
-
-        private void DoMeleeTripleAttack()
-        {
-            _playerAnimator.SetTrigger(_meleeTripleAttackTrigger);
-        }
-
-        private void InvokeDoStepForward() 
-        {
-            OnDoStepForwardAnimationEvent?.Invoke();
-        }
-
+    
         private async void HandleDoSkill()
         {
             switch(Model.ActiveSkill.SkillType)
@@ -173,9 +158,21 @@ namespace ShadowFlareRemake.Player
                     InvokeOnAttackAnimationEnded();
                     break;
             }
+        }
 
+        private void DoMeleeSingleAttack()
+        {
+            _playerAnimator.SetTrigger(_meleeSingleAttackTrigger);
+        }
 
-            _vfxView.SetIsPlayingEffect(VfxType.RedExplosion, true);
+        private void DoMeleeTripleAttack()
+        {
+            _playerAnimator.SetTrigger(_meleeTripleAttackTrigger);
+        }
+
+        private void InvokeDoStepForward()
+        {
+            OnDoStepForwardAnimationEvent?.Invoke();
         }
 
         private async Task DoMeteorSkill()

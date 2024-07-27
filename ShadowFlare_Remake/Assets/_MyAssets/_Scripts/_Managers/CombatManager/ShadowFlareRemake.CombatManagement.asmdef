@@ -5,6 +5,7 @@
         "ShadowFlareRemake",
         "ShadowFlareRemake.Combat",
         "ShadowFlareRemake.CombatRestrictedData",
+        "ShadowFlareRemake.SkillsRestrictedData",
         "ShadowFlareRemake.Units",
         "ShadowFlareRemake.Skills"
     ],

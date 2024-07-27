@@ -24,10 +24,11 @@ namespace ShadowFlareRemake.GameManagement
     {
         [Header("Managers")]
         [SerializeField] private UIManager _uiManager;
-        [SerializeField] private CamerasManager _camerasManager;
         [SerializeField] private InputManager _inputManager;
+        [SerializeField] private CombatManager _combatManager;
         [SerializeField] private RewardsManager _rewardsManager;
         [SerializeField] private LootManager _lootManager;
+        [SerializeField] private CamerasManager _camerasManager;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -43,7 +44,6 @@ namespace ShadowFlareRemake.GameManagement
         [Header("--------------- TESTS: Player ---------------")]
         [SerializeField] private int _restoreOrReduceAmount = 5;
 
-        private CombatManager _combatManager;
         private Dictionary<EnemyController, EnemyDataContainer> _enemiesDict = new();
 
         private Unit _playerUnit;
@@ -90,7 +90,6 @@ namespace ShadowFlareRemake.GameManagement
             InitEnemies();
             InitPlayer();
             InitUiManager();
-            InitCombatManager();
         }
 
         private void InitUiManager()
@@ -99,11 +98,6 @@ namespace ShadowFlareRemake.GameManagement
             _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); // Should handle this when implementing loading system
             _uiManager.SetPlayerSkills(GetPlayerSkills());
             _uiManager.SetPlayerActiveSkill(SkillType.MeleeAttack);
-        }
-
-        private void InitCombatManager()
-        {
-            _combatManager = new CombatManager();
         }
 
         #endregion
@@ -320,6 +314,10 @@ namespace ShadowFlareRemake.GameManagement
         {
             var enemyData = _enemiesDict[enemyController];
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, enemyData.EnemyUnit.Stats);
+
+            if(receivedAttackData.InflictedDamage <= 0)
+                return;
+
             enemyData.EnemyUnit.ReduceHP(receivedAttackData.InflictedDamage);
             enemyData.EnemyModel.SetIsReceivedCritialHit(receivedAttackData.IsCritialHit);
         }
@@ -351,14 +349,22 @@ namespace ShadowFlareRemake.GameManagement
         {
             _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
             var playerSkills = GetPlayerSkills();
+
             _playerUnit = new Unit(_playerUnitStats, playerSkills);
             _playerModel = new PlayerModel(_playerUnit);
+
+            var meleeSkill = GetSkillDataFromSkillType(playerSkills, SkillType.MeleeAttack);
+            _playerModel.SetActiveSkill(meleeSkill);
+
             _playerController.InitPlayer(_playerModel, _inputManager);
         }
 
         private void HandlePlayerGotHit(Attack attack)
         {
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, _playerUnitStats);
+
+            if(receivedAttackData.InflictedDamage <= 0)
+                return;
 
             _playerUnit.ReduceHP(receivedAttackData.InflictedDamage);
             _playerModel.SetIsLastHitWasCritialHit(receivedAttackData.IsCritialHit);
@@ -450,6 +456,24 @@ namespace ShadowFlareRemake.GameManagement
             return skillsList;
         }
 
+        private ISkillData GetSkillDataFromSkillType(List<ISkillData> skills, SkillType skillType)
+        {
+            foreach(var skill in skills)
+            {
+                if(skill == null)
+                {
+                    continue;
+                }
+
+                if(skill.SkillType == skillType)
+                {
+                    return skill;
+                }
+            }
+
+            return null;
+        }
+
         private void HandlePlayerAttack(bool isUsingSkill)
         {
             if(!isUsingSkill)
@@ -458,12 +482,17 @@ namespace ShadowFlareRemake.GameManagement
                 return;
             }
 
-            var hasEnoughMana = _playerModel.ActiveSkill.MpCost <= _playerUnit.CurrentMP;
+            var skillMpCost = _playerModel.ActiveSkill.MpCost;
+            var hasEnoughMana = skillMpCost <= _playerUnit.CurrentMP;
 
             if(_playerModel.ActiveSkill != null && hasEnoughMana)
             {
-                _playerUnit.ReduceMP(_playerModel.ActiveSkill.MpCost);
-                _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+                if(skillMpCost > 0)
+                {
+                    _playerUnit.ReduceMP(_playerModel.ActiveSkill.MpCost);
+                    _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+                }
+               
                 _playerModel.SetAttackState(true, true);
             }
         }

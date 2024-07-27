@@ -1,40 +1,66 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.CombatRestrictedData;
 using ShadowFlareRemake.Skills;
+using ShadowFlareRemake.SkillsRestrictedData;
 using ShadowFlareRemake.Units;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShadowFlareRemake.CombatManagement
 {
-    public class CombatManager
+    public class CombatManager : MonoBehaviour
     {
+        [Header("Skills")]
+        [SerializeField] private List<SkillData_ScriptableObject> _skills; // Todo: Get these automatically from folder
+
+        private Dictionary<SkillType, SkillData_ScriptableObject> _skillsDict = new();
+
+        private void Awake()
+        {
+            InitSkillsDict();
+        }
+
         public ReceivedAttackData GetReceivedAttackData(Attack attack, IUnitStats receiverStats)
         {
-            var inflictedDamage = 0;
-            var isCriticalHit = Random.value >= 0.75f; // Improve this
+            var skill = _skillsDict[attack.SkillType];
 
-            if(attack.DamageType is SkillDamageType.Physical)
+            if(skill == null || skill.DamageType == SkillDamageType.None)
             {
-                inflictedDamage = GetPhysicalDamage(attack.Stats, receiverStats);
+                return new ReceivedAttackData(0, false);
             }
-            else if(attack.DamageType is SkillDamageType.Magical)
+
+            var inflictedDamage = skill.AddedDamage;
+            var isCriticalHit = Random.value >= 0.75f; // Bruh
+
+            if(skill.DamageType is SkillDamageType.Physical)
             {
-                inflictedDamage = GetMagicalDamage(attack.Stats, receiverStats);
+                inflictedDamage += GetPhysicalDamage(attack.AttackerStats, receiverStats);
+            }
+            else if(skill.DamageType is SkillDamageType.Magical)
+            {
+                inflictedDamage += GetMagicalDamage(attack.AttackerStats, receiverStats);
             }
 
             return new ReceivedAttackData(inflictedDamage, isCriticalHit);
         }
 
         private int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) // Todo: Expand this.
-        { 
-            var damage = AttackerStats.Attack - receiverStats.Defense;
-            return damage > 1 ? damage : 1;
+        {
+            return AttackerStats.Attack - receiverStats.Defense;
         }
 
         private int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) // Todo: Expand this.
-        {  
-            var damage = Attacker.MagicalAttack - receiverUnit.MagicalDefense;
-            return damage > 1 ? damage : 1;
+        {
+            return Attacker.MagicalAttack - receiverUnit.MagicalDefense;
         }
+
+        private void InitSkillsDict()
+        {
+            foreach(var skill in _skills)
+            {
+                _skillsDict.Add(skill.SkillType, skill);
+            }
+        }
+
     }
 }
