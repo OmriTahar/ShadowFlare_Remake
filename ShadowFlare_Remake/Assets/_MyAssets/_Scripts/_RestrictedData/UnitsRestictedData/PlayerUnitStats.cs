@@ -53,6 +53,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
 
         private static readonly int _defaultMovementSpeed = 100;
         private static readonly int _defaultAttackSpeed = 100;
+        private static readonly int _defaultMagicalAttackSpeed = 100;
         private static readonly int _defaultOverWeightSpeed = 60;
 
         #endregion
@@ -138,6 +139,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
         {
             MovementSpeed = _defaultMovementSpeed;
             AttackSpeed = _defaultAttackSpeed;
+            MagicalAttackSpeed = _defaultMagicalAttackSpeed;
 
             Strength += addedStats.Strength;
             EquippedWeight += addedStats.EquippedWeight;
@@ -161,6 +163,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
             {
                 MovementSpeed = _defaultOverWeightSpeed;
                 AttackSpeed = _defaultOverWeightSpeed;
+                MagicalAttackSpeed = _defaultOverWeightSpeed;
             }
         }
     }

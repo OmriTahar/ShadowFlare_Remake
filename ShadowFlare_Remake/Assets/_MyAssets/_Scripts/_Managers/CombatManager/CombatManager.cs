@@ -29,19 +29,25 @@ namespace ShadowFlareRemake.CombatManagement
                 return new ReceivedAttackData(0, false);
             }
 
+            var inflictedDamage = GetInflictedDamage(skill, attack.AttackerStats, receiverStats);
+            var isCriticalHit = GetIsCritialHit();
+
+            return new ReceivedAttackData(inflictedDamage, isCriticalHit);
+        }
+        private int GetInflictedDamage(ISkillData skill, IUnitStats attackerStats, IUnitStats receiverStats)
+        {
             var inflictedDamage = skill.AddedDamage;
-            var isCriticalHit = Random.value >= 0.75f; // Bruh
 
             if(skill.DamageType is SkillDamageType.Physical)
             {
-                inflictedDamage += GetPhysicalDamage(attack.AttackerStats, receiverStats);
+                inflictedDamage += GetPhysicalDamage(attackerStats, receiverStats);
             }
             else if(skill.DamageType is SkillDamageType.Magical)
             {
-                inflictedDamage += GetMagicalDamage(attack.AttackerStats, receiverStats);
+                inflictedDamage += GetMagicalDamage(attackerStats, receiverStats);
             }
 
-            return new ReceivedAttackData(inflictedDamage, isCriticalHit);
+            return inflictedDamage;
         }
 
         private int GetPhysicalDamage(IUnitStats AttackerStats, IUnitStats receiverStats) // Todo: Expand this.
@@ -52,6 +58,11 @@ namespace ShadowFlareRemake.CombatManagement
         private int GetMagicalDamage(IUnitStats Attacker, IUnitStats receiverUnit) // Todo: Expand this.
         {
             return Attacker.MagicalAttack - receiverUnit.MagicalDefense;
+        }
+
+        private bool GetIsCritialHit()
+        {
+            return Random.value >= 0.75f; // Bruh
         }
 
         private void InitSkillsDict()

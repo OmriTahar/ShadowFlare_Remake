@@ -5247,18 +5247,21 @@ MonoBehaviour:
     type: 2}
   _testLootDataToSpawnOnAwake:
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
-  - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
   - {fileID: 11400000, guid: 3ddc7cc9074a6df469196ad0c4938484, type: 2}
   - {fileID: 11400000, guid: 3d2ccbee539e3e14ea411ad3d03ad64f, type: 2}
-  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
-  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
-  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
-  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
   - {fileID: 11400000, guid: e3936f19356a42f40beab169fc71bde2, type: 2}
   - {fileID: 11400000, guid: cb22c0bb4e4374543a836917d4f5b4a3, type: 2}
   - {fileID: 11400000, guid: 84eb6763931c29c48a2f21235e66c22a, type: 2}
   - {fileID: 11400000, guid: 57791beb8edc5174aa59f68ff7e9e085, type: 2}
   - {fileID: 11400000, guid: 06af98c5cc82f81469db023132ce3e38, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
+  - {fileID: 11400000, guid: 2a5f4839b3399684bbcc25110497b6ca, type: 2}
 --- !u!4 &514450253
 Transform:
   m_ObjectHideFlags: 0
