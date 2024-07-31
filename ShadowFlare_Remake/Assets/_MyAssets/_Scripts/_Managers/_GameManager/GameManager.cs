@@ -44,7 +44,7 @@ namespace ShadowFlareRemake.GameManagement
         [Header("--------------- TESTS: Player ---------------")]
         [SerializeField] private int _restoreOrReduceAmount = 5;
 
-        private Dictionary<EnemyController, EnemyDataContainer> _enemiesDict = new();
+        private Dictionary<EnemyController, EnemyConcreteData> _enemiesDict = new();
 
         private Unit _playerUnit;
         private PlayerModel _playerModel;
@@ -270,16 +270,14 @@ namespace ShadowFlareRemake.GameManagement
             var enemySkills = GetEnemySkills(enemyUnitStats);
             var enemyUnit = new Unit(enemyUnitStats, enemySkills);
             var enemyModel = new EnemyModel(enemyUnit);
-            var enemyDataContainer = new EnemyDataContainer(enemyUnit, enemyModel);
+            var enemyDataContainer = new EnemyConcreteData(enemyUnit, enemyModel);
 
-            enemyController.InitEnemyAndGetItsCollider(enemyModel, _playerController.transform, isEnemyActive);
+            enemyController.InitEnemy(enemyModel, _playerController.transform, isEnemyActive);
             _enemiesDict.Add(enemyController, enemyDataContainer);
             RegisterEnemyEvents(enemyController);
 
             if(destroyEnemyToSpawn)
-            {
                 Destroy(enemyToSpawn.gameObject);
-            }
         }
 
         private List<ISkillData> GetEnemySkills(EnemyUnitStats enemyUnitStats)
@@ -314,6 +312,7 @@ namespace ShadowFlareRemake.GameManagement
         private void HandleEnemyGotHit(Attack attack, EnemyController enemyController)
         {
             var enemyData = _enemiesDict[enemyController];
+
             var receivedAttackData = _combatManager.GetReceivedAttackData(attack, enemyData.EnemyUnit.Stats);
 
             if(receivedAttackData.InflictedDamage <= 0)

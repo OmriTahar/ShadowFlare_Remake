@@ -22,18 +22,29 @@ namespace ShadowFlareRemake.CombatManagement
 
         public ReceivedAttackData GetReceivedAttackData(Attack attack, IUnitStats receiverStats)
         {
-            var skill = _skillsDict[attack.SkillType];
+            var skillData = _skillsDict[attack.SkillType];
 
-            if(skill == null || skill.DamageType == SkillDamageType.None)
+            if(!IsValidAttack(skillData))
             {
                 return new ReceivedAttackData(0, false);
             }
 
-            var inflictedDamage = GetInflictedDamage(skill, attack.AttackerStats, receiverStats);
+            var inflictedDamage = GetInflictedDamage(skillData, attack.AttackerStats, receiverStats);
             var isCriticalHit = GetIsCritialHit();
 
             return new ReceivedAttackData(inflictedDamage, isCriticalHit);
         }
+
+        private bool IsValidAttack(ISkillData skillData)
+        {
+            if(skillData == null || skillData.DamageType == SkillDamageType.None)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private int GetInflictedDamage(ISkillData skill, IUnitStats attackerStats, IUnitStats receiverStats)
         {
             var inflictedDamage = skill.AddedDamage;
@@ -72,6 +83,5 @@ namespace ShadowFlareRemake.CombatManagement
                 _skillsDict.Add(skill.SkillType, skill);
             }
         }
-
     }
 }

@@ -24,11 +24,10 @@ namespace ShadowFlareRemake.Enemies
 
         #region Initialization
 
-        public void InitEnemyAndGetItsCollider(BaseEnemyModel baseEnemyModel, Transform playerTransform, bool isActive)
+        public void InitEnemy(BaseEnemyModel baseEnemyModel, Transform playerTransform, bool isActive)
         {
             Model = baseEnemyModel;
             PlayerTransform = playerTransform;
-
             name = Model.Stats.Name;
             IsActive = isActive;
             MeleeAttack.SetUnitStats(Model.Stats);
@@ -37,7 +36,6 @@ namespace ShadowFlareRemake.Enemies
             RegisterEvents();
 
             View.SetModel(Model);
-
             SetNavMeshAgent();
         }
 

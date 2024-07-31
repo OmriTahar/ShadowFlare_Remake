@@ -10,13 +10,13 @@ namespace ShadowFlareRemake.LootManagement
         [SerializeField] private Transform _lootParent;
         [SerializeField] private GameObject _lootPrefab;
 
-        [Header("Player Starting Loot")]
+        [Header("--- Player Starting Loot ---")]
         [SerializeField] private List<LootData_ScriptableObject> _playerStartingLoot;
 
-        [Header("Enemies Drop")]
+        [Header("--- Enemies Drop ---")]
         [SerializeField] private List<LootData_ScriptableObject> _lootDropsData;
 
-        [Header("Test")]
+        [Header("--- Test ---")]
         [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
         [SerializeField] private List<LootData_ScriptableObject> _testLootDataToSpawnOnAwake;
 
