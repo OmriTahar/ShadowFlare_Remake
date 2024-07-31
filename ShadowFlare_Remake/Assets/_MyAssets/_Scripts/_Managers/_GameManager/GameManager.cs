@@ -270,10 +270,10 @@ namespace ShadowFlareRemake.GameManagement
             var enemySkills = GetEnemySkills(enemyUnitStats);
             var enemyUnit = new Unit(enemyUnitStats, enemySkills);
             var enemyModel = new EnemyModel(enemyUnit);
-            var enemyDataContainer = new EnemyConcreteData(enemyUnit, enemyModel);
+            var enemyConcreteData = new EnemyConcreteData(enemyUnit, enemyModel);
 
             enemyController.InitEnemy(enemyModel, _playerController.transform, isEnemyActive);
-            _enemiesDict.Add(enemyController, enemyDataContainer);
+            _enemiesDict.Add(enemyController, enemyConcreteData);
             RegisterEnemyEvents(enemyController);
 
             if(destroyEnemyToSpawn)
