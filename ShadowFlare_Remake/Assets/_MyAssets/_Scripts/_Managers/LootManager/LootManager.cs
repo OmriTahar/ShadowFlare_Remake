@@ -8,7 +8,7 @@ namespace ShadowFlareRemake.LootManagement
     {
         [Header("References")]
         [SerializeField] private Transform _lootParent;
-        [SerializeField] private GameObject _lootPrefab;
+        [SerializeField] private LootView _lootPrefab;
 
         [Header("--- Player Starting Loot ---")]
         [SerializeField] private List<LootData_ScriptableObject> _playerStartingLoot;
@@ -20,8 +20,24 @@ namespace ShadowFlareRemake.LootManagement
         [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
         [SerializeField] private List<LootData_ScriptableObject> _testLootDataToSpawnOnAwake;
 
+        private const int _lootPoolsStartingAmount = 17;
+
+        private Stack<LootView> _lootViewsPool = new Stack<LootView>(_lootPoolsStartingAmount);
+        private Stack<LootModel> _lootModelsPool = new Stack<LootModel>(_lootPoolsStartingAmount);
+
         private List<int> _testGoldSpawnList = new List<int>() { 1, 50, 300, 800, 5000, 10000, 316, 3576 };
+
+        private int _lootPrefabsPoolLastUsedIndex = 0;
         private int _testGoldSpawnIndex = 0;
+
+        #region MonoBehaviour
+        private void Awake()
+        {
+            ExpandLootViewsPool();
+            ExpandLootModelsPool();
+        }
+
+        #endregion
 
         #region Meat & Potatos
 
@@ -30,26 +46,27 @@ namespace ShadowFlareRemake.LootManagement
             return _playerStartingLoot;
         }
 
-        public void HandleLootDrop(int level, int lootDropChance, Vector3 enemyPosition)
+        public void HandleLootDrop(int level, int lootDropChance, Vector3 position)
         {
             var randomNum = Random.Range(0, 100);
 
             if(randomNum > lootDropChance)
                 return;
 
-            var loot = GenerateLoot(level);
+            var loot = GetGeneratedLootModel(level);
 
             if(loot == null)
                 return;
 
-            DropLootReward(loot, enemyPosition);
+            DropLoot(loot, position, true);
         }
 
-        private LootModel GenerateLoot(int level) // TODO: Guess
+        private LootModel GetGeneratedLootModel(int level) // TODO: Guess
         {
             var randomIndex = Random.Range(0, _lootDropsData.Count - 1);
             var lootData = _lootDropsData[randomIndex];
-            var lootModel = new LootModel(lootData);
+            var lootModel = GetLootModel();
+            lootModel.SetLootData(lootData, true);
 
             if(lootModel.LootCategory == LootCategory.Gold)
             {
@@ -61,22 +78,71 @@ namespace ShadowFlareRemake.LootManagement
             return lootModel;
         }
 
-        public GameObject InstantiateLootPrefab()
+        public void DropLoot(LootModel lootModel, Vector3 pos, bool useOffset)
         {
-            return Instantiate(_lootPrefab);
-        }
+            var lootView = GetLootView();
+            var randomOffsetX = 0f;
+            var randomOffsetZ = 0f;
 
-        private void DropLootReward(LootModel lootModel, Vector3 pos)
-        {
-            var loot = Instantiate(_lootPrefab, _lootParent);
+            if(useOffset)
+            {
+                randomOffsetX = Random.Range(-1f, 1f);
+                randomOffsetZ = Random.Range(-1f, 1f);
+            }
 
-            var randomOffsetX = Random.Range(-1f, 1f);
-            var randomOffsetZ = Random.Range(-1f, 1f);
-            loot.transform.position = new Vector3(pos.x + randomOffsetX, pos.y, pos.z + randomOffsetZ);
+            lootView.transform.position = new Vector3(pos.x + randomOffsetX, pos.y, pos.z + randomOffsetZ);
+            lootView.gameObject.SetActive(true);
 
-            var lootView = loot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
             lootModel.InvokeDropAnimation();
+        }
+
+        private void ExpandLootViewsPool()
+        {
+            for(int i = 0; i < _lootPoolsStartingAmount; i++)
+            {
+                var addedLootView = Instantiate(_lootPrefab, _lootParent);
+                _lootViewsPool.Push(addedLootView);
+                addedLootView.gameObject.SetActive(false);
+            }
+        }
+
+        public LootView GetLootView()
+        {
+            if(_lootViewsPool.Count == 0)
+            {
+                ExpandLootViewsPool();
+            }
+
+            return _lootViewsPool.Pop();
+        }
+
+        public void ReturnLootToPools(LootView lootView)
+        {
+            lootView.gameObject.SetActive(false);
+            _lootViewsPool.Push(lootView);
+
+            var lootModel = lootView.GetLootModel();
+            _lootModelsPool.Push(lootModel);
+        }
+
+        private void ExpandLootModelsPool()
+        {
+            for(int i = 0; i < _lootPoolsStartingAmount; i++)
+            {
+                var addedLootModel = new LootModel();
+                _lootModelsPool.Push(addedLootModel);
+            }
+        }
+
+        private LootModel GetLootModel()
+        {
+            if(_lootModelsPool.Count == 0)
+            {
+                ExpandLootModelsPool();
+            }
+
+            return _lootModelsPool.Pop();
         }
 
         #endregion
@@ -94,7 +160,7 @@ namespace ShadowFlareRemake.LootManagement
 
             foreach(var lootData in _testLootDataToSpawnOnAwake)
             {
-                TestSpawnLootLogic(lootData, spawnPosX, spawnPosZ);
+                TestSpawnLootLogic(lootData, spawnPosX, spawnPosZ, false);
 
                 if(isSecondRow)
                 {
@@ -109,15 +175,17 @@ namespace ShadowFlareRemake.LootManagement
                 isSecondRow = !isSecondRow;
             }
         }
+
         public void TestSpawnLootItem()
         {
             var pos = _lootParent.transform.position;
-            TestSpawnLootLogic(_testLootDataToSpawn, pos.x, pos.z);
+            TestSpawnLootLogic(_testLootDataToSpawn, pos.x, pos.z - 2, true);
         }
 
-        private void TestSpawnLootLogic(LootData_ScriptableObject lootData, float posX, float posZ)
+        private void TestSpawnLootLogic(LootData_ScriptableObject lootData, float posX, float posZ, bool isAnimatingDrop)
         {
-            var lootModel = new LootModel(lootData);
+            var lootModel = GetLootModel();
+            lootModel.SetLootData(lootData, true);
 
             if(lootModel.LootCategory == LootCategory.Gold)
             {
@@ -128,12 +196,17 @@ namespace ShadowFlareRemake.LootManagement
                 }
             }
 
-            var loot = Instantiate(_lootPrefab, _lootParent);
-            var pos = loot.transform.position;
-            loot.transform.position = new Vector3(posX, 0, posZ);
+            var lootView = GetLootView();
+            var pos = lootView.transform.position;
+            lootView.transform.position = new Vector3(posX, 0, posZ);
 
-            var lootView = loot.GetComponentInChildren<LootView>();
             lootView.SetModel(lootModel);
+            lootView.gameObject.SetActive(true);
+
+            if(isAnimatingDrop)
+            {
+                lootModel.InvokeDropAnimation();
+            }
         }
 
 #if UNITY_EDITOR

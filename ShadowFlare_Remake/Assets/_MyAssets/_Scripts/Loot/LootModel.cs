@@ -21,7 +21,14 @@ namespace ShadowFlareRemake.Loot
 
         #region Initialization
 
+        public LootModel() { }
+
         public LootModel(LootData_ScriptableObject lootData)
+        {
+            SetLootData(lootData, false);
+        }
+
+        public void SetLootData(LootData_ScriptableObject lootData, bool invokeChanged)
         {
             LootData = lootData;
             IsAllowedToSetLocalPosition = true;
@@ -30,6 +37,11 @@ namespace ShadowFlareRemake.Loot
             HighlightColor = new Color(Color.r + _highlightAdder, Color.g + _highlightAdder, Color.b + _highlightAdder, _alpha);
 
             SetLootCategory(lootData.LootType);
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
         }
 
         private void SetLootCategory(LootType lootType)

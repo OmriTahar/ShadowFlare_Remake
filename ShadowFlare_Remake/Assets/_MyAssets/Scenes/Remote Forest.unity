@@ -5211,7 +5211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lootParent: {fileID: 1971432786}
-  _lootPrefab: {fileID: 5221065971394155767, guid: 42f5cda6e9e1423459b29605d7a55b9e,
+  _lootPrefab: {fileID: 4310644639866030655, guid: 42f5cda6e9e1423459b29605d7a55b9e,
     type: 3}
   _playerStartingLoot:
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
@@ -5230,6 +5230,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
   - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
   - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
+  - {fileID: 11400000, guid: 06af98c5cc82f81469db023132ce3e38, type: 2}
   _lootDropsData:
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
   - {fileID: 11400000, guid: 3ddc7cc9074a6df469196ad0c4938484, type: 2}

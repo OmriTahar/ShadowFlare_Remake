@@ -321,6 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5221065971394155764}
   - component: {fileID: 6546220259579257766}
+  - component: {fileID: 4310644639866030655}
   m_Layer: 7
   m_Name: Loot_Prefab
   m_TagString: Untagged
@@ -366,6 +367,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4310644639866030655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221065971394155767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680f40f3407022249b960d56051187f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rect: {fileID: 0}
+  _image: {fileID: 0}
+  _nameText: {fileID: 1738042203073190429}
+  _animator: {fileID: 6546220259579257766}
+  _nameBackgroundImage: {fileID: 6014175864898547438}
+  _nameBG_EquipmentColor: {r: 0, g: 0.29803923, b: 1, a: 0.49019608}
+  _nameBG_GoldColor: {r: 0.67058825, g: 0.6901961, b: 0, a: 0.49019608}
+  _nameBG_PotionsColor: {r: 1, g: 0, b: 0.64280605, a: 0.49019608}
 --- !u!1 &9197321906997652547
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,11 +495,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1000014188511100, guid: 5dcae5adf53292945adef517afe8041e,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3260301018575255150}
-    - targetCorrespondingSourceObject: {fileID: 1000014188511100, guid: 5dcae5adf53292945adef517afe8041e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6014446571590141200}
+      addedObject: {fileID: 7879102624934744581}
   m_SourcePrefab: {fileID: 100100000, guid: 5dcae5adf53292945adef517afe8041e, type: 3}
 --- !u!23 &3319556778527854936 stripped
 MeshRenderer:
@@ -513,27 +530,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.05, y: 0.7, z: 0.65}
   m_Center: {x: 0, y: 0.35, z: 0}
---- !u!114 &3260301018575255150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3333601261051145792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 680f40f3407022249b960d56051187f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rect: {fileID: 0}
-  _image: {fileID: 0}
-  _nameText: {fileID: 1738042203073190429}
-  _animator: {fileID: 6546220259579257766}
-  _nameBackgroundImage: {fileID: 6014175864898547438}
-  _nameBG_EquipmentColor: {r: 0, g: 0.29803923, b: 1, a: 0.49019608}
-  _nameBG_GoldColor: {r: 0.67058825, g: 0.6901961, b: 0, a: 0.49019608}
-  _nameBG_PotionsColor: {r: 1, g: 0, b: 0.64280605, a: 0.49019608}
---- !u!114 &6014446571590141200
+--- !u!114 &7879102624934744581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

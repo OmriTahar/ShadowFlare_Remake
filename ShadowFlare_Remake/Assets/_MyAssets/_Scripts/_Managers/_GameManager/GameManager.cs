@@ -53,7 +53,6 @@ namespace ShadowFlareRemake.GameManagement
 
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
-        private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
@@ -67,7 +66,6 @@ namespace ShadowFlareRemake.GameManagement
             HandleInitializtion();
             RegisterEvents();
 
-            GivePlayerStartingLoot();
             _lootManager.HandleTestSpawnLoot();
         }
 
@@ -96,7 +94,7 @@ namespace ShadowFlareRemake.GameManagement
         {
             _uiManager.InitUiManager(_inputManager);
             _uiManager.InitPlayerFullStats(_playerUnit, _playerEquippedGearAddedStats);
-            _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); 
+            HandlePlayerEquippedGearStats(_uiManager.GetPlayerCurrentlyEquippedGearData());
             _uiManager.SetPlayerSkills(GetPlayerSkills());
             _uiManager.SetPlayerActiveSkill(SkillType.MeleeAttack);
         }
@@ -349,7 +347,6 @@ namespace ShadowFlareRemake.GameManagement
         {
             _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
             var playerSkills = GetPlayerSkills();
-
             _playerUnit = new Unit(_playerUnitStats, playerSkills);
             _playerModel = new PlayerModel(_playerUnit);
 
@@ -357,6 +354,7 @@ namespace ShadowFlareRemake.GameManagement
             _playerModel.SetActiveSkill(meleeSkill);
 
             _playerController.InitPlayer(_playerModel, _inputManager);
+            GivePlayerStartingLoot();
         }
 
         private void HandlePlayerGotHit(Attack attack)
@@ -374,16 +372,16 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerPickUpLootFromTheGround(Collider lootCollider)
         {
-            _lastPickedUpLootView = lootCollider.GetComponent<LootView>();
-            _lastPickedUpLootView.gameObject.SetActive(false);
-            var lootModel = _lastPickedUpLootView.GetLootModel();
+            var lootView = lootCollider.GetComponentInParent<LootView>();
+            var lootModel = lootView.GetLootModel();
 
             if(!_uiManager.TryPickUpLootFromTheGround(lootModel))
             {
-                _lastPickedUpLootView.gameObject.SetActive(true);
                 lootModel.InvokeDropAnimation();
                 return;
             }
+
+            _lootManager.ReturnLootToPools(lootView);
 
             if(lootModel.LootCategory == LootCategory.Equipment)
             {
@@ -393,12 +391,8 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerDropLootToTheGround(LootModel lootModel)
         {
-            var worldLoot = _lootManager.InstantiateLootPrefab();
-            worldLoot.transform.position = GetPlayerDroppingLootPos();
-
-            var lootView = worldLoot.GetComponentInChildren<LootView>();
-            lootView.SetModel(lootModel);
-            lootModel.InvokeDropAnimation();
+            var dropPosition = GetPlayerDroppingLootPos();
+            _lootManager.DropLoot(lootModel, dropPosition, false);
 
             HandlePlayerHoldingLoot(false);
             _playerController.SetIsLastActionWasMove(false);
