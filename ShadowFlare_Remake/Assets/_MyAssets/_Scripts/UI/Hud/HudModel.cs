@@ -61,9 +61,9 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetExp(int currentExp, int expToNextLevel, bool invokeChanged = true)
+        public void SetExp(int currentExp, int expToNextLevel)
         {
-            var isExpChanged = CurrentExp == currentExp && ExpToLevelUp == expToNextLevel;
+            var isExpChanged = CurrentExp != currentExp || ExpToLevelUp != expToNextLevel;
 
             if(!isExpChanged)
                 return;
@@ -73,7 +73,7 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetLevel(int newLevel, bool invokeChanged = true)
+        public void SetLevel(int newLevel)
         {
             if(Level == newLevel)
                 return;
@@ -82,17 +82,13 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetIsCloseButtonActive(bool isCloseButtonActive, bool InvokeChanged = false)
+        public void SetIsCloseButtonActive(bool isCloseButtonActive)
         {
             if(IsCloseButtonActive == isCloseButtonActive)
                 return;
 
             IsCloseButtonActive = isCloseButtonActive;
-
-            if(InvokeChanged)
-            {
-                Changed();
-            }
+            Changed();
         }
 
         private bool IsVitalsChanged(int currentHP, int maxHP, int currentMP, int maxMP)

@@ -428,8 +428,8 @@ namespace ShadowFlareRemake.UIManagement
 
             SetPlayerVitals(unit.CurrentHP, stats.MaxHP, unit.CurrentMP, stats.MaxMP);
             SetPlayerExp(stats.CurrentExp, stats.ExpToLevelUp);
-            SetPlayerStats(false);
             SetPlayerLevel(stats.Level);
+            SetPlayerStats(false);
         }
 
         public void SetPlayerVitals(int currentHP, int maxHP, int currentMP, int maxMP)

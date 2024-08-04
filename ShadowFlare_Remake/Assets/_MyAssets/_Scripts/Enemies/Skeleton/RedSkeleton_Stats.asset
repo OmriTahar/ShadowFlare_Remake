@@ -20,10 +20,10 @@ MonoBehaviour:
   <Scale>k__BackingField: 22
   <EvolutionLevel>k__BackingField: 2
   ______REWARDS_____: ------------------------------------
-  <ExpReward>k__BackingField: 15
+  <ExpReward>k__BackingField: 10
   <LootDropChance>k__BackingField: 100
   ______PHYSICAL_____: ------------------------------------
-  <MaxHP>k__BackingField: 25
+  <MaxHP>k__BackingField: 48
   <Attack>k__BackingField: 20
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1
@@ -38,3 +38,5 @@ MonoBehaviour:
   <MagicalHitRate>k__BackingField: 1
   <MagicalEvasionRate>k__BackingField: 1
   <MagicalAttackSpeed>k__BackingField: 1
+  ______SKILLS_____: ------------------------------------
+  <Skills>k__BackingField: []

@@ -201,7 +201,6 @@ namespace ShadowFlareRemake.UI.Hud
             }
         }
 
-
         private void SetVitalSlidersMaxValue(Slider vitalSlider, Slider restoreSlider, Slider reduceSlider, bool isHealthSlider)
         {
             var amount = isHealthSlider ? Model.MaxHP : Model.MaxMP;
