@@ -290,7 +290,6 @@ namespace ShadowFlareRemake.GameManagement
             return skillsList;
         }
 
-
         private bool IsValidEnemyToSpawn(EnemyToSpawn enemyToSpawn)
         {
             if(enemyToSpawn == null || enemyToSpawn.EnemyPrefab == null || enemyToSpawn.EnemyUnit == null || !enemyToSpawn.isActiveAndEnabled)
@@ -381,7 +380,7 @@ namespace ShadowFlareRemake.GameManagement
                 return;
             }
 
-            _lootManager.ReturnLootToPools(lootView);
+            _lootManager.ReturnLootToPools(lootView, lootModel);
 
             if(lootModel.LootCategory == LootCategory.Equipment)
             {
@@ -497,14 +496,8 @@ namespace ShadowFlareRemake.GameManagement
 
         private void GivePlayerStartingLoot()
         {
-            var startingLootData = _lootManager.GetPlayerStartingLoot();
-            var startingLootModels = new List<LootModel>();
-
-            foreach(var data in startingLootData)
-            {
-                startingLootModels.Add(new LootModel(data));
-            }
-
+            var startingLootModels = _lootManager.GetPlayerStartingLoot();
+           
             foreach(var lootModel in startingLootModels)
             {
                 _uiManager.TryPickUpLootFromTheGround(lootModel);

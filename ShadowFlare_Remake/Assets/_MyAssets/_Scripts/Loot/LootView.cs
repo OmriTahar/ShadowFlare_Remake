@@ -67,6 +67,7 @@ namespace ShadowFlareRemake.Loot
             }
 
             _name = Model.LootData.Name;
+            name = Model.LootData.Name;
             _sprite = Model.LootData.Sprite;
             _width = Model.LootData.Width;
             _height = Model.LootData.Height;
