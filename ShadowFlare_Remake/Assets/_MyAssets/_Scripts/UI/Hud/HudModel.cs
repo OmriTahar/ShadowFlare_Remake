@@ -61,9 +61,9 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetExp(int currentExp, int expToNextLevel, bool invokeChanged = true)
+        public void SetExp(int currentExp, int expToNextLevel)
         {
-            var isExpChanged = CurrentExp == currentExp && ExpToLevelUp == expToNextLevel;
+            var isExpChanged = CurrentExp != currentExp || ExpToLevelUp != expToNextLevel;
 
             if(!isExpChanged)
                 return;
@@ -73,7 +73,7 @@ namespace ShadowFlareRemake.UI.Hud
             Changed();
         }
 
-        public void SetLevel(int newLevel, bool invokeChanged = true)
+        public void SetLevel(int newLevel)
         {
             if(Level == newLevel)
                 return;
