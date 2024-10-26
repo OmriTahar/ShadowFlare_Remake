@@ -4309,6 +4309,159 @@ MonoBehaviour:
       m_Action: Num Eight_Keyboard Click
       m_Flags: 0
     m_Flags: 0
+  F1_KeyboardClickAction:
+    m_Name: F1_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a808945c-4890-41cd-a50d-04021ad0b6c4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 416e1c22-fb1b-4bb6-9083-7f638b714718
+      m_Path: <Keyboard>/f1
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F1_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F2_KeyboardClickAction:
+    m_Name: F2_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ed17dea8-5859-4015-ab91-2ecb825c5436
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: fb06e68b-9661-45ba-b743-e958fe2912ad
+      m_Path: <Keyboard>/f2
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F2_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F3_KeyboardClickAction:
+    m_Name: F3_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 11f84920-ee6d-4607-8a6a-011c083f1766
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: aeceebb9-0020-4d5c-aa32-bdb700758380
+      m_Path: <Keyboard>/f3
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F3_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F4_KeyboardClickAction:
+    m_Name: F4_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 02b56896-28ca-4385-b730-c4f858d1b61d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 5bb250af-ccbf-4474-bcae-4a8c946e533d
+      m_Path: <Keyboard>/f4
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F4_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F5_KeyboardClickAction:
+    m_Name: F5_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: da3d69f9-0293-4b7e-aa44-8bd64a0fb5da
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 39363a61-89c6-4d12-8004-1e5af250e7da
+      m_Path: <Keyboard>/f5
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F5_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F6_KeyboardClickAction:
+    m_Name: F6_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: eb815f28-52be-478f-9f42-b1af39e735d7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: bd6917cd-0f09-4b1f-a870-c3b23108e82e
+      m_Path: <Keyboard>/f6
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F6_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F7_KeyboardClickAction:
+    m_Name: F7_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1d171b9b-57e3-4e88-8d03-a1171948da1c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: c51a7e55-5b63-41f8-8880-7585480d1ff2
+      m_Path: <Keyboard>/f7
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F7_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F8_KeyboardClickAction:
+    m_Name: F8_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fc3af2bc-84ca-46b4-aae8-2134520b6cd0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 9dfd47c2-0e5f-421f-927e-448710ebb828
+      m_Path: <Keyboard>/f8
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F8_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
+  F9_KeyboardClickAction:
+    m_Name: F9_Keyboard Click
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 5ea65a5c-0fb9-4574-9116-fb2ef4a24898
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 7cd3948f-fb44-433e-84c3-b8f041f5b1f6
+      m_Path: <Keyboard>/f9
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: F9_Keyboard Click
+      m_Flags: 0
+    m_Flags: 0
 --- !u!4 &440198285
 Transform:
   m_ObjectHideFlags: 0

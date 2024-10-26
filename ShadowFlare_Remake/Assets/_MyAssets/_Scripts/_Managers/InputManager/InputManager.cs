@@ -36,6 +36,19 @@ namespace ShadowFlareRemake.InputManagement
         [SerializeField] private InputAction NumSeven_KeyboardClickAction;
         [SerializeField] private InputAction NumEight_KeyboardClickAction;
 
+        [Space(10)]
+        [Header("----- Keyboard F Keys Input Actions -----")]
+        [Space(5)]
+        [SerializeField] private InputAction F1_KeyboardClickAction;
+        [SerializeField] private InputAction F2_KeyboardClickAction;
+        [SerializeField] private InputAction F3_KeyboardClickAction;
+        [SerializeField] private InputAction F4_KeyboardClickAction;
+        [SerializeField] private InputAction F5_KeyboardClickAction;
+        [SerializeField] private InputAction F6_KeyboardClickAction;
+        [SerializeField] private InputAction F7_KeyboardClickAction;
+        [SerializeField] private InputAction F8_KeyboardClickAction;
+        [SerializeField] private InputAction F9_KeyboardClickAction;
+
         public Collider CurrentRaycastHitCollider { get; private set; }
         public RaycastHit CurrentRaycastHit { get; private set; }
         public Vector3 CurrentMousePosition { get; private set; }
@@ -116,6 +129,16 @@ namespace ShadowFlareRemake.InputManagement
                 NumSix_KeyboardClickAction.Enable();
                 NumSeven_KeyboardClickAction.Enable();
                 NumEight_KeyboardClickAction.Enable();
+
+                F1_KeyboardClickAction.Enable();
+                F2_KeyboardClickAction.Enable();
+                F3_KeyboardClickAction.Enable();
+                F4_KeyboardClickAction.Enable();
+                F5_KeyboardClickAction.Enable();
+                F6_KeyboardClickAction.Enable();
+                F7_KeyboardClickAction.Enable();
+                F8_KeyboardClickAction.Enable();
+                F9_KeyboardClickAction.Enable();
             }
             else
             {
@@ -134,6 +157,16 @@ namespace ShadowFlareRemake.InputManagement
                 NumSix_KeyboardClickAction.Disable();
                 NumSeven_KeyboardClickAction.Disable();
                 NumEight_KeyboardClickAction.Disable();
+
+                F1_KeyboardClickAction.Disable();
+                F2_KeyboardClickAction.Disable();
+                F3_KeyboardClickAction.Disable();
+                F4_KeyboardClickAction.Disable();
+                F5_KeyboardClickAction.Disable();
+                F6_KeyboardClickAction.Disable();
+                F7_KeyboardClickAction.Disable();
+                F8_KeyboardClickAction.Disable();
+                F9_KeyboardClickAction.Disable();
             }
         }
 
@@ -326,6 +359,96 @@ namespace ShadowFlareRemake.InputManagement
 
                 case PlayerKeyboardNumsInputType.NumEight:
                     NumEight_KeyboardClickAction.performed -= action;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType inputType, Action<InputAction.CallbackContext> action)
+        {
+            switch(inputType)
+            {
+                case PlayerKeyboardFKeysInputType.F1:
+                    F1_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F2:
+                    F2_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F3:
+                    F3_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F4:
+                    F4_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F5:
+                    F5_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F6:
+                    F6_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F7:
+                    F7_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F8:
+                    F8_KeyboardClickAction.performed += action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F9:
+                    F9_KeyboardClickAction.performed += action;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType inputType, Action<InputAction.CallbackContext> action)
+        {
+            switch(inputType)
+            {
+                case PlayerKeyboardFKeysInputType.F1:
+                    F1_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F2:
+                    F2_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F3:
+                    F3_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F4:
+                    F4_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F5:
+                    F5_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F6:
+                    F6_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F7:
+                    F7_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F8:
+                    F8_KeyboardClickAction.performed -= action;
+                    break;
+
+                case PlayerKeyboardFKeysInputType.F9:
+                    F9_KeyboardClickAction.performed -= action;
                     break;
 
                 default:

@@ -125,6 +125,7 @@ namespace ShadowFlareRemake.UI.Hud
         {
             ISkillData meleeSkill = null;
             var barIndex = 0;
+            var lastSkillsBarIndex = _skillsAmount - 1;
 
             foreach(var skill in playerSkills)
             {
@@ -135,10 +136,12 @@ namespace ShadowFlareRemake.UI.Hud
                 }
 
                 SkillModels[barIndex].SetSkillData(skill);
+                SkillModels[barIndex].SetIndexInSkillsBar(barIndex);
                 barIndex++;
             }
 
-            SkillModels[_skillsAmount - 1].SetSkillData(meleeSkill);
+            SkillModels[lastSkillsBarIndex].SetSkillData(meleeSkill);
+            SkillModels[lastSkillsBarIndex].SetIndexInSkillsBar(barIndex);
             Changed();
         }
 

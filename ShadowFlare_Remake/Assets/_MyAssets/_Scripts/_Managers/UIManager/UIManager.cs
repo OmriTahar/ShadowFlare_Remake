@@ -74,6 +74,22 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
+        #region Skill Selection Variables
+
+        private Dictionary<string, int> _skillSelectionIndexesDict = new();
+
+        private const string _f1_SkillSelectionActionName = "F1_Keyboard Click";
+        private const string _f2_SkillSelectionActionName = "F2_Keyboard Click";
+        private const string _f3_SkillSelectionActionName = "F3_Keyboard Click";
+        private const string _f4_SkillSelectionActionName = "F4_Keyboard Click";
+        private const string _f5_SkillSelectionActionName = "F5_Keyboard Click";
+        private const string _f6_SkillSelectionActionName = "F6_Keyboard Click";
+        private const string _f7_SkillSelectionActionName = "F7_Keyboard Click";
+        private const string _f8_SkillSelectionActionName = "F8_Keyboard Click";
+        private const string _f9_SkillSelectionActionName = "F9_Keyboard Click";
+
+        #endregion
+
         #region MonoBehaviour
 
         protected override void Awake()
@@ -82,6 +98,7 @@ namespace ShadowFlareRemake.UIManagement
             CacheNulls();
             InitModels();
             InitQuickItemsIndexesDict();
+            InitSkillSelectionIndexesDict();
             SetScreenSize();
         }
 
@@ -147,6 +164,19 @@ namespace ShadowFlareRemake.UIManagement
             _quickItemsIndexesDict.Add(_numSix_QuickItemActionName, _numSix_QuickItemIndex);
             _quickItemsIndexesDict.Add(_numSeven_QuickItemActionName, _numSeven_QuickItemIndex);
             _quickItemsIndexesDict.Add(_numEight_QuickItemActionName, _numEight_QuickItemIndex);
+        }
+
+        private void InitSkillSelectionIndexesDict()
+        {
+            _skillSelectionIndexesDict.Add(_f1_SkillSelectionActionName, 0);
+            _skillSelectionIndexesDict.Add(_f2_SkillSelectionActionName, 1);
+            _skillSelectionIndexesDict.Add(_f3_SkillSelectionActionName, 2);
+            _skillSelectionIndexesDict.Add(_f4_SkillSelectionActionName, 3);
+            _skillSelectionIndexesDict.Add(_f5_SkillSelectionActionName, 4);
+            _skillSelectionIndexesDict.Add(_f6_SkillSelectionActionName, 5);
+            _skillSelectionIndexesDict.Add(_f7_SkillSelectionActionName, 6);
+            _skillSelectionIndexesDict.Add(_f8_SkillSelectionActionName, 7);
+            _skillSelectionIndexesDict.Add(_f9_SkillSelectionActionName, 8);
         }
 
         private void SetScreenSize()
@@ -489,6 +519,17 @@ namespace ShadowFlareRemake.UIManagement
             OnHudSkillItemClicked?.Invoke(skillData);
         }
 
+        private void HandleKeyboardFKeysClicked(InputAction.CallbackContext context)
+        {
+            var index = _skillSelectionIndexesDict[context.action.name];
+            var skillModel = _hudModel.SkillModels[index];
+
+            if(skillModel == null || skillModel.SkillData == null)
+                return;
+
+            OnHudSkillItemClicked?.Invoke(skillModel.SkillData);
+        }
+
         #endregion
 
         #region UI Screen Cover
@@ -600,6 +641,17 @@ namespace ShadowFlareRemake.UIManagement
                 _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
                 _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
                 _inputReader.ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
+
+                // Keyboard F Keys
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F1, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F2, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F3, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F4, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F5, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F6, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F7, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F8, HandleKeyboardFKeysClicked);
+                _inputReader.ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F9, HandleKeyboardFKeysClicked);
             }
             else
             {
@@ -619,6 +671,17 @@ namespace ShadowFlareRemake.UIManagement
                 _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSix, HandleKeyboardNumClicked);
                 _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumSeven, HandleKeyboardNumClicked);
                 _inputReader.DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType.NumEight, HandleKeyboardNumClicked);
+
+                // Keyboard F Keys
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F1, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F2, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F3, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F4, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F5, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F6, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F7, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F8, HandleKeyboardFKeysClicked);
+                _inputReader.DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType.F9, HandleKeyboardFKeysClicked);
             }
         }
 

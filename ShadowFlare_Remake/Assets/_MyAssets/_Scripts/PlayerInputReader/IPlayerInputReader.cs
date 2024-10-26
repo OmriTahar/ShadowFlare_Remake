@@ -26,5 +26,8 @@ namespace ShadowFlareRemake.PlayerInputReader
 
         void ResigterToKeyboardNumsInputAction(PlayerKeyboardNumsInputType inputType, Action<InputAction.CallbackContext> action);
         void DeresigterFromKeyboardNumsInputAction(PlayerKeyboardNumsInputType inputType, Action<InputAction.CallbackContext> action);
+
+        void ResigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType inputType, Action<InputAction.CallbackContext> action);
+        void DeresigterToKeyboardFKeysInputAction(PlayerKeyboardFKeysInputType inputType, Action<InputAction.CallbackContext> action);
     }
 }
