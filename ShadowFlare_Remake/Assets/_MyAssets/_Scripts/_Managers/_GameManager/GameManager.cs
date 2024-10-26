@@ -347,7 +347,8 @@ namespace ShadowFlareRemake.GameManagement
 
         private void InitPlayer()
         {
-            _playerUnitStats = new PlayerUnitStats(_playerUnitStatsToCopy);
+            _playerUnitStats = ScriptableObject.CreateInstance<PlayerUnitStats>();
+            _playerUnitStats.SetStatsFromCopy(_playerUnitStatsToCopy);
             var playerSkills = GetPlayerSkills();
 
             _playerUnit = new Unit(_playerUnitStats, playerSkills);

@@ -58,7 +58,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
 
         #endregion
 
-        public PlayerUnitStats(PlayerUnitStats statsToCopy)
+        public void SetStatsFromCopy(PlayerUnitStats statsToCopy)
         {
             Vocation = statsToCopy.Vocation;
             Strength = statsToCopy.Strength;
