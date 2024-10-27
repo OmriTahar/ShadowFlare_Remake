@@ -34,7 +34,6 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] private FadingObject _fadingObject;
 
         [Header("Settings")]
-        [SerializeField] private Vector3 _healthBarStabilizer;
         [SerializeField] private bool _useSkinnedMeshRenderer;
 
         private int _lastSeenHP;
@@ -77,11 +76,6 @@ namespace ShadowFlareRemake.Enemies
         #endregion
 
         #region MonoBehaviour
-
-        private void FixedUpdate()
-        {
-            //StabilizeHpSlider();
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -248,11 +242,6 @@ namespace ShadowFlareRemake.Enemies
         public void FinishedDeathAnimation() // Called from an animation event 
         {
             FadeOut();
-        }
-
-        private void StabilizeHpSlider()
-        {
-            _healthSliderTransform.rotation = Quaternion.Euler(_healthBarStabilizer);
         }
 
         #endregion

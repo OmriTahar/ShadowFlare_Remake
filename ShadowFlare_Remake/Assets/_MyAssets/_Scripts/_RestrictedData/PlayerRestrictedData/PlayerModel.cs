@@ -60,6 +60,18 @@ namespace ShadowFlareRemake.PlayerRestrictedData
         public override void SetIsMoving(bool isMoving)
         {
             IsMoving = isMoving;
+
+            if(isMoving)
+            {
+                SetIsTalking(false, false);
+            }
+
+            Changed();
+        }
+
+        public override void SetIsTalking(bool isTalking, bool invokeChanged = true)
+        {
+            IsTalking = isTalking;
             Changed();
         }
 

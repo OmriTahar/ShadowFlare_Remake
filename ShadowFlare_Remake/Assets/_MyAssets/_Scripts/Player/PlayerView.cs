@@ -25,6 +25,7 @@ namespace ShadowFlareRemake.Player
         private readonly int _magicalAttackAnimSpeedParam = Animator.StringToHash("MagicalAttackAnimSpeed");
 
         private const string _isMovingBool = "IsMoving";
+        private const string _isTalkingBool = "IsTalking";
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
         private const string _castSpellMeteorTrigger = "CastSpell_Meteor";
@@ -54,6 +55,7 @@ namespace ShadowFlareRemake.Player
         {
             SetAnimationsSpeed();
             SetIsMovingAnimation();
+            SetIsTalkingAnimation();
             HandleHitEffect();
             HandleHP();
 
@@ -133,6 +135,11 @@ namespace ShadowFlareRemake.Player
         private void SetIsMovingAnimation()
         {
             _playerAnimator.SetBool(_isMovingBool, Model.IsMoving);
+        }
+
+        private void SetIsTalkingAnimation()
+        {
+            _playerAnimator.SetBool(_isTalkingBool, Model.IsTalking);
         }
 
         private void HandleAttackAnimations()

@@ -160,6 +160,13 @@ namespace ShadowFlareRemake.Player
                 selectedCoroutine = MoveAndAttackLogic(enemyPos);
                 SetIsLastActionWasMove(false);
             }
+            else if(_inputReader.IsCursorOnNPC)
+            {
+                var hitCollider = _inputReader.CurrentRaycastHitCollider;
+                var npcPos = hitCollider.transform.position;
+                selectedCoroutine = MoveAndTalkLogic(npcPos);
+                SetIsLastActionWasMove(false);
+            }
             else if(_inputReader.IsCursorOnItem)
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
@@ -236,6 +243,34 @@ namespace ShadowFlareRemake.Player
             _model.SetIsMoving(false);
 
             Attack(false);
+        }
+
+        private IEnumerator MoveAndTalkLogic(Vector3 targetPos)
+        {
+            targetPos.y = 0f;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
+
+            if(Vector3.Distance(transform.position, targetPos) <= _attackDistance)
+            {
+                var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
+                transform.LookAt(targetDirection);
+                _model.SetIsTalking(true);
+                yield break;
+            }
+
+            _model.SetIsMoving(true);
+
+            while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
+            {
+                Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
+                Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            _model.SetIsMoving(false);
+            _model.SetIsTalking(true);
         }
 
         private void UseSkillAtDirection(InputAction.CallbackContext context)
