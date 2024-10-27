@@ -496,7 +496,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5388307940072675350}
-  m_LocalRotation: {x: 0.31287053, y: 0.32969674, z: -0.14005245, w: 0.87965757}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
@@ -506,10 +506,10 @@ RectTransform:
   - {fileID: 8206127180800426773}
   - {fileID: 1555294770630496756}
   m_Father: {fileID: 5209516796046941800}
-  m_LocalEulerAnglesHint: {x: 40, y: 40, z: -3}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.9}
   m_SizeDelta: {x: 60, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6540207488409775401
@@ -589,17 +589,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8492525189691213289}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.09904577, y: 0.89239913, z: -0.23911765, w: 0.3696438}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5488867904597944236}
   m_Father: {fileID: 6330140032925643382}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 135, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4}
+  m_AnchoredPosition: {x: 0, y: 2.5}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1596550160243294088
@@ -1453,7 +1453,7 @@ MonoBehaviour:
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
   _nameHolder: {fileID: 5388307940072675350}
   _enemyView: {fileID: 7970543067481453309}
-  _highlightIntensity: 0.5
+  _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 1
 --- !u!114 &7970543067481453309
 MonoBehaviour:
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7babf075910109045965916a0a4a7cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <DamageType>k__BackingField: 1
+  <SkillType>k__BackingField: 0
 --- !u!137 &1929619644779240721 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 13700002, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0,

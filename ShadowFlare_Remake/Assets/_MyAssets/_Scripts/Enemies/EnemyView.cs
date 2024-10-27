@@ -80,7 +80,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void FixedUpdate()
         {
-            StabilizeHpSlider();
+            //StabilizeHpSlider();
         }
 
         private void OnTriggerEnter(Collider other)
