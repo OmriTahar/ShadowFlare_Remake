@@ -6,6 +6,7 @@ namespace ShadowFlareRemake {
         protected int PlayerLayer;
         protected int GroundLayer;
         protected int EnemyLayer;
+        protected int NpcLayer;
         protected int ItemLayer;
         protected int UILayer;
 
@@ -22,6 +23,7 @@ namespace ShadowFlareRemake {
             PlayerLayer = LayerMask.NameToLayer("Player");
             GroundLayer = LayerMask.NameToLayer("Ground");
             EnemyLayer = LayerMask.NameToLayer("Enemy");
+            NpcLayer = LayerMask.NameToLayer("NPC");
             ItemLayer = LayerMask.NameToLayer("Item");
             UILayer = LayerMask.NameToLayer("UI");
         }

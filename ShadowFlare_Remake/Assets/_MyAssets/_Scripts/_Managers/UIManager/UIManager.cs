@@ -207,6 +207,10 @@ namespace ShadowFlareRemake.UIManagement
             {
                 _curserModel.SetCursorIconState(CursorIconState.PickUp);
             }
+            else if(_inputReader.IsCursorOnNPC)
+            {
+                _curserModel.SetCursorIconState(CursorIconState.NPC);
+            }
             else
                 _curserModel.SetCursorIconState(CursorIconState.Other);
         }

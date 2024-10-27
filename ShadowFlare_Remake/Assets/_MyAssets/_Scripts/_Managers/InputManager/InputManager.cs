@@ -58,6 +58,7 @@ namespace ShadowFlareRemake.InputManagement
 
         public bool IsCursorOnGround { get; private set; }
         public bool IsCursorOnEnemy { get; private set; }
+        public bool IsCursorOnNPC { get; private set; }
         public bool IsCursorOnItem { get; private set; }
         public bool IsCursorOnUI { get; private set; }
 
@@ -200,6 +201,7 @@ namespace ShadowFlareRemake.InputManagement
 
                 IsCursorOnGround = raycastLayer.CompareTo(GroundLayer) == 0;
                 IsCursorOnEnemy = raycastLayer.CompareTo(EnemyLayer) == 0;
+                IsCursorOnNPC = raycastLayer.CompareTo(NpcLayer) == 0;
                 IsCursorOnItem = raycastLayer.CompareTo(ItemLayer) == 0;
             }
         }

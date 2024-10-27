@@ -12,6 +12,7 @@ namespace ShadowFlareRemake.PlayerInputReader
 
         bool IsCursorOnGround { get; }
         bool IsCursorOnEnemy { get; }
+        bool IsCursorOnNPC { get; }
         bool IsCursorOnItem { get; }
         bool IsCursorOnUI { get; }
 
