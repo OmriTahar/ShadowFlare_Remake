@@ -8,6 +8,7 @@ using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
+using ShadowFlareRemake.NPC;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
@@ -53,6 +54,7 @@ namespace ShadowFlareRemake.GameManagement
 
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
+        private NpcView _lastNpcView;
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
@@ -125,12 +127,14 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit += HandlePlayerGotHit;
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack += HandlePlayerAttack;
+                _playerController.OnTalkingToNpc += HandlePlayerTalkingToNpc;
             }
             else
             {
                 _playerController.OnIGotHit -= HandlePlayerGotHit;
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack -= HandlePlayerAttack;
+                _playerController.OnTalkingToNpc -= HandlePlayerTalkingToNpc;
             }
         }
 
@@ -179,6 +183,7 @@ namespace ShadowFlareRemake.GameManagement
             if(IsValidHighlightableObject(hitCollider))
             {
                 HighlightObject(hitCollider);
+                CacheLatestNpcView();
                 return;
             }
 
@@ -210,6 +215,11 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastHighlighted_GameObject = newObject;
             _lastHighlightable = newHighlightable;
+        }
+
+        private void CacheLatestNpcView()
+        {
+            _lastNpcView = _lastHighlightable.GetNpcView();
         }
 
         #endregion
@@ -497,6 +507,31 @@ namespace ShadowFlareRemake.GameManagement
                 _playerModel.SetAttackState(true, true);
             }
         }
+
+        private void HandlePlayerTalkingToNpc()
+        {
+            if(_lastNpcView == null)
+            {
+                return;
+            }
+
+            _lastHighlightable.SetIsNameHolderEnabled(false);
+
+            var speech = _lastNpcView.GetCurrentSpeech();
+
+            if(speech == null)
+            {
+                return;
+            }
+
+            print(speech);
+        }
+
+        #endregion
+
+        #region NPC's
+
+
 
         #endregion
 

@@ -144,8 +144,9 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
-  m_sharedMaterial: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 335f53585a88aed4594839bd49e41897, type: 2}
+  m_sharedMaterial: {fileID: -7312110126605548529, guid: 335f53585a88aed4594839bd49e41897,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8
+  m_fontSize: 10
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1476,8 +1477,8 @@ MonoBehaviour:
   _animator: {fileID: 1929619644783485907}
   _vfxView: {fileID: 715006787454672085}
   _fadingObject: {fileID: 4901277643235306858}
-  _healthBarStabilizer: {x: 40, y: 40, z: -3}
   _useSkinnedMeshRenderer: 1
+  _healthBarStabilizer: {x: 40, y: 40, z: -3}
 --- !u!1 &1929619644776058997 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100038, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0,

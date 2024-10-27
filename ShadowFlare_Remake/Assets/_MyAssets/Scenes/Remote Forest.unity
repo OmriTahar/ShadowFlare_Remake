@@ -6654,6 +6654,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1142288575}
     m_Modifications:
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speech.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speeches.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speech.Array.data[0]
+      value: Hi my name is ronen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speech.Array.data[1]
+      value: How can i be of service?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speeches.Array.data[0]
+      value: Hi my name is ronen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speeches.Array.data[1]
+      value: I run this town bitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _speeches.Array.data[2]
+      value: How can i be of service?
+      objectReference: {fileID: 0}
     - target: {fileID: 5251107426523682287, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9185,7 +9220,7 @@ Transform:
   m_GameObject: {fileID: 866406399}
   serializedVersion: 2
   m_LocalRotation: {x: 0.4008975, y: 0.19305384, z: -0.15089756, w: 0.8827465}
-  m_LocalPosition: {x: -10.5, y: 12.5, z: -6.5}
+  m_LocalPosition: {x: -9, y: 12.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

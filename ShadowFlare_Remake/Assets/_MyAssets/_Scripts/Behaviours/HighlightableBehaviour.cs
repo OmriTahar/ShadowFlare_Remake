@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.NPC;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Behaviours
@@ -15,15 +16,19 @@ namespace ShadowFlareRemake.Behaviours
 
         [Header("Other")]
         [SerializeField] private EnemyView _enemyView;
+        [SerializeField] private NpcView _npcView;
 
         [Header("Settings")]
         [SerializeField] private float _highlightIntensity = 0.2f;
         [SerializeField] private bool _useSkinnedMeshRenderer;
+        [SerializeField] private bool _isDisplayingNameUponHover;
 
         private Color _color;
         private Color _highlightColor;
 
         private const string _highlightableTag = "Highlightable";
+
+        #region MonoBehaviour
 
         private void Start()
         {
@@ -42,6 +47,10 @@ namespace ShadowFlareRemake.Behaviours
             DeregisterEvents();
         }
 
+        #endregion
+
+        #region Initialization
+
         private void InitTag()
         {
             if(gameObject.tag != _highlightableTag)
@@ -55,6 +64,10 @@ namespace ShadowFlareRemake.Behaviours
             _color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
             _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
         }
+
+        #endregion
+
+        #region Events
 
         private void RegisterEvents()
         {
@@ -72,6 +85,10 @@ namespace ShadowFlareRemake.Behaviours
             _enemyView.OnDeath -= DisableHighlightable;
         }
 
+        #endregion
+
+        #region Meat & Potatos
+
         public void SetIsHighlighted(bool isHighlighted)
         {
             if(IsHighlighted == isHighlighted)
@@ -83,7 +100,7 @@ namespace ShadowFlareRemake.Behaviours
 
         private void HandleIsHighlightedLogic()
         {
-            _nameHolder.gameObject.SetActive(IsHighlighted);
+            SetIsNameHolderEnabled(IsHighlighted);
 
             if(_useSkinnedMeshRenderer)
             {
@@ -94,10 +111,27 @@ namespace ShadowFlareRemake.Behaviours
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
         }
 
+        public void SetIsNameHolderEnabled(bool isEnabled)
+        {
+            _nameHolder.gameObject.SetActive(isEnabled);
+        }
+
+        public void SetIsSpeechBubbleEnabled()
+        {
+            // Continue from here 
+        }
+
         private void DisableHighlightable()
         {
             IsHighlightable = false;
             SetIsHighlighted(false);
         }
+
+        public NpcView GetNpcView()
+        {
+            return _npcView;
+        }
+
+        #endregion
     }
 }

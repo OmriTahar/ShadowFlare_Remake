@@ -1,6 +1,5 @@
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.PlayerInputReader;
-using ShadowFlareRemake.Skills;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ namespace ShadowFlareRemake.Player
         public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
         public event Action<bool> OnPlayerAttack;
+        public event Action OnTalkingToNpc;
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
@@ -31,6 +31,7 @@ namespace ShadowFlareRemake.Player
 
         private const int _rotationSpeed = 10;
         private const float _destinationReachedThreshold = 0.1f;
+        private const float _maxMoveDuration = 3;
 
         private BasePlayerModel _model;
         private CharacterController _characterController;
@@ -200,16 +201,18 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveLogic(Vector3 targetPos)
         {
             targetPos.y = 0f;
+            var elapsedTime = 0f;
             var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > _destinationReachedThreshold)
+            while(Vector3.Distance(transform.position, targetPos) > _destinationReachedThreshold && elapsedTime < _maxMoveDuration)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
                 _characterController.Move(movement);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
@@ -219,6 +222,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveAndAttackLogic(Vector3 targetPos)
         {
             targetPos.y = 0f;
+            var elapsedTime = 0f;
             var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance)
@@ -231,7 +235,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
+            while(Vector3.Distance(transform.position, targetPos) > _attackDistance && elapsedTime < _maxMoveDuration)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
@@ -248,19 +252,22 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveAndTalkLogic(Vector3 targetPos)
         {
             targetPos.y = 0f;
+            var elapsedTime = 0f;
             var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             if(Vector3.Distance(transform.position, targetPos) <= _attackDistance)
             {
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
                 transform.LookAt(targetDirection);
+
                 _model.SetIsTalking(true);
+                OnTalkingToNpc?.Invoke();
                 yield break;
             }
 
             _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > _attackDistance)
+            while(Vector3.Distance(transform.position, targetPos) > _attackDistance && elapsedTime < _maxMoveDuration)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
@@ -271,6 +278,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
             _model.SetIsTalking(true);
+            OnTalkingToNpc?.Invoke();
         }
 
         private void UseSkillAtDirection(InputAction.CallbackContext context)
@@ -333,6 +341,7 @@ namespace ShadowFlareRemake.Player
         private IEnumerator MoveAndPickUpLogic(Vector3 targetPos, Collider lootCollider)
         {
             targetPos.y = 0f;
+            var elapsedTime = 0f;
             var movementSpeed = _model.GetMovementSpeedForMoveLogic();
 
             if(Vector3.Distance(transform.position, targetPos) <= _pickUpDistance)
@@ -345,7 +354,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(true);
 
-            while(Vector3.Distance(transform.position, targetPos) > _pickUpDistance)
+            while(Vector3.Distance(transform.position, targetPos) > _pickUpDistance && elapsedTime < _maxMoveDuration)
             {
                 Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
                 Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
