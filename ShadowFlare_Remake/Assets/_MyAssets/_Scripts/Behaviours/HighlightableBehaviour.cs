@@ -14,7 +14,7 @@ namespace ShadowFlareRemake.Behaviours
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
         [SerializeField] private GameObject _nameHolder;
 
-        [Header("Other")]
+        [Header("Parent Views")]
         [SerializeField] private EnemyView _enemyView;
         [SerializeField] private NpcView _npcView;
 
@@ -25,6 +25,8 @@ namespace ShadowFlareRemake.Behaviours
 
         private Color _color;
         private Color _highlightColor;
+
+        private bool _isAllowedToShowName = true;
 
         private const string _highlightableTag = "Highlightable";
 
@@ -100,7 +102,14 @@ namespace ShadowFlareRemake.Behaviours
 
         private void HandleIsHighlightedLogic()
         {
-            SetIsNameHolderEnabled(IsHighlighted);
+            if(_isAllowedToShowName)
+            {
+                _nameHolder.gameObject.SetActive(IsHighlighted);
+            }
+            else
+            {
+                _nameHolder.gameObject.SetActive(false);
+            }
 
             if(_useSkinnedMeshRenderer)
             {
@@ -111,9 +120,14 @@ namespace ShadowFlareRemake.Behaviours
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
         }
 
-        public void SetIsNameHolderEnabled(bool isEnabled)
+        public void SetIsShowingName(bool isShowingName)
         {
-            _nameHolder.gameObject.SetActive(isEnabled);
+            _nameHolder.gameObject.SetActive(isShowingName);
+        }
+
+        public void SetIsAllowedToShowName(bool isAllowedToShowName)
+        {
+            _isAllowedToShowName = isAllowedToShowName;
         }
 
         public void SetIsSpeechBubbleEnabled()

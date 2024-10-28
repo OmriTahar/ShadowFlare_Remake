@@ -14,7 +14,8 @@ namespace ShadowFlareRemake.Player
         public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
         public event Action<bool> OnPlayerAttack;
-        public event Action OnTalkingToNpc;
+        public event Action OnStartTalkingToNpc;
+        public event Action OnFinishTalkingToNpc;
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
@@ -165,6 +166,7 @@ namespace ShadowFlareRemake.Player
             {
                 var hitCollider = _inputReader.CurrentRaycastHitCollider;
                 var npcPos = hitCollider.transform.position;
+
                 selectedCoroutine = MoveAndTalkLogic(npcPos);
                 SetIsLastActionWasMove(false);
             }
@@ -172,6 +174,13 @@ namespace ShadowFlareRemake.Player
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
                 SetIsLastActionWasMove(false);
+            }
+
+            ////// DO THIS BETTER
+            if(_model.IsTalking && !_inputReader.IsCursorOnNPC)
+            {
+                _model.SetIsTalking(false);
+                OnFinishTalkingToNpc?.Invoke();
             }
 
             HandleCoroutines(selectedCoroutine);
@@ -261,7 +270,7 @@ namespace ShadowFlareRemake.Player
                 transform.LookAt(targetDirection);
 
                 _model.SetIsTalking(true);
-                OnTalkingToNpc?.Invoke();
+                OnStartTalkingToNpc?.Invoke();
                 yield break;
             }
 
@@ -278,7 +287,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
             _model.SetIsTalking(true);
-            OnTalkingToNpc?.Invoke();
+            OnStartTalkingToNpc?.Invoke();
         }
 
         private void UseSkillAtDirection(InputAction.CallbackContext context)

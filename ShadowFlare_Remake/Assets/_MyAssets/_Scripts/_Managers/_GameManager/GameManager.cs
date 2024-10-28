@@ -54,7 +54,7 @@ namespace ShadowFlareRemake.GameManagement
 
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
-        private NpcView _lastNpcView;
+        private (HighlightableBehaviour, NpcView) _lastNpc;
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
@@ -127,14 +127,16 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit += HandlePlayerGotHit;
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack += HandlePlayerAttack;
-                _playerController.OnTalkingToNpc += HandlePlayerTalkingToNpc;
+                _playerController.OnStartTalkingToNpc += HandlePlayerTalkingToNpc;
+                _playerController.OnFinishTalkingToNpc += HandlePlayerFinishTalkingToNpc;
             }
             else
             {
                 _playerController.OnIGotHit -= HandlePlayerGotHit;
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack -= HandlePlayerAttack;
-                _playerController.OnTalkingToNpc -= HandlePlayerTalkingToNpc;
+                _playerController.OnStartTalkingToNpc -= HandlePlayerTalkingToNpc;
+                _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishTalkingToNpc;
             }
         }
 
@@ -183,7 +185,7 @@ namespace ShadowFlareRemake.GameManagement
             if(IsValidHighlightableObject(hitCollider))
             {
                 HighlightObject(hitCollider);
-                CacheLatestNpcView();
+                CacheLastNpc();
                 return;
             }
 
@@ -211,15 +213,15 @@ namespace ShadowFlareRemake.GameManagement
             if(!newHighlightable.IsHighlightable)
                 return;
 
-            newHighlightable.SetIsHighlighted(true);
-
             _lastHighlighted_GameObject = newObject;
             _lastHighlightable = newHighlightable;
+            _lastHighlightable.SetIsHighlighted(true);
         }
 
-        private void CacheLatestNpcView()
+        private void CacheLastNpc()
         {
-            _lastNpcView = _lastHighlightable.GetNpcView();
+            _lastNpc.Item1 = _lastHighlightable;
+            _lastNpc.Item2 = _lastHighlightable.GetNpcView();
         }
 
         #endregion
@@ -510,28 +512,25 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerTalkingToNpc()
         {
-            if(_lastNpcView == null)
-            {
+            if(_lastNpc.Item2 == null)
                 return;
+
+            _lastNpc.Item1.SetIsAllowedToShowName(false);
+
+            if(!_lastNpc.Item2.TrySpeak())
+            {
+                HandlePlayerFinishTalkingToNpc();
+                _lastNpc.Item2.SetIsTalking(false);
             }
 
-            _lastHighlightable.SetIsNameHolderEnabled(false);
-
-            var speech = _lastNpcView.GetCurrentSpeech();
-
-            if(speech == null)
-            {
-                return;
-            }
-
-            print(speech);
+            _lastNpc.Item2.SetIsTalking(true);
         }
 
-        #endregion
-
-        #region NPC's
-
-
+        private void HandlePlayerFinishTalkingToNpc()
+        {
+            _lastNpc.Item2.SetIsSpeechHolderEnabled(false);
+            _lastNpc.Item1.SetIsAllowedToShowName(true);
+        }
 
         #endregion
 

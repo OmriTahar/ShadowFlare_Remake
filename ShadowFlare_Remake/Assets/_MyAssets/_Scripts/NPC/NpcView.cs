@@ -7,6 +7,8 @@ namespace ShadowFlareRemake.NPC
     {
         [Header("References")]
         [SerializeField] private TMP_Text _name;
+        [SerializeField] private TMP_Text _speechText;
+        [SerializeField] private GameObject _speechHolder;
 
         [Header("Temp")]
         [SerializeField] private string _namePlaceHolder;
@@ -15,11 +17,11 @@ namespace ShadowFlareRemake.NPC
         [SerializeField] private string[] _speeches;
 
         private int _currentSpeechIndex = 0;
+        private bool _isTalking = false;
 
         private void Start()
         {
             _name.text = _namePlaceHolder;
-
         }
 
         protected override void ModelChanged()
@@ -27,10 +29,8 @@ namespace ShadowFlareRemake.NPC
             throw new System.NotImplementedException();
         }
 
-        public string GetCurrentSpeech()
+        private string GetCurrentSpeech()
         {
-            var speechesAmount = _speeches.Length;
-
             var currentSpeech = _speeches[_currentSpeechIndex];
 
             var nextSpeechIndex = _currentSpeechIndex + 1;
@@ -38,6 +38,7 @@ namespace ShadowFlareRemake.NPC
             if(nextSpeechIndex > _speeches.Length - 1)
             {
                 _currentSpeechIndex = 0;
+                currentSpeech = null;
             }
             else
             {
@@ -45,6 +46,40 @@ namespace ShadowFlareRemake.NPC
             }
 
             return currentSpeech;
+        }
+
+        public bool TrySpeak()
+        {
+            var currentSpeech = GetCurrentSpeech();
+
+            if(string.IsNullOrEmpty(currentSpeech))
+            {
+                return false;
+            }
+
+            _speechText.text = GetCurrentSpeech();
+            SetIsSpeechHolderEnabled(true);
+            return true;
+        }
+
+        public void SetIsSpeechHolderEnabled(bool isEnabled)
+        {
+            _speechHolder.SetActive(isEnabled);
+        }
+
+        public bool GetIsTalking()
+        {
+            return _isTalking;
+        }
+
+        public void SetIsTalking(bool isTalking)
+        {
+            _isTalking = isTalking;
+        }
+
+        public NpcModel GetNpcModel()
+        {
+            return Model;
         }
     }
 }
