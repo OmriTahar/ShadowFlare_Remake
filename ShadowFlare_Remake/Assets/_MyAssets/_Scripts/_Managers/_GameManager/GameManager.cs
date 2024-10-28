@@ -516,6 +516,7 @@ namespace ShadowFlareRemake.GameManagement
                 return;
 
             _lastNpc.Item1.SetIsAllowedToShowName(false);
+            _lastNpc.Item2.LookAtPlayer(_playerController.transform);
 
             if(!_lastNpc.Item2.TrySpeak())
             {

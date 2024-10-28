@@ -6766,6 +6766,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
+      propertyPath: _healthBarStabilizer.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _healthBarStabilizer.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _healthBarStabilizer.z
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
       propertyPath: _speeches.Array.data[0]
       value: 'Hi there! '
       objectReference: {fileID: 0}

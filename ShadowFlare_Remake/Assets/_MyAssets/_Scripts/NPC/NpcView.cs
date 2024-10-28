@@ -31,18 +31,16 @@ namespace ShadowFlareRemake.NPC
 
         private string GetCurrentSpeech()
         {
-            var currentSpeech = _speeches[_currentSpeechIndex];
+            string currentSpeech = null;
 
-            var nextSpeechIndex = _currentSpeechIndex + 1;
-
-            if(nextSpeechIndex > _speeches.Length - 1)
+            if(_currentSpeechIndex > _speeches.Length - 1)
             {
                 _currentSpeechIndex = 0;
-                currentSpeech = null;
             }
             else
             {
-                _currentSpeechIndex = nextSpeechIndex;
+                currentSpeech = _speeches[_currentSpeechIndex];
+                _currentSpeechIndex++;
             }
 
             return currentSpeech;
@@ -57,8 +55,9 @@ namespace ShadowFlareRemake.NPC
                 return false;
             }
 
-            _speechText.text = GetCurrentSpeech();
+            _speechText.text = currentSpeech;
             SetIsSpeechHolderEnabled(true);
+
             return true;
         }
 
@@ -80,6 +79,11 @@ namespace ShadowFlareRemake.NPC
         public NpcModel GetNpcModel()
         {
             return Model;
+        }
+
+        public void LookAtPlayer(Transform playerTransform)
+        {
+            transform.LookAt(playerTransform);
         }
     }
 }

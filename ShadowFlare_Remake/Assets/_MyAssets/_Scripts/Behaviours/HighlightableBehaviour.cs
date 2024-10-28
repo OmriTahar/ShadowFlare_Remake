@@ -102,6 +102,11 @@ namespace ShadowFlareRemake.Behaviours
 
         private void HandleIsHighlightedLogic()
         {
+            //if(IsHighlighted)
+            //{
+            //    _healthSliderTransform.rotation = Quaternion.Euler(_healthBarStabilizer);
+            //}
+
             if(_isAllowedToShowName)
             {
                 _nameHolder.gameObject.SetActive(IsHighlighted);
