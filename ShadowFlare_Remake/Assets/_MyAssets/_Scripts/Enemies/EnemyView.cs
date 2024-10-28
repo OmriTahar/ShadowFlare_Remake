@@ -35,7 +35,6 @@ namespace ShadowFlareRemake.Enemies
 
         [Header("Settings")]
         [SerializeField] private bool _useSkinnedMeshRenderer;
-        [SerializeField] private Vector3 _healthBarStabilizer;
 
         private int _lastSeenHP;
         private bool _isDying;
@@ -89,11 +88,6 @@ namespace ShadowFlareRemake.Enemies
         private void OnParticleCollision(GameObject other)
         {
             OnParticleCollisionEvent?.Invoke(other);
-        }
-
-        private void FixedUpdate()
-        {
-            //StabilizeHpSlider();
         }
 
         #endregion
@@ -248,11 +242,6 @@ namespace ShadowFlareRemake.Enemies
         public void FinishedDeathAnimation() // Called from an animation event 
         {
             FadeOut();
-        }
-
-        private void StabilizeHpSlider()
-        {
-            _healthSliderTransform.rotation = Quaternion.Euler(_healthBarStabilizer);
         }
 
         #endregion
