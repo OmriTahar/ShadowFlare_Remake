@@ -10,6 +10,7 @@ namespace ShadowFlareRemake.Behaviours
         public bool IsHighlighted { get; private set; }
 
         [Header("References")]
+        [SerializeField] private Transform _canvasTransform;
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
         [SerializeField] private GameObject _nameHolder;
@@ -21,19 +22,19 @@ namespace ShadowFlareRemake.Behaviours
         [Header("Settings")]
         [SerializeField] private float _highlightIntensity = 0.2f;
         [SerializeField] private bool _useSkinnedMeshRenderer;
-        [SerializeField] private bool _isDisplayingNameUponHover;
-
-        private Color _color;
-        private Color _highlightColor;
-
-        private bool _isAllowedToShowName = true;
 
         private const string _highlightableTag = "Highlightable";
+
+        private Camera _mainCamera;
+        private Color _color;
+        private Color _highlightColor;
+        private bool _isAllowedToShowName = true;
 
         #region MonoBehaviour
 
         private void Start()
         {
+            CacheMainCamera();
             InitTag();
             InitColors();
             HandleIsHighlightedLogic();
@@ -52,6 +53,11 @@ namespace ShadowFlareRemake.Behaviours
         #endregion
 
         #region Initialization
+
+        private void CacheMainCamera()
+        {
+            _mainCamera = Camera.main;
+        }
 
         private void InitTag()
         {
@@ -102,19 +108,12 @@ namespace ShadowFlareRemake.Behaviours
 
         private void HandleIsHighlightedLogic()
         {
-            //if(IsHighlighted)
-            //{
-            //    _healthSliderTransform.rotation = Quaternion.Euler(_healthBarStabilizer);
-            //}
+            if(IsHighlighted)
+                FaceCanvasAccordingToTheCamera();
 
-            if(_isAllowedToShowName)
-            {
-                _nameHolder.gameObject.SetActive(IsHighlighted);
-            }
-            else
-            {
-                _nameHolder.gameObject.SetActive(false);
-            }
+            var isNameActive = _isAllowedToShowName? IsHighlighted : false;
+            _nameHolder.gameObject.SetActive(isNameActive);
+
 
             if(_useSkinnedMeshRenderer)
             {
@@ -125,25 +124,26 @@ namespace ShadowFlareRemake.Behaviours
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
         }
 
-        public void SetIsShowingName(bool isShowingName)
-        {
-            _nameHolder.gameObject.SetActive(isShowingName);
-        }
-
         public void SetIsAllowedToShowName(bool isAllowedToShowName)
         {
             _isAllowedToShowName = isAllowedToShowName;
-        }
-
-        public void SetIsSpeechBubbleEnabled()
-        {
-            // Continue from here 
         }
 
         private void DisableHighlightable()
         {
             IsHighlightable = false;
             SetIsHighlighted(false);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public void FaceCanvasAccordingToTheCamera()
+        {
+            Vector3 direction = _mainCamera.transform.position - transform.position;
+            Quaternion rotation = Quaternion.LookRotation(-direction);
+            _canvasTransform.rotation = rotation;
         }
 
         public NpcView GetNpcView()

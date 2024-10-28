@@ -93,7 +93,7 @@ namespace ShadowFlareRemake.Enemies
 
         private void FixedUpdate()
         {
-            StabilizeHpSlider();
+            //StabilizeHpSlider();
         }
 
         #endregion

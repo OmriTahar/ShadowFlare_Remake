@@ -176,7 +176,6 @@ namespace ShadowFlareRemake.Player
                 SetIsLastActionWasMove(false);
             }
 
-            ////// DO THIS BETTER
             if(_model.IsTalking && !_inputReader.IsCursorOnNPC)
             {
                 _model.SetIsTalking(false);

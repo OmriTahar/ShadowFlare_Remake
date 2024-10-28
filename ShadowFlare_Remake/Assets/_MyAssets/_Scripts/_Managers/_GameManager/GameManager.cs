@@ -220,8 +220,13 @@ namespace ShadowFlareRemake.GameManagement
 
         private void CacheLastNpc()
         {
+            var npcView = _lastHighlightable.GetNpcView();
+
+            if(npcView == null)
+                return;
+
             _lastNpc.Item1 = _lastHighlightable;
-            _lastNpc.Item2 = _lastHighlightable.GetNpcView();
+            _lastNpc.Item2 = npcView;
         }
 
         #endregion
@@ -517,11 +522,11 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastNpc.Item1.SetIsAllowedToShowName(false);
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
+            _lastNpc.Item1.FaceCanvasAccordingToTheCamera();
 
             if(!_lastNpc.Item2.TrySpeak())
             {
                 HandlePlayerFinishTalkingToNpc();
-                _lastNpc.Item2.SetIsTalking(false);
             }
 
             _lastNpc.Item2.SetIsTalking(true);
@@ -530,6 +535,7 @@ namespace ShadowFlareRemake.GameManagement
         private void HandlePlayerFinishTalkingToNpc()
         {
             _lastNpc.Item2.SetIsSpeechHolderEnabled(false);
+            _lastNpc.Item2.SetIsTalking(false);
             _lastNpc.Item1.SetIsAllowedToShowName(true);
         }
 
