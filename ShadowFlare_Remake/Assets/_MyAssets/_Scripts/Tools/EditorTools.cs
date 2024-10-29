@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Tools {
+#if UNITY_EDITOR
     public static class EditorTools {
 
         private static GUIStyle _boldLabel;
@@ -54,5 +55,6 @@ namespace ShadowFlareRemake.Tools {
             return retVal;
         }
     }
+#endif
 }
 
