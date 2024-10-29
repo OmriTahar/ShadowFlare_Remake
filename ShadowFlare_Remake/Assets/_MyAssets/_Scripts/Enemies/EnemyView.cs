@@ -112,8 +112,10 @@ namespace ShadowFlareRemake.Enemies
 
         private void SetScale()
         {
-            float scale = Model.Stats.Scale;
-            transform.localScale = new Vector3(scale, scale, scale);
+            var currentLocalScale = transform.localScale.x;
+            float scaleMultiplier = Model.Stats.ScaleMultiplier;
+            float newScale = currentLocalScale * scaleMultiplier;
+            transform.localScale = new Vector3(newScale, newScale, newScale);
         }
 
         private void SetEvolutionLevelAnimParam()
@@ -246,6 +248,15 @@ namespace ShadowFlareRemake.Enemies
 
         #endregion
 
+        #region Helpers
+
+        public float GetEnemyScaleMultiplier()
+        {
+            return Model.Stats.ScaleMultiplier;
+        }
+
+        #endregion
+
         #region Fade Out
 
         private const string _srcBlend_FadeOutParam = "_SrcBlend";
@@ -311,6 +322,8 @@ namespace ShadowFlareRemake.Enemies
         }
 
         #endregion
+
+     
     }
 }
 

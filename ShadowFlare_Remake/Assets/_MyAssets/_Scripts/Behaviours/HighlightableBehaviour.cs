@@ -40,6 +40,7 @@ namespace ShadowFlareRemake.Behaviours
             CacheMainCamera();
             SetIsEnemyOrNpc();
             InitColors();
+            SetEnemyCanvasHeight();
             HandleIsHighlightedLogic();
         }
 
@@ -61,6 +62,18 @@ namespace ShadowFlareRemake.Behaviours
         {
             IsEnemy = _enemyView != null;
             IsNpc = _npcView != null;
+        }
+
+        private void SetEnemyCanvasHeight()
+        {
+            if(!IsEnemy)
+                return;
+
+            var currentCanvasLocalPos = _canvasTransform.localPosition;
+            var enemyScaleMultiplier = _enemyView.GetEnemyScaleMultiplier();
+            var newY = currentCanvasLocalPos.y * enemyScaleMultiplier;
+            var newCanvasPos = new Vector3(currentCanvasLocalPos.x, newY, currentCanvasLocalPos.z);
+            _canvasTransform.localPosition = newCanvasPos;
         }
 
         private void CacheMainCamera()

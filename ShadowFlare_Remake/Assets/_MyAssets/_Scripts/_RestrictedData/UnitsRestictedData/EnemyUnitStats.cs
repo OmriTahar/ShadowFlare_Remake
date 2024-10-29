@@ -19,7 +19,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
         [Space(15)]
         [SerializeField] private string ______ENEMY_____ = _spaceLine;
         [field: SerializeField] public Color Color { get; private set; }
-        [field: SerializeField] public float Scale { get; private set; }
+        [field: SerializeField] public float ScaleMultiplier { get; private set; } = 1f;
         [field: SerializeField] public int EvolutionLevel { get; private set; }
 
         [Space(15)]
