@@ -8,6 +8,8 @@ namespace ShadowFlareRemake.Behaviours
     {
         public bool IsHighlightable { get; private set; } = true;
         public bool IsHighlighted { get; private set; }
+        public bool IsEnemy { get; private set; }
+        public bool IsNpc { get; private set; }
 
         [Header("References")]
         [SerializeField] private Transform _canvasTransform;
@@ -34,8 +36,9 @@ namespace ShadowFlareRemake.Behaviours
 
         private void Start()
         {
-            CacheMainCamera();
             InitTag();
+            CacheMainCamera();
+            SetIsEnemyOrNpc();
             InitColors();
             HandleIsHighlightedLogic();
         }
@@ -53,6 +56,12 @@ namespace ShadowFlareRemake.Behaviours
         #endregion
 
         #region Initialization
+
+        private void SetIsEnemyOrNpc()
+        {
+            IsEnemy = _enemyView != null;
+            IsNpc = _npcView != null;
+        }
 
         private void CacheMainCamera()
         {
@@ -127,6 +136,9 @@ namespace ShadowFlareRemake.Behaviours
         public void SetIsAllowedToShowName(bool isAllowedToShowName)
         {
             _isAllowedToShowName = isAllowedToShowName;
+
+            if(IsHighlighted)
+                _nameHolder.gameObject.SetActive(isAllowedToShowName);
         }
 
         private void DisableHighlightable()

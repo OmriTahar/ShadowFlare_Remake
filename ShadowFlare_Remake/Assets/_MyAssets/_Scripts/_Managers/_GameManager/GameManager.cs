@@ -220,6 +220,9 @@ namespace ShadowFlareRemake.GameManagement
 
         private void CacheLastNpc()
         {
+            if(!_lastHighlightable.IsNpc)
+                return;
+
             var npcView = _lastHighlightable.GetNpcView();
 
             if(npcView == null)
