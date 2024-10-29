@@ -5,6 +5,8 @@ namespace ShadowFlareRemake.NPC
 {
     public class NpcView : View<NpcModel>
     {
+        public bool IsTalking {get; private set;}
+
         [Header("References")]
         [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _speechText;
@@ -17,7 +19,6 @@ namespace ShadowFlareRemake.NPC
         [SerializeField] private string[] _speeches;
 
         private int _currentSpeechIndex = 0;
-        private bool _isTalking = false;
 
         private void Start()
         {
@@ -66,14 +67,9 @@ namespace ShadowFlareRemake.NPC
             _speechHolder.SetActive(isEnabled);
         }
 
-        public bool GetIsTalking()
-        {
-            return _isTalking;
-        }
-
         public void SetIsTalking(bool isTalking)
         {
-            _isTalking = isTalking;
+            IsTalking = isTalking;
         }
 
         public NpcModel GetNpcModel()

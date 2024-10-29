@@ -98,7 +98,7 @@ namespace ShadowFlareRemake.GameManagement
         {
             _uiManager.InitUiManager(_inputManager);
             _uiManager.InitPlayerFullStats(_playerUnit, _playerEquippedGearAddedStats);
-            _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats); 
+            _uiManager.SetPlayerFullUI(_playerUnit, _playerEquippedGearAddedStats);
             _uiManager.SetPlayerSkills(GetPlayerSkills());
             _uiManager.SetPlayerActiveSkill(SkillType.MeleeAttack);
         }
@@ -513,7 +513,7 @@ namespace ShadowFlareRemake.GameManagement
                     _playerUnit.ReduceMP(_playerModel.ActiveSkill.MpCost);
                     _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
                 }
-               
+
                 _playerModel.SetAttackState(true, true);
             }
         }
@@ -527,11 +527,21 @@ namespace ShadowFlareRemake.GameManagement
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
             _lastNpc.Item1.FaceCanvasAccordingToTheCamera();
 
-            if(!_lastNpc.Item2.TrySpeak())
+            var hasMoreSpeechLines = _lastNpc.Item2.TrySpeak();
+
+            if(hasMoreSpeechLines)
             {
-                HandlePlayerFinishTalkingToNpc();
+                _lastNpc.Item2.SetIsTalking(true);
+                return;
             }
 
+            if(_lastNpc.Item2.IsTalking) // Finish active conversation
+            {
+                HandlePlayerFinishTalkingToNpc();
+                return;
+            }
+
+            _lastNpc.Item2.TrySpeak();   // Start conversation from the top
             _lastNpc.Item2.SetIsTalking(true);
         }
 
