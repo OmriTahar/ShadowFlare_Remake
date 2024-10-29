@@ -5,6 +5,7 @@ namespace ShadowFlareRemake.NPC
 {
     public class NpcView : View<NpcModel>
     {
+        public float SpeechBubbleOffset { get => _speechBubbleOffset; }
         public bool IsTalking {get; private set;}
 
         [Header("References")]
@@ -17,6 +18,9 @@ namespace ShadowFlareRemake.NPC
 
         [Header("Speech")]
         [SerializeField] private string[] _speeches;
+
+        [Header("Settings")]
+        [SerializeField] private float _speechBubbleOffset = 200;
 
         private int _currentSpeechIndex = 0;
 

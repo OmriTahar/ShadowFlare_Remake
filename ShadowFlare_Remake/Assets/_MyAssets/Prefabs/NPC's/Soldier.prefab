@@ -52,6 +52,7 @@ MonoBehaviour:
   _namePlaceHolder: Gaston
   _speeches:
   - Fuck off.
+  _speechBubbleOffset: 300
 --- !u!1001 &7014641972570749964
 PrefabInstance:
   m_ObjectHideFlags: 0

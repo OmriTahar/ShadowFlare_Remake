@@ -1,10 +1,12 @@
 using ShadowFlareRemake.Loot;
+using ShadowFlareRemake.NPC;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Rewards;
 using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
+using ShadowFlareRemake.UI.Dialog;
 using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.ItemsGrid;
@@ -31,6 +33,7 @@ namespace ShadowFlareRemake.UIManagement
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
+        [SerializeField] private DialogView _dialogView;
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private StatsView _statsView;
         [SerializeField] private HudView _hudView;
@@ -41,6 +44,7 @@ namespace ShadowFlareRemake.UIManagement
         [SerializeField] private RectTransform _lootInfoRect;
 
         private CurserModel _curserModel;
+        private DialogModel _dialogModel;
         private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
         private HudModel _hudModel;
@@ -140,6 +144,9 @@ namespace ShadowFlareRemake.UIManagement
         {
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
+
+            _dialogModel = new DialogModel();
+            _dialogView.SetModel(_dialogModel);
 
             _inventoryModel = new InventoryModel(false);
             _inventoryView.SetModel(_inventoryModel);
@@ -603,12 +610,32 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
+        #region Dialog
+
+        public void HandleStartConversation(NpcView npcView)
+        {
+            var speechBubblePosition = GetBubblePosition(npcView);
+            _dialogModel.SetSpeechBubblePosition(speechBubblePosition);
+            _dialogModel.SetIsBubbleActive(true);
+        }
+
+        private Vector3 GetBubblePosition(NpcView npcView)
+        {
+            var npcPos = npcView.transform.position;
+            var screenPoint = Camera.main.WorldToScreenPoint(npcPos);
+            var bubbleOffset = npcView.SpeechBubbleOffset;
+            return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
+        }
+
+        #endregion
+
         #region Events
 
         private void RegisterEvents()
         {
             RegisterInputManagerEvents(true);
             RegisterCursorEvents(true);
+            RegisterDialogEvents(true);
             RegisterHudEvents(true);
             RegisterInventoryEvents(true);
             RegisterStatsEvents(true);
@@ -619,6 +646,7 @@ namespace ShadowFlareRemake.UIManagement
         {
             RegisterInputManagerEvents(false);
             RegisterCursorEvents(false);
+            RegisterDialogEvents(false);
             RegisterHudEvents(false);
             RegisterInventoryEvents(false);
             RegisterStatsEvents(false);
@@ -695,6 +723,20 @@ namespace ShadowFlareRemake.UIManagement
                 _curserView.OnCurserHoldingLootChange += HandleIsCurserHoldingLoot;
             else
                 _curserView.OnCurserHoldingLootChange -= HandleIsCurserHoldingLoot;
+        }
+
+        private void RegisterDialogEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
+                _dialogView.OnCurserEnterUI += CursorEnteredUI;
+                _dialogView.OnCurserLeftUI += CursorLeftUI;
+            }
+            else
+            {
+                _dialogView.OnCurserEnterUI -= CursorEnteredUI;
+                _dialogView.OnCurserLeftUI -= CursorLeftUI;
+            }
         }
 
         private void RegisterHudEvents(bool isRegister)
