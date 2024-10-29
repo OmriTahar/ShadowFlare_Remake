@@ -180,6 +180,14 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandleHighlightObjectOnCursorFocus()
         {
+            if(_inputManager.IsCursorOnUI)
+            {
+                if(_lastHighlightable != null)
+                    _lastHighlightable.SetIsHighlighted(false);
+
+                return;
+            }
+
             var hitCollider = _inputManager.CurrentRaycastHitCollider;
 
             if(IsValidHighlightableObject(hitCollider))
