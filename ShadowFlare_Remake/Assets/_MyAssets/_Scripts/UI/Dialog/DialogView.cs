@@ -6,7 +6,7 @@ namespace ShadowFlareRemake.UI.Dialog
     public class DialogView : UIView<DialogModel>
     {
         [Header("References")]
-        [SerializeField] private Transform _speechBubbleHolder;
+        [SerializeField] private Transform _dialogBubbleHolder;
         [SerializeField] private TMP_Text _dialogText;
 
         [Header("Answers Refs")]
@@ -21,9 +21,9 @@ namespace ShadowFlareRemake.UI.Dialog
 
         protected override void ModelChanged()
         {
-            _speechBubbleHolder.gameObject.SetActive(Model.IsBubbleActive);
-            _speechBubbleHolder.position = Model.SpeechBubblePosition;
-            _dialogText.text = Model.CurrentText;
+            _dialogBubbleHolder.gameObject.SetActive(Model.IsBubbleActive);
+            _dialogBubbleHolder.position = Model.DialogBubblePosition;
+            _dialogText.text = Model.CurrentDialogText;
         }
     }
 }

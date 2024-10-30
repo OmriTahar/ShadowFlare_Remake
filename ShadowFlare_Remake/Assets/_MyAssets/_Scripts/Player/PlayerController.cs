@@ -14,7 +14,7 @@ namespace ShadowFlareRemake.Player
         public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
         public event Action<bool> OnPlayerAttack;
-        public event Action OnStartTalkingToNpc;
+        public event Action OnTalkingToNpc;
         public event Action OnFinishTalkingToNpc;
 
         [Header("References")]
@@ -269,7 +269,7 @@ namespace ShadowFlareRemake.Player
                 transform.LookAt(targetDirection);
 
                 _model.SetIsTalking(true);
-                OnStartTalkingToNpc?.Invoke();
+                OnTalkingToNpc?.Invoke();
                 yield break;
             }
 
@@ -286,7 +286,7 @@ namespace ShadowFlareRemake.Player
 
             _model.SetIsMoving(false);
             _model.SetIsTalking(true);
-            OnStartTalkingToNpc?.Invoke();
+            OnTalkingToNpc?.Invoke();
         }
 
         private void UseSkillAtDirection(InputAction.CallbackContext context)

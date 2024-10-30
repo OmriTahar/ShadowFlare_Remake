@@ -615,25 +615,25 @@ namespace ShadowFlareRemake.UIManagement
 
         public void HandleStartDialog(NpcView npcView)
         {
-            var speechBubblePosition = GetTextBubblePosition(npcView);
-            _dialogModel.SetTextBubblePosition(speechBubblePosition);
+            var dialogBubblePos = GetDialogBubblePosition(npcView);
+            _dialogModel.SetDialogBubblePosition(dialogBubblePos);
 
-            var currentSpeechText = npcView.GetCurrentSpeech();
+            var currentSpeechText = npcView.GetCurrentDialogText();
             var hasSomethingToSay = !string.IsNullOrEmpty(currentSpeechText);
 
             if(hasSomethingToSay)       // Start or Continue dialog
             {
                 npcView.SetIsTalking(true);
-                _dialogModel.SetText(currentSpeechText);
-                _dialogModel.SetIsTextBubbleActive(true);
+                _dialogModel.SetDialogText(currentSpeechText);
+                _dialogModel.SetIsDialogBubbleActive(true);
                 return;
             }
 
             if(!npcView.IsTalking)      // Start dialog from the top
             {
                 npcView.SetIsTalking(true);
-                _dialogModel.SetText(npcView.GetCurrentSpeech());
-                _dialogModel.SetIsTextBubbleActive(true);
+                _dialogModel.SetDialogText(npcView.GetCurrentDialogText());
+                _dialogModel.SetIsDialogBubbleActive(true);
                 return;
 
             }
@@ -644,14 +644,14 @@ namespace ShadowFlareRemake.UIManagement
 
         public void HandleFinishDialog()
         {
-            _dialogModel.SetIsTextBubbleActive(false);
+            _dialogModel.SetIsDialogBubbleActive(false);
         }
 
-        private Vector3 GetTextBubblePosition(NpcView npcView)
+        private Vector3 GetDialogBubblePosition(NpcView npcView)
         {
             var npcPos = npcView.transform.position;
             var screenPoint = Camera.main.WorldToScreenPoint(npcPos);
-            var bubbleOffset = npcView.SpeechBubbleOffset;
+            var bubbleOffset = npcView.DialogBubbleOffset;
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
         }
 

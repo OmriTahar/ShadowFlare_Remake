@@ -127,7 +127,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit += HandlePlayerGotHit;
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack += HandlePlayerAttack;
-                _playerController.OnStartTalkingToNpc += HandlePlayerTalkingToNpc;
+                _playerController.OnTalkingToNpc += HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc += HandlePlayerFinishedTalkingToNpc;
             }
             else
@@ -135,7 +135,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit -= HandlePlayerGotHit;
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack -= HandlePlayerAttack;
-                _playerController.OnStartTalkingToNpc -= HandlePlayerTalkingToNpc;
+                _playerController.OnTalkingToNpc -= HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishedTalkingToNpc;
             }
         }
@@ -534,7 +534,6 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastNpc.Item1.SetIsAllowedToShowName(false);
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
-
             _uiManager.HandleStartDialog(_lastNpc.Item2);
         }
 

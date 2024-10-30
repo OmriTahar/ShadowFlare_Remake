@@ -5,65 +5,50 @@ namespace ShadowFlareRemake.NPC
 {
     public class NpcView : View<NpcModel>
     {
-        public float SpeechBubbleOffset { get => _speechBubbleOffset; }
-        public bool IsTalking {get; private set;}
+        public float DialogBubbleOffset { get => _dialogBubbleOffset; }
+        public bool IsTalking { get; private set; }
 
         [Header("References")]
         [SerializeField] private TMP_Text _name;
-        [SerializeField] private TMP_Text _speechText;
-        [SerializeField] private GameObject _speechHolder;
 
         [Header("Temp")]
         [SerializeField] private string _namePlaceHolder;
 
-        [Header("Speech")]
-        [SerializeField] private string[] _speeches;
+        [Header("Dialog Lines")]
+        [SerializeField] private string[] _dialogTexts;
 
         [Header("Settings")]
-        [SerializeField] private float _speechBubbleOffset = 200;
+        [SerializeField] private float _dialogBubbleOffset = 200;
 
-        private int _currentSpeechIndex = 0;
+        private int _dialogTextsIndex = 0;
 
         private void Start()
         {
             _name.text = _namePlaceHolder;
         }
 
-        protected override void ModelChanged()
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override void ModelChanged() { }
 
-        public string GetCurrentSpeech()
+        public string GetCurrentDialogText()
         {
-            string currentSpeech = null;
+            string currentDialogText = null;
 
-            if(_currentSpeechIndex > _speeches.Length - 1)
+            if(_dialogTextsIndex > _dialogTexts.Length - 1)
             {
-                _currentSpeechIndex = 0;
+                _dialogTextsIndex = 0;
             }
             else
             {
-                currentSpeech = _speeches[_currentSpeechIndex];
-                _currentSpeechIndex++;
+                currentDialogText = _dialogTexts[_dialogTextsIndex];
+                _dialogTextsIndex++;
             }
 
-            return currentSpeech;
-        }
-
-        public void SetIsSpeechHolderEnabled(bool isEnabled)
-        {
-            _speechHolder.SetActive(isEnabled);
+            return currentDialogText;
         }
 
         public void SetIsTalking(bool isTalking)
         {
             IsTalking = isTalking;
-        }
-
-        public NpcModel GetNpcModel()
-        {
-            return Model;
         }
 
         public void LookAtPlayer(Transform playerTransform)

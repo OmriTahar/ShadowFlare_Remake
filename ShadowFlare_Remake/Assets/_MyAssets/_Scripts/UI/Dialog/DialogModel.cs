@@ -4,28 +4,28 @@ namespace ShadowFlareRemake.UI.Dialog
 {
     public class DialogModel : Model
     {
-        public Vector3 SpeechBubblePosition { get; private set; }
-        public string CurrentText { get; private set; }
+        public Vector3 DialogBubblePosition { get; private set; }
+        public string CurrentDialogText { get; private set; }
         public bool IsBubbleActive { get; private set; }
         public bool IsAnswersActive { get; private set; }
 
         public DialogModel() { }
 
-        public void SetTextBubblePosition(Vector3 pos)
+        public void SetDialogBubblePosition(Vector3 pos)
         {
-            SpeechBubblePosition = pos;
+            DialogBubblePosition = pos;
             Changed();
         }
 
-        public void SetIsTextBubbleActive(bool isActive)
+        public void SetIsDialogBubbleActive(bool isActive)
         {
             IsBubbleActive = isActive;
             Changed();
         }
 
-        public void SetText(string text)
+        public void SetDialogText(string text)
         {
-            CurrentText = text;
+            CurrentDialogText = text;
             Changed();
         }
 

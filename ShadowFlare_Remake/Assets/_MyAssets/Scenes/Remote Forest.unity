@@ -6781,6 +6781,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
+      propertyPath: _dialogTexts.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
       propertyPath: _speeches.Array.data[0]
       value: 'Hi there! '
       objectReference: {fileID: 0}
@@ -6797,6 +6802,26 @@ PrefabInstance:
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _speeches.Array.data[3]
+      value: How can i be of service?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[0]
+      value: Hi there!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[1]
+      value: I am Ronen The Great
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[2]
+      value: I RUN THIS TOWN BITCH
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[3]
       value: How can i be of service?
       objectReference: {fileID: 0}
     - target: {fileID: 4930471785826968923, guid: 6a3c3c37133b6ae4d9590995c8166d88,
@@ -12654,7 +12679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1081635979}
   m_Layer: 5
-  m_Name: Speech Bubble Holder
+  m_Name: Dialog Bubble Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19058,7 +19083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c14c049f28d8d4483ca57b8efe396d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speechBubbleHolder: {fileID: 1081635979}
+  _dialogBubbleHolder: {fileID: 1081635979}
   _dialogText: {fileID: 2078028808}
   _firstAnswerGO: {fileID: 1557567163}
   _firstAnswerText: {fileID: 1925793513}
@@ -24749,7 +24774,7 @@ GameObject:
   - component: {fileID: 2025782023}
   - component: {fileID: 2025782022}
   m_Layer: 5
-  m_Name: BG
+  m_Name: BG (Dialog Bubble)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25537,7 +25562,7 @@ GameObject:
   - component: {fileID: 2078028809}
   - component: {fileID: 2078028808}
   m_Layer: 5
-  m_Name: Speech_Text
+  m_Name: Dialog_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27055,6 +27080,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogBubbleOffset
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTexts.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[0]
+      value: Fuck off.
+      objectReference: {fileID: 0}
     - target: {fileID: 6345729980442888652, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27194,6 +27234,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1142288575}
     m_Modifications:
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTexts.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[0]
+      value: Hey sweetie
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTexts.Array.data[1]
+      value: Do you like my Dress?
+      objectReference: {fileID: 0}
     - target: {fileID: 1190288950991933405, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: m_LocalScale.x

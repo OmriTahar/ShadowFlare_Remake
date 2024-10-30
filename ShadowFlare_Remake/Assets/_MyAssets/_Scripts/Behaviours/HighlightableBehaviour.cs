@@ -11,11 +11,13 @@ namespace ShadowFlareRemake.Behaviours
         public bool IsEnemy { get; private set; }
         public bool IsNpc { get; private set; }
 
-        [Header("References")]
+        [Header("UI")]
         [SerializeField] private Transform _canvasTransform;
+        [SerializeField] private GameObject _nameHolder;
+
+        [Header("Renderers")]
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
-        [SerializeField] private GameObject _nameHolder;
 
         [Header("Parent Views")]
         [SerializeField] private EnemyView _enemyView;
