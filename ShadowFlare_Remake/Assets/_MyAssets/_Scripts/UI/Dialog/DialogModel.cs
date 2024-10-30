@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Npc;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Dialog
@@ -5,9 +6,11 @@ namespace ShadowFlareRemake.UI.Dialog
     public class DialogModel : Model
     {
         public Vector3 DialogBubblePosition { get; private set; }
-        public string CurrentDialogText { get; private set; }
+        public DialogTextData CurrentDialogTextData { get; private set; }
         public bool IsBubbleActive { get; private set; }
         public bool IsAnswersActive { get; private set; }
+
+        public int CurrentAnswerId = -1;
 
         public DialogModel() { }
 
@@ -23,15 +26,21 @@ namespace ShadowFlareRemake.UI.Dialog
             Changed();
         }
 
-        public void SetDialogText(string text)
+        public void SetDialogTextData(DialogTextData data)
         {
-            CurrentDialogText = text;
+            CurrentDialogTextData = data;
             Changed();
         }
 
         public void SetIsAnswersActive(bool isActive)
         {
             IsAnswersActive = isActive;
+            Changed();
+        }
+
+        public void SetAnswerId(int id)
+        {
+            CurrentAnswerId = id;
             Changed();
         }
     }

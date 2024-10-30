@@ -618,13 +618,13 @@ namespace ShadowFlareRemake.UIManagement
             var dialogBubblePos = GetDialogBubblePosition(npcView);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
 
-            var currentSpeechText = npcView.GetCurrentDialogText();
-            var hasSomethingToSay = !string.IsNullOrEmpty(currentSpeechText);
+            var currentDialogTextData = npcView.GetCurrentDialogTextData();
+            var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
 
             if(hasSomethingToSay)       // Start or Continue dialog
             {
                 npcView.SetIsTalking(true);
-                _dialogModel.SetDialogText(currentSpeechText);
+                _dialogModel.SetDialogTextData(currentDialogTextData);
                 _dialogModel.SetIsDialogBubbleActive(true);
                 return;
             }
@@ -632,7 +632,7 @@ namespace ShadowFlareRemake.UIManagement
             if(!npcView.IsTalking)      // Start dialog from the top
             {
                 npcView.SetIsTalking(true);
-                _dialogModel.SetDialogText(npcView.GetCurrentDialogText());
+                _dialogModel.SetDialogTextData(npcView.GetCurrentDialogTextData());
                 _dialogModel.SetIsDialogBubbleActive(true);
                 return;
 
@@ -641,6 +641,33 @@ namespace ShadowFlareRemake.UIManagement
             OnFinishedDialog?.Invoke();
         }
 
+        //public void HandleStartDialogOld(NpcView npcView)
+        //{
+        //    var dialogBubblePos = GetDialogBubblePosition(npcView);
+        //    _dialogModel.SetDialogBubblePosition(dialogBubblePos);
+
+        //    var currentSpeechText = npcView.GetCurrentDialogTextData();
+        //    var hasSomethingToSay = !string.IsNullOrEmpty(currentSpeechText);
+
+        //    if(hasSomethingToSay)       // Start or Continue dialog
+        //    {
+        //        npcView.SetIsTalking(true);
+        //        _dialogModel.SetDialogText(currentSpeechText);
+        //        _dialogModel.SetIsDialogBubbleActive(true);
+        //        return;
+        //    }
+
+        //    if(!npcView.IsTalking)      // Start dialog from the top
+        //    {
+        //        npcView.SetIsTalking(true);
+        //        _dialogModel.SetDialogText(npcView.GetCurrentDialogTextData());
+        //        _dialogModel.SetIsDialogBubbleActive(true);
+        //        return;
+
+        //    }
+
+        //    OnFinishedDialog?.Invoke();
+        //}
 
         public void HandleFinishDialog()
         {
@@ -653,6 +680,11 @@ namespace ShadowFlareRemake.UIManagement
             var screenPoint = Camera.main.WorldToScreenPoint(npcPos);
             var bubbleOffset = npcView.DialogBubbleOffset;
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
+        }
+
+        private void HandleDialogAnswerClicked(int answerId)
+        {
+            print($"Answer Clicked!!! ID: {answerId}");
         }
 
         #endregion
@@ -759,11 +791,13 @@ namespace ShadowFlareRemake.UIManagement
             {
                 _dialogView.OnCurserEnterUI += CursorEnteredUI;
                 _dialogView.OnCurserLeftUI += CursorLeftUI;
+                _dialogView.OnAnswerClicked += HandleDialogAnswerClicked;
             }
             else
             {
                 _dialogView.OnCurserEnterUI -= CursorEnteredUI;
                 _dialogView.OnCurserLeftUI -= CursorLeftUI;
+                _dialogView.OnAnswerClicked -= HandleDialogAnswerClicked;
             }
         }
 
