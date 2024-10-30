@@ -1604,10 +1604,11 @@ MonoBehaviour:
   _rewardsManager: {fileID: 410748830}
   _lootManager: {fileID: 514450252}
   _camerasManager: {fileID: 926134501}
-  _enemiesParent: {fileID: 1054742629}
   _playerController: {fileID: 972601921}
   _playerUnitStatsToCopy: {fileID: 11400000, guid: 49710c2a48b6f3249b289e02ac6503c9,
     type: 2}
+  _enemiesParent: {fileID: 1054742629}
+  _npcParent: {fileID: 0}
   _testEnemyToSpawn: {fileID: 1302082256}
   _isEnemyActiveOnSpawn: 0
   _restoreOrReduceAmount: 10

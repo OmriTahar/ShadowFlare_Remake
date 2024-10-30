@@ -8,7 +8,7 @@ using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
-using ShadowFlareRemake.NPC;
+using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
@@ -31,12 +31,15 @@ namespace ShadowFlareRemake.GameManagement
         [SerializeField] private LootManager _lootManager;
         [SerializeField] private CamerasManager _camerasManager;
 
-        [Header("Enemies")]
-        [SerializeField] private Transform _enemiesParent;
-
         [Header("Player")]
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStatsToCopy;
+
+        [Header("Enemies")]
+        [SerializeField] private Transform _enemiesParent;
+
+        [Header("NPC's")]
+        [SerializeField] private Transform _npcParent;
 
         [Header("--------------- TESTS: Enemies ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
@@ -321,7 +324,6 @@ namespace ShadowFlareRemake.GameManagement
             return skillsList;
         }
 
-
         private bool IsValidEnemyToSpawn(EnemyToSpawn enemyToSpawn)
         {
             if(enemyToSpawn == null || enemyToSpawn.EnemyPrefab == null || enemyToSpawn.EnemyUnit == null || !enemyToSpawn.isActiveAndEnabled)
@@ -542,6 +544,20 @@ namespace ShadowFlareRemake.GameManagement
             _lastNpc.Item2.SetIsTalking(false);
             _lastNpc.Item1.SetIsAllowedToShowName(true);
             _uiManager.HandleFinishDialog();
+        }
+
+        #endregion
+
+        #region Npc
+
+        private void InitNpcs()
+        {
+            var npcsToInitialize = _npcParent.GetComponentsInChildren<EnemyToSpawn>();
+
+            //foreach(var enemyToSpawn in enemiesToSpawn)
+            //{
+            //    InitEnemyLogic(enemyToSpawn, _isEnemyActiveOnSpawn);
+            //}
         }
 
         #endregion

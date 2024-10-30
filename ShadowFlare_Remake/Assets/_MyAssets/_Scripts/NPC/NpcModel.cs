@@ -1,4 +1,4 @@
-namespace ShadowFlareRemake.NPC
+namespace ShadowFlareRemake.Npc
 {
     public class NpcModel : Model
     {

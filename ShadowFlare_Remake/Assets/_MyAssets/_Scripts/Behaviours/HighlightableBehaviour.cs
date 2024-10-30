@@ -1,5 +1,5 @@
 using ShadowFlareRemake.Enemies;
-using ShadowFlareRemake.NPC;
+using ShadowFlareRemake.Npc;
 using UnityEngine;
 
 namespace ShadowFlareRemake.Behaviours

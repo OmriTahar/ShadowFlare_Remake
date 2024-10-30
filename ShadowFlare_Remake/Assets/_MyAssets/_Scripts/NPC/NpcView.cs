@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace ShadowFlareRemake.NPC
+namespace ShadowFlareRemake.Npc
 {
     public class NpcView : View<NpcModel>
     {

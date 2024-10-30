@@ -1,5 +1,5 @@
 using ShadowFlareRemake.Loot;
-using ShadowFlareRemake.NPC;
+using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerInputReader;
 using ShadowFlareRemake.Rewards;
