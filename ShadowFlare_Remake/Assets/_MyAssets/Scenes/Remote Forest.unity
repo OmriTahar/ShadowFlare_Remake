@@ -1598,7 +1598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44decafebd85afe43a595052a396cbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogRect: {fileID: 1657158858}
   _uiManager: {fileID: 915568423}
   _inputManager: {fileID: 440198284}
   _combatManager: {fileID: 1526295854}
@@ -18192,7 +18191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1557567164
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19060,6 +19059,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speechBubbleHolder: {fileID: 1081635979}
+  _dialogText: {fileID: 2078028808}
+  _firstAnswerGO: {fileID: 1557567163}
+  _firstAnswerText: {fileID: 1925793513}
+  _secondAnswerGO: {fileID: 2020565464}
+  _secondAnswerText: {fileID: 1137478709}
+  _thirdAnswerGO: {fileID: 2135572330}
+  _thirdAnswerText: {fileID: 1124676792}
 --- !u!1001 &1657608153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24620,7 +24626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2020565465
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26077,7 +26083,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2135572331
 RectTransform:
   m_ObjectHideFlags: 0

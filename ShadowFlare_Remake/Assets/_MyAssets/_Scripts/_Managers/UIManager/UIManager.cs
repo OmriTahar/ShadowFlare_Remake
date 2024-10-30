@@ -30,6 +30,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action<LootModel, Vector2Int> OnPotionClicked;
         public event Action<ISkillData> OnHudSkillItemClicked;
         public event Action<UIScreenCover> OnUIScreenCoverChange;
+        public event Action OnFinishedDialog;
 
         [Header("Views")]
         [SerializeField] private CurserView _curserView;
@@ -612,14 +613,41 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleStartConversation(NpcView npcView)
+        public void HandleStartDialog(NpcView npcView)
         {
-            var speechBubblePosition = GetBubblePosition(npcView);
-            _dialogModel.SetSpeechBubblePosition(speechBubblePosition);
-            _dialogModel.SetIsBubbleActive(true);
+            var speechBubblePosition = GetTextBubblePosition(npcView);
+            _dialogModel.SetTextBubblePosition(speechBubblePosition);
+
+            var currentSpeechText = npcView.GetCurrentSpeech();
+            var hasSomethingToSay = !string.IsNullOrEmpty(currentSpeechText);
+
+            if(hasSomethingToSay)       // Start or Continue dialog
+            {
+                npcView.SetIsTalking(true);
+                _dialogModel.SetText(currentSpeechText);
+                _dialogModel.SetIsTextBubbleActive(true);
+                return;
+            }
+
+            if(!npcView.IsTalking)      // Start dialog from the top
+            {
+                npcView.SetIsTalking(true);
+                _dialogModel.SetText(npcView.GetCurrentSpeech());
+                _dialogModel.SetIsTextBubbleActive(true);
+                return;
+
+            }
+
+            OnFinishedDialog?.Invoke();
         }
 
-        private Vector3 GetBubblePosition(NpcView npcView)
+
+        public void HandleFinishDialog()
+        {
+            _dialogModel.SetIsTextBubbleActive(false);
+        }
+
+        private Vector3 GetTextBubblePosition(NpcView npcView)
         {
             var npcPos = npcView.transform.position;
             var screenPoint = Camera.main.WorldToScreenPoint(npcPos);

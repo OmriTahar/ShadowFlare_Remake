@@ -34,7 +34,7 @@ namespace ShadowFlareRemake.NPC
             throw new System.NotImplementedException();
         }
 
-        private string GetCurrentSpeech()
+        public string GetCurrentSpeech()
         {
             string currentSpeech = null;
 
@@ -49,21 +49,6 @@ namespace ShadowFlareRemake.NPC
             }
 
             return currentSpeech;
-        }
-
-        public bool TrySpeak()
-        {
-            var currentSpeech = GetCurrentSpeech();
-
-            if(string.IsNullOrEmpty(currentSpeech))
-            {
-                return false;
-            }
-
-            _speechText.text = currentSpeech;
-            SetIsSpeechHolderEnabled(true);
-
-            return true;
         }
 
         public void SetIsSpeechHolderEnabled(bool isEnabled)

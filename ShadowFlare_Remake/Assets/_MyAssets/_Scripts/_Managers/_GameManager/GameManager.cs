@@ -23,9 +23,6 @@ namespace ShadowFlareRemake.GameManagement
 {
     public class GameManager : MonoBehaviour
     {
-        [Header("TEMP!!!")]
-        [SerializeField] private RectTransform _dialogRect;
-
         [Header("Managers")]
         [SerializeField] private UIManager _uiManager;
         [SerializeField] private InputManager _inputManager;
@@ -131,7 +128,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack += HandlePlayerAttack;
                 _playerController.OnStartTalkingToNpc += HandlePlayerTalkingToNpc;
-                _playerController.OnFinishTalkingToNpc += HandlePlayerFinishTalkingToNpc;
+                _playerController.OnFinishTalkingToNpc += HandlePlayerFinishedTalkingToNpc;
             }
             else
             {
@@ -139,7 +136,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack -= HandlePlayerAttack;
                 _playerController.OnStartTalkingToNpc -= HandlePlayerTalkingToNpc;
-                _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishTalkingToNpc;
+                _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishedTalkingToNpc;
             }
         }
 
@@ -154,7 +151,7 @@ namespace ShadowFlareRemake.GameManagement
                 _uiManager.OnPotionClicked += HandlePlayerUsedQuickItem;
                 _uiManager.OnUIScreenCoverChange += HandleCamerasOnUiCoverChange;
                 _uiManager.OnHudSkillItemClicked += HandleHudSkillItemClicked;
-
+                _uiManager.OnFinishedDialog += HandlePlayerFinishedTalkingToNpc;
             }
             else
             {
@@ -165,6 +162,7 @@ namespace ShadowFlareRemake.GameManagement
                 _uiManager.OnPotionClicked -= HandlePlayerUsedQuickItem;
                 _uiManager.OnUIScreenCoverChange -= HandleCamerasOnUiCoverChange;
                 _uiManager.OnHudSkillItemClicked -= HandleHudSkillItemClicked;
+                _uiManager.OnFinishedDialog -= HandlePlayerFinishedTalkingToNpc;
             }
         }
 
@@ -531,73 +529,20 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerTalkingToNpc()
         {
-
-            var npcPos = _lastNpc.Item1.transform.position;
-            var screenPoint = Camera.main.WorldToScreenPoint(npcPos);
-            var bubbleOffset = _lastNpc.Item2.SpeechBubbleOffset;
-            var newPos = new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
-
-            _dialogRect.transform.position = newPos;
-
-            _uiManager.HandleStartConversation(_lastNpc.Item2);
-
-            //if(_lastNpc.Item2 == null)
-            //    return;
-
-            //_lastNpc.Item1.SetIsAllowedToShowName(false);
-            //_lastNpc.Item2.LookAtPlayer(_playerController.transform);
-            //_lastNpc.Item1.FaceCanvasAccordingToTheCamera();
-
-            //var hasMoreSpeechLines = _lastNpc.Item2.TrySpeak();
-
-            //if(hasMoreSpeechLines)
-            //{
-            //    _lastNpc.Item2.SetIsTalking(true);
-            //    return;
-            //}
-
-            //if(_lastNpc.Item2.IsTalking) // Finish active conversation
-            //{
-            //    HandlePlayerFinishTalkingToNpc();
-            //    return;
-            //}
-
-            //_lastNpc.Item2.TrySpeak();   // Start conversation from the top
-            //_lastNpc.Item2.SetIsTalking(true);
-        }
-
-        private void HandlePlayerTalkingToNpcOld()
-        {
             if(_lastNpc.Item2 == null)
                 return;
 
             _lastNpc.Item1.SetIsAllowedToShowName(false);
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
-            _lastNpc.Item1.FaceCanvasAccordingToTheCamera();
 
-            var hasMoreSpeechLines = _lastNpc.Item2.TrySpeak();
-
-            if(hasMoreSpeechLines)
-            {
-                _lastNpc.Item2.SetIsTalking(true);
-                return;
-            }
-
-            if(_lastNpc.Item2.IsTalking) // Finish active conversation
-            {
-                HandlePlayerFinishTalkingToNpc();
-                return;
-            }
-
-            _lastNpc.Item2.TrySpeak();   // Start conversation from the top
-            _lastNpc.Item2.SetIsTalking(true);
+            _uiManager.HandleStartDialog(_lastNpc.Item2);
         }
 
-        private void HandlePlayerFinishTalkingToNpc()
+        private void HandlePlayerFinishedTalkingToNpc()
         {
-            _lastNpc.Item2.SetIsSpeechHolderEnabled(false);
             _lastNpc.Item2.SetIsTalking(false);
             _lastNpc.Item1.SetIsAllowedToShowName(true);
+            _uiManager.HandleFinishDialog();
         }
 
         #endregion
