@@ -40,12 +40,12 @@ namespace ShadowFlareRemake.UI.Dialog
 
         private void SetDialogAnswers()
         {
-            if(Model.CurrentDialogTextData == null)
+            if(Model.CurrentDialogTextData == null || Model.CurrentDialogTextData.Answers == null || Model.CurrentDialogTextData.Answers.Length == 0)
                 return;
 
-            var fisrtAnswer = Model.CurrentDialogTextData.FirstAnswerTitle;
-            var secondAnswer = Model.CurrentDialogTextData.SecondAnswerTitle;
-            var thirdAnswer = Model.CurrentDialogTextData.ThirdAnswerTitle;
+            var fisrtAnswer = Model.CurrentDialogTextData.Answers[0].Title;
+            var secondAnswer = Model.CurrentDialogTextData.Answers[1].Title;
+            var thirdAnswer = Model.CurrentDialogTextData.Answers[2].Title;
 
             if(!string.IsNullOrEmpty(fisrtAnswer))
             {
@@ -82,17 +82,17 @@ namespace ShadowFlareRemake.UI.Dialog
 
         public void FirstAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(0);
+            OnAnswerClicked?.Invoke(1);
         }
 
         public void SecondAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(1);
+            OnAnswerClicked?.Invoke(2);
         }
 
         public void ThirdAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(2);
+            OnAnswerClicked?.Invoke(3);
         }
 
         #endregion

@@ -536,7 +536,7 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastNpc.Item1.SetIsAllowedToShowName(false);
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
-            _uiManager.HandleStartDialog(_lastNpc.Item2);
+            _uiManager.HandleDialog(_lastNpc.Item2);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()

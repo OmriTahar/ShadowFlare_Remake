@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace ShadowFlareRemake.Npc
         [Header("Settings")]
         [SerializeField] private float _dialogBubbleOffset = 200;
 
-        private int _dialogTextsIndex = 0;
+        public int CurrentDialogTextId = 0; // Fix this public shit -> Use the fucking model
 
         private void Start()
         {
@@ -33,21 +34,26 @@ namespace ShadowFlareRemake.Npc
 
         protected override void ModelChanged() { }
 
-        public DialogTextData GetCurrentDialogTextData()
+        public DialogTextData GetCurrentDialogTextData(int nextDialogTextId = -1)
         {
             if(_dialogTextsData == null || _dialogTextsData.Length == 0)
                 return null;
 
             DialogTextData currentDialogText = null;
 
-            if(_dialogTextsIndex > _dialogTexts.Length - 1)
+            if(nextDialogTextId > -1)
             {
-                _dialogTextsIndex = 0;
+                currentDialogText = _dialogTextsData.FirstOrDefault(data => data.Id == nextDialogTextId);
+                CurrentDialogTextId = nextDialogTextId;
+            }
+            else if(CurrentDialogTextId > _dialogTexts.Length - 1)
+            {
+                CurrentDialogTextId = 0;
             }
             else
             {
-                currentDialogText = _dialogTextsData[_dialogTextsIndex];
-                _dialogTextsIndex++;
+                currentDialogText = _dialogTextsData[CurrentDialogTextId];
+                CurrentDialogTextId++;
             }
 
             return currentDialogText;
@@ -57,14 +63,14 @@ namespace ShadowFlareRemake.Npc
         {
             string currentDialogText = null;
 
-            if(_dialogTextsIndex > _dialogTexts.Length - 1)
+            if(CurrentDialogTextId > _dialogTexts.Length - 1)
             {
-                _dialogTextsIndex = 0;
+                CurrentDialogTextId = 0;
             }
             else
             {
-                currentDialogText = _dialogTexts[_dialogTextsIndex];
-                _dialogTextsIndex++;
+                currentDialogText = _dialogTexts[CurrentDialogTextId];
+                CurrentDialogTextId++;
             }
 
             return currentDialogText;

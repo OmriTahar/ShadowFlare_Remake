@@ -27314,27 +27314,97 @@ PrefabInstance:
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].Id
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].Id
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].Id
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].Id
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
       propertyPath: _dialogTextsData.Array.data[0].Title
-      value: Hey sweetie
+      value: Intro
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[1].Title
-      value: Do you like my Dress?
+      value: Question
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].Title
+      value: Response to answer
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].Title
+      value: Response to answer
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].Title
+      value: Response to answer
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[0].DialogText
-      value: Hey sweetie
+      value: Hey Sweetie
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[1].DialogText
-      value: Do you like my Dress?
+      value: Do you like my dress?
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].DialogText
+      value: Thank you suger tits
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].DialogText
+      value: That's rude.
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].DialogText
+      value: Think about it and let me know.
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].IsFinalText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].IsFinalText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].IsFinalText
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
@@ -27348,8 +27418,148 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].FirstAnswer_Title
+      value: Yes
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
       propertyPath: _dialogTextsData.Array.data[1].SecondAnswerTitle
       value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].ThirdAnswer_Title
+      value: Maybe
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].FirstAnswer_Title
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].ThirdAnswer_Title
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].SecondAnswer_Title
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].SecondAnswer_Title
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].FirstAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].ThirdAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].FirstAnswer_NextTextId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].ThirdAnswer_NextTextId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].FirstAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].ThirdAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].FirstAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].ThirdAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].FirstAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].ThirdAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].SecondAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].SecondAnswer_NextTextId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].SecondAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].SecondAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[4].SecondAnswer_NextTextId
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[0].Title
+      value: Yes
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[1].Title
+      value: No
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[2].Title
+      value: Maybe
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[0].NextDialogTextId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[1].NextDialogTextId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Answers.Array.data[2].NextDialogTextId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1190288950991933405, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}

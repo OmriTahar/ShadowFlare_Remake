@@ -613,12 +613,22 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleStartDialog(NpcView npcView)
+        public void HandleDialog(NpcView npcView, int nextDialogTextId = -1)
         {
+            _dialogModel.SetCurrentNpc(npcView);
             var dialogBubblePos = GetDialogBubblePosition(npcView);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
 
-            var currentDialogTextData = npcView.GetCurrentDialogTextData();
+            var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
+
+            if(currentDialogTextData == null)
+            {
+                print("Next dialog data is null.");
+                OnFinishedDialog?.Invoke();
+                _dialogModel.SetCurrentNpc(null);
+                return;
+            }
+
             var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
 
             if(hasSomethingToSay)       // Start or Continue dialog
@@ -639,6 +649,7 @@ namespace ShadowFlareRemake.UIManagement
             }
 
             OnFinishedDialog?.Invoke();
+            _dialogModel.SetCurrentNpc(null);
         }
 
         //public void HandleStartDialogOld(NpcView npcView)
@@ -682,9 +693,10 @@ namespace ShadowFlareRemake.UIManagement
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
         }
 
-        private void HandleDialogAnswerClicked(int answerId)
+        private void HandleDialogAnswerClicked(int nextDialogTextIdAdder)
         {
-            print($"Answer Clicked!!! ID: {answerId}");
+            var nextTextId = _dialogModel.CurrentNpc.CurrentDialogTextId + nextDialogTextIdAdder;
+            HandleDialog(_dialogModel.CurrentNpc, nextTextId);
         }
 
         #endregion
