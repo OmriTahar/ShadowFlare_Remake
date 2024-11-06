@@ -7096,7 +7096,22 @@ PrefabInstance:
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _dialogTextsData.Array.size
-      value: 0
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[1].Id
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].Id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].Id
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
@@ -7106,17 +7121,42 @@ PrefabInstance:
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[1].Title
-      value: Hi
+      value: Introduction
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].Title
+      value: Deterence
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].Title
+      value: Final
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[0].DialogText
-      value: Hi my name is Ronen
+      value: Hello there!
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[1].DialogText
-      value: Hi my name is Ronen
+      value: I'm Ronen The Great!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[2].DialogText
+      value: I RUN THIS TOWN BITCH
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].DialogText
+      value: How can i be of service?
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[3].IsFinalText
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4930471785826968923, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
@@ -27156,6 +27196,26 @@ PrefabInstance:
         type: 3}
       propertyPath: _dialogTexts.Array.data[0]
       value: Fuck off.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].Title
+      value: Single
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].DialogText
+      value: Fuck off.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _dialogTextsData.Array.data[0].IsFinalText
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6345729980442888652, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
         type: 3}

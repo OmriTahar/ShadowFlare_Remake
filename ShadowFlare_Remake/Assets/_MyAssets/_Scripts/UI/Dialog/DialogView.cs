@@ -41,7 +41,10 @@ namespace ShadowFlareRemake.UI.Dialog
         private void SetDialogAnswers()
         {
             if(Model.CurrentDialogTextData == null || Model.CurrentDialogTextData.Answers == null || Model.CurrentDialogTextData.Answers.Length == 0)
+            {
+                TurnOffDialogAnswers();
                 return;
+            }
 
             var fisrtAnswer = Model.CurrentDialogTextData.Answers[0].Title;
             var secondAnswer = Model.CurrentDialogTextData.Answers[1].Title;
@@ -78,21 +81,28 @@ namespace ShadowFlareRemake.UI.Dialog
             }
         }
 
+        private void TurnOffDialogAnswers()
+        {
+            _firstAnswerGO.SetActive(false);
+            _secondAnswerGO.SetActive(false);
+            _thirdAnswerGO.SetActive(false);
+        }
+
         #region Unity Buttons
 
         public void FirstAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(1);
+            OnAnswerClicked?.Invoke(0);
         }
 
         public void SecondAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(2);
+            OnAnswerClicked?.Invoke(1);
         }
 
         public void ThirdAnswerClicked()
         {
-            OnAnswerClicked?.Invoke(3);
+            OnAnswerClicked?.Invoke(2);
         }
 
         #endregion

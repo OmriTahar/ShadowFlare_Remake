@@ -613,7 +613,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleDialog(NpcView npcView, int nextDialogTextId = -1)
+        public void HandleDialog(NpcView npcView, int nextDialogTextId = -1) // Is it possible to make this smarter?
         {
             _dialogModel.SetCurrentNpc(npcView);
             var dialogBubblePos = GetDialogBubblePosition(npcView);
@@ -623,10 +623,15 @@ namespace ShadowFlareRemake.UIManagement
 
             if(currentDialogTextData == null)
             {
-                print("Next dialog data is null.");
-                OnFinishedDialog?.Invoke();
-                _dialogModel.SetCurrentNpc(null);
-                return;
+                if(npcView.IsTalking)
+                {
+                    print("Next dialog data is null.");
+                    OnFinishedDialog?.Invoke();
+                    _dialogModel.SetCurrentNpc(null);
+                    return;
+                }
+
+                currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
             }
 
             var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
@@ -645,7 +650,6 @@ namespace ShadowFlareRemake.UIManagement
                 _dialogModel.SetDialogTextData(npcView.GetCurrentDialogTextData());
                 _dialogModel.SetIsDialogBubbleActive(true);
                 return;
-
             }
 
             OnFinishedDialog?.Invoke();
