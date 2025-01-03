@@ -40,15 +40,17 @@ namespace ShadowFlareRemake.UI.Dialog
 
         private void SetDialogAnswers()
         {
-            if(Model.CurrentDialogTextData == null || Model.CurrentDialogTextData.Answers == null || Model.CurrentDialogTextData.Answers.Length == 0)
+            var dialogData = Model.CurrentDialogTextData;
+
+            if(dialogData == null || dialogData.Answers == null || dialogData.Answers.Length == 0)
             {
                 TurnOffDialogAnswers();
                 return;
             }
 
-            var fisrtAnswer = Model.CurrentDialogTextData.Answers[0].Title;
-            var secondAnswer = Model.CurrentDialogTextData.Answers[1].Title;
-            var thirdAnswer = Model.CurrentDialogTextData.Answers[2].Title;
+            var fisrtAnswer = dialogData.Answers[0].Title;
+            var secondAnswer = dialogData.Answers[1].Title;
+            var thirdAnswer = dialogData.Answers[2].Title;
 
             if(!string.IsNullOrEmpty(fisrtAnswer))
             {

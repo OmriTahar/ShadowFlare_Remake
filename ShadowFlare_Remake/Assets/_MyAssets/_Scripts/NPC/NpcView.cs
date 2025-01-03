@@ -7,6 +7,7 @@ namespace ShadowFlareRemake.Npc
 {
     public class NpcView : View<NpcModel>
     {
+        public string Name { get => Model.Name; }
         public float DialogBubbleOffset { get => _dialogBubbleOffset; }
         public bool IsTalking { get; private set; }
 

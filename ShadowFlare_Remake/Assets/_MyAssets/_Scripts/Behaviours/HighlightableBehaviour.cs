@@ -8,6 +8,7 @@ namespace ShadowFlareRemake.Behaviours
     {
         public bool IsHighlightable { get; private set; } = true;
         public bool IsHighlighted { get; private set; }
+        public bool IsAllowedToShowName { get => _isAllowedToShowName; }
         public bool IsEnemy { get; private set; }
         public bool IsNpc { get; private set; }
 
@@ -176,6 +177,32 @@ namespace ShadowFlareRemake.Behaviours
         public NpcView GetNpcView()
         {
             return _npcView;
+        }
+
+        public EntityNameData GetEntityNameData()
+        {
+            EntityType entityType;
+            string name;
+            int currentHP = 0;
+            int maxHP = 0;
+
+            if(IsNpc && _npcView != null)
+            {
+                entityType = EntityType.Npc;
+                name = _npcView.Name;
+                return new EntityNameData(entityType, name, currentHP, maxHP);
+            }
+
+            if(IsEnemy && _enemyView != null)
+            {
+                entityType = EntityType.Enemy;
+                name = _enemyView.Name;
+                currentHP = _enemyView.CurrentHP;
+                maxHP = _enemyView.MaxHP;
+                return new EntityNameData(entityType, name, currentHP, maxHP);
+            }
+
+            return null;
         }
 
         #endregion

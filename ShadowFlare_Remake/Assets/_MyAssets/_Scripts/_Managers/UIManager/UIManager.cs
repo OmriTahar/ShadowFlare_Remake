@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Behaviours;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
@@ -11,6 +12,7 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.ItemsGrid;
 using ShadowFlareRemake.UI.LevelUp;
+using ShadowFlareRemake.UI.NameBubble;
 using ShadowFlareRemake.UI.Stats;
 using ShadowFlareRemake.Units;
 using System;
@@ -33,6 +35,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action OnFinishedDialog;
 
         [Header("Views")]
+        [SerializeField] private EntityNameView _nameBubbleView;
         [SerializeField] private CurserView _curserView;
         [SerializeField] private DialogView _dialogView;
         [SerializeField] private InventoryView _inventoryView;
@@ -44,6 +47,7 @@ namespace ShadowFlareRemake.UIManagement
         [SerializeField] private Transform _pickedUpLootTranform;
         [SerializeField] private RectTransform _lootInfoRect;
 
+        private EntityNameModel _nameBubbleModel;
         private CurserModel _curserModel;
         private DialogModel _dialogModel;
         private StatsModel _statsModel;
@@ -143,6 +147,9 @@ namespace ShadowFlareRemake.UIManagement
 
         private void InitModels()
         {
+            _nameBubbleModel = new EntityNameModel();
+            _nameBubbleView.SetModel(_nameBubbleModel);
+
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
 
@@ -701,6 +708,20 @@ namespace ShadowFlareRemake.UIManagement
         {
             var nextTextId = _dialogModel.CurrentNpc.CurrentDialogTextId + nextDialogTextIdAdder;
             HandleDialog(_dialogModel.CurrentNpc, nextTextId);
+        }
+
+        #endregion
+
+        #region NameBubble
+
+        public void SetNameBubble(EntityNameData data)
+        {
+            _nameBubbleModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP);
+        }
+
+        public void SetIsNameBubbleActive(bool isActive)
+        {
+            _nameBubbleModel.SetIsActive(isActive);
         }
 
         #endregion

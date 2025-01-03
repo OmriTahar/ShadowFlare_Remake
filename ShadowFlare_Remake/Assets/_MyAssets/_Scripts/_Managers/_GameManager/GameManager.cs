@@ -180,14 +180,14 @@ namespace ShadowFlareRemake.GameManagement
 
         #endregion
 
-        #region Highlightable Objects
+        #region Highlightables
 
         private void HandleHighlightObjectOnCursorFocus()
         {
             if(_inputManager.IsCursorOnUI)
             {
                 if(_lastHighlightable != null)
-                    _lastHighlightable.SetIsHighlighted(false);
+                    SetIsHighlighted(false);
 
                 return;
             }
@@ -202,7 +202,7 @@ namespace ShadowFlareRemake.GameManagement
             }
 
             if(_lastHighlightable != null)
-                _lastHighlightable.SetIsHighlighted(false);
+                SetIsHighlighted(false);
         }
 
         private bool IsValidHighlightableObject(Collider hitCollider)
@@ -218,7 +218,9 @@ namespace ShadowFlareRemake.GameManagement
                 return;
 
             if(_lastHighlightable != null)
-                _lastHighlightable.SetIsHighlighted(false);
+            {
+                SetIsHighlighted(false);
+            }
 
             var newHighlightable = newObject.GetComponent<HighlightableBehaviour>();
 
@@ -227,7 +229,21 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastHighlighted_GameObject = newObject;
             _lastHighlightable = newHighlightable;
-            _lastHighlightable.SetIsHighlighted(true);
+            SetEntityNameData();
+            SetIsHighlighted(true);
+        }
+
+        private void SetIsHighlighted(bool isHighlighted)
+        {
+            _lastHighlightable.SetIsHighlighted(isHighlighted);
+            var isBubbleActive = isHighlighted && _lastHighlightable.IsAllowedToShowName;
+            _uiManager.SetIsNameBubbleActive(isBubbleActive);
+        }
+
+        private void SetEntityNameData()
+        {
+            var nameBubbleData = _lastHighlightable.GetEntityNameData();
+            _uiManager.SetNameBubble(nameBubbleData);
         }
 
         private void CacheLastNpc()
@@ -351,6 +367,8 @@ namespace ShadowFlareRemake.GameManagement
 
             enemyData.EnemyUnit.ReduceHP(receivedAttackData.InflictedDamage);
             enemyData.EnemyModel.SetIsReceivedCritialHit(receivedAttackData.IsCritialHit);
+
+            SetEntityNameData();
         }
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)

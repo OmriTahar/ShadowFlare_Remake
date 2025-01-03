@@ -18,6 +18,10 @@ namespace ShadowFlareRemake.Enemies
         public event Action OnFinishedDeathAnimation;
         public event Action OnFinishedFadeOutAnimation;
 
+        public string Name { get => Model.Name; }
+        public int CurrentHP { get => _lastSeenHP; }
+        public int MaxHP { get => Model.Stats.MaxHP; }
+
         [Header("Collision & Renderers")]
         [SerializeField] private Collider _myCollider;
         [SerializeField] private MeshRenderer _meshRenderer;
@@ -26,7 +30,6 @@ namespace ShadowFlareRemake.Enemies
         [Header("Health Slider")]
         [SerializeField] private TMP_Text _name;
         [SerializeField] private Slider _healthSlider;
-        [SerializeField] private Transform _healthSliderTransform;
 
         [Header("Animations & Effects")]
         [SerializeField] private Animator _animator;
