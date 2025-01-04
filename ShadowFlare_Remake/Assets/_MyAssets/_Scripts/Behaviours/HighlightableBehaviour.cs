@@ -186,14 +186,8 @@ namespace ShadowFlareRemake.Behaviours
             string name;
             int currentHP = 0;
             int maxHP = 0;
+            int evolutionLevel = 1;
             float scaleMultiplier = 1;
-
-            if(IsNpc && _npcView != null)
-            {
-                entityType = EntityType.Npc;
-                name = _npcView.Name;
-                return new EntityNameData(entityType, name, currentHP, maxHP, _nameBubbleUiOffest, scaleMultiplier);
-            }
 
             if(IsEnemy && _enemyView != null)
             {
@@ -201,9 +195,17 @@ namespace ShadowFlareRemake.Behaviours
                 name = _enemyView.Name;
                 currentHP = _enemyView.CurrentHP;
                 maxHP = _enemyView.MaxHP;
+                evolutionLevel = _enemyView.EvolutionLevel;
                 scaleMultiplier = _enemyView.ScaleMultiplier;
 
-                return new EntityNameData(entityType, name, currentHP, maxHP, _nameBubbleUiOffest, scaleMultiplier);
+                return new EntityNameData(entityType, name, currentHP, maxHP, evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
+            }
+
+            if(IsNpc && _npcView != null)
+            {
+                entityType = EntityType.Npc;
+                name = _npcView.Name;
+                return new EntityNameData(entityType, name, currentHP, maxHP, evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
             }
 
             return null;

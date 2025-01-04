@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c032e2c4b157434c8b3f201b36bdb5c, type: 3}
-  m_Name: RedSkeleton_Stats
+  m_Name: BlueSkeleton_Stats
   m_EditorClassIdentifier: 
   ______BASE_____: ------------------------------------
-  <Name>k__BackingField: Red Skeleton
+  <Name>k__BackingField: Blue Skeleton
   <Level>k__BackingField: 2
   ______ENEMY_____: ------------------------------------
-  <Color>k__BackingField: {r: 0.990566, g: 0.3317462, b: 0.3317462, a: 1}
-  <ScaleMultiplier>k__BackingField: 1.3
-  <EvolutionLevel>k__BackingField: 3
+  <Color>k__BackingField: {r: 0.3333334, g: 0.6218696, b: 0.99215686, a: 1}
+  <ScaleMultiplier>k__BackingField: 1.15
+  <EvolutionLevel>k__BackingField: 2
   ______REWARDS_____: ------------------------------------
-  <ExpReward>k__BackingField: 30
+  <ExpReward>k__BackingField: 20
   <LootDropChance>k__BackingField: 100
   ______PHYSICAL_____: ------------------------------------
-  <MaxHP>k__BackingField: 48
-  <Attack>k__BackingField: 20
+  <MaxHP>k__BackingField: 36
+  <Attack>k__BackingField: 15
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1
   <EvasionRate>k__BackingField: 1
-  <MovementSpeed>k__BackingField: 5
+  <MovementSpeed>k__BackingField: 3
   <AttackSpeed>k__BackingField: 1
-  <AttackDistance>k__BackingField: 3.2
+  <AttackDistance>k__BackingField: 3
   ______MAGICAL_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1

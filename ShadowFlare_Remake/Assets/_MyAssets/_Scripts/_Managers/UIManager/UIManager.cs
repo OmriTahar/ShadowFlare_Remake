@@ -688,17 +688,23 @@ namespace ShadowFlareRemake.UIManagement
 
         public void SetEntityNameData(EntityNameData data, Transform entityTransform)
         {
-            _entityNameModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP, data.UiOffest,
-                                               data.ScaleMultiplier,entityTransform);
+            _entityNameModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP, data.EvolutionLevel,
+                                               data.UiOffest, data.ScaleMultiplier, entityTransform);
         }
 
         public void SetIsEntityNameActive(bool isActive)
         {
+            if(isActive == _entityNameModel.IsActive)
+                return;
+
             _entityNameModel.SetIsActive(isActive);
         }
 
         public void SetEntityNameTransform(Transform entityTransform)
         {
+            if(entityTransform == null && _entityNameModel.CurrentEntityTransform == null)
+                return;
+
             _entityNameModel.SetEntityTransform(entityTransform);
         }
 

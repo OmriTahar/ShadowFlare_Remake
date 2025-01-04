@@ -22,6 +22,7 @@ namespace ShadowFlareRemake.Enemies
         public int CurrentHP { get => _lastSeenHP; }
         public int MaxHP { get => Model.Stats.MaxHP; }
         public float ScaleMultiplier { get => Model.Stats.ScaleMultiplier; }
+        public int EvolutionLevel { get => Model.Stats.EvolutionLevel; }
 
         [Header("Collision & Renderers")]
         [SerializeField] private Collider _myCollider;

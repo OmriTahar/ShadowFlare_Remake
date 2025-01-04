@@ -11,6 +11,7 @@ namespace ShadowFlareRemake.UI.NameBubble
         public string Name { get; private set; }
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
+        public int EvolutionLevel { get; private set; }
         public int UiOffest { get; private set; }
         public float ScaleMultiplier { get; private set; }
 
@@ -22,13 +23,14 @@ namespace ShadowFlareRemake.UI.NameBubble
             MaxHP = 0;
         }
 
-        public void SetNameBubbleData(EntityType entityType, string name, int currentHP, int maxHP, 
+        public void SetNameBubbleData(EntityType entityType, string name, int currentHP, int maxHP, int evolutionLevel,
                                       int uiOffset, float scaleMultiplier ,Transform entityTransform)
         {
             EntityType = entityType;
             Name = name;
             CurrentHP = currentHP;
             MaxHP = maxHP;
+            EvolutionLevel = evolutionLevel;
             UiOffest = uiOffset;
             ScaleMultiplier = scaleMultiplier;
             CurrentEntityTransform = entityTransform;

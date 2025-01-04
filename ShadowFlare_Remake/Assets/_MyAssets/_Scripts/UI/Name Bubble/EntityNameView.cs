@@ -10,6 +10,12 @@ namespace ShadowFlareRemake.UI.NameBubble
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private Slider _nameSlider;
         [SerializeField] private Transform _nameBubbleTransform;
+        [SerializeField] private RectTransform _nameBubbleRectTransform;
+
+        [Header("Settings")]
+        [SerializeField] private Vector2 _smallSliderSize;
+        [SerializeField] private Vector2 _mediumSliderSize;
+        [SerializeField] private Vector2 _largeSliderSize;
 
         private Transform _currentEntityTransform;
 
@@ -23,6 +29,7 @@ namespace ShadowFlareRemake.UI.NameBubble
 
         protected override void ModelChanged()
         {
+            SetSliderSize();
             SetValues();
             SetIsActive();
         }
@@ -37,14 +44,38 @@ namespace ShadowFlareRemake.UI.NameBubble
 
             _nameSlider.maxValue = Model.MaxHP;
             _nameSlider.value = Model.CurrentHP;
-
             _currentEntityTransform = Model.CurrentEntityTransform;
+
             SetNameUiPosition();
         }
 
         public void SetIsActive()
         {
             _nameSlider.gameObject.SetActive(Model.IsActive);
+        }
+
+        private void SetSliderSize()
+        {
+            print("Evolution level: " + Model.EvolutionLevel);
+
+            switch(Model.EvolutionLevel)
+            {
+                case 1:
+                    _nameBubbleRectTransform.sizeDelta = _smallSliderSize;
+                    break;
+
+                case 2:
+                    _nameBubbleRectTransform.sizeDelta = _mediumSliderSize;
+                    break;
+
+                case 3:
+                    _nameBubbleRectTransform.sizeDelta = _largeSliderSize;
+                    break;
+
+                default:
+                    _nameBubbleRectTransform.sizeDelta = _smallSliderSize;
+                    break;
+            }
         }
 
         private void SetNameUiPosition()
