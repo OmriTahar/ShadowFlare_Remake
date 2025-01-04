@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -7,12 +6,9 @@ namespace ShadowFlareRemake.Npc
 {
     public class NpcView : View<NpcModel>
     {
-        public string Name { get => Model.Name; }
+        public string Name { get => name; } //{ get => Model.Name; }
         public float DialogBubbleOffset { get => _dialogBubbleOffset; }
         public bool IsTalking { get; private set; }
-
-        [Header("References")]
-        [SerializeField] private TMP_Text _name;
 
         [Header("Temp")]
         [SerializeField] private string _namePlaceHolder;
@@ -27,11 +23,6 @@ namespace ShadowFlareRemake.Npc
         [SerializeField] private float _dialogBubbleOffset = 200;
 
         public int CurrentDialogTextId = 0; // Fix this public shit -> Use the fucking model
-
-        private void Start()
-        {
-            _name.text = _namePlaceHolder;
-        }
 
         protected override void ModelChanged() { }
 

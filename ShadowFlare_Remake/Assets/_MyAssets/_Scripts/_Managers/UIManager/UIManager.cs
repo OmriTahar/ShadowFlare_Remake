@@ -684,7 +684,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region Entity Name
+        #region Entity Name Bubble
 
         public void SetEntityNameData(EntityNameData data, Transform entityTransform)
         {

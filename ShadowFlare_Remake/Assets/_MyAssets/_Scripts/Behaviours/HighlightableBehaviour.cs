@@ -8,13 +8,6 @@ namespace ShadowFlareRemake.Behaviours
     {
         public bool IsHighlightable { get; private set; } = true;
         public bool IsHighlighted { get; private set; }
-        public bool IsAllowedToShowName { get => _isAllowedToShowName; }
-        public bool IsEnemy { get; private set; }
-        public bool IsNpc { get; private set; }
-
-        [Header("UI")]
-        [SerializeField] private Transform _canvasTransform;
-        [SerializeField] private GameObject _nameHolder;
 
         [Header("Renderers")]
         [SerializeField] private MeshRenderer _meshRenderer;
@@ -28,23 +21,19 @@ namespace ShadowFlareRemake.Behaviours
         [SerializeField] private int _nameBubbleUiOffest;
         [SerializeField] private float _highlightIntensity = 0.2f;
         [SerializeField] private bool _useSkinnedMeshRenderer;
+        [field: SerializeField] public EntityType EntityType { get; private set; }
 
         private const string _highlightableTag = "Highlightable";
 
-        private Camera _mainCamera;
         private Color _color;
         private Color _highlightColor;
-        private bool _isAllowedToShowName = true;
 
         #region MonoBehaviour
 
         private void Start()
         {
             InitTag();
-            CacheMainCamera();
-            SetIsEnemyOrNpc();
             InitColors();
-            SetEnemyCanvasHeight();
             HandleIsHighlightedLogic();
         }
 
@@ -61,29 +50,6 @@ namespace ShadowFlareRemake.Behaviours
         #endregion
 
         #region Initialization
-
-        private void SetIsEnemyOrNpc()
-        {
-            IsEnemy = _enemyView != null;
-            IsNpc = _npcView != null;
-        }
-
-        private void SetEnemyCanvasHeight()
-        {
-            if(!IsEnemy)
-                return;
-
-            var currentCanvasLocalPos = _canvasTransform.localPosition;
-            var enemyScaleMultiplier = _enemyView.GetEnemyScaleMultiplier();
-            var newY = currentCanvasLocalPos.y * enemyScaleMultiplier;
-            var newCanvasPos = new Vector3(currentCanvasLocalPos.x, newY, currentCanvasLocalPos.z);
-            _canvasTransform.localPosition = newCanvasPos;
-        }
-
-        private void CacheMainCamera()
-        {
-            _mainCamera = Camera.main;
-        }
 
         private void InitTag()
         {
@@ -134,13 +100,6 @@ namespace ShadowFlareRemake.Behaviours
 
         private void HandleIsHighlightedLogic()
         {
-            if(IsHighlighted)
-                FaceCanvasAccordingToTheCamera();
-
-            var isNameActive = _isAllowedToShowName? IsHighlighted : false;
-            _nameHolder.gameObject.SetActive(isNameActive);
-
-
             if(_useSkinnedMeshRenderer)
             {
                 _skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
@@ -148,14 +107,6 @@ namespace ShadowFlareRemake.Behaviours
             }
 
             _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
-        }
-
-        public void SetIsAllowedToShowName(bool isAllowedToShowName)
-        {
-            _isAllowedToShowName = isAllowedToShowName;
-
-            if(IsHighlighted)
-                _nameHolder.gameObject.SetActive(isAllowedToShowName);
         }
 
         private void DisableHighlightable()
@@ -168,19 +119,12 @@ namespace ShadowFlareRemake.Behaviours
 
         #region Helpers
 
-        public void FaceCanvasAccordingToTheCamera()
-        {
-            Vector3 direction = _mainCamera.transform.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(-direction);
-            _canvasTransform.rotation = rotation;
-        }
-
         public NpcView GetNpcView()
         {
             return _npcView;
         }
 
-        public EntityNameData GetEntityNameData()
+        public EntityNameData GetEntityNameBubbleData()
         {
             EntityType entityType;
             string name;
@@ -189,7 +133,7 @@ namespace ShadowFlareRemake.Behaviours
             int evolutionLevel = 1;
             float scaleMultiplier = 1;
 
-            if(IsEnemy && _enemyView != null)
+            if(EntityType == EntityType.Enemy && _enemyView != null)
             {
                 entityType = EntityType.Enemy;
                 name = _enemyView.Name;
@@ -198,14 +142,17 @@ namespace ShadowFlareRemake.Behaviours
                 evolutionLevel = _enemyView.EvolutionLevel;
                 scaleMultiplier = _enemyView.ScaleMultiplier;
 
-                return new EntityNameData(entityType, name, currentHP, maxHP, evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
+                return new EntityNameData(entityType, name, currentHP, maxHP,
+                                          evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
             }
 
-            if(IsNpc && _npcView != null)
+            if(EntityType == EntityType.Npc && _npcView != null)
             {
                 entityType = EntityType.Npc;
                 name = _npcView.Name;
-                return new EntityNameData(entityType, name, currentHP, maxHP, evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
+
+                return new EntityNameData(entityType, name, currentHP, maxHP,
+                                          evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
             }
 
             return null;

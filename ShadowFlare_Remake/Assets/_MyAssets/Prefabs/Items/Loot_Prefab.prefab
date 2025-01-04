@@ -546,14 +546,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasTransform: {fileID: 1477553766422379424}
   _meshRenderer: {fileID: 3319556778527854936}
   _skinnedMeshRenderer: {fileID: 0}
-  _nameHolder: {fileID: 9197321906997652547}
   _enemyView: {fileID: 0}
   _npcView: {fileID: 0}
+  _nameBubbleUiOffest: 0
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 0
+  <EntityType>k__BackingField: 3
 --- !u!4 &3336864765410818638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013169634162, guid: 5dcae5adf53292945adef517afe8041e,

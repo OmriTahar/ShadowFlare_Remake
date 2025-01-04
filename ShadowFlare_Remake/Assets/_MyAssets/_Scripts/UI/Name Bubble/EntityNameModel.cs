@@ -1,3 +1,4 @@
+using ShadowFlareRemake.Loot;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.NameBubble
@@ -6,6 +7,7 @@ namespace ShadowFlareRemake.UI.NameBubble
     {
         public bool IsActive { get; private set; }
         public EntityType EntityType { get; private set; }
+        public LootCategory LootCategory {  get; private set; } 
         public string Name { get; private set; }
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }

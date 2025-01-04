@@ -29,10 +29,6 @@ namespace ShadowFlareRemake.Enemies
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
 
-        [Header("Health Slider")]
-        [SerializeField] private TMP_Text _name;
-        [SerializeField] private Slider _healthSlider;
-
         [Header("Animations & Effects")]
         [SerializeField] private Animator _animator;
         [SerializeField] private VisualEffectsSubView _vfxView;
@@ -61,8 +57,6 @@ namespace ShadowFlareRemake.Enemies
             if(Model == null)
                 return;
 
-            ResetHealthSliderValues();
-            SetNameText();
             SetColor();
             SetScale();
             SetEvolutionLevelAnimParam();
@@ -99,11 +93,6 @@ namespace ShadowFlareRemake.Enemies
 
         #region Initialization
 
-        private void SetNameText()
-        {
-            _name.text = Model.Name;
-        }
-
         private void SetColor()
         {
             if(_useSkinnedMeshRenderer)
@@ -126,14 +115,6 @@ namespace ShadowFlareRemake.Enemies
         private void SetEvolutionLevelAnimParam()
         {
             _animator.SetInteger(_evolutionLevelAnimHash, Model.Stats.EvolutionLevel);
-        }
-
-        private void ResetHealthSliderValues()
-        {
-            var value = Model.Stats.MaxHP;
-            _healthSlider.maxValue = value;
-            _healthSlider.value = value;
-            _lastSeenHP = Model.Unit.CurrentHP;
         }
 
         private void CacheNulls()
@@ -169,7 +150,6 @@ namespace ShadowFlareRemake.Enemies
 
             var realHP = Model.Unit.CurrentHP;
             _lastSeenHP = realHP < 0 ? 0 : realHP;
-            _healthSlider.value = _lastSeenHP;
 
             if(_lastSeenHP == 0)
             {

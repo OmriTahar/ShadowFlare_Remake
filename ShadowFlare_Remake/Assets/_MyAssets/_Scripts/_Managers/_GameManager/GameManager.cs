@@ -63,6 +63,8 @@ namespace ShadowFlareRemake.GameManagement
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
+        private bool _isAllowedToShowEntityName = true; // Move to UI? To EntityNameModel
+
         #region MonoBehaviour
 
         private async void Start()
@@ -236,7 +238,7 @@ namespace ShadowFlareRemake.GameManagement
         private void SetIsHighlighted(bool isHighlighted)
         {
             _lastHighlightable.SetIsHighlighted(isHighlighted);
-            var isBubbleActive = isHighlighted && _lastHighlightable.IsAllowedToShowName;
+            var isBubbleActive = isHighlighted && _isAllowedToShowEntityName;
             _uiManager.SetIsEntityNameActive(isBubbleActive);
 
             if(!isHighlighted)
@@ -245,13 +247,13 @@ namespace ShadowFlareRemake.GameManagement
 
         private void SetEntityNameData()
         {
-            var nameBubbleData = _lastHighlightable.GetEntityNameData();
+            var nameBubbleData = _lastHighlightable.GetEntityNameBubbleData();
             _uiManager.SetEntityNameData(nameBubbleData, _lastHighlighted_GameObject.transform);
         }
 
         private void CacheLastNpc()
         {
-            if(!_lastHighlightable.IsNpc)
+            if(_lastHighlightable.EntityType != EntityType.Npc)
                 return;
 
             var npcView = _lastHighlightable.GetNpcView();
@@ -555,7 +557,7 @@ namespace ShadowFlareRemake.GameManagement
             if(_lastNpc.Item2 == null)
                 return;
 
-            _lastNpc.Item1.SetIsAllowedToShowName(false);
+            _isAllowedToShowEntityName = false;
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
             _uiManager.HandleDialog(_lastNpc.Item2);
         }
@@ -563,7 +565,7 @@ namespace ShadowFlareRemake.GameManagement
         private void HandlePlayerFinishedTalkingToNpc()
         {
             _lastNpc.Item2.SetIsTalking(false);
-            _lastNpc.Item1.SetIsAllowedToShowName(true);
+            _isAllowedToShowEntityName = true;
             _uiManager.HandleFinishDialog();
         }
 
