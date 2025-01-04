@@ -11955,7 +11955,7 @@ GameObject:
   - component: {fileID: 1011728476}
   - component: {fileID: 1011728478}
   - component: {fileID: 1011728477}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12164,7 +12164,7 @@ GameObject:
   - component: {fileID: 1033629028}
   - component: {fileID: 1033629030}
   - component: {fileID: 1033629029}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12680,13 +12680,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1058647017}
   - component: {fileID: 1058647018}
-  m_Layer: 6
-  m_Name: Health Slider
+  m_Layer: 5
+  m_Name: Name Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1058647017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19216,7 +19216,7 @@ GameObject:
   - component: {fileID: 1582019458}
   - component: {fileID: 1582019460}
   - component: {fileID: 1582019459}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19676,7 +19676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1591725591}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20827,10 +20827,10 @@ MonoBehaviour:
   _nameText: {fileID: 1582019459}
   _nameSlider: {fileID: 1058647018}
   _nameBubbleTransform: {fileID: 1058647017}
-  _nameBubbleRectTransform: {fileID: 1717306217}
+  _nameBubbleRectTransform: {fileID: 1058647017}
   _smallSliderSize: {x: 250, y: 120}
-  _mediumSliderSize: {x: 375, y: 120}
-  _largeSliderSize: {x: 500, y: 120}
+  _mediumSliderSize: {x: 400, y: 120}
+  _largeSliderSize: {x: 600, y: 120}
 --- !u!1001 &1717387292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21500,7 +21500,7 @@ GameObject:
   - component: {fileID: 1753621313}
   - component: {fileID: 1753621315}
   - component: {fileID: 1753621314}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21522,7 +21522,7 @@ RectTransform:
   m_Father: {fileID: 1591725591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

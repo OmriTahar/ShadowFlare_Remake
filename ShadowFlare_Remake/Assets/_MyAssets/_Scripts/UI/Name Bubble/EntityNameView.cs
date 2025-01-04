@@ -31,7 +31,27 @@ namespace ShadowFlareRemake.UI.NameBubble
         {
             SetSliderSize();
             SetValues();
+            SetNameUiPosition();
             SetIsActive();
+        }
+
+        private void SetSliderSize()
+        {
+            switch(Model.EvolutionLevel)
+            {
+                case 1:
+                    _nameBubbleRectTransform.sizeDelta = new Vector2(_smallSliderSize.x, _smallSliderSize.y);
+                    break;
+                case 2:
+                    _nameBubbleRectTransform.sizeDelta = new Vector2(_mediumSliderSize.x, _mediumSliderSize.y);
+                    break;
+                case 3:
+                    _nameBubbleRectTransform.sizeDelta = new Vector2(_largeSliderSize.x, _largeSliderSize.y);
+                    break;
+                default:
+                    _nameBubbleRectTransform.sizeDelta = new Vector2(_smallSliderSize.x, _smallSliderSize.y);
+                    break;
+            }
         }
 
         private void SetValues()
@@ -45,38 +65,8 @@ namespace ShadowFlareRemake.UI.NameBubble
             _nameSlider.maxValue = Model.MaxHP;
             _nameSlider.value = Model.CurrentHP;
             _currentEntityTransform = Model.CurrentEntityTransform;
-
-            SetNameUiPosition();
         }
 
-        public void SetIsActive()
-        {
-            _nameSlider.gameObject.SetActive(Model.IsActive);
-        }
-
-        private void SetSliderSize()
-        {
-            print("Evolution level: " + Model.EvolutionLevel);
-
-            switch(Model.EvolutionLevel)
-            {
-                case 1:
-                    _nameBubbleRectTransform.sizeDelta = _smallSliderSize;
-                    break;
-
-                case 2:
-                    _nameBubbleRectTransform.sizeDelta = _mediumSliderSize;
-                    break;
-
-                case 3:
-                    _nameBubbleRectTransform.sizeDelta = _largeSliderSize;
-                    break;
-
-                default:
-                    _nameBubbleRectTransform.sizeDelta = _smallSliderSize;
-                    break;
-            }
-        }
 
         private void SetNameUiPosition()
         {
@@ -92,6 +82,11 @@ namespace ShadowFlareRemake.UI.NameBubble
             var screenPoint = Camera.main.WorldToScreenPoint(Model.CurrentEntityTransform.position);
             var bubbleOffset = Model.UiOffest * Model.ScaleMultiplier;
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
+        }
+
+        public void SetIsActive()
+        {
+            _nameSlider.gameObject.SetActive(Model.IsActive);
         }
     }
 }
