@@ -23,7 +23,7 @@ MonoBehaviour:
   <ExpReward>k__BackingField: 15
   <LootDropChance>k__BackingField: 100
   ______PHYSICAL_____: ------------------------------------
-  <MaxHP>k__BackingField: 25
+  <MaxHP>k__BackingField: 48
   <Attack>k__BackingField: 20
   <Defense>k__BackingField: 1
   <HitRate>k__BackingField: 1

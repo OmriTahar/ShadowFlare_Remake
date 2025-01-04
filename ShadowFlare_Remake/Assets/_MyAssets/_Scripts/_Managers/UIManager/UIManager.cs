@@ -35,7 +35,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action OnFinishedDialog;
 
         [Header("Views")]
-        [SerializeField] private EntityNameView _nameBubbleView;
+        [SerializeField] private EntityNameView _entityNameView;
         [SerializeField] private CurserView _curserView;
         [SerializeField] private DialogView _dialogView;
         [SerializeField] private InventoryView _inventoryView;
@@ -47,7 +47,7 @@ namespace ShadowFlareRemake.UIManagement
         [SerializeField] private Transform _pickedUpLootTranform;
         [SerializeField] private RectTransform _lootInfoRect;
 
-        private EntityNameModel _nameBubbleModel;
+        private EntityNameModel _entityNameModel;
         private CurserModel _curserModel;
         private DialogModel _dialogModel;
         private StatsModel _statsModel;
@@ -147,8 +147,8 @@ namespace ShadowFlareRemake.UIManagement
 
         private void InitModels()
         {
-            _nameBubbleModel = new EntityNameModel();
-            _nameBubbleView.SetModel(_nameBubbleModel);
+            _entityNameModel = new EntityNameModel();
+            _entityNameView.SetModel(_entityNameModel);
 
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
@@ -663,34 +663,6 @@ namespace ShadowFlareRemake.UIManagement
             _dialogModel.SetCurrentNpc(null);
         }
 
-        //public void HandleStartDialogOld(NpcView npcView)
-        //{
-        //    var dialogBubblePos = GetDialogBubblePosition(npcView);
-        //    _dialogModel.SetDialogBubblePosition(dialogBubblePos);
-
-        //    var currentSpeechText = npcView.GetCurrentDialogTextData();
-        //    var hasSomethingToSay = !string.IsNullOrEmpty(currentSpeechText);
-
-        //    if(hasSomethingToSay)       // Start or Continue dialog
-        //    {
-        //        npcView.SetIsTalking(true);
-        //        _dialogModel.SetDialogText(currentSpeechText);
-        //        _dialogModel.SetIsDialogBubbleActive(true);
-        //        return;
-        //    }
-
-        //    if(!npcView.IsTalking)      // Start dialog from the top
-        //    {
-        //        npcView.SetIsTalking(true);
-        //        _dialogModel.SetDialogText(npcView.GetCurrentDialogTextData());
-        //        _dialogModel.SetIsDialogBubbleActive(true);
-        //        return;
-
-        //    }
-
-        //    OnFinishedDialog?.Invoke();
-        //}
-
         public void HandleFinishDialog()
         {
             _dialogModel.SetIsDialogBubbleActive(false);
@@ -712,16 +684,22 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region NameBubble
+        #region Entity Name
 
-        public void SetNameBubble(EntityNameData data)
+        public void SetEntityNameData(EntityNameData data, Transform entityTransform)
         {
-            _nameBubbleModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP);
+            _entityNameModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP, data.UiOffest,
+                                               data.ScaleMultiplier,entityTransform);
         }
 
-        public void SetIsNameBubbleActive(bool isActive)
+        public void SetIsEntityNameActive(bool isActive)
         {
-            _nameBubbleModel.SetIsActive(isActive);
+            _entityNameModel.SetIsActive(isActive);
+        }
+
+        public void SetEntityNameTransform(Transform entityTransform)
+        {
+            _entityNameModel.SetEntityTransform(entityTransform);
         }
 
         #endregion

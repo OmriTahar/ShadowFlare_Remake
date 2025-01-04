@@ -25,6 +25,7 @@ namespace ShadowFlareRemake.Behaviours
         [SerializeField] private NpcView _npcView;
 
         [Header("Settings")]
+        [SerializeField] private int _nameBubbleUiOffest;
         [SerializeField] private float _highlightIntensity = 0.2f;
         [SerializeField] private bool _useSkinnedMeshRenderer;
 
@@ -185,12 +186,13 @@ namespace ShadowFlareRemake.Behaviours
             string name;
             int currentHP = 0;
             int maxHP = 0;
+            float scaleMultiplier = 1;
 
             if(IsNpc && _npcView != null)
             {
                 entityType = EntityType.Npc;
                 name = _npcView.Name;
-                return new EntityNameData(entityType, name, currentHP, maxHP);
+                return new EntityNameData(entityType, name, currentHP, maxHP, _nameBubbleUiOffest, scaleMultiplier);
             }
 
             if(IsEnemy && _enemyView != null)
@@ -199,7 +201,9 @@ namespace ShadowFlareRemake.Behaviours
                 name = _enemyView.Name;
                 currentHP = _enemyView.CurrentHP;
                 maxHP = _enemyView.MaxHP;
-                return new EntityNameData(entityType, name, currentHP, maxHP);
+                scaleMultiplier = _enemyView.ScaleMultiplier;
+
+                return new EntityNameData(entityType, name, currentHP, maxHP, _nameBubbleUiOffest, scaleMultiplier);
             }
 
             return null;

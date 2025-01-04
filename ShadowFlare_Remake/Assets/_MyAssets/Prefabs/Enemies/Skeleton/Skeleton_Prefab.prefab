@@ -860,11 +860,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasTransform: {fileID: 5209516796046941800}
+  _nameHolder: {fileID: 5388307940072675350}
   _meshRenderer: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
-  _nameHolder: {fileID: 5388307940072675350}
   _enemyView: {fileID: 7970543067481453309}
   _npcView: {fileID: 0}
+  _nameBubbleUiOffest: 200
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 1
 --- !u!114 &7970543067481453309
@@ -884,7 +885,6 @@ MonoBehaviour:
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
   _name: {fileID: 41722521982095429}
   _healthSlider: {fileID: 6540207488409775401}
-  _healthSliderTransform: {fileID: 5488867904597944236}
   _animator: {fileID: 1929619644783485907}
   _vfxView: {fileID: 715006787454672085}
   _fadingObject: {fileID: 4901277643235306858}
@@ -1087,6 +1087,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy's World Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2187783567225318055, guid: 63e535ae497eb2e4a9bd25bf327d0369,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2579710287665164582, guid: 63e535ae497eb2e4a9bd25bf327d0369,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1190,12 +1195,12 @@ PrefabInstance:
     - target: {fileID: 6822760022118636828, guid: 63e535ae497eb2e4a9bd25bf327d0369,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6822760022118636828, guid: 63e535ae497eb2e4a9bd25bf327d0369,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1223,12 +1228,6 @@ RectTransform:
 --- !u!1 &5388307940072675350 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2395931219223000920, guid: 63e535ae497eb2e4a9bd25bf327d0369,
-    type: 3}
-  m_PrefabInstance: {fileID: 7748182823885664078}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &5488867904597944236 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2858505369756797154, guid: 63e535ae497eb2e4a9bd25bf327d0369,
     type: 3}
   m_PrefabInstance: {fileID: 7748182823885664078}
   m_PrefabAsset: {fileID: 0}

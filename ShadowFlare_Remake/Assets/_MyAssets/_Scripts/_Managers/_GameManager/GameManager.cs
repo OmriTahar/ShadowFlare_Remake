@@ -237,13 +237,16 @@ namespace ShadowFlareRemake.GameManagement
         {
             _lastHighlightable.SetIsHighlighted(isHighlighted);
             var isBubbleActive = isHighlighted && _lastHighlightable.IsAllowedToShowName;
-            _uiManager.SetIsNameBubbleActive(isBubbleActive);
+            _uiManager.SetIsEntityNameActive(isBubbleActive);
+
+            if(!isHighlighted)
+                _uiManager.SetEntityNameTransform(null);
         }
 
         private void SetEntityNameData()
         {
             var nameBubbleData = _lastHighlightable.GetEntityNameData();
-            _uiManager.SetNameBubble(nameBubbleData);
+            _uiManager.SetEntityNameData(nameBubbleData, _lastHighlighted_GameObject.transform);
         }
 
         private void CacheLastNpc()
