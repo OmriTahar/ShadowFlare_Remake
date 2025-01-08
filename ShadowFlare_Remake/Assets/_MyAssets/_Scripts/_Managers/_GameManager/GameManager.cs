@@ -63,7 +63,7 @@ namespace ShadowFlareRemake.GameManagement
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
-        private bool _isAllowedToShowEntityName = true; // Move to UI? To EntityNameModel
+        private bool _isAllowedToShowHighlightableName = true; // Move to UI? To EntityNameModel
 
         #region MonoBehaviour
 
@@ -238,8 +238,8 @@ namespace ShadowFlareRemake.GameManagement
         private void SetIsHighlighted(bool isHighlighted)
         {
             _lastHighlightable.SetIsHighlighted(isHighlighted);
-            var isBubbleActive = isHighlighted && _isAllowedToShowEntityName;
-            _uiManager.SetIsHighlightableNameActive(isBubbleActive);
+            var isHighlightableNameActive = isHighlighted && _isAllowedToShowHighlightableName;
+            _uiManager.SetIsHighlightableNameActive(isHighlightableNameActive);
 
             if(!isHighlighted)
                 _uiManager.SetHighlightableEntityTransform(null);
@@ -557,7 +557,7 @@ namespace ShadowFlareRemake.GameManagement
             if(_lastNpc.Item2 == null)
                 return;
 
-            _isAllowedToShowEntityName = false;
+            _isAllowedToShowHighlightableName = false;
             _lastNpc.Item2.LookAtPlayer(_playerController.transform);
             _uiManager.HandleDialog(_lastNpc.Item2);
         }
@@ -565,7 +565,7 @@ namespace ShadowFlareRemake.GameManagement
         private void HandlePlayerFinishedTalkingToNpc()
         {
             _lastNpc.Item2.SetIsTalking(false);
-            _isAllowedToShowEntityName = true;
+            _isAllowedToShowHighlightableName = true;
             _uiManager.HandleFinishDialog();
         }
 
