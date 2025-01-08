@@ -1,22 +1,24 @@
 using ShadowFlareRemake.Loot;
 using UnityEngine;
 
-namespace ShadowFlareRemake.UI.NameBubble
+namespace ShadowFlareRemake.UI.Highlightables
 {
-    public class EntityNameModel : Model
+    public class HighlightableNameModel : Model
     {
-        public bool IsActive { get; private set; }
-        public EntityType EntityType { get; private set; }
-        public LootCategory LootCategory {  get; private set; } 
         public string Name { get; private set; }
+        public EntityType EntityType { get; private set; }
+        public Transform CurrentEntityTransform { get; private set; }
+        public int UiOffest { get; private set; }
+        public bool IsActive { get; private set; }
+
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
         public int EvolutionLevel { get; private set; }
-        public int UiOffest { get; private set; }
         public float ScaleMultiplier { get; private set; }
-        public Transform CurrentEntityTransform { get; private set; }
+        public LootCategory LootCategory {  get; private set; } 
+        public int GoldAmount { get; private set; }
 
-        public EntityNameModel()
+        public HighlightableNameModel()
         {
             EntityType = EntityType.None;
             Name = "";
@@ -28,17 +30,18 @@ namespace ShadowFlareRemake.UI.NameBubble
             CurrentEntityTransform = null;
         }
 
-        public void SetNameBubbleData(EntityType entityType, string name, int currentHP, int maxHP, int evolutionLevel,
-                                      int uiOffset, float scaleMultiplier ,Transform entityTransform)
+        public void SetHighlightableData(HighlightableData data, Transform entityTransform)
         {
-            EntityType = entityType;
-            Name = name;
-            CurrentHP = currentHP;
-            MaxHP = maxHP;
-            EvolutionLevel = evolutionLevel;
-            UiOffest = uiOffset;
-            ScaleMultiplier = scaleMultiplier;
+            Name = data.Name;
+            EntityType = data.EntityType;
             CurrentEntityTransform = entityTransform;
+            UiOffest = data.UiOffset;
+            CurrentHP = data.CurrentHP;
+            MaxHP = data.MaxHP;
+            EvolutionLevel = data.EvolutionLevel;
+            ScaleMultiplier = data.ScaleMultiplier;
+            LootCategory = data.LootCategory;
+            GoldAmount = data.GoldAmount;
             Changed();
         }
 

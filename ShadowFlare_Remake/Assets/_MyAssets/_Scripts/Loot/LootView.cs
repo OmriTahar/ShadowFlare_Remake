@@ -8,23 +8,25 @@ namespace ShadowFlareRemake.Loot
     public class LootView : View<LootModel>
     {
         public event Action OnLootViewClicked;
+        public string Name { get => Model.LootData.Name; }
+        public int Amount { get => Model.Amount; }
+        public LootCategory LootCategory { get => Model.LootCategory; }
 
         [Header("Refernces")]
         [SerializeField] private RectTransform _rect;
         [SerializeField] private Image _image;
-        [SerializeField] private TMP_Text _nameText;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Image _nameBackgroundImage;
-
-        [Header("Settings")]
-        [SerializeField] private Color _nameBG_EquipmentColor;
-        [SerializeField] private Color _nameBG_GoldColor;
-        [SerializeField] private Color _nameBG_PotionsColor;
 
         private readonly int _dropAnimHash = Animator.StringToHash("Drop");
         private const int _generalSizeMultiplier = 58;
         private const int _goldSizeMultiplier = 62;
         private const int _posHelper = 35;
+
+        private const int _goldAmount_Tier1 = 3;
+        private const int _goldAmount_Tier2 = 100;
+        private const int _goldAmount_Tier3 = 500;
+        private const int _goldAmount_Tier4 = 1000;
+        private const int _goldAmount_Tier5 = 9999;
 
         private string _name;
         private Sprite _sprite;
@@ -39,8 +41,6 @@ namespace ShadowFlareRemake.Loot
                 return;
 
             SetData();
-            SetNameText();
-            SetNameBackgroundColor();
             HandleSprite();
             HandleAnimation();
         }
@@ -70,41 +70,6 @@ namespace ShadowFlareRemake.Loot
             _sprite = Model.LootData.Sprite;
             _width = Model.LootData.Width;
             _height = Model.LootData.Height;
-        }
-
-        private void SetNameText()
-        {
-            if(_nameText != null && !string.IsNullOrEmpty(_name))
-            {
-                if(Model.LootCategory == LootCategory.Gold)
-                {
-                    _nameText.text = $"{Model.Amount} {_name}";
-                    return;
-                }
-
-                _nameText.text = _name;
-            }
-        }
-
-        private void SetNameBackgroundColor()
-        {
-            if(_nameBackgroundImage == null)
-                return;
-
-            switch(Model.LootCategory)
-            {
-                case LootCategory.Equipment:
-                    _nameBackgroundImage.color = _nameBG_EquipmentColor;
-                    break;
-
-                case LootCategory.Potion:
-                    _nameBackgroundImage.color = _nameBG_PotionsColor;
-                    break;
-
-                case LootCategory.Gold:
-                    _nameBackgroundImage.color = _nameBG_GoldColor;
-                    break;
-            }
         }
 
         private void HandleSprite()
@@ -179,22 +144,22 @@ namespace ShadowFlareRemake.Loot
                 _image.sprite = data.GoldImage_1;
             }
 
-            else if(amount >= 3 && amount < 100)
+            else if(amount >= _goldAmount_Tier1 && amount < _goldAmount_Tier2)
             {
                 _image.sprite = data.GoldImage_2_to_99;
             }
 
-            else if(amount >= 100 && amount < 500)
+            else if(amount >= _goldAmount_Tier2 && amount < _goldAmount_Tier3)
             {
                 _image.sprite = data.GoldImage_100_to_499;
             }
 
-            else if(amount >= 500 && amount < 1000)
+            else if(amount >= _goldAmount_Tier3 && amount < _goldAmount_Tier4)
             {
                 _image.sprite = data.GoldImage_500_to_999;
             }
 
-            else if(amount >= 1000 && amount < 10000)
+            else if(amount >= _goldAmount_Tier4 && amount < _goldAmount_Tier5)
             {
                 _image.sprite = data.GoldImage_1000_to_9999;
             }

@@ -228,7 +228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1477553766422379424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -531,9 +531,6 @@ MonoBehaviour:
   _nameText: {fileID: 1738042203073190429}
   _animator: {fileID: 6546220259579257766}
   _nameBackgroundImage: {fileID: 6014175864898547438}
-  _nameBG_EquipmentColor: {r: 0, g: 0.29803923, b: 1, a: 0.49019608}
-  _nameBG_GoldColor: {r: 0.67058825, g: 0.6901961, b: 0, a: 0.49019608}
-  _nameBG_PotionsColor: {r: 1, g: 0, b: 0.64280605, a: 0.49019608}
 --- !u!114 &6014446571590141200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,9 +545,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 3319556778527854936}
   _skinnedMeshRenderer: {fileID: 0}
-  _enemyView: {fileID: 0}
   _npcView: {fileID: 0}
-  _nameBubbleUiOffest: 0
+  _enemyView: {fileID: 0}
+  _lootView: {fileID: 3260301018575255150}
+  _nameBubbleUiOffest: 50
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 0
   <EntityType>k__BackingField: 3

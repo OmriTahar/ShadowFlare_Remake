@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShadowFlareRemake.UI.NameBubble
+namespace ShadowFlareRemake.UI.Highlightables
 {
-    public class EntityNameView : View<EntityNameModel>
+    public class HighlightableNameView : View<HighlightableNameModel>
     {
         [Header("References")]
         [SerializeField] private TMP_Text _nameText;
@@ -23,6 +23,8 @@ namespace ShadowFlareRemake.UI.NameBubble
         [SerializeField] private Color _nameBG_EquipmentColor;
         [SerializeField] private Color _nameBG_GoldColor;
         [SerializeField] private Color _nameBG_PotionsColor;
+
+        private const int _one = 1;
 
         private Transform _currentEntityTransform;
         private RectTransform _nameSliderRectTrans;
@@ -56,14 +58,28 @@ namespace ShadowFlareRemake.UI.NameBubble
 
         private void SetValues()
         {
-            _nameText.text = Model.Name;
+            var name = Model.Name;
+
+            if(IsGold())
+                name = $"{Model.GoldAmount} {Model.Name}";
+
+            _nameText.text = name;
             _currentEntityTransform = Model.CurrentEntityTransform;
 
             if(Model.EntityType != EntityType.Enemy)
+            {
+                _nameSlider.maxValue = _one;
+                _nameSlider.value = _one;
                 return;
+            }
 
             _nameSlider.maxValue = Model.MaxHP;
             _nameSlider.value = Model.CurrentHP;
+        }
+
+        private bool IsGold()
+        {
+            return Model.EntityType == EntityType.Loot && Model.LootCategory == LootCategory.Gold;
         }
 
         private void SetSliderSize()

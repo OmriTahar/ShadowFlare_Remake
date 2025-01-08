@@ -1,8 +1,9 @@
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using UnityEngine;
 
-namespace ShadowFlareRemake.Behaviours
+namespace ShadowFlareRemake.UI.Highlightables
 {
     public class HighlightableBehaviour : MonoBehaviour
     {
@@ -14,8 +15,9 @@ namespace ShadowFlareRemake.Behaviours
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
 
         [Header("Parent Views")]
-        [SerializeField] private EnemyView _enemyView;
         [SerializeField] private NpcView _npcView;
+        [SerializeField] private EnemyView _enemyView;
+        [SerializeField] private LootView _lootView; 
 
         [Header("Settings")]
         [SerializeField] private int _nameBubbleUiOffest;
@@ -124,35 +126,37 @@ namespace ShadowFlareRemake.Behaviours
             return _npcView;
         }
 
-        public EntityNameData GetEntityNameBubbleData()
+        public HighlightableData GetHighlightableData()
         {
             EntityType entityType;
             string name;
-            int currentHP = 0;
-            int maxHP = 0;
-            int evolutionLevel = 1;
-            float scaleMultiplier = 1;
-
-            if(EntityType == EntityType.Enemy && _enemyView != null)
-            {
-                entityType = EntityType.Enemy;
-                name = _enemyView.Name;
-                currentHP = _enemyView.CurrentHP;
-                maxHP = _enemyView.MaxHP;
-                evolutionLevel = _enemyView.EvolutionLevel;
-                scaleMultiplier = _enemyView.ScaleMultiplier;
-
-                return new EntityNameData(entityType, name, currentHP, maxHP,
-                                          evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
-            }
 
             if(EntityType == EntityType.Npc && _npcView != null)
             {
                 entityType = EntityType.Npc;
                 name = _npcView.Name;
+                return new HighlightableData(entityType, name, _nameBubbleUiOffest);
+            }
 
-                return new EntityNameData(entityType, name, currentHP, maxHP,
-                                          evolutionLevel, _nameBubbleUiOffest, scaleMultiplier);
+            if(EntityType == EntityType.Enemy && _enemyView != null)
+            {
+                entityType = EntityType.Enemy;
+                name = _enemyView.Name;
+                int currentHP = _enemyView.CurrentHP;
+                int maxHP = _enemyView.MaxHP;
+                int evolutionLevel = _enemyView.EvolutionLevel;
+                float scaleMultiplier = _enemyView.ScaleMultiplier;
+                return new HighlightableData(entityType, name, _nameBubbleUiOffest,
+                                             currentHP, maxHP, evolutionLevel, scaleMultiplier);
+            }
+
+            if(EntityType == EntityType.Loot && _lootView != null)
+            {
+                entityType = EntityType.Loot;
+                name = _lootView.Name;
+                var lootCategory = _lootView.LootCategory;
+                var goldAmount = _lootView.Amount;
+                return new HighlightableData(entityType, name, _nameBubbleUiOffest, lootCategory, goldAmount);
             }
 
             return null;

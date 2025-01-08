@@ -1,4 +1,4 @@
-using ShadowFlareRemake.Behaviours;
+using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
@@ -12,7 +12,6 @@ using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.ItemsGrid;
 using ShadowFlareRemake.UI.LevelUp;
-using ShadowFlareRemake.UI.NameBubble;
 using ShadowFlareRemake.UI.Stats;
 using ShadowFlareRemake.Units;
 using System;
@@ -35,7 +34,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action OnFinishedDialog;
 
         [Header("Views")]
-        [SerializeField] private EntityNameView _entityNameView;
+        [SerializeField] private HighlightableNameView _highlightableNameView;
         [SerializeField] private CurserView _curserView;
         [SerializeField] private DialogView _dialogView;
         [SerializeField] private InventoryView _inventoryView;
@@ -47,7 +46,7 @@ namespace ShadowFlareRemake.UIManagement
         [SerializeField] private Transform _pickedUpLootTranform;
         [SerializeField] private RectTransform _lootInfoRect;
 
-        private EntityNameModel _entityNameModel;
+        private HighlightableNameModel _highlightableNameModel;
         private CurserModel _curserModel;
         private DialogModel _dialogModel;
         private StatsModel _statsModel;
@@ -147,8 +146,8 @@ namespace ShadowFlareRemake.UIManagement
 
         private void InitModels()
         {
-            _entityNameModel = new EntityNameModel();
-            _entityNameView.SetModel(_entityNameModel);
+            _highlightableNameModel = new HighlightableNameModel();
+            _highlightableNameView.SetModel(_highlightableNameModel);
 
             _curserModel = new CurserModel();
             _curserView.SetModel(_curserModel);
@@ -684,28 +683,27 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region Entity Name Bubble
+        #region Highlightables
 
-        public void SetEntityNameData(EntityNameData data, Transform entityTransform)
+        public void SetHighlightableData(HighlightableData data, Transform entityTransform)
         {
-            _entityNameModel.SetNameBubbleData(data.EntityType, data.Name, data.CurrentHP, data.MaxHP, data.EvolutionLevel,
-                                               data.UiOffest, data.ScaleMultiplier, entityTransform);
+            _highlightableNameModel.SetHighlightableData(data, entityTransform);
         }
 
-        public void SetIsEntityNameActive(bool isActive)
+        public void SetIsHighlightableNameActive(bool isActive)
         {
-            if(isActive == _entityNameModel.IsActive)
+            if(isActive == _highlightableNameModel.IsActive)
                 return;
 
-            _entityNameModel.SetIsActive(isActive);
+            _highlightableNameModel.SetIsActive(isActive);
         }
 
-        public void SetEntityNameTransform(Transform entityTransform)
+        public void SetHighlightableEntityTransform(Transform entityTransform)
         {
-            if(entityTransform == null && _entityNameModel.CurrentEntityTransform == null)
+            if(entityTransform == null && _highlightableNameModel.CurrentEntityTransform == null)
                 return;
 
-            _entityNameModel.SetEntityTransform(entityTransform);
+            _highlightableNameModel.SetEntityTransform(entityTransform);
         }
 
         #endregion

@@ -1,4 +1,3 @@
-using ShadowFlareRemake.Behaviours;
 using ShadowFlareRemake.CamerasManagement;
 using ShadowFlareRemake.Combat;
 using ShadowFlareRemake.CombatManagement;
@@ -14,6 +13,7 @@ using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
 using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
+using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.UIManagement;
 using ShadowFlareRemake.UnitsRestrictedData;
 using System.Collections.Generic;
@@ -231,7 +231,7 @@ namespace ShadowFlareRemake.GameManagement
 
             _lastHighlighted_GameObject = newObject;
             _lastHighlightable = newHighlightable;
-            SetEntityNameData();
+            SetHighlightableData();
             SetIsHighlighted(true);
         }
 
@@ -239,16 +239,16 @@ namespace ShadowFlareRemake.GameManagement
         {
             _lastHighlightable.SetIsHighlighted(isHighlighted);
             var isBubbleActive = isHighlighted && _isAllowedToShowEntityName;
-            _uiManager.SetIsEntityNameActive(isBubbleActive);
+            _uiManager.SetIsHighlightableNameActive(isBubbleActive);
 
             if(!isHighlighted)
-                _uiManager.SetEntityNameTransform(null);
+                _uiManager.SetHighlightableEntityTransform(null);
         }
 
-        private void SetEntityNameData()
+        private void SetHighlightableData()
         {
-            var nameBubbleData = _lastHighlightable.GetEntityNameBubbleData();
-            _uiManager.SetEntityNameData(nameBubbleData, _lastHighlighted_GameObject.transform);
+            var highlightableData = _lastHighlightable.GetHighlightableData();
+            _uiManager.SetHighlightableData(highlightableData, _lastHighlighted_GameObject.transform);
         }
 
         private void CacheLastNpc()
@@ -373,7 +373,7 @@ namespace ShadowFlareRemake.GameManagement
             enemyData.EnemyUnit.ReduceHP(receivedAttackData.InflictedDamage);
             enemyData.EnemyModel.SetIsReceivedCritialHit(receivedAttackData.IsCritialHit);
 
-            SetEntityNameData();
+            SetHighlightableData();
         }
 
         private void HandleEnemyDied(IEnemyUnitStats enemyStats, Vector3 enemyPosition)

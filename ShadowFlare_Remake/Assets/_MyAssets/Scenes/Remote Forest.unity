@@ -5595,9 +5595,9 @@ MonoBehaviour:
     type: 2}
   _testLootDataToSpawnOnAwake:
   - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
-  - {fileID: 11400000, guid: 3ddc7cc9074a6df469196ad0c4938484, type: 2}
-  - {fileID: 11400000, guid: 3d2ccbee539e3e14ea411ad3d03ad64f, type: 2}
-  - {fileID: 11400000, guid: e3936f19356a42f40beab169fc71bde2, type: 2}
+  - {fileID: 11400000, guid: f1443733b59a7484d8a34d570a501b98, type: 2}
+  - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
+  - {fileID: 11400000, guid: e6d5712b3ddcbfa44bd505ed14ead8d2, type: 2}
   - {fileID: 11400000, guid: cb22c0bb4e4374543a836917d4f5b4a3, type: 2}
   - {fileID: 11400000, guid: 84eb6763931c29c48a2f21235e66c22a, type: 2}
   - {fileID: 11400000, guid: 57791beb8edc5174aa59f68ff7e9e085, type: 2}
@@ -11124,7 +11124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c10dab000fdff4b9ec4ad7aab2eb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entityNameView: {fileID: 1717306218}
+  _highlightableNameView: {fileID: 1717306218}
   _curserView: {fileID: 1804044777}
   _dialogView: {fileID: 1657158859}
   _inventoryView: {fileID: 825770268}
@@ -12606,12 +12606,12 @@ GameObject:
   - component: {fileID: 1058647017}
   - component: {fileID: 1058647018}
   m_Layer: 5
-  m_Name: Name Slider
+  m_Name: Highlightable Name Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1058647017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16365,12 +16365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rect: {fileID: 1359072667}
   _image: {fileID: 1359072669}
-  _nameText: {fileID: 0}
   _animator: {fileID: 0}
-  _nameBackgroundImage: {fileID: 0}
-  _nameBG_EquipmentColor: {r: 0, g: 0, b: 0, a: 0}
-  _nameBG_GoldColor: {r: 0, g: 0, b: 0, a: 0}
-  _nameBG_PotionsColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1359072669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20710,7 +20705,7 @@ GameObject:
   - component: {fileID: 1717306217}
   - component: {fileID: 1717306218}
   m_Layer: 5
-  m_Name: Entity Name View
+  m_Name: Highlightable Name View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20757,8 +20752,8 @@ MonoBehaviour:
   _nameBG_NpcColor: {r: 0, g: 1, b: 0, a: 0.3137255}
   _nameBG_EnemyColor: {r: 1, g: 0, b: 0, a: 0.3137255}
   _nameBG_EquipmentColor: {r: 0, g: 0.29803923, b: 1, a: 0.49019608}
-  _nameBG_GoldColor: {r: 0.9029212, g: 0.9622642, b: 0, a: 0.49019608}
-  _nameBG_PotionsColor: {r: 0, g: 1, b: 0.9063432, a: 0.49019608}
+  _nameBG_GoldColor: {r: 0.7294118, g: 0.78039217, b: 0, a: 0.49019608}
+  _nameBG_PotionsColor: {r: 0, g: 0.7137255, b: 0.64705884, a: 0.49019608}
 --- !u!1001 &1717387292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21450,7 +21445,7 @@ RectTransform:
   m_Father: {fileID: 1591725591}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
