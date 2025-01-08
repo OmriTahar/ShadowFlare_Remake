@@ -119,7 +119,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         #endregion
 
-        #region Helpers
+        #region Getters
 
         public NpcView GetNpcView()
         {
