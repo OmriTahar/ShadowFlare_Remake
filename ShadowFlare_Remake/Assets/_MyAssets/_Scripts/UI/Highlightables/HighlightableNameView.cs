@@ -140,7 +140,6 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void SetNameUiPosition()
         {
-            var pos = GetNameUiPosition();
             _nameSliderRectTrans.position = GetNameUiPosition();
         }
 
@@ -151,7 +150,7 @@ namespace ShadowFlareRemake.UI.Highlightables
                 return Vector3.zero;
             }
 
-            var screenPoint = Camera.main.WorldToScreenPoint(Model.CurrentEntityTransform.position);
+            var screenPoint = Camera.main.WorldToScreenPoint(_currentEntityTransform.position);
             var bubbleOffset = Model.UiOffest * Model.ScaleMultiplier;
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
         }
