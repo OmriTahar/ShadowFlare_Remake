@@ -665,6 +665,7 @@ namespace ShadowFlareRemake.UIManagement
         public void HandleFinishDialog()
         {
             _dialogModel.SetIsDialogBubbleActive(false);
+            _dialogModel.ResetTextId();
         }
 
         private Vector3 GetDialogBubblePosition(NpcView npcView)

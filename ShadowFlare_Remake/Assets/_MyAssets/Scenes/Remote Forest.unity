@@ -28144,17 +28144,17 @@ PrefabInstance:
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[2].Title
-      value: Response to answer
+      value: Response to answer (Id 2)
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[3].Title
-      value: Response to answer
+      value: Response to answer (Id 3)
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTextsData.Array.data[4].Title
-      value: Response to answer
+      value: Response to answer (Id 4)
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}

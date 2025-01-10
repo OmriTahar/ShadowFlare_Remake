@@ -3,6 +3,8 @@
     "rootNamespace": "ShadowFlareRemake.GameManagerRestrictedData",
     "references": [
         "GUID:e8733038a827d4741897f7e335845f44",
+        "GUID:5cfda05a4b29ccc4fa82470ebdb42a1e",
+        "GUID:5e82cee30cdd43443aedc1562a7cbc38",
         "GUID:f12ebb93ad09ab14d9e54d355e20fc24",
         "GUID:146e726169c820d4dbb8c18ec93716ae"
     ],

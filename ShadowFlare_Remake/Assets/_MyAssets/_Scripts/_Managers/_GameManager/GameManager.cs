@@ -57,13 +57,13 @@ namespace ShadowFlareRemake.GameManagement
 
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
-        private (HighlightableBehaviour, NpcView) _lastNpc;
+        private NpcDataContainer _lastNpc = new();
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
-        private bool _isAllowedToShowHighlightableName = true; // Move to UI? To EntityNameModel
+        private bool _isAllowedToShowHighlightableName = true; 
 
         #region MonoBehaviour
 
@@ -261,8 +261,8 @@ namespace ShadowFlareRemake.GameManagement
             if(npcView == null)
                 return;
 
-            _lastNpc.Item1 = _lastHighlightable;
-            _lastNpc.Item2 = npcView;
+            _lastNpc.HighlightableBehaviour = _lastHighlightable;
+            _lastNpc.View = npcView;
         }
 
         #endregion
@@ -554,17 +554,17 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerTalkingToNpc()
         {
-            if(_lastNpc.Item2 == null)
+            if(_lastNpc.View == null)
                 return;
 
             _isAllowedToShowHighlightableName = false;
-            _lastNpc.Item2.LookAtPlayer(_playerController.transform);
-            _uiManager.HandleDialog(_lastNpc.Item2);
+            _lastNpc.View.LookAtPlayer(_playerController.transform);
+            _uiManager.HandleDialog(_lastNpc.View);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()
         {
-            _lastNpc.Item2.SetIsTalking(false);
+            _lastNpc.View.SetIsTalking(false);
             _isAllowedToShowHighlightableName = true;
             _uiManager.HandleFinishDialog();
         }

@@ -8,6 +8,7 @@ namespace ShadowFlareRemake.Npc
     {
         public string Name { get => name; } //{ get => Model.Name; }
         public float DialogBubbleOffset { get => _dialogBubbleOffset; }
+        public int CurrentDialogTextId { get => _currentDialogTextId; }
         public bool IsTalking { get; private set; }
 
         [Header("Temp")]
@@ -22,7 +23,7 @@ namespace ShadowFlareRemake.Npc
         [Header("Settings")]
         [SerializeField] private float _dialogBubbleOffset = 200;
 
-        public int CurrentDialogTextId = 0; // Fix this public shit -> Use the fucking model
+        private int _currentDialogTextId = 0;
 
         protected override void ModelChanged() { }
 
@@ -36,16 +37,16 @@ namespace ShadowFlareRemake.Npc
             if(nextDialogTextId > -1)
             {
                 currentDialogText = _dialogTextsData.FirstOrDefault(data => data.Id == nextDialogTextId);
-                CurrentDialogTextId = nextDialogTextId;
+                _currentDialogTextId = nextDialogTextId;
             }
             else if(CurrentDialogTextId > _dialogTexts.Length - 1)
             {
-                CurrentDialogTextId = 0;
+                _currentDialogTextId = 0;
             }
             else
             {
-                currentDialogText = _dialogTextsData[CurrentDialogTextId];
-                CurrentDialogTextId++;
+                currentDialogText = _dialogTextsData[_currentDialogTextId];
+                _currentDialogTextId++;
             }
 
             return currentDialogText;
@@ -57,12 +58,12 @@ namespace ShadowFlareRemake.Npc
 
             if(CurrentDialogTextId > _dialogTexts.Length - 1)
             {
-                CurrentDialogTextId = 0;
+                _currentDialogTextId = 0;
             }
             else
             {
-                currentDialogText = _dialogTexts[CurrentDialogTextId];
-                CurrentDialogTextId++;
+                currentDialogText = _dialogTexts[_currentDialogTextId];
+                _currentDialogTextId++;
             }
 
             return currentDialogText;
@@ -76,6 +77,11 @@ namespace ShadowFlareRemake.Npc
         public void LookAtPlayer(Transform playerTransform)
         {
             transform.LookAt(playerTransform);
+        }
+
+        public void ResetCurrentDialogTextId()
+        {
+            _currentDialogTextId = 0;
         }
     }
 }

@@ -50,5 +50,14 @@ namespace ShadowFlareRemake.UI.Dialog
             CurrentAnswerId = id;
             Changed();
         }
+
+        public void ResetTextId()
+        {
+            if(CurrentNpc == null)
+                return;
+
+            CurrentNpc.ResetCurrentDialogTextId();
+            Changed();
+        }
     }
 }
