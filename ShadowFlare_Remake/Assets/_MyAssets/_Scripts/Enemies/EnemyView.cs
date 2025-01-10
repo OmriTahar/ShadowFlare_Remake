@@ -282,6 +282,7 @@ namespace ShadowFlareRemake.Enemies
             }
 
             float time = 0;
+            float fadingDuration = _fadingObject.FadingDuration;
 
             if(fadingObject == null || fadingObject.Materials == null)
             {
@@ -294,7 +295,8 @@ namespace ShadowFlareRemake.Enemies
                 {
                     if(material.HasProperty(_baseColor))
                     {
-                        material.color = new Color(material.color.r, material.color.g, material.color.b, Mathf.Lerp(fadingObject.InitialAlpha, 0, time * 2.5f));
+                        material.color = new Color(material.color.r, material.color.g, material.color.b, 
+                                                   Mathf.Lerp(fadingObject.InitialAlpha, 0, fadingDuration));
                     }
                 }
 

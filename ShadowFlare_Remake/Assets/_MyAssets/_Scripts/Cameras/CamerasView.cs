@@ -13,9 +13,6 @@ namespace ShadowFlareRemake.Cameras
         [SerializeField] private Transform _leftCamera;
         [SerializeField] private Transform _rightCamera;
 
-        [Header("Settings")]
-        [SerializeField] private Vector3 _cameraOffset;
-
         private void Update()
         {
             transform.position = _followTarget.position;
@@ -46,8 +43,8 @@ namespace ShadowFlareRemake.Cameras
                     break;
             }
 
-            _mainCameraTransform.localPosition = Vector3.zero;
-            _mainCameraTransform.localRotation = Quaternion.identity;
+            //_mainCameraTransform.localPosition = Vector3.zero;
+            //_mainCameraTransform.localRotation = Quaternion.identity;
         }
     }
 }

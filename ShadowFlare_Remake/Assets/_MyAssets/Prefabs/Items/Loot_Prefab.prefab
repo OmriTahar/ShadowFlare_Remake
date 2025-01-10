@@ -196,7 +196,7 @@ MonoBehaviour:
   _npcView: {fileID: 0}
   _enemyView: {fileID: 0}
   _lootView: {fileID: 3260301018575255150}
-  _nameBubbleUiOffest: 50
+  _nameBubbleUiOffest: 100
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 0
   <EntityType>k__BackingField: 3
