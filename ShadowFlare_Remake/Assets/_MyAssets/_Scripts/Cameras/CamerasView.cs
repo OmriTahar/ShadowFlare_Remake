@@ -43,7 +43,7 @@ namespace ShadowFlareRemake.Cameras
                     break;
             }
 
-            //_mainCameraTransform.localPosition = Vector3.zero;
+            _mainCameraTransform.localPosition = Vector3.zero;
             //_mainCameraTransform.localRotation = Quaternion.identity;
         }
     }
