@@ -7079,6 +7079,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
+      propertyPath: _name
+      value: Ronen The Great
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
       propertyPath: _speech.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -27914,6 +27919,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
         type: 3}
+      propertyPath: _name
+      value: Igor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
       propertyPath: _dialogBubbleOffset
       value: 300
       objectReference: {fileID: 0}
@@ -28086,6 +28096,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1142288575}
     m_Modifications:
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _name
+      value: Dikla
+      objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _dialogTexts.Array.size

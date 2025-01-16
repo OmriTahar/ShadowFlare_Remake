@@ -44,6 +44,12 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         protected override void ModelChanged()
         {
+            if(!Model.IsAllowedToBeActive)
+            {
+                _nameSlider.gameObject.SetActive(false);
+                return;
+            }
+
             SetValues();
             SetSliderSize();
             SetBackgroundColor();
@@ -157,6 +163,12 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         public void SetIsActive()
         {
+            if(!Model.IsAllowedToBeActive)
+            {
+                _nameSlider.gameObject.SetActive(false);
+                return;
+            }
+
             _nameSlider.gameObject.SetActive(Model.IsActive);
         }
     }

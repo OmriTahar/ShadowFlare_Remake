@@ -5,13 +5,13 @@ namespace ShadowFlareRemake.Npc
 {
     public class NpcView : View<NpcModel>
     {
-        public string Name { get => name; } //{ get => Model.Name; }
+        public string Name { get => _name; } 
         public float DialogBubbleOffset { get => _dialogBubbleOffset; }
         public int CurrentDialogTextId { get => _currentDialogTextId; }
         public bool IsTalking { get; private set; }
 
         [Header("Initialization")]
-        [SerializeField] private string _namePlaceHolder;
+        [SerializeField] private string _name;
 
         [Header("Dialog Text Data")]
         [SerializeField] private DialogTextData[] _dialogTextsData;

@@ -621,7 +621,9 @@ namespace ShadowFlareRemake.UIManagement
 
         public void HandleDialog(NpcView npcView, int nextDialogTextId = -1) // Is it possible to make this smarter?
         {
+            _highlightableNameModel.SetIsAllowedToBeActive(false);
             _dialogModel.SetCurrentNpc(npcView);
+
             var dialogBubblePos = GetDialogBubblePosition(npcView);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
 
@@ -631,7 +633,7 @@ namespace ShadowFlareRemake.UIManagement
             {
                 if(npcView.IsTalking)
                 {
-                    print("Next dialog data is null.");
+                    print($"Finished dialog with {npcView.Name}");
                     OnFinishedDialog?.Invoke();
                     _dialogModel.SetCurrentNpc(null);
                     return;
@@ -642,18 +644,10 @@ namespace ShadowFlareRemake.UIManagement
 
             var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
 
-            if(hasSomethingToSay)       // Start or Continue dialog
+            if(hasSomethingToSay)      
             {
                 npcView.SetIsTalking(true);
                 _dialogModel.SetDialogTextData(currentDialogTextData);
-                _dialogModel.SetIsDialogBubbleActive(true);
-                return;
-            }
-
-            if(!npcView.IsTalking)      // Start dialog from the top
-            {
-                npcView.SetIsTalking(true);
-                _dialogModel.SetDialogTextData(npcView.GetCurrentDialogTextData());
                 _dialogModel.SetIsDialogBubbleActive(true);
                 return;
             }
@@ -662,10 +656,12 @@ namespace ShadowFlareRemake.UIManagement
             _dialogModel.SetCurrentNpc(null);
         }
 
-        public void HandleFinishDialog()
+        public void HandleFinishDialog(NpcView npcView)
         {
+            npcView.SetIsTalking(false);
             _dialogModel.SetIsDialogBubbleActive(false);
             _dialogModel.ResetTextId();
+            _highlightableNameModel.SetIsAllowedToBeActive(true);
         }
 
         private Vector3 GetDialogBubblePosition(NpcView npcView)

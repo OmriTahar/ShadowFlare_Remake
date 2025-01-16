@@ -63,8 +63,6 @@ namespace ShadowFlareRemake.GameManagement
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
-        private bool _isAllowedToShowHighlightableName = true; 
-
         #region MonoBehaviour
 
         private async void Start()
@@ -238,8 +236,7 @@ namespace ShadowFlareRemake.GameManagement
         private void SetIsHighlighted(bool isHighlighted)
         {
             _lastHighlightable.SetIsHighlighted(isHighlighted);
-            var isHighlightableNameActive = isHighlighted && _isAllowedToShowHighlightableName;
-            _uiManager.SetIsHighlightableNameActive(isHighlightableNameActive);
+            _uiManager.SetIsHighlightableNameActive(isHighlighted);
 
             if(!isHighlighted)
                 _uiManager.SetHighlightableEntityTransform(null);
@@ -552,35 +549,25 @@ namespace ShadowFlareRemake.GameManagement
             }
         }
 
+        #endregion
+
+        #region Npc
+
         private void HandlePlayerTalkingToNpc()
         {
             if(_lastNpc.View == null)
                 return;
 
-            _isAllowedToShowHighlightableName = false;
             _lastNpc.View.LookAtPlayer(_playerController.transform);
             _uiManager.HandleDialog(_lastNpc.View);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()
         {
-            _lastNpc.View.SetIsTalking(false);
-            _isAllowedToShowHighlightableName = true;
-            _uiManager.HandleFinishDialog();
-        }
+            _uiManager.HandleFinishDialog(_lastNpc.View);
 
-        #endregion
-
-        #region Npc
-
-        private void InitNpcs()
-        {
-            var npcsToInitialize = _npcParent.GetComponentsInChildren<EnemyToSpawn>();
-
-            //foreach(var enemyToSpawn in enemiesToSpawn)
-            //{
-            //    InitEnemyLogic(enemyToSpawn, _isEnemyActiveOnSpawn);
-            //}
+            if(_lastHighlightable != null)
+                _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);
         }
 
         #endregion

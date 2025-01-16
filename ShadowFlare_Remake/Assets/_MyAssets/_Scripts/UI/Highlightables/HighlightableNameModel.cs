@@ -10,6 +10,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         public Transform CurrentEntityTransform { get; private set; }
         public int UiOffest { get; private set; }
         public bool IsActive { get; private set; }
+        public bool IsAllowedToBeActive { get; private set; } = true;
 
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
@@ -54,6 +55,12 @@ namespace ShadowFlareRemake.UI.Highlightables
         public void SetIsActive(bool isActive)
         {
             IsActive = isActive;
+            Changed();
+        }
+
+        public void SetIsAllowedToBeActive(bool isAllowedToBeActive)
+        {
+            IsAllowedToBeActive = isAllowedToBeActive;
             Changed();
         }
     }
