@@ -9,16 +9,17 @@ namespace ShadowFlareRemake.UI.Dialog
         public Vector3 DialogBubblePosition { get; private set; }
         public DialogTextData CurrentDialogTextData { get; private set; }
         public bool IsBubbleActive { get; private set; }
-        public bool IsAnswersActive { get; private set; }
-
-        public int CurrentAnswerId = -1;
+        public bool IsQuestionText { get; private set; }
+        public bool IsFinalText { get; private set; }
 
         public DialogModel() { }
 
-        public void SetCurrentNpc(NpcView npc)
+        public void SetCurrentNpc(NpcView npc, bool invokeChanged = true)
         {
             CurrentNpc = npc;
-            Changed();
+
+            if(invokeChanged)
+                Changed();
         }
 
         public void SetDialogBubblePosition(Vector3 pos)
@@ -27,37 +28,80 @@ namespace ShadowFlareRemake.UI.Dialog
             Changed();
         }
 
-        public void SetIsDialogBubbleActive(bool isActive)
+        public void SetIsDialogBubbleActive(bool isActive, bool invokeChanged = true)
         {
             IsBubbleActive = isActive;
-            Changed();
+
+            if(invokeChanged)
+                Changed();
         }
 
         public void SetDialogTextData(DialogTextData data)
         {
             CurrentDialogTextData = data;
+            SetIsQuestionText();
+            SetIsFinalText();
             Changed();
         }
-
-        public void SetIsAnswersActive(bool isActive)
+       
+        private void SetIsQuestionText()
         {
-            IsAnswersActive = isActive;
-            Changed();
+            if(CurrentDialogTextData == null)
+                return;
+
+            IsQuestionText = CurrentDialogTextData.IsQuestionText;
         }
 
-        public void SetAnswerId(int id)
+        private void SetIsFinalText()
         {
-            CurrentAnswerId = id;
+            if(CurrentDialogTextData == null)
+                return;
+
+            IsFinalText = CurrentDialogTextData.IsFinalText;
+        }
+
+        #region Reset Functions
+
+        public void ResetDialogModel()
+        {
+            bool invokeChanged = false;
+
+            ResetTextId(invokeChanged);
+            SetCurrentNpc(null, invokeChanged);
+            ResetIsQuestionText(invokeChanged);
+            ResetIsFinalText(invokeChanged);
+            SetIsDialogBubbleActive(false, invokeChanged);
+
             Changed();
         }
 
-        public void ResetTextId()
+        private void ResetIsQuestionText(bool invokeChanged = true)
+        {
+            IsQuestionText = false;
+
+            if(invokeChanged)
+                Changed();
+        }
+
+        private void ResetIsFinalText(bool invokeChanged = true)
+        {
+            IsFinalText = false;
+
+            if(invokeChanged)
+                Changed();
+        }
+
+        private void ResetTextId(bool invokeChanged = true)
         {
             if(CurrentNpc == null)
                 return;
 
             CurrentNpc.ResetCurrentDialogTextId();
-            Changed();
+
+            if(invokeChanged)
+                Changed();
         }
+
+        #endregion
     }
 }

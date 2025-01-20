@@ -8,6 +8,7 @@ namespace ShadowFlareRemake.Npc
         public string Title;
         public int Id;
         public string DialogText;
+        public bool IsQuestionText;
         public bool IsFinalText;
         public DialogAnswerData[] Answers;
     }

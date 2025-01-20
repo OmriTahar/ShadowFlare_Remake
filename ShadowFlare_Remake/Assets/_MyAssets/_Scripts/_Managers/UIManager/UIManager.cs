@@ -1,4 +1,3 @@
-using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
@@ -8,6 +7,7 @@ using ShadowFlareRemake.Skills;
 using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Cursor;
 using ShadowFlareRemake.UI.Dialog;
+using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.UI.Hud;
 using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.ItemsGrid;
@@ -627,6 +627,15 @@ namespace ShadowFlareRemake.UIManagement
             var dialogBubblePos = GetDialogBubblePosition(npcView);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
 
+            if(_dialogModel.IsFinalText)
+            {
+                OnFinishedDialog?.Invoke();
+                return;
+            }
+
+            if(_dialogModel.IsQuestionText) // Should click on answers and not on NPC
+                return;
+
             var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
 
             if(currentDialogTextData == null)
@@ -644,7 +653,7 @@ namespace ShadowFlareRemake.UIManagement
 
             var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
 
-            if(hasSomethingToSay)      
+            if(hasSomethingToSay)
             {
                 npcView.SetIsTalking(true);
                 _dialogModel.SetDialogTextData(currentDialogTextData);
@@ -653,14 +662,12 @@ namespace ShadowFlareRemake.UIManagement
             }
 
             OnFinishedDialog?.Invoke();
-            _dialogModel.SetCurrentNpc(null);
         }
 
         public void HandleFinishDialog(NpcView npcView)
         {
             npcView.SetIsTalking(false);
-            _dialogModel.SetIsDialogBubbleActive(false);
-            _dialogModel.ResetTextId();
+            _dialogModel.ResetDialogModel();
             _highlightableNameModel.SetIsAllowedToBeActive(true);
         }
 
