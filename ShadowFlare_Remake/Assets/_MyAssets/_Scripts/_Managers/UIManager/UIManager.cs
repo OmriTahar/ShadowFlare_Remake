@@ -619,7 +619,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleDialog(NpcView npcView, int nextDialogTextId = -1) // Is it possible to make this smarter?
+        public void HandleDialog(NpcView npcView, bool isClickedOnAnswer, int nextDialogTextId = -1) 
         {
             _highlightableNameModel.SetIsAllowedToBeActive(false);
             _dialogModel.SetCurrentNpc(npcView);
@@ -633,7 +633,7 @@ namespace ShadowFlareRemake.UIManagement
                 return;
             }
 
-            if(_dialogModel.IsQuestionText && _dialogModel.CurrentDialogTextData.Id == _dialogModel.CurrentDialogTextId) // Should click on answers and not on NPC
+            if(_dialogModel.IsQuestionText && !isClickedOnAnswer) 
                 return;
 
             var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
@@ -680,7 +680,7 @@ namespace ShadowFlareRemake.UIManagement
         private void HandleDialogAnswerClicked(int nextDialogTextIdAdder)
         {
             var nextTextId = _dialogModel.CurrentNpc.CurrentDialogTextId + nextDialogTextIdAdder;
-            HandleDialog(_dialogModel.CurrentNpc, nextTextId);
+            HandleDialog(_dialogModel.CurrentNpc, true, nextTextId);
         }
 
         #endregion

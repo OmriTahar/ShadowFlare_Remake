@@ -14,7 +14,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
-        public int EvolutionLevel { get; private set; }
+        public int NameBgSize { get; private set; }
         public float ScaleMultiplier { get; private set; }
         public LootCategory LootCategory {  get; private set; } 
         public int GoldAmount { get; private set; }
@@ -25,7 +25,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             Name = "";
             CurrentHP = 0;
             MaxHP = 0;
-            EvolutionLevel = 1;
+            NameBgSize = 1;
             UiOffest = 0;
             ScaleMultiplier = 1;
             CurrentEntityTransform = null;
@@ -39,7 +39,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             UiOffest = data.UiOffset;
             CurrentHP = data.CurrentHP;
             MaxHP = data.MaxHP;
-            EvolutionLevel = data.EvolutionLevel;
+            NameBgSize = data.NameBgSize;
             ScaleMultiplier = data.ScaleMultiplier;
             LootCategory = data.LootCategory;
             GoldAmount = data.GoldAmount;

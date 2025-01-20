@@ -35,7 +35,7 @@ namespace ShadowFlareRemake.Npc
                 currentDialogText = _dialogTextsData.FirstOrDefault(data => data.Id == nextDialogTextId);
                 _currentDialogTextId = nextDialogTextId;
             }
-            else if(CurrentDialogTextId > _dialogTextsData.Length - 1)
+            else if(_currentDialogTextId > _dialogTextsData.Length - 1)
             {
                 _currentDialogTextId = 0;
             }

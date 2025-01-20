@@ -12,7 +12,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         // ------------- ENEMIES --------------- 
         public int CurrentHP { get; private set; }
         public int MaxHP { get; private set; }
-        public int EvolutionLevel { get; private set; } = 1;
+        public int NameBgSize { get; private set; } = 1;
         public float ScaleMultiplier { get; private set; } = 1;
 
         // -------------- LOOT ----------------
@@ -34,7 +34,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             UiOffset = uiOffset;
             CurrentHP = currentHP;
             MaxHP = maxHP;
-            EvolutionLevel = evolutionLevel;
+            NameBgSize = evolutionLevel;
             ScaleMultiplier = scaleMultiplier;
         }
 

@@ -16,6 +16,8 @@ namespace ShadowFlareRemake.UI.Highlightables
         [SerializeField] private Vector2 _smallSliderSize;
         [SerializeField] private Vector2 _mediumSliderSize;
         [SerializeField] private Vector2 _largeSliderSize;
+        [SerializeField] private int _mediumNameBgCharsCount;
+        [SerializeField] private int _LargeNameBgCharsCount;
 
         [Header("Colors")]
         [SerializeField] private Color _nameBG_NpcColor;
@@ -90,21 +92,35 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void SetSliderSize()
         {
-            switch(Model.EvolutionLevel)
+            if(Model.EntityType == EntityType.Enemy)
             {
-                case 1:
-                    _nameSliderRectTrans.sizeDelta = _smallSliderSize;
-                    break;
-                case 2:
-                    _nameSliderRectTrans.sizeDelta = _mediumSliderSize;
-                    break;
-                case 3:
-                    _nameSliderRectTrans.sizeDelta = _largeSliderSize;
-                    break;
-                default:
-                    _nameSliderRectTrans.sizeDelta = _mediumSliderSize;
-                    break;
+                switch(Model.NameBgSize)
+                {
+                    case 1:
+                        _nameSliderRectTrans.sizeDelta = _smallSliderSize;
+                        break;
+                    case 2:
+                        _nameSliderRectTrans.sizeDelta = _mediumSliderSize;
+                        break;
+                    case 3:
+                        _nameSliderRectTrans.sizeDelta = _largeSliderSize;
+                        break;
+                }
+                return;
             }
+
+            var nameCharsCount = Model.Name.Length;
+
+            if(nameCharsCount >= _LargeNameBgCharsCount)
+            {
+                _nameSliderRectTrans.sizeDelta = _largeSliderSize;
+            }
+            else if(nameCharsCount >= _mediumNameBgCharsCount)
+            {
+                _nameSliderRectTrans.sizeDelta = _mediumSliderSize;
+            }
+            else
+                _nameSliderRectTrans.sizeDelta = _smallSliderSize;
         }
 
         private void SetBackgroundColor()

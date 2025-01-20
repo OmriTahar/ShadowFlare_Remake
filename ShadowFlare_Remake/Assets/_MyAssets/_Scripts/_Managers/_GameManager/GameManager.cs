@@ -559,7 +559,7 @@ namespace ShadowFlareRemake.GameManagement
                 return;
 
             _lastNpc.View.LookAtPlayer(_playerController.transform);
-            _uiManager.HandleDialog(_lastNpc.View);
+            _uiManager.HandleDialog(_lastNpc.View, false);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()

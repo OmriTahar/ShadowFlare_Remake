@@ -7084,6 +7084,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
+      propertyPath: _nameBgSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
       propertyPath: _speech.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -19184,10 +19189,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45.45
-  m_fontSizeBase: 36
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 8
   m_fontSizeMax: 40
   m_fontStyle: 0
@@ -20722,6 +20727,8 @@ MonoBehaviour:
   _smallSliderSize: {x: 250, y: 120}
   _mediumSliderSize: {x: 400, y: 120}
   _largeSliderSize: {x: 600, y: 120}
+  _mediumNameBgCharsCount: 15
+  _LargeNameBgCharsCount: 25
   _nameBG_NpcColor: {r: 0, g: 1, b: 0, a: 0.3137255}
   _nameBG_EnemyColor: {r: 1, g: 0, b: 0, a: 0.3137255}
   _nameBG_EquipmentColor: {r: 0, g: 0.29803923, b: 1, a: 0.49019608}
@@ -27924,6 +27931,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
         type: 3}
+      propertyPath: _nameBgSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
       propertyPath: _dialogBubbleOffset
       value: 300
       objectReference: {fileID: 0}
@@ -28100,6 +28112,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _name
       value: Dikla
+      objectReference: {fileID: 0}
+    - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _nameBgSize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}

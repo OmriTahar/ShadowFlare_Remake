@@ -144,10 +144,10 @@ namespace ShadowFlareRemake.UI.Highlightables
                 name = _enemyView.Name;
                 int currentHP = _enemyView.CurrentHP;
                 int maxHP = _enemyView.MaxHP;
-                int evolutionLevel = _enemyView.EvolutionLevel;
+                int nameBgSize = _enemyView.EvolutionLevel;
                 float scaleMultiplier = _enemyView.ScaleMultiplier;
                 return new HighlightableData(entityType, name, _nameBubbleUiOffest,
-                                             currentHP, maxHP, evolutionLevel, scaleMultiplier);
+                                             currentHP, maxHP, nameBgSize, scaleMultiplier);
             }
 
             if(EntityType == EntityType.Loot && _lootView != null)
