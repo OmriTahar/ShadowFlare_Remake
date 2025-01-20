@@ -193,13 +193,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 3319556778527854936}
   _skinnedMeshRenderer: {fileID: 0}
-  _npcView: {fileID: 0}
-  _enemyView: {fileID: 0}
-  _lootView: {fileID: 3260301018575255150}
+  _entityObject: {fileID: 3333601261051145792}
+  <EntityType>k__BackingField: 3
   _nameBubbleUiOffest: 100
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 0
-  <EntityType>k__BackingField: 3
 --- !u!4 &3336864765410818638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013169634162, guid: 5dcae5adf53292945adef517afe8041e,

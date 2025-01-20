@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShadowFlareRemake.Npc
 {
-    public class NpcView : View<NpcModel>
+    public class NpcBehaviour : MonoBehaviour
     {
         public string Name { get => _name; } 
         public float DialogBubbleOffset { get => _dialogBubbleOffset; }
@@ -20,8 +20,6 @@ namespace ShadowFlareRemake.Npc
         [SerializeField] private float _dialogBubbleOffset = 200;
 
         private int _currentDialogTextId = 0;
-
-        protected override void ModelChanged() { }
 
         public DialogTextData GetCurrentDialogTextData(int nextDialogTextId = -1)
         {
@@ -53,9 +51,9 @@ namespace ShadowFlareRemake.Npc
             IsTalking = isTalking;
         }
 
-        public void LookAtPlayer(Transform playerTransform)
+        public void LookAtTransform(Transform transformToLookAt)
         {
-            transform.LookAt(playerTransform);
+            transform.LookAt(transformToLookAt);
         }
 
         public void ResetCurrentDialogTextId()

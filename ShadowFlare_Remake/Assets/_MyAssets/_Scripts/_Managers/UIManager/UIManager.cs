@@ -619,7 +619,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleDialog(NpcView npcView, bool isClickedOnAnswer, int nextDialogTextId = -1) 
+        public void HandleDialog(NpcBehaviour npcView, bool isClickedOnAnswer, int nextDialogTextId = -1)
         {
             _highlightableNameModel.SetIsAllowedToBeActive(false);
             _dialogModel.SetCurrentNpc(npcView);
@@ -633,7 +633,7 @@ namespace ShadowFlareRemake.UIManagement
                 return;
             }
 
-            if(_dialogModel.IsQuestionText && !isClickedOnAnswer) 
+            if(_dialogModel.IsQuestionText && !isClickedOnAnswer)
                 return;
 
             var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
@@ -662,14 +662,14 @@ namespace ShadowFlareRemake.UIManagement
             OnFinishedDialog?.Invoke();
         }
 
-        public void HandleFinishDialog(NpcView npcView)
+        public void HandleFinishDialog(NpcBehaviour npcView)
         {
             npcView.SetIsTalking(false);
             _dialogModel.ResetDialogModel();
             _highlightableNameModel.SetIsAllowedToBeActive(true);
         }
 
-        private Vector3 GetDialogBubblePosition(NpcView npcView)
+        private Vector3 GetDialogBubblePosition(NpcBehaviour npcView)
         {
             var npcPos = npcView.transform.position;
             var screenPoint = Camera.main.WorldToScreenPoint(npcPos);

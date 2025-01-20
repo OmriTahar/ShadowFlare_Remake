@@ -7,7 +7,6 @@ using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
-using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
@@ -37,9 +36,6 @@ namespace ShadowFlareRemake.GameManagement
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
-
-        [Header("NPC's")]
-        [SerializeField] private Transform _npcParent;
 
         [Header("--------------- TESTS: Enemies ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
@@ -253,13 +249,13 @@ namespace ShadowFlareRemake.GameManagement
             if(_lastHighlightable.EntityType != EntityType.Npc)
                 return;
 
-            var npcView = _lastHighlightable.GetNpcView();
+            var npc = _lastHighlightable.GetNpcBehaviour();
 
-            if(npcView == null)
+            if(npc == null)
                 return;
 
             _lastNpc.HighlightableBehaviour = _lastHighlightable;
-            _lastNpc.View = npcView;
+            _lastNpc.Npc = npc;
         }
 
         #endregion
@@ -555,16 +551,16 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerTalkingToNpc()
         {
-            if(_lastNpc.View == null)
+            if(_lastNpc.Npc == null)
                 return;
 
-            _lastNpc.View.LookAtPlayer(_playerController.transform);
-            _uiManager.HandleDialog(_lastNpc.View, false);
+            _lastNpc.Npc.LookAtTransform(_playerController.transform);
+            _uiManager.HandleDialog(_lastNpc.Npc, false);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()
         {
-            _uiManager.HandleFinishDialog(_lastNpc.View);
+            _uiManager.HandleFinishDialog(_lastNpc.Npc);
 
             if(_lastHighlightable != null)
                 _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);

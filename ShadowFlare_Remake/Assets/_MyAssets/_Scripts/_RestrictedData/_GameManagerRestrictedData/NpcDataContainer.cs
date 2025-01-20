@@ -6,8 +6,7 @@ namespace ShadowFlareRemake.GameManagerRestrictedData
     public class NpcDataContainer
     {
         public HighlightableBehaviour HighlightableBehaviour;
-        public NpcModel Model;
-        public NpcView View;
+        public NpcBehaviour Npc;
 
         public NpcDataContainer() { }
     }

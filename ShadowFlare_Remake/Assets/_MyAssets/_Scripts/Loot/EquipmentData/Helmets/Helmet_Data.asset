@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Helmet_Data
   m_EditorClassIdentifier: 
   _________BASE_________: ------------------------------------
-  <Name>k__BackingField: Helment
+  <Name>k__BackingField: Helmet
   <LootType>k__BackingField: 3
   <Color>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <Sprite>k__BackingField: {fileID: 21300000, guid: 6030a7103becf0c46aa1905abbd6a39a,

@@ -1703,7 +1703,6 @@ MonoBehaviour:
   _playerUnitStatsToCopy: {fileID: 11400000, guid: 49710c2a48b6f3249b289e02ac6503c9,
     type: 2}
   _enemiesParent: {fileID: 1054742629}
-  _npcParent: {fileID: 0}
   _testEnemyToSpawn: {fileID: 1302082256}
   _isEnemyActiveOnSpawn: 0
   _restoreOrReduceAmount: 10
@@ -4853,6 +4852,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &440309836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3608932996864390937, guid: 48e1a7c3733a5124fbf25a43abccb301,
+    type: 3}
+  m_PrefabInstance: {fileID: 4824216701145875063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &452432107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6529,6 +6534,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2c18b482a1011469cc7a30b20226dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &571804382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+    type: 3}
+  m_PrefabInstance: {fileID: 635781528}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &601882444
 GameObject:
   m_ObjectHideFlags: 0
@@ -7347,15 +7358,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 7248951576327704084, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _entityObject
+      value: 
+      objectReference: {fileID: 571804382}
+    - target: {fileID: 7248951576327704084, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      propertyPath: _npcBehaviour
+      value: 
+      objectReference: {fileID: 635781530}
     - target: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: m_Name
       value: Magician
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4525067250371051792, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7940719953895527930, guid: 6a3c3c37133b6ae4d9590995c8166d88,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 635781530}
   m_SourcePrefab: {fileID: 100100000, guid: 6a3c3c37133b6ae4d9590995c8166d88, type: 3}
 --- !u!4 &635781529 stripped
 Transform:
@@ -7363,6 +7389,45 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 635781528}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &635781530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571804382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Ronen The Great
+  _dialogTextsData:
+  - Title: Hi
+    Id: 0
+    DialogText: Hello There!
+    IsQuestionText: 0
+    IsFinalText: 0
+    Answers: []
+  - Title: Intro
+    Id: 1
+    DialogText: I am Ronen The Great!
+    IsQuestionText: 0
+    IsFinalText: 0
+    Answers: []
+  - Title: Deterence
+    Id: 2
+    DialogText: I RUN THIS BITCH
+    IsQuestionText: 0
+    IsFinalText: 0
+    Answers: []
+  - Title: Final
+    Id: 3
+    DialogText: How can I be of service?
+    IsQuestionText: 0
+    IsFinalText: 1
+    Answers: []
+  _dialogBubbleOffset: 200
 --- !u!1001 &654563267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8014,6 +8079,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3067932416887089534, guid: bf5072e62b826134db1b3aff1f3b0193,
     type: 3}
   m_PrefabInstance: {fileID: 682426336}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &682610095 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3284783999506281391, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+    type: 3}
+  m_PrefabInstance: {fileID: 3838884023419023764}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &682789082
 PrefabInstance:
@@ -28089,10 +28160,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8138805717053303041, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _entityObject
+      value: 
+      objectReference: {fileID: 682610095}
+    - target: {fileID: 8138805717053303041, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      propertyPath: _npcBehaviour
+      value: 
+      objectReference: {fileID: 6177545896927845847}
+    m_RemovedComponents:
+    - {fileID: 5684155390644701006, guid: f32beb42ad1d1494ab0a2c7d9d88c128, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3284783999506281391, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6177545896927845847}
   m_SourcePrefab: {fileID: 100100000, guid: f32beb42ad1d1494ab0a2c7d9d88c128, type: 3}
 --- !u!4 &4799799080434918298 stripped
 Transform:
@@ -28100,6 +28186,57 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4824216701145875063}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4799799080434918299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440309836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Dikla
+  _dialogTextsData:
+  - Title: Hi
+    Id: 0
+    DialogText: Hey sweetie
+    IsQuestionText: 0
+    IsFinalText: 0
+    Answers: []
+  - Title: Question
+    Id: 1
+    DialogText: Do you like my dress?
+    IsQuestionText: 1
+    IsFinalText: 0
+    Answers:
+    - Title: Yes
+      NextDialogTextId: 2
+    - Title: No
+      NextDialogTextId: 3
+    - Title: Maybe
+      NextDialogTextId: 4
+  - Title: Answer 1
+    Id: 2
+    DialogText: Thanks suger tits
+    IsQuestionText: 0
+    IsFinalText: 1
+    Answers: []
+  - Title: Answer 2
+    Id: 3
+    DialogText: Yeah right
+    IsQuestionText: 0
+    IsFinalText: 1
+    Answers: []
+  - Title: Answer 3
+    Id: 4
+    DialogText: Think about it and let me know
+    IsQuestionText: 0
+    IsFinalText: 1
+    Answers: []
+  _dialogBubbleOffset: 200
 --- !u!1001 &4824216701145875063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28578,6 +28715,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7211129529822168104, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _entityObject
+      value: 
+      objectReference: {fileID: 440309836}
+    - target: {fileID: 7211129529822168104, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      propertyPath: _npcBehaviour
+      value: 
+      objectReference: {fileID: 4799799080434918299}
     - target: {fileID: 7403197374545281177, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -28733,10 +28880,15 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 545639162271687033, guid: 48e1a7c3733a5124fbf25a43abccb301, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3608932996864390937, guid: 48e1a7c3733a5124fbf25a43abccb301,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4799799080434918299}
   m_SourcePrefab: {fileID: 100100000, guid: 48e1a7c3733a5124fbf25a43abccb301, type: 3}
 --- !u!1001 &5333997295604999326
 PrefabInstance:
@@ -29025,6 +29177,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3838884023419023764}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6177545896927845847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682610095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Igor
+  _dialogTextsData:
+  - Title: Hi
+    Id: 0
+    DialogText: Fuck Off
+    IsQuestionText: 0
+    IsFinalText: 1
+    Answers: []
+  _dialogBubbleOffset: 250
 --- !u!1001 &7169015465982072824
 PrefabInstance:
   m_ObjectHideFlags: 0

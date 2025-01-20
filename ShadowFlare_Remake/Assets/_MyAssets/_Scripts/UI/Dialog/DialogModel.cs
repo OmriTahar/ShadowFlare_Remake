@@ -5,7 +5,7 @@ namespace ShadowFlareRemake.UI.Dialog
 {
     public class DialogModel : Model
     {
-        public NpcView CurrentNpc { get; private set; }
+        public NpcBehaviour CurrentNpc { get; private set; }
         public Vector3 DialogBubblePosition { get; private set; }
         public DialogTextData CurrentDialogTextData { get; private set; }
         public bool IsBubbleActive { get; private set; }
@@ -15,7 +15,7 @@ namespace ShadowFlareRemake.UI.Dialog
 
         public DialogModel() { }
 
-        public void SetCurrentNpc(NpcView npc, bool invokeChanged = true)
+        public void SetCurrentNpc(NpcBehaviour npc, bool invokeChanged = true)
         {
             CurrentNpc = npc;
 
@@ -45,7 +45,7 @@ namespace ShadowFlareRemake.UI.Dialog
             SetIsFinalText();
             Changed();
         }
-       
+
         private void SetIsQuestionText()
         {
             if(CurrentDialogTextData == null)

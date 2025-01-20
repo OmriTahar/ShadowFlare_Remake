@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +27,6 @@ namespace ShadowFlareRemake.Loot
         private const int _goldAmount_Tier4 = 1000;
         private const int _goldAmount_Tier5 = 9999;
 
-        private string _name;
         private Sprite _sprite;
         private int _width;
         private int _height;
@@ -66,7 +64,6 @@ namespace ShadowFlareRemake.Loot
                 return;
             }
 
-            _name = Model.LootData.Name;
             _sprite = Model.LootData.Sprite;
             _width = Model.LootData.Width;
             _height = Model.LootData.Height;

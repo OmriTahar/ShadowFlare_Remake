@@ -861,13 +861,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 1929619644779240721}
-  _npcView: {fileID: 0}
-  _enemyView: {fileID: 7970543067481453309}
-  _lootView: {fileID: 0}
+  _entityObject: {fileID: 1929619644776058973}
+  <EntityType>k__BackingField: 2
   _nameBubbleUiOffest: 200
   _highlightIntensity: 0.7
   _useSkinnedMeshRenderer: 1
-  <EntityType>k__BackingField: 2
 --- !u!114 &7970543067481453309
 MonoBehaviour:
   m_ObjectHideFlags: 0

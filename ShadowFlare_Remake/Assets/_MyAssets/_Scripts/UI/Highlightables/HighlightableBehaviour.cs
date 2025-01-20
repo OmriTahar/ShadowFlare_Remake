@@ -14,18 +14,20 @@ namespace ShadowFlareRemake.UI.Highlightables
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
 
-        [Header("Parent Views")]
-        [SerializeField] private NpcView _npcView;
-        [SerializeField] private EnemyView _enemyView;
-        [SerializeField] private LootView _lootView; 
+        [Header("Entity")]
+        [SerializeField] private GameObject _entityObject;
+        [field: SerializeField] public EntityType EntityType { get; private set; }
 
         [Header("Settings")]
         [SerializeField] private int _nameBubbleUiOffest;
         [SerializeField] private float _highlightIntensity = 0.2f;
         [SerializeField] private bool _useSkinnedMeshRenderer;
-        [field: SerializeField] public EntityType EntityType { get; private set; }
 
         private const string _highlightableTag = "Highlightable";
+
+        private NpcBehaviour _npcBehaviour;
+        private EnemyView _enemyView;
+        private LootView _lootView;
 
         private Color _color;
         private Color _highlightColor;
@@ -34,6 +36,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void Start()
         {
+            CacheEntityBehaviour();
             InitTag();
             InitColors();
             HandleIsHighlightedLogic();
@@ -53,6 +56,24 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         #region Initialization
 
+        private void CacheEntityBehaviour()
+        {
+            switch(EntityType)
+            {
+                case EntityType.Npc:
+                    _npcBehaviour = _entityObject.GetComponent<NpcBehaviour>();
+                    break;
+
+                case EntityType.Enemy:
+                    _enemyView = _entityObject.GetComponent<EnemyView>();
+                    break;
+
+                case EntityType.Loot:
+                    _lootView = _entityObject.GetComponent<LootView>();
+                    break;
+            }
+        }
+
         private void InitTag()
         {
             if(gameObject.tag != _highlightableTag)
@@ -66,7 +87,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             _color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
             _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
         }
-
+       
         #endregion
 
         #region Events
@@ -121,9 +142,9 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         #region Getters
 
-        public NpcView GetNpcView()
+        public NpcBehaviour GetNpcBehaviour()
         {
-            return _npcView;
+            return _npcBehaviour;
         }
 
         public HighlightableData GetHighlightableData()
@@ -131,10 +152,10 @@ namespace ShadowFlareRemake.UI.Highlightables
             EntityType entityType;
             string name;
 
-            if(EntityType == EntityType.Npc && _npcView != null)
+            if(EntityType == EntityType.Npc && _npcBehaviour != null)
             {
                 entityType = EntityType.Npc;
-                name = _npcView.Name;
+                name = _npcBehaviour.Name;
                 return new HighlightableData(entityType, name, _nameBubbleUiOffest);
             }
 

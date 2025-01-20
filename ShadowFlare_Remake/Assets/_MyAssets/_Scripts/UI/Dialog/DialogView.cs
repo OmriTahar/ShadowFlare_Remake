@@ -42,7 +42,7 @@ namespace ShadowFlareRemake.UI.Dialog
         {
             var dialogData = Model.CurrentDialogTextData;
 
-            if(dialogData == null || dialogData.Answers == null || dialogData.Answers.Length == 0)
+            if(!IsValidQuestion())
             {
                 TurnOffDialogAnswers();
                 return;
@@ -52,35 +52,31 @@ namespace ShadowFlareRemake.UI.Dialog
             var secondAnswer = dialogData.Answers[1].Title;
             var thirdAnswer = dialogData.Answers[2].Title;
 
-            if(!string.IsNullOrEmpty(fisrtAnswer))
+            SetAnswerTextAndActivness(_firstAnswerGO, _firstAnswerText, fisrtAnswer);
+            SetAnswerTextAndActivness(_secondAnswerGO, _secondAnswerText, secondAnswer);
+            SetAnswerTextAndActivness(_thirdAnswerGO, _thirdAnswerText, thirdAnswer);
+        }
+        private bool IsValidQuestion()
+        {
+            var dialogData = Model.CurrentDialogTextData;
+
+            if(dialogData == null || !dialogData.IsQuestionText || dialogData.Answers == null || dialogData.Answers.Length == 0)
             {
-                _firstAnswerGO.SetActive(true);
-                _firstAnswerText.text = fisrtAnswer;
+                return false;
             }
-            else
+            return true;
+        }
+
+        private void SetAnswerTextAndActivness(GameObject textGameObject, TMP_Text tmpText, string Answer)
+        {
+            if(string.IsNullOrEmpty(Answer))
             {
-                _firstAnswerGO.SetActive(false);
+                textGameObject.SetActive(false);
+                return;
             }
 
-            if(!string.IsNullOrEmpty(secondAnswer))
-            {
-                _secondAnswerGO.SetActive(true);
-                _secondAnswerText.text = secondAnswer;
-            }
-            else
-            {
-                _secondAnswerGO.SetActive(false);
-            }
-
-            if(!string.IsNullOrEmpty(thirdAnswer))
-            {
-               _thirdAnswerGO.SetActive(true);
-                _thirdAnswerText.text = thirdAnswer;
-            }
-            else
-            {
-                _thirdAnswerGO.SetActive(false);
-            }
+            textGameObject.SetActive(true);
+            tmpText.text = Answer;
         }
 
         private void TurnOffDialogAnswers()
