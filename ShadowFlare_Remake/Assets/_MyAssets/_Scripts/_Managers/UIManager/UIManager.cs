@@ -633,7 +633,7 @@ namespace ShadowFlareRemake.UIManagement
                 return;
             }
 
-            if(_dialogModel.IsQuestionText) // Should click on answers and not on NPC
+            if(_dialogModel.IsQuestionText && _dialogModel.CurrentDialogTextData.Id == _dialogModel.CurrentDialogTextId) // Should click on answers and not on NPC
                 return;
 
             var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
@@ -642,9 +642,7 @@ namespace ShadowFlareRemake.UIManagement
             {
                 if(npcView.IsTalking)
                 {
-                    print($"Finished dialog with {npcView.Name}");
                     OnFinishedDialog?.Invoke();
-                    _dialogModel.SetCurrentNpc(null);
                     return;
                 }
 

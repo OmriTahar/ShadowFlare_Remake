@@ -11,6 +11,7 @@ namespace ShadowFlareRemake.UI.Dialog
         public bool IsBubbleActive { get; private set; }
         public bool IsQuestionText { get; private set; }
         public bool IsFinalText { get; private set; }
+        public int CurrentDialogTextId { get; private set; }
 
         public DialogModel() { }
 
@@ -39,6 +40,7 @@ namespace ShadowFlareRemake.UI.Dialog
         public void SetDialogTextData(DialogTextData data)
         {
             CurrentDialogTextData = data;
+            SetCurrentDialogTextId();
             SetIsQuestionText();
             SetIsFinalText();
             Changed();
@@ -58,6 +60,14 @@ namespace ShadowFlareRemake.UI.Dialog
                 return;
 
             IsFinalText = CurrentDialogTextData.IsFinalText;
+        }
+
+        private void SetCurrentDialogTextId()
+        {
+            if(CurrentDialogTextData == null)
+                return;
+
+            CurrentDialogTextId = CurrentDialogTextData.Id;
         }
 
         #region Reset Functions
