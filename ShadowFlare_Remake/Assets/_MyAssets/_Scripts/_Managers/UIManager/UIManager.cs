@@ -624,9 +624,6 @@ namespace ShadowFlareRemake.UIManagement
             _highlightableNameModel.SetIsAllowedToBeActive(false);
             _dialogModel.SetCurrentNpc(npcView);
 
-            var dialogBubblePos = GetDialogBubblePosition(npcView);
-            _dialogModel.SetDialogBubblePosition(dialogBubblePos);
-
             if(_dialogModel.IsFinalText)
             {
                 OnFinishedDialog?.Invoke();
@@ -636,6 +633,8 @@ namespace ShadowFlareRemake.UIManagement
             if(_dialogModel.IsQuestionText && !isClickedOnAnswer)
                 return;
 
+            var dialogBubblePos = GetDialogBubblePosition(npcView);
+            _dialogModel.SetDialogBubblePosition(dialogBubblePos);
             var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
 
             if(currentDialogTextData == null)
@@ -674,6 +673,12 @@ namespace ShadowFlareRemake.UIManagement
             var npcPos = npcView.transform.position;
             var screenPoint = Camera.main.WorldToScreenPoint(npcPos);
             var bubbleOffset = npcView.DialogBubbleOffset;
+
+            if(npcView.IsNextDialogIsQuestion())
+            {
+                bubbleOffset += 50;
+            }
+
             return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
         }
 

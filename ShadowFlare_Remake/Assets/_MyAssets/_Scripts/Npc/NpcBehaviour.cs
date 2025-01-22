@@ -46,6 +46,16 @@ namespace ShadowFlareRemake.Npc
             return currentDialogText;
         }
 
+        public bool IsNextDialogIsQuestion()
+        {
+            if(_currentDialogTextId > _dialogTextsData.Length)
+            {
+                return false;
+            }
+
+            return _dialogTextsData[_currentDialogTextId].IsQuestionText;
+        }
+
         public void SetIsTalking(bool isTalking)
         {
             IsTalking = isTalking;
