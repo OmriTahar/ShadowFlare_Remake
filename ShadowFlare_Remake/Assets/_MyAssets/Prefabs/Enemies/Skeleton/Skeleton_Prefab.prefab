@@ -972,6 +972,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6330140032925643382}
     m_Modifications:
+    - target: {fileID: 1005927550926758530, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
+        type: 3}
+      propertyPath: m_VelocityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1005927550926758530, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
+        type: 3}
+      propertyPath: m_CameraVelocityScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3020474967610497864, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1027,6 +1037,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VFX View
       objectReference: {fileID: 0}
+    - target: {fileID: 4204234300618479242, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
+        type: 3}
+      propertyPath: _effectsList.Array.data[0].<Effect>k__BackingField
+      value: 
+      objectReference: {fileID: 4315896638456877603}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1047,6 +1062,12 @@ MonoBehaviour:
 --- !u!4 &1900140579287208215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3020474967610497864, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3725679966983686751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4315896638456877603 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 599369148008257660, guid: 5b8569c36a81d064bb5737a0e8f5fa5c,
     type: 3}
   m_PrefabInstance: {fileID: 3725679966983686751}
   m_PrefabAsset: {fileID: 0}
