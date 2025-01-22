@@ -14,6 +14,8 @@ namespace ShadowFlareRemake.Player
         public event Action<Attack> OnIGotHit;
         public event Action<Collider> OnPickedLoot;
         public event Action<bool> OnPlayerAttack;
+
+        public event Action OnClickedOnNpc;
         public event Action OnTalkingToNpc;
         public event Action OnFinishTalkingToNpc;
 
@@ -259,6 +261,8 @@ namespace ShadowFlareRemake.Player
 
         private IEnumerator MoveAndTalkLogic(Vector3 targetPos)
         {
+            OnClickedOnNpc?.Invoke();
+
             targetPos.y = 0f;
             var elapsedTime = 0f;
             var movementSpeed = _model.GetMovementSpeedForMoveLogic();

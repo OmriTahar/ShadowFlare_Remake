@@ -15,6 +15,7 @@ using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.UIManagement;
 using ShadowFlareRemake.UnitsRestrictedData;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -126,6 +127,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit += HandlePlayerGotHit;
                 _playerController.OnPickedLoot += HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack += HandlePlayerAttack;
+                _playerController.OnClickedOnNpc += HandlePlayerClickedOnNpc;
                 _playerController.OnTalkingToNpc += HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc += HandlePlayerFinishedTalkingToNpc;
             }
@@ -134,6 +136,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnIGotHit -= HandlePlayerGotHit;
                 _playerController.OnPickedLoot -= HandlePlayerPickUpLootFromTheGround;
                 _playerController.OnPlayerAttack -= HandlePlayerAttack;
+                _playerController.OnClickedOnNpc -= HandlePlayerClickedOnNpc;
                 _playerController.OnTalkingToNpc -= HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishedTalkingToNpc;
             }
@@ -549,18 +552,28 @@ namespace ShadowFlareRemake.GameManagement
 
         #region Npc
 
-        private void HandlePlayerTalkingToNpc()
+        private void HandlePlayerClickedOnNpc()
         {
             if(_lastNpc.Npc == null)
                 return;
 
+            var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
+
+            if(currentTalkingNpc != null && _lastNpc.Npc != currentTalkingNpc)
+            {
+                HandlePlayerFinishedTalkingToNpc();
+            }
+        }
+
+        private void HandlePlayerTalkingToNpc()
+        {
             _lastNpc.Npc.LookAtTransform(_playerController.transform);
             _uiManager.HandleDialog(_lastNpc.Npc, false);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()
         {
-            _uiManager.HandleFinishDialog(_lastNpc.Npc);
+            _uiManager.HandleFinishDialog();
 
             if(_lastHighlightable != null)
                 _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);

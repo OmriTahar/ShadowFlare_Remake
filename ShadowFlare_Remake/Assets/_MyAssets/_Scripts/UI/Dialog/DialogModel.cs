@@ -75,14 +75,21 @@ namespace ShadowFlareRemake.UI.Dialog
         public void ResetDialogModel()
         {
             bool invokeChanged = false;
-
+            ResetIsNpcTalking();
             ResetTextId(invokeChanged);
             SetCurrentNpc(null, invokeChanged);
             ResetIsQuestionText(invokeChanged);
             ResetIsFinalText(invokeChanged);
             SetIsDialogBubbleActive(false, invokeChanged);
-
             Changed();
+        }
+
+        private void ResetIsNpcTalking()
+        {
+            if (CurrentNpc == null) 
+                return;
+
+            CurrentNpc.SetIsTalking(false);
         }
 
         private void ResetIsQuestionText(bool invokeChanged = true)

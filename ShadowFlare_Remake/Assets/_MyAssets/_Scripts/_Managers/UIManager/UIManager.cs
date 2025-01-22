@@ -661,11 +661,15 @@ namespace ShadowFlareRemake.UIManagement
             OnFinishedDialog?.Invoke();
         }
 
-        public void HandleFinishDialog(NpcBehaviour npcView)
+        public void HandleFinishDialog()
         {
-            npcView.SetIsTalking(false);
             _dialogModel.ResetDialogModel();
             _highlightableNameModel.SetIsAllowedToBeActive(true);
+        }
+
+        public NpcBehaviour GetCurrentTalkingNpc()
+        {
+            return _dialogModel.CurrentNpc;
         }
 
         private Vector3 GetDialogBubblePosition(NpcBehaviour npcView)
