@@ -7336,7 +7336,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _npcBehaviour
       value: 
-      objectReference: {fileID: 635781530}
+      objectReference: {fileID: 0}
     - target: {fileID: 7248951576327704084, guid: 6a3c3c37133b6ae4d9590995c8166d88,
         type: 3}
       propertyPath: _nameBubbleUiOffest
@@ -7372,12 +7372,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 571804382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Ronen The Great
   _dialogTextsData:
-  - Title: Hi
+  - Title: Greetings
     Id: 0
     DialogText: Hello There!
     IsQuestionText: 0
@@ -7385,13 +7385,13 @@ MonoBehaviour:
     Answers: []
   - Title: Intro
     Id: 1
-    DialogText: I am Ronen The Great!
+    DialogText: I am Ronen The Great.
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
   - Title: Deterence
     Id: 2
-    DialogText: I RUN THIS BITCH
+    DialogText: 'AND I RUN THIS TOWN YOU LITTLE BITCH '
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
@@ -28081,7 +28081,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _npcBehaviour
       value: 
-      objectReference: {fileID: 6177545896927845847}
+      objectReference: {fileID: 0}
     - target: {fileID: 8138805717053303041, guid: f32beb42ad1d1494ab0a2c7d9d88c128,
         type: 3}
       propertyPath: _nameBubbleUiOffest
@@ -28112,14 +28112,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 440309836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Dikla
   _dialogTextsData:
-  - Title: Hi
+  - Title: Intro
     Id: 0
-    DialogText: Hey sweetie
+    DialogText: Hi sweetie
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
@@ -28641,7 +28641,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _npcBehaviour
       value: 
-      objectReference: {fileID: 4799799080434918299}
+      objectReference: {fileID: 0}
     - target: {fileID: 7211129529822168104, guid: 48e1a7c3733a5124fbf25a43abccb301,
         type: 3}
       propertyPath: _nameBubbleUiOffest
@@ -29108,12 +29108,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 682610095}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4542e640d64d24c4ab4ca5ca315fce7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Igor
   _dialogTextsData:
-  - Title: Hi
+  - Title: Fuck Off
     Id: 0
     DialogText: Fuck Off
     IsQuestionText: 0

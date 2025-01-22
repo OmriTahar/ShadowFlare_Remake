@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Preset_RonenTheGreat
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd,
+      type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _name
+    value: Ronen The Great
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.size
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].Title
+    value: Greetings
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].Id
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].DialogText
+    value: Hello There!
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].IsQuestionText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].IsFinalText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[0].Answers.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].Title
+    value: Intro
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].Id
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].DialogText
+    value: I am Ronen The Great.
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].IsQuestionText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].IsFinalText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[1].Answers.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].Title
+    value: Deterence
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].Id
+    value: 2
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].DialogText
+    value: 'AND I RUN THIS TOWN YOU LITTLE BITCH '
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].IsQuestionText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].IsFinalText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[2].Answers.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].Title
+    value: Final
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].Id
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].DialogText
+    value: How can I be of service?
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].IsQuestionText
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].IsFinalText
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogTextsData.Array.data[3].Answers.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: _dialogBubbleOffset
+    value: 200
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
