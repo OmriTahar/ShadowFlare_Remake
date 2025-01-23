@@ -7376,10 +7376,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Ronen The Great
-  _dialogTextsData:
-  - Title: Greetings
+  _dialogTextDataArray:
+  - Title: Hi
     Id: 0
-    DialogText: Hello There!
+    DialogText: Greetings!
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
@@ -7391,7 +7391,7 @@ MonoBehaviour:
     Answers: []
   - Title: Deterence
     Id: 2
-    DialogText: 'AND I RUN THIS TOWN YOU LITTLE BITCH '
+    DialogText: AND I RUN THIS TOWN YOU LITTLE BITCH
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
@@ -28116,10 +28116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Dikla
-  _dialogTextsData:
+  _dialogTextDataArray:
   - Title: Intro
     Id: 0
-    DialogText: Hi sweetie
+    DialogText: Hi Sweetie
     IsQuestionText: 0
     IsFinalText: 0
     Answers: []
@@ -29112,10 +29112,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Igor
-  _dialogTextsData:
-  - Title: Fuck Off
+  _dialogTextDataArray:
+  - Title: Intro
     Id: 0
-    DialogText: Fuck Off
+    DialogText: Fuck off.
     IsQuestionText: 0
     IsFinalText: 1
     Answers: []

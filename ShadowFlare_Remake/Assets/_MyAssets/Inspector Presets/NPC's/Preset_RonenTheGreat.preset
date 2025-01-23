@@ -30,103 +30,103 @@ Preset:
     value: Ronen The Great
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.size
+    propertyPath: _dialogTextDataArray.Array.size
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].Title
-    value: Greetings
+    propertyPath: _dialogTextDataArray.Array.data[0].Title
+    value: Hi
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].Id
+    propertyPath: _dialogTextDataArray.Array.data[0].Id
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].DialogText
-    value: Hello There!
+    propertyPath: _dialogTextDataArray.Array.data[0].DialogText
+    value: Greetings!
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].IsQuestionText
+    propertyPath: _dialogTextDataArray.Array.data[0].IsQuestionText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].IsFinalText
+    propertyPath: _dialogTextDataArray.Array.data[0].IsFinalText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[0].Answers.Array.size
+    propertyPath: _dialogTextDataArray.Array.data[0].Answers.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].Title
+    propertyPath: _dialogTextDataArray.Array.data[1].Title
     value: Intro
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].Id
+    propertyPath: _dialogTextDataArray.Array.data[1].Id
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].DialogText
+    propertyPath: _dialogTextDataArray.Array.data[1].DialogText
     value: I am Ronen The Great.
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].IsQuestionText
+    propertyPath: _dialogTextDataArray.Array.data[1].IsQuestionText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].IsFinalText
+    propertyPath: _dialogTextDataArray.Array.data[1].IsFinalText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[1].Answers.Array.size
+    propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].Title
+    propertyPath: _dialogTextDataArray.Array.data[2].Title
     value: Deterence
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].Id
+    propertyPath: _dialogTextDataArray.Array.data[2].Id
     value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].DialogText
-    value: 'AND I RUN THIS TOWN YOU LITTLE BITCH '
+    propertyPath: _dialogTextDataArray.Array.data[2].DialogText
+    value: AND I RUN THIS TOWN YOU LITTLE BITCH
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].IsQuestionText
+    propertyPath: _dialogTextDataArray.Array.data[2].IsQuestionText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].IsFinalText
+    propertyPath: _dialogTextDataArray.Array.data[2].IsFinalText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[2].Answers.Array.size
+    propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].Title
+    propertyPath: _dialogTextDataArray.Array.data[3].Title
     value: Final
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].Id
+    propertyPath: _dialogTextDataArray.Array.data[3].Id
     value: 3
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].DialogText
+    propertyPath: _dialogTextDataArray.Array.data[3].DialogText
     value: How can I be of service?
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].IsQuestionText
+    propertyPath: _dialogTextDataArray.Array.data[3].IsQuestionText
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].IsFinalText
+    propertyPath: _dialogTextDataArray.Array.data[3].IsFinalText
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: _dialogTextsData.Array.data[3].Answers.Array.size
+    propertyPath: _dialogTextDataArray.Array.data[3].Answers.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}

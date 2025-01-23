@@ -13,47 +13,53 @@ namespace ShadowFlareRemake.Npc
         [Header("Initialization")]
         [SerializeField] private string _name;
 
-        [Header("Dialog Text Data")]
-        [SerializeField] private DialogTextData[] _dialogTextsData;
+        [Header("Dialog")]
+        [SerializeField] private DialogTextData[] _dialogTextDataArray;
 
         [Header("Settings")]
         [SerializeField] private float _dialogBubbleOffset = 200;
 
         private int _currentDialogTextId = 0;
 
-        public DialogTextData GetCurrentDialogTextData(int nextDialogTextId = -1)
+        public DialogTextData GetCurrentDialogTextData(int nextDialogTextId)
         {
-            if(_dialogTextsData == null || _dialogTextsData.Length == 0)
+            if(_dialogTextDataArray == null || _dialogTextDataArray.Length == 0)
                 return null;
-
-            DialogTextData currentDialogText = null;
 
             if(nextDialogTextId > -1)
             {
-                currentDialogText = _dialogTextsData.FirstOrDefault(data => data.Id == nextDialogTextId);
-                _currentDialogTextId = nextDialogTextId;
+                return GetDialogTextDataById(nextDialogTextId);
             }
-            else if(_currentDialogTextId > _dialogTextsData.Length - 1)
+
+            return GetNextDialogTextData();
+        }
+
+        private DialogTextData GetDialogTextDataById(int nextDialogTextId)
+        {
+            _currentDialogTextId = nextDialogTextId;
+            return _dialogTextDataArray.FirstOrDefault(data => data.Id == nextDialogTextId);
+        }
+
+        private DialogTextData GetNextDialogTextData()
+        {
+            if(_currentDialogTextId >= _dialogTextDataArray.Length)
             {
                 _currentDialogTextId = 0;
             }
-            else
-            {
-                currentDialogText = _dialogTextsData[_currentDialogTextId];
-                _currentDialogTextId++;
-            }
 
+            DialogTextData currentDialogText = _dialogTextDataArray[_currentDialogTextId];
+            _currentDialogTextId++;
             return currentDialogText;
         }
 
         public bool IsNextDialogIsQuestion()
         {
-            if(_currentDialogTextId > _dialogTextsData.Length)
+            if(_currentDialogTextId > _dialogTextDataArray.Length)
             {
                 return false;
             }
 
-            return _dialogTextsData[_currentDialogTextId].IsQuestionText;
+            return _dialogTextDataArray[_currentDialogTextId].IsQuestionText;
         }
 
         public void SetIsTalking(bool isTalking)

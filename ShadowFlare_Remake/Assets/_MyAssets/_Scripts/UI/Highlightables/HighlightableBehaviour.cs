@@ -21,7 +21,6 @@ namespace ShadowFlareRemake.UI.Highlightables
         [Header("Settings")]
         [SerializeField] private int _nameBubbleUiOffest;
         [SerializeField] private float _highlightIntensity = 0.2f;
-        [SerializeField] private bool _useSkinnedMeshRenderer;
 
         private const string _highlightableTag = "Highlightable";
 
@@ -31,6 +30,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private Color _color;
         private Color _highlightColor;
+        private bool _useSkinnedMeshRenderer;
 
         #region MonoBehaviour
 
@@ -38,6 +38,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             CacheEntityBehaviour();
             InitTag();
+            InitRenderer();
             InitColors();
             HandleIsHighlightedLogic();
         }
@@ -80,6 +81,11 @@ namespace ShadowFlareRemake.UI.Highlightables
             {
                 gameObject.tag = _highlightableTag;
             }
+        }
+
+        private void InitRenderer()
+        {
+            _useSkinnedMeshRenderer = _skinnedMeshRenderer != null;
         }
 
         private void InitColors()
