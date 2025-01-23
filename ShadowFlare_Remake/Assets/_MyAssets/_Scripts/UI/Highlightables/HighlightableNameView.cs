@@ -20,6 +20,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         [SerializeField] private int _LargeNameBgCharsCount;
 
         [Header("Colors")]
+        [SerializeField] private Color _nameBG_InteractableColor;
         [SerializeField] private Color _nameBG_NpcColor;
         [SerializeField] private Color _nameBG_EnemyColor;
         [SerializeField] private Color _nameBG_EquipmentColor;
@@ -127,6 +128,10 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             switch(Model.EntityType)
             {
+                case EntityType.Interactable:
+                    _nameSliderFill.color = _nameBG_InteractableColor;
+                    break;
+
                 case EntityType.Npc:
                     _nameSliderFill.color = _nameBG_NpcColor;
                     break;

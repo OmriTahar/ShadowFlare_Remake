@@ -5,7 +5,7 @@ namespace ShadowFlareRemake
     [Serializable]
     public enum EntityType
     {
-        None,
+        Interactable,
         Npc,
         Enemy,
         Loot

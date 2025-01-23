@@ -20,7 +20,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         [Header("Settings")]
         [SerializeField] private int _nameBubbleUiOffest;
-        [SerializeField] private float _highlightIntensity = 0.2f;
+        [SerializeField] private float _highlightIntensity = 0.7f;
 
         private const string _highlightableTag = "Highlightable";
 
@@ -157,6 +157,12 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             EntityType entityType;
             string name;
+
+            if(EntityType == EntityType.Interactable)
+            {
+                entityType = EntityType.Npc;
+                return new HighlightableData(entityType, this.name, _nameBubbleUiOffest);
+            }
 
             if(EntityType == EntityType.Npc && _npcBehaviour != null)
             {

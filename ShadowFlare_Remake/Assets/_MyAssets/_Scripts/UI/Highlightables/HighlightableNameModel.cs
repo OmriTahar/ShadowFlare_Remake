@@ -21,7 +21,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         public HighlightableNameModel()
         {
-            EntityType = EntityType.None;
+            EntityType = EntityType.Interactable;
             Name = "";
             CurrentHP = 0;
             MaxHP = 0;
