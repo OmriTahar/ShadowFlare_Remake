@@ -635,9 +635,9 @@ namespace ShadowFlareRemake.UIManagement
 
             var dialogBubblePos = GetDialogBubblePosition(npcView);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
-            var currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
+            var dialogTextData = npcView.GetNextDialogTextData(nextDialogTextId);
 
-            if(currentDialogTextData == null)
+            if(dialogTextData == null)
             {
                 if(npcView.IsTalking)
                 {
@@ -645,15 +645,15 @@ namespace ShadowFlareRemake.UIManagement
                     return;
                 }
 
-                currentDialogTextData = npcView.GetCurrentDialogTextData(nextDialogTextId);
+                dialogTextData = npcView.GetNextDialogTextData(nextDialogTextId);
             }
 
-            var hasSomethingToSay = !string.IsNullOrEmpty(currentDialogTextData.DialogText);
+            var hasSomethingToSay = !string.IsNullOrEmpty(dialogTextData.DialogText);
 
             if(hasSomethingToSay)
             {
                 npcView.SetIsTalking(true);
-                _dialogModel.SetDialogTextData(currentDialogTextData);
+                _dialogModel.SetDialogTextData(dialogTextData);
                 _dialogModel.SetIsDialogBubbleActive(true);
                 return;
             }

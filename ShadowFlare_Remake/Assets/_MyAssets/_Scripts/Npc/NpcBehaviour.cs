@@ -21,7 +21,7 @@ namespace ShadowFlareRemake.Npc
 
         private int _currentDialogTextId = 0;
 
-        public DialogTextData GetCurrentDialogTextData(int nextDialogTextId)
+        public DialogTextData GetNextDialogTextData(int nextDialogTextId)
         {
             if(_dialogTextDataArray == null || _dialogTextDataArray.Length == 0)
                 return null;
@@ -31,7 +31,7 @@ namespace ShadowFlareRemake.Npc
                 return GetDialogTextDataById(nextDialogTextId);
             }
 
-            return GetNextDialogTextData();
+            return GetNextDialogTextData_Internal();
         }
 
         private DialogTextData GetDialogTextDataById(int nextDialogTextId)
@@ -40,7 +40,7 @@ namespace ShadowFlareRemake.Npc
             return _dialogTextDataArray.FirstOrDefault(data => data.Id == nextDialogTextId);
         }
 
-        private DialogTextData GetNextDialogTextData()
+        private DialogTextData GetNextDialogTextData_Internal()
         {
             if(_currentDialogTextId >= _dialogTextDataArray.Length)
             {
