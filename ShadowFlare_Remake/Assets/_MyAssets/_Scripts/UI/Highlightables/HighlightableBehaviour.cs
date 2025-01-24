@@ -2,7 +2,6 @@ using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Highlightables
@@ -13,8 +12,8 @@ namespace ShadowFlareRemake.UI.Highlightables
         public bool IsHighlighted { get; private set; }
 
         [Header("Renderers")]
-        [SerializeField] private MeshRenderer _meshRenderer;
-        [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
+        [SerializeField] private MeshRenderer[] _meshRenderers;
+        [SerializeField] private SkinnedMeshRenderer[] _skinnedMeshRenderers;
 
         [Header("Entity")]
         [SerializeField] private GameObject _entityObject;
@@ -88,23 +87,29 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void InitRenderer()
         {
-            _useSkinnedMeshRenderer = _skinnedMeshRenderer != null;
+            _useSkinnedMeshRenderer = _skinnedMeshRenderers != null;
         }
 
         private void InitColors()
         {
             if(_useSkinnedMeshRenderer)
             {
-                foreach(var material in _skinnedMeshRenderer.materials)
+                foreach(var skinnedMeshRenderer in _skinnedMeshRenderers)
                 {
-                    _colorsDict.Add(material, material.color);
+                    foreach(var material in skinnedMeshRenderer.materials)
+                    {
+                        _colorsDict.Add(material, material.color);
+                    }
                 }
             }
             else
             {
-                foreach(var material in _meshRenderer.materials)
+                foreach(var meshRenderer in _meshRenderers)
                 {
-                    _colorsDict.Add(material, material.color);
+                    foreach(var material in meshRenderer.materials)
+                    {
+                        _colorsDict.Add(material, material.color);
+                    }
                 }
             }
 
@@ -149,17 +154,24 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             if(_useSkinnedMeshRenderer)
             {
-                foreach(var material in _skinnedMeshRenderer.materials)
+                foreach(var skinnedMeshRenderer in _skinnedMeshRenderers)
                 {
-                    material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                    foreach(var material in skinnedMeshRenderer.materials)
+                    {
+                        material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                    }
                 }
+                   
                 //_skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
                 return;
             }
 
-            foreach(var material in _meshRenderer.materials)
+            foreach(var meshRenderer in _meshRenderers)
             {
-                material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                foreach(var material in meshRenderer.materials)
+                {
+                    material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                }
             }
         }
 

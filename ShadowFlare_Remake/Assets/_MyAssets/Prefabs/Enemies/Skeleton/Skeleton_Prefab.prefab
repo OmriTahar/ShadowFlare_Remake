@@ -859,8 +859,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ab641e577df8c41a7ed8d5c731a125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 0}
-  _skinnedMeshRenderer: {fileID: 1929619644779240721}
+  _meshRenderers: []
+  _skinnedMeshRenderers:
+  - {fileID: 1929619644779240721}
   _entityObject: {fileID: 1929619644776058973}
   <EntityType>k__BackingField: 2
   _nameBubbleOffest: {x: 0, y: 175}
