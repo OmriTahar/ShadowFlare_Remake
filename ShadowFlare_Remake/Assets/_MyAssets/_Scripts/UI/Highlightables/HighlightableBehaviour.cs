@@ -1,6 +1,8 @@
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace ShadowFlareRemake.UI.Highlightables
@@ -28,7 +30,8 @@ namespace ShadowFlareRemake.UI.Highlightables
         private EnemyView _enemyView;
         private LootView _lootView;
 
-        private Color _color;
+        private Dictionary<Material, Color> _colorsDict = new();
+        private Color _color = Color.white;
         private Color _highlightColor;
         private bool _useSkinnedMeshRenderer;
 
@@ -90,10 +93,25 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void InitColors()
         {
-            _color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
+            if(_useSkinnedMeshRenderer)
+            {
+                foreach(var material in _skinnedMeshRenderer.materials)
+                {
+                    _colorsDict.Add(material, material.color);
+                }
+            }
+            else
+            {
+                foreach(var material in _meshRenderer.materials)
+                {
+                    _colorsDict.Add(material, material.color);
+                }
+            }
+
+            //_color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
             _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
         }
-       
+
         #endregion
 
         #region Events
@@ -131,11 +149,18 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             if(_useSkinnedMeshRenderer)
             {
-                _skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
+                foreach(var material in _skinnedMeshRenderer.materials)
+                {
+                    material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                }
+                //_skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
                 return;
             }
 
-            _meshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
+            foreach(var material in _meshRenderer.materials)
+            {
+                material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+            }
         }
 
         private void DisableHighlightable()
