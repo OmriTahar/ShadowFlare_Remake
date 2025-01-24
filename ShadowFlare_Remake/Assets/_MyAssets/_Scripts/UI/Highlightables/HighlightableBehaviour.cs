@@ -19,7 +19,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         [field: SerializeField] public EntityType EntityType { get; private set; }
 
         [Header("Settings")]
-        [SerializeField] private int _nameBubbleUiOffest;
+        [SerializeField] private Vector2Int _nameBubbleOffest;
         [SerializeField] private float _highlightIntensity = 0.7f;
 
         private const string _highlightableTag = "Highlightable";
@@ -161,14 +161,14 @@ namespace ShadowFlareRemake.UI.Highlightables
             if(EntityType == EntityType.Interactable)
             {
                 entityType = EntityType.Npc;
-                return new HighlightableData(entityType, this.name, _nameBubbleUiOffest);
+                return new HighlightableData(entityType, this.name, _nameBubbleOffest);
             }
 
             if(EntityType == EntityType.Npc && _npcBehaviour != null)
             {
                 entityType = EntityType.Npc;
                 name = _npcBehaviour.Name;
-                return new HighlightableData(entityType, name, _nameBubbleUiOffest);
+                return new HighlightableData(entityType, name, _nameBubbleOffest);
             }
 
             if(EntityType == EntityType.Enemy && _enemyView != null)
@@ -179,7 +179,7 @@ namespace ShadowFlareRemake.UI.Highlightables
                 int maxHP = _enemyView.MaxHP;
                 int nameBgSize = _enemyView.EvolutionLevel;
                 float scaleMultiplier = _enemyView.ScaleMultiplier;
-                return new HighlightableData(entityType, name, _nameBubbleUiOffest,
+                return new HighlightableData(entityType, name, _nameBubbleOffest,
                                              currentHP, maxHP, nameBgSize, scaleMultiplier);
             }
 
@@ -189,7 +189,7 @@ namespace ShadowFlareRemake.UI.Highlightables
                 name = _lootView.Name;
                 var lootCategory = _lootView.LootCategory;
                 var goldAmount = _lootView.Amount;
-                return new HighlightableData(entityType, name, _nameBubbleUiOffest, lootCategory, goldAmount);
+                return new HighlightableData(entityType, name, _nameBubbleOffest, lootCategory, goldAmount);
             }
 
             return null;

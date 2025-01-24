@@ -8,7 +8,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         public string Name { get; private set; }
         public EntityType EntityType { get; private set; }
         public Transform CurrentEntityTransform { get; private set; }
-        public int UiOffest { get; private set; }
+        public Vector2Int NameBubbleOffset { get; private set; }
         public bool IsActive { get; private set; }
         public bool IsAllowedToBeActive { get; private set; } = true;
 
@@ -26,7 +26,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             CurrentHP = 0;
             MaxHP = 0;
             NameBgSize = 1;
-            UiOffest = 0;
+            NameBubbleOffset = new Vector2Int();
             ScaleMultiplier = 1;
             CurrentEntityTransform = null;
         }
@@ -36,7 +36,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             Name = data.Name;
             EntityType = data.EntityType;
             CurrentEntityTransform = entityTransform;
-            UiOffest = data.UiOffset;
+            NameBubbleOffset = data.NameBubbleOffset;
             CurrentHP = data.CurrentHP;
             MaxHP = data.MaxHP;
             NameBgSize = data.NameBgSize;

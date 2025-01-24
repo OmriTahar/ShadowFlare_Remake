@@ -195,9 +195,8 @@ MonoBehaviour:
   _skinnedMeshRenderer: {fileID: 0}
   _entityObject: {fileID: 3333601261051145792}
   <EntityType>k__BackingField: 3
-  _nameBubbleUiOffest: 100
+  _nameBubbleOffest: {x: 0, y: 100}
   _highlightIntensity: 0.7
-  _useSkinnedMeshRenderer: 0
 --- !u!4 &3336864765410818638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013169634162, guid: 5dcae5adf53292945adef517afe8041e,

@@ -178,8 +178,9 @@ namespace ShadowFlareRemake.UI.Highlightables
             }
 
             var screenPoint = Camera.main.WorldToScreenPoint(_currentEntityTransform.position);
-            var bubbleOffset = Model.UiOffest * Model.ScaleMultiplier;
-            return new Vector3(screenPoint.x, screenPoint.y + bubbleOffset, screenPoint.z);
+            var nameBubble_X = (Model.NameBubbleOffset.x * Model.ScaleMultiplier) + screenPoint.x;
+            var nameBubble_Y = (Model.NameBubbleOffset.y * Model.ScaleMultiplier) + screenPoint.y;
+            return new Vector3(nameBubble_X, nameBubble_Y, screenPoint.z);
         }
 
         public void SetIsActive()
