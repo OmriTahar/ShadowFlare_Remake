@@ -30,8 +30,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         private LootView _lootView;
 
         private Dictionary<Material, Color> _colorsDict = new();
-        private Color _color = Color.white;
-        private Color _highlightColor;
+        private Dictionary<Material, Color> _highlightedColorsDict = new();
         private bool _useSkinnedMeshRenderer;
 
         #region MonoBehaviour
@@ -42,7 +41,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             InitTag();
             InitRenderer();
             InitColors();
-            HandleIsHighlightedLogic();
+            SetColors();
         }
 
         private void OnEnable()
@@ -87,7 +86,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void InitRenderer()
         {
-            _useSkinnedMeshRenderer = _skinnedMeshRenderers != null;
+            _useSkinnedMeshRenderer = _skinnedMeshRenderers != null && _skinnedMeshRenderers.Length > 0;
         }
 
         private void InitColors()
@@ -113,8 +112,12 @@ namespace ShadowFlareRemake.UI.Highlightables
                 }
             }
 
-            //_color = _useSkinnedMeshRenderer ? _skinnedMeshRenderer.material.color : _meshRenderer.material.color;
-            _highlightColor = new Color(_color.r + _highlightIntensity, _color.g + _highlightIntensity, _color.b + _highlightIntensity, 1);
+            foreach(var pair in _colorsDict)
+            {
+                var color = pair.Value;
+                var highlightedColoer = new Color(color.r + _highlightIntensity, color.g + _highlightIntensity, color.b + _highlightIntensity, 1);
+                _highlightedColorsDict.Add(pair.Key, highlightedColoer);
+            }
         }
 
         #endregion
@@ -141,16 +144,16 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         #region Meat & Potatos
 
-        public void SetIsHighlighted(bool isHighlighted)
+        public void HandleSetIsHighlighted(bool isHighlighted)
         {
             if(IsHighlighted == isHighlighted)
                 return;
 
             IsHighlighted = isHighlighted;
-            HandleIsHighlightedLogic();
+            SetColors();
         }
 
-        private void HandleIsHighlightedLogic()
+        private void SetColors()
         {
             if(_useSkinnedMeshRenderer)
             {
@@ -158,11 +161,9 @@ namespace ShadowFlareRemake.UI.Highlightables
                 {
                     foreach(var material in skinnedMeshRenderer.materials)
                     {
-                        material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                        material.color = IsHighlighted ? _highlightedColorsDict[material] : _colorsDict[material];
                     }
                 }
-                   
-                //_skinnedMeshRenderer.material.color = IsHighlighted ? _highlightColor : _color;
                 return;
             }
 
@@ -170,7 +171,7 @@ namespace ShadowFlareRemake.UI.Highlightables
             {
                 foreach(var material in meshRenderer.materials)
                 {
-                    material.color = IsHighlighted ? _highlightColor : _colorsDict[material];
+                    material.color = IsHighlighted ? _highlightedColorsDict[material] : _colorsDict[material];
                 }
             }
         }
@@ -178,7 +179,7 @@ namespace ShadowFlareRemake.UI.Highlightables
         private void DisableHighlightable()
         {
             IsHighlightable = false;
-            SetIsHighlighted(false);
+            HandleSetIsHighlighted(false);
         }
 
         #endregion

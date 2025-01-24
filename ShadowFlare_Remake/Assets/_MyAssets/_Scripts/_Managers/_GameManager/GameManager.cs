@@ -234,7 +234,7 @@ namespace ShadowFlareRemake.GameManagement
 
         private void SetIsHighlighted(bool isHighlighted)
         {
-            _lastHighlightable.SetIsHighlighted(isHighlighted);
+            _lastHighlightable.HandleSetIsHighlighted(isHighlighted);
             _uiManager.SetIsHighlightableNameActive(isHighlighted);
 
             if(!isHighlighted)
