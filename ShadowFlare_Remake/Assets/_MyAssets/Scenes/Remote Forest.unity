@@ -33500,39 +33500,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Dikla
   _dialogTextDataArray:
-  - Title: Intro
+  - Title: Heal
     Id: 0
-    DialogText: Hi Sweetie
-    IsQuestionText: 0
-    IsFinalText: 0
-    Answers: []
-  - Title: Question
-    Id: 1
-    DialogText: Do you like my dress?
-    IsQuestionText: 1
-    IsFinalText: 0
-    Answers:
-    - Title: Yes
-      NextDialogTextId: 2
-    - Title: No
-      NextDialogTextId: 3
-    - Title: Maybe
-      NextDialogTextId: 4
-  - Title: Answer 1
-    Id: 2
-    DialogText: Thanks suger tits
-    IsQuestionText: 0
-    IsFinalText: 1
-    Answers: []
-  - Title: Answer 2
-    Id: 3
-    DialogText: Yeah right
-    IsQuestionText: 0
-    IsFinalText: 1
-    Answers: []
-  - Title: Answer 3
-    Id: 4
-    DialogText: Think about it and let me know
+    DialogText: The holy spirit presides over life! \n Heal the evil wounds!
     IsQuestionText: 0
     IsFinalText: 1
     Answers: []
@@ -34506,8 +34476,173 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
         type: 3}
+      propertyPath: _dialogTextDataArray.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[3].Id
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[4].Id
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[0].Title
+      value: Greetings
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Title
+      value: What can I do for ya?
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Title
+      value: Trade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[3].Title
+      value: Identify
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[4].Title
+      value: Repair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].DialogText
+      value: What can I do for ya?
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].DialogText
+      value: In 1-2 Months, I guess
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[3].DialogText
+      value: Not sure about that one
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[4].DialogText
+      value: Soon Be'ezrat Ha'Shem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
       propertyPath: _dialogTextDataArray.Array.data[0].IsFinalText
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].IsFinalText
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].IsFinalText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[3].IsFinalText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[4].IsFinalText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].IsQuestionText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].IsQuestionText
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[0].Title
+      value: Trade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[1].Title
+      value: Identify
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[2].Title
+      value: Repair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[0].Title
+      value: Trade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[1].Title
+      value: Identify
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[2].Title
+      value: Repair
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[0].NextDialogTextId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[1].NextDialogTextId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[1].Answers.Array.data[2].NextDialogTextId
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[0].NextDialogTextId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[1].NextDialogTextId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: _dialogTextDataArray.Array.data[2].Answers.Array.data[2].NextDialogTextId
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7064567947404842669, guid: 96a84685e8180014c94844f7154b6719,
         type: 3}
