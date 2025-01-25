@@ -31,6 +31,7 @@ namespace ShadowFlareRemake.UIManagement
         public event Action<LootModel, Vector2Int> OnPotionClicked;
         public event Action<ISkillData> OnHudSkillItemClicked;
         public event Action<UIScreenCover> OnUIScreenCoverChange;
+        public event Action<NpcBehaviour> OnNpcHealedPlayer;
         public event Action OnFinishedDialog;
 
         [Header("Views")]
@@ -619,13 +620,18 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleDialog(NpcBehaviour npcView, bool isClickedOnAnswer, int nextDialogTextId = -1)
+        public void HandleDialog(NpcBehaviour npc, bool isClickedOnAnswer, int nextDialogTextId = -1)
         {
             _highlightableNameModel.SetIsAllowedToBeActive(false);
-            _dialogModel.SetCurrentNpc(npcView);
+            _dialogModel.SetCurrentNpc(npc);
 
             if(_dialogModel.IsFinalText)
             {
+                if(npc.NpcType == NpcType.Healer)
+                {
+                    OnNpcHealedPlayer?.Invoke(npc);
+                }
+
                 OnFinishedDialog?.Invoke();
                 return;
             }
@@ -633,32 +639,13 @@ namespace ShadowFlareRemake.UIManagement
             if(_dialogModel.IsQuestionText && !isClickedOnAnswer)
                 return;
 
-            var dialogBubblePos = GetDialogBubblePosition(npcView);
+            var dialogBubblePos = GetDialogBubblePosition(npc);
             _dialogModel.SetDialogBubblePosition(dialogBubblePos);
-            var dialogTextData = npcView.GetNextDialogTextData(nextDialogTextId);
-
-            if(dialogTextData == null)
-            {
-                if(npcView.IsTalking)
-                {
-                    OnFinishedDialog?.Invoke();
-                    return;
-                }
-
-                dialogTextData = npcView.GetNextDialogTextData(nextDialogTextId);
-            }
-
-            var hasSomethingToSay = !string.IsNullOrEmpty(dialogTextData.DialogText);
-
-            if(hasSomethingToSay)
-            {
-                npcView.SetIsTalking(true);
-                _dialogModel.SetDialogTextData(dialogTextData);
-                _dialogModel.SetIsDialogBubbleActive(true);
-                return;
-            }
-
-            OnFinishedDialog?.Invoke();
+            var dialogTextData = npc.GetNextDialogTextData(nextDialogTextId);
+           
+            npc.SetIsTalking(true);
+            _dialogModel.SetDialogTextData(dialogTextData);
+            _dialogModel.SetIsDialogBubbleActive(true);
         }
 
         public void HandleFinishDialog()

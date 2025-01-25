@@ -7,6 +7,7 @@ using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
+using ShadowFlareRemake.Npc;
 using ShadowFlareRemake.Player;
 using ShadowFlareRemake.PlayerRestrictedData;
 using ShadowFlareRemake.RewardsManagement;
@@ -15,7 +16,6 @@ using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.UIManagement;
 using ShadowFlareRemake.UnitsRestrictedData;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -153,6 +153,7 @@ namespace ShadowFlareRemake.GameManagement
                 _uiManager.OnPotionClicked += HandlePlayerUsedQuickItem;
                 _uiManager.OnUIScreenCoverChange += HandleCamerasOnUiCoverChange;
                 _uiManager.OnHudSkillItemClicked += HandleHudSkillItemClicked;
+                _uiManager.OnNpcHealedPlayer += HandleNpcHealedPlayer;
                 _uiManager.OnFinishedDialog += HandlePlayerFinishedTalkingToNpc;
             }
             else
@@ -164,6 +165,7 @@ namespace ShadowFlareRemake.GameManagement
                 _uiManager.OnPotionClicked -= HandlePlayerUsedQuickItem;
                 _uiManager.OnUIScreenCoverChange -= HandleCamerasOnUiCoverChange;
                 _uiManager.OnHudSkillItemClicked -= HandleHudSkillItemClicked;
+                _uiManager.OnNpcHealedPlayer -= HandleNpcHealedPlayer;
                 _uiManager.OnFinishedDialog -= HandlePlayerFinishedTalkingToNpc;
             }
         }
@@ -577,6 +579,17 @@ namespace ShadowFlareRemake.GameManagement
 
             if(_lastHighlightable != null)
                 _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);
+        }
+
+        private void HandleNpcHealedPlayer(NpcBehaviour npc)
+        {
+            if(npc == null || _playerUnit.IsVitalsFull())
+                return;
+
+            npc.CastHealAnimation();
+            _playerUnit.FullHeal();
+            _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
+            _playerController.PlayHealAnimation();
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -35,7 +36,23 @@ namespace ShadowFlareRemake.UI.Dialog
             if(Model.CurrentDialogTextData == null)
                 return;
 
-            _dialogText.text = Model.CurrentDialogTextData.DialogText;
+            var text = ReplaceBackslashWithNewline(Model.CurrentDialogTextData.DialogText);
+            _dialogText.text = text;
+        }
+
+        public string ReplaceBackslashWithNewline(string input)
+        {
+            char[] chars = input.ToCharArray();
+
+            for(int i = 0; i < chars.Length; i++)
+            {
+                if(chars[i] == '\\')
+                {
+                    chars[i] = '\n';
+                }
+            }
+
+            return new string(chars);
         }
 
         private void SetDialogAnswers()

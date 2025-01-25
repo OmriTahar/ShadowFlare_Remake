@@ -29,8 +29,6 @@ namespace ShadowFlareRemake.Player
         private const string _meleeSingleAttackTrigger = "MeleeSingle";
         private const string _meleeTripleAttackTrigger = "MeleeTriple";
         private const string _castSpellMeteorTrigger = "CastSpell_Meteor";
-
-        private const int _oneHundred = 100;
         private const int _oneSecondInMilliSeconds = 1000;
 
         private float _magicalAttackSpeed;
@@ -253,6 +251,15 @@ namespace ShadowFlareRemake.Player
             }
 
             _vfxView.SetIsPlayingEffect(VfxType.Hit, true);
+        }
+
+        #endregion
+
+        #region VFX
+
+        public void PlayHealAnimation()
+        {
+            _vfxView.SetIsPlayingEffect(VfxType.Heal, true);
         }
 
         #endregion

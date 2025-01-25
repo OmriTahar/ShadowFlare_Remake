@@ -5,21 +5,24 @@ namespace ShadowFlareRemake.Npc
 {
     public class NpcBehaviour : MonoBehaviour
     {
-        public string Name { get => _name; } 
-        public float DialogBubbleOffset { get => _dialogBubbleOffset; }
-        public int CurrentDialogTextId { get => _currentDialogTextId; }
+        public int CurrentDialogTextId { get; private set; } = 0;
         public bool IsTalking { get; private set; }
 
-        [Header("Initialization")]
-        [SerializeField] private string _name;
+        [field: SerializeField] public string Name { get; private set; }
+        [field: SerializeField] public NpcType NpcType { get; private set; }  
+        [field: SerializeField] public float DialogBubbleOffset { get; private set; } = 200;
 
         [Header("Dialog")]
         [SerializeField] private DialogTextData[] _dialogTextDataArray;
 
-        [Header("Settings")]
-        [SerializeField] private float _dialogBubbleOffset = 200;
+        private readonly int _castAnimHash = Animator.StringToHash("Cast");
 
-        private int _currentDialogTextId = 0;
+        private Animator _animator;
+
+        private void Awake()
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
 
         public DialogTextData GetNextDialogTextData(int nextDialogTextId)
         {
@@ -36,30 +39,30 @@ namespace ShadowFlareRemake.Npc
 
         private DialogTextData GetDialogTextDataById(int nextDialogTextId)
         {
-            _currentDialogTextId = nextDialogTextId;
+            CurrentDialogTextId = nextDialogTextId;
             return _dialogTextDataArray.FirstOrDefault(data => data.Id == nextDialogTextId);
         }
 
         private DialogTextData GetNextDialogTextData_Internal()
         {
-            if(_currentDialogTextId >= _dialogTextDataArray.Length)
+            if(CurrentDialogTextId >= _dialogTextDataArray.Length)
             {
-                _currentDialogTextId = 0;
+                CurrentDialogTextId = 0;
             }
 
-            DialogTextData currentDialogText = _dialogTextDataArray[_currentDialogTextId];
-            _currentDialogTextId++;
+            DialogTextData currentDialogText = _dialogTextDataArray[CurrentDialogTextId];
+            CurrentDialogTextId++;
             return currentDialogText;
         }
 
         public bool IsNextDialogIsQuestion()
         {
-            if(_currentDialogTextId > _dialogTextDataArray.Length)
+            if(CurrentDialogTextId > _dialogTextDataArray.Length)
             {
                 return false;
             }
 
-            return _dialogTextDataArray[_currentDialogTextId].IsQuestionText;
+            return _dialogTextDataArray[CurrentDialogTextId].IsQuestionText;
         }
 
         public void SetIsTalking(bool isTalking)
@@ -74,7 +77,12 @@ namespace ShadowFlareRemake.Npc
 
         public void ResetCurrentDialogTextId()
         {
-            _currentDialogTextId = 0;
+            CurrentDialogTextId = 0;
+        }
+
+        public void CastHealAnimation()
+        {
+            _animator.SetTrigger(_castAnimHash);
         }
     }
 }

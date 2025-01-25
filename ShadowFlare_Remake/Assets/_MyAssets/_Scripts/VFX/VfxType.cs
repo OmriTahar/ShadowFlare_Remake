@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.VFX
         DeathBlood,
         RedExplosion,
         LightningShield,
-        Portal
+        Portal,
+        Heal
     }
 }

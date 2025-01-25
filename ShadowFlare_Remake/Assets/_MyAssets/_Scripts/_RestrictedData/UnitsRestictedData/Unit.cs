@@ -58,6 +58,11 @@ namespace ShadowFlareRemake.UnitsRestrictedData
             }
         }
 
+        public bool IsVitalsFull()
+        {
+            return CurrentHP == Stats.MaxHP && CurrentMP == Stats.MaxMP;
+        }
+
         public bool IsHpFull()
         {
             return CurrentHP == Stats.MaxHP;
@@ -67,6 +72,5 @@ namespace ShadowFlareRemake.UnitsRestrictedData
         {
             return CurrentMP == Stats.MaxMP;
         }
-
     }
 }

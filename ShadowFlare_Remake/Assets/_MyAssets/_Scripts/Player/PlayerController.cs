@@ -400,6 +400,15 @@ namespace ShadowFlareRemake.Player
 
         #endregion
 
+        #region GameManager Helpers
+
+        public void PlayHealAnimation()
+        {
+            _view.PlayHealAnimation();
+        }
+
+        #endregion
+
         #region Gizmos
 
         void OnDrawGizmos()

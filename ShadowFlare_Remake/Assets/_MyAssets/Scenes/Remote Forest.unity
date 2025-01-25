@@ -33498,15 +33498,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Dikla
+  <Name>k__BackingField: Dikla
+  <NpcType>k__BackingField: 1
+  <DialogBubbleOffset>k__BackingField: 200
   _dialogTextDataArray:
   - Title: Heal
     Id: 0
-    DialogText: The holy spirit presides over life! \n Heal the evil wounds!
+    DialogText: The holy spirit presides over life!\Heal the evil wounds!
     IsQuestionText: 0
     IsFinalText: 1
     Answers: []
-  _dialogBubbleOffset: 200
 --- !u!1001 &4824216701145875063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34476,6 +34477,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
         type: 3}
+      propertyPath: <Name>k__BackingField
+      value: Sven
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
+      propertyPath: <NpcType>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632703684329457528, guid: 96a84685e8180014c94844f7154b6719,
+        type: 3}
       propertyPath: _dialogTextDataArray.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -34722,7 +34733,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331e23c2aa95d4649886c8d65a1ed4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Igor
+  <Name>k__BackingField: Igor
+  <NpcType>k__BackingField: 0
+  <DialogBubbleOffset>k__BackingField: 225
   _dialogTextDataArray:
   - Title: Intro
     Id: 0
@@ -34730,7 +34743,6 @@ MonoBehaviour:
     IsQuestionText: 0
     IsFinalText: 1
     Answers: []
-  _dialogBubbleOffset: 250
 --- !u!1001 &7169015465982072824
 PrefabInstance:
   m_ObjectHideFlags: 0
