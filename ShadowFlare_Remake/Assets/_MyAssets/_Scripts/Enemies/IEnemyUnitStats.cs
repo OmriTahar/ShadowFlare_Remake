@@ -9,6 +9,7 @@ namespace ShadowFlareRemake.Enemies
         public float ScaleMultiplier { get; }
         public int EvolutionLevel { get; }
         public float AttackDistance { get; }
+        public int ChaseDistance { get; }
         public int ExpReward { get; }
         public int LootDropChance { get; }
     }

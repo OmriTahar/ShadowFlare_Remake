@@ -31,6 +31,7 @@ MonoBehaviour:
   <MovementSpeed>k__BackingField: 2
   <AttackSpeed>k__BackingField: 1
   <AttackDistance>k__BackingField: 2.8
+  <ChaseDistance>k__BackingField: 20
   ______MAGICAL_____: ------------------------------------
   <MaxMP>k__BackingField: 1
   <MagicalAttack>k__BackingField: 1

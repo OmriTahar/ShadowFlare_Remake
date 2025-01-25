@@ -1,6 +1,5 @@
 using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.SkillsRestrictedData;
-using ShadowFlareRemake.Units;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +36,7 @@ namespace ShadowFlareRemake.UnitsRestrictedData
         [field: SerializeField] public int MovementSpeed { get; private set; }
         [field: SerializeField] public int AttackSpeed { get; private set; }
         [field: SerializeField] public float AttackDistance { get; private set; }
+        [field: SerializeField] public int ChaseDistance { get; private set; }
 
         [Space(15)]
         [SerializeField] private string ______MAGICAL_____ = _spaceLine;

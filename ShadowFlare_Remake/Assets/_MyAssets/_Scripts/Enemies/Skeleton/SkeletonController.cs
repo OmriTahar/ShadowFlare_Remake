@@ -44,20 +44,23 @@ namespace ShadowFlareRemake.Enemies
             if(!IsActive)
                 return;
 
-            if(DistanceFromPlayer > Model.Stats.AttackDistance)
+            if(DistanceFromPlayer <= Model.Stats.AttackDistance)
+            {
+                Model.SetEnemyState(EnemyState.Attacking);
+            }
+            else if(DistanceFromPlayer <= Model.Stats.ChaseDistance)
             {
                 Model.SetEnemyState(EnemyState.Chasing);
             }
-            else
-                Model.SetEnemyState(EnemyState.Attacking);
         }
 
         private void HandleChasingState()
         {
             Agent.isStopped = false;
+
             Agent.SetDestination(PlayerTransform.position);
 
-            if(DistanceFromPlayer <= Model.Stats.AttackDistance)
+            if((DistanceFromPlayer <= Model.Stats.AttackDistance) || (DistanceFromPlayer > Model.Stats.ChaseDistance))
             {
                 Model.SetEnemyState(EnemyState.Idle);
             }
