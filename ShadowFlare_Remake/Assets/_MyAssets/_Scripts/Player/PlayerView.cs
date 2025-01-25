@@ -254,15 +254,6 @@ namespace ShadowFlareRemake.Player
         }
 
         #endregion
-
-        #region VFX
-
-        public void PlayHealAnimation()
-        {
-            _vfxView.SetIsPlayingEffect(VfxType.Heal, true);
-        }
-
-        #endregion
     }
 }
 

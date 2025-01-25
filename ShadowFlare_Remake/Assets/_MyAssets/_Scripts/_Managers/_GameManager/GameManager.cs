@@ -16,6 +16,7 @@ using ShadowFlareRemake.UI;
 using ShadowFlareRemake.UI.Highlightables;
 using ShadowFlareRemake.UIManagement;
 using ShadowFlareRemake.UnitsRestrictedData;
+using ShadowFlareRemake.VFX;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,6 +35,7 @@ namespace ShadowFlareRemake.GameManagement
         [Header("Player")]
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerUnitStats _playerUnitStatsToCopy;
+        [SerializeField] private VisualEffectsSubView _playerVfxView;
 
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
@@ -550,6 +552,11 @@ namespace ShadowFlareRemake.GameManagement
             }
         }
 
+        private void PlayHealEffectOnPlayer()
+        {
+            _playerVfxView.SetIsPlayingEffect(VfxType.Heal, true);
+        }
+
         #endregion
 
         #region Npc
@@ -589,7 +596,7 @@ namespace ShadowFlareRemake.GameManagement
             npc.CastHealAnimation();
             _playerUnit.FullHeal();
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
-            _playerController.PlayHealAnimation();
+            PlayHealEffectOnPlayer();
         }
 
         #endregion

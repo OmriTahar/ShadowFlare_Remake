@@ -2128,6 +2128,7 @@ MonoBehaviour:
   _playerController: {fileID: 972601921}
   _playerUnitStatsToCopy: {fileID: 11400000, guid: 49710c2a48b6f3249b289e02ac6503c9,
     type: 2}
+  _playerVfxView: {fileID: 1897369232}
   _enemiesParent: {fileID: 1054742629}
   _testEnemyToSpawn: {fileID: 1302082256}
   _isEnemyActiveOnSpawn: 1
@@ -27932,6 +27933,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888725144}
   m_CullTransparentMesh: 1
+--- !u!114 &1897369232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7634456199729279305, guid: 3dcb955e359095c428883d479150464c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2759206233480350412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38546eeb1924bf0488fad10ffd4f42dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1903344054
 GameObject:
   m_ObjectHideFlags: 0
