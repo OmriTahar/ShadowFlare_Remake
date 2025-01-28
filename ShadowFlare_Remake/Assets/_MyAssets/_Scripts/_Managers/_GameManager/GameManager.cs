@@ -563,21 +563,21 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerClickedOnNpc()
         {
-            if(_lastNpc.Npc == null)
-                return;
-
             var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
 
             if(currentTalkingNpc != null && _lastNpc.Npc != currentTalkingNpc)
             {
                 HandlePlayerFinishedTalkingToNpc();
             }
+
+            _uiManager.SetCurrentTalkingNpc(_lastNpc.Npc);
         }
 
         private void HandlePlayerTalkingToNpc()
         {
-            _lastNpc.Npc.LookAtTransform(_playerController.transform);
-            _uiManager.HandleDialog(_lastNpc.Npc, false);
+            var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
+            currentTalkingNpc.LookAtTransform(_playerController.transform);
+            _uiManager.HandleDialog(false);
         }
 
         private void HandlePlayerFinishedTalkingToNpc()
@@ -690,7 +690,7 @@ namespace ShadowFlareRemake.GameManagement
                     gameManager.TestReducePlayerHealth();
                 }
 
-                GUILayout.Space(15);
+                GUILayout.Space(5);
 
                 if(GUILayout.Button("Restore Player Health"))
                 {
@@ -704,7 +704,7 @@ namespace ShadowFlareRemake.GameManagement
                     gameManager.TestReducePlayerMana();
                 }
 
-                GUILayout.Space(15);
+                GUILayout.Space(5);
 
                 if(GUILayout.Button("Restore Player Mana"))
                 {

@@ -620,10 +620,11 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Dialog
 
-        public void HandleDialog(NpcBehaviour npc, bool isClickedOnAnswer, int nextDialogTextId = -1)
+        public void HandleDialog(bool isClickedOnAnswer, int nextDialogTextId = -1)
         {
+            var npc = _dialogModel.CurrentNpc;
             _highlightableNameModel.SetIsAllowedToBeActive(false);
-            _dialogModel.SetCurrentNpc(npc);
+            //_dialogModel.SetCurrentNpc(npc);
 
             if(_dialogModel.IsFinalText)
             {
@@ -654,6 +655,11 @@ namespace ShadowFlareRemake.UIManagement
             _highlightableNameModel.SetIsAllowedToBeActive(true);
         }
 
+        public void SetCurrentTalkingNpc(NpcBehaviour npc)
+        {
+            _dialogModel.SetCurrentNpc(npc, false);
+        }
+
         public NpcBehaviour GetCurrentTalkingNpc()
         {
             return _dialogModel.CurrentNpc;
@@ -676,7 +682,7 @@ namespace ShadowFlareRemake.UIManagement
         private void HandleDialogAnswerClicked(int nextDialogTextIdAdder)
         {
             var nextTextId = _dialogModel.CurrentNpc.CurrentDialogTextId + nextDialogTextIdAdder;
-            HandleDialog(_dialogModel.CurrentNpc, true, nextTextId);
+            HandleDialog(true, nextTextId);
         }
 
         #endregion
