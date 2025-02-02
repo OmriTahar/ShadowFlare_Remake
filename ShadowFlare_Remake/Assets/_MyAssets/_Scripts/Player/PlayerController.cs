@@ -150,6 +150,8 @@ namespace ShadowFlareRemake.Player
             if(hit.collider == null)
                 return;
 
+            InvokeFinishedTalkingToNpcIfNecessary();
+
             IEnumerator selectedCoroutine = null;
 
             if((isLeftMouseHeldDown && _isLastActionWasMove) || _inputReader.IsCursorOnGround)
@@ -168,7 +170,6 @@ namespace ShadowFlareRemake.Player
             {
                 var hitCollider = _inputReader.CurrentRaycastHitCollider;
                 var npcPos = hitCollider.transform.position;
-
                 selectedCoroutine = MoveAndTalkLogic(npcPos);
                 SetIsLastActionWasMove(false);
             }
@@ -178,13 +179,16 @@ namespace ShadowFlareRemake.Player
                 SetIsLastActionWasMove(false);
             }
 
+            HandleCoroutines(selectedCoroutine);
+        }
+
+        private void InvokeFinishedTalkingToNpcIfNecessary()
+        {
             if(_model.IsTalking && !_inputReader.IsCursorOnNPC)
             {
                 _model.SetIsTalking(false);
                 OnFinishTalkingToNpc?.Invoke();
             }
-
-            HandleCoroutines(selectedCoroutine);
         }
 
         private bool IsValidLeftMouseClick(bool isLeftMouseHeldDown)
