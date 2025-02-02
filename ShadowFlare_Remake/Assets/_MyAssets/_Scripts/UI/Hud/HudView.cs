@@ -81,12 +81,6 @@ namespace ShadowFlareRemake.UI.Hud
 
         #region Initialization
 
-        private void InitVitalsSliders()
-        {
-            InitHealthSliders();
-            InitManaSliders();
-        }
-
         private void InitHealthSliders()
         {
             SetVitalSlidersMaxValue(_healthSlider, _health_RestoreSlider, _health_ReduceSlider, true);

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 namespace ShadowFlareRemake.Player
 {
@@ -18,6 +19,10 @@ namespace ShadowFlareRemake.Player
         public event Action OnClickedOnNpc;
         public event Action OnTalkingToNpc;
         public event Action OnFinishTalkingToNpc;
+
+        public event Action OnClickedOnInteractable;
+        public event Action OnInteractingWithInteractable;
+        public event Action OnFinishedInteractingWithInteractable;
 
         [Header("References")]
         [SerializeField] private PlayerView _view;
@@ -150,7 +155,7 @@ namespace ShadowFlareRemake.Player
             if(hit.collider == null)
                 return;
 
-            InvokeFinishedTalkingToNpcIfNecessary();
+            HandleFinishedInteraction();
 
             IEnumerator selectedCoroutine = null;
 
@@ -173,6 +178,14 @@ namespace ShadowFlareRemake.Player
                 selectedCoroutine = MoveAndTalkLogic(npcPos);
                 SetIsLastActionWasMove(false);
             }
+            else if(_inputReader.IsCursorOnInteractable)
+            {
+                var hitCollider = _inputReader.CurrentRaycastHitCollider;
+                var interactablePos = hitCollider.ClosestPoint(transform.position);
+                Vector3 interactableCenter = hit.collider.bounds.center;
+                selectedCoroutine = MoveAndInteractLogic(interactablePos, interactableCenter);
+                SetIsLastActionWasMove(false);
+            }
             else if(_inputReader.IsCursorOnItem)
             {
                 selectedCoroutine = MoveAndPickUpLogic(hit.point, hit.collider);
@@ -182,12 +195,20 @@ namespace ShadowFlareRemake.Player
             HandleCoroutines(selectedCoroutine);
         }
 
-        private void InvokeFinishedTalkingToNpcIfNecessary()
+        private void HandleFinishedInteraction()
         {
-            if(_model.IsTalking && !_inputReader.IsCursorOnNPC)
+            if(!_model.IsInteracting)
+                return;
+
+            if(!_inputReader.IsCursorOnNPC)
             {
-                _model.SetIsTalking(false);
+                _model.SetIsInteracting(false);
                 OnFinishTalkingToNpc?.Invoke();
+            }
+            else if(!_inputReader.IsCursorOnInteractable)
+            {
+                _model.SetIsInteracting(false);
+                OnFinishedInteractingWithInteractable?.Invoke();
             }
         }
 
@@ -276,7 +297,7 @@ namespace ShadowFlareRemake.Player
                 var targetDirection = new Vector3(targetPos.x, 0, targetPos.z);
                 transform.LookAt(targetDirection);
 
-                _model.SetIsTalking(true);
+                _model.SetIsInteracting(true);
                 OnTalkingToNpc?.Invoke();
                 yield break;
             }
@@ -293,8 +314,42 @@ namespace ShadowFlareRemake.Player
             }
 
             _model.SetIsMoving(false);
-            _model.SetIsTalking(true);
+            _model.SetIsInteracting(true);
             OnTalkingToNpc?.Invoke();
+        }
+
+        private IEnumerator MoveAndInteractLogic(Vector3 targetPos, Vector3 interactableCenter)
+        {
+            OnClickedOnInteractable?.Invoke();
+
+            targetPos.y = 0f;
+            var elapsedTime = 0f;
+            var movementSpeed = _model.GetMovementSpeedForMoveLogic();
+            var lootAtPos = new Vector3(interactableCenter.x, 0, interactableCenter.z);
+
+            if(Vector3.Distance(transform.position, targetPos) <= _attackDistance)
+            {
+                transform.LookAt(lootAtPos);
+                _model.SetIsInteracting(true);
+                OnInteractingWithInteractable?.Invoke();
+                yield break;
+            }
+
+            _model.SetIsMoving(true);
+
+            while(Vector3.Distance(transform.position, targetPos) > _attackDistance && elapsedTime < _maxMoveDuration)
+            {
+                Vector3 direction = targetPos - new Vector3(transform.position.x, 0, transform.position.z);
+                Vector3 movement = direction.normalized * movementSpeed * Time.deltaTime;
+                _characterController.Move(movement);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction.normalized), _rotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+
+            transform.LookAt(lootAtPos);
+            _model.SetIsMoving(false);
+            _model.SetIsInteracting(true);
+            OnInteractingWithInteractable?.Invoke();
         }
 
         private void UseSkillAtDirection(InputAction.CallbackContext context)

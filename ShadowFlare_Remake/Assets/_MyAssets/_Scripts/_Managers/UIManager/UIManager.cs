@@ -13,6 +13,7 @@ using ShadowFlareRemake.UI.Inventory;
 using ShadowFlareRemake.UI.ItemsGrid;
 using ShadowFlareRemake.UI.LevelUp;
 using ShadowFlareRemake.UI.Stats;
+using ShadowFlareRemake.UI.Warehouse;
 using ShadowFlareRemake.Units;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,7 @@ namespace ShadowFlareRemake.UIManagement
         [SerializeField] private CurserView _curserView;
         [SerializeField] private DialogView _dialogView;
         [SerializeField] private InventoryView _inventoryView;
+        [SerializeField] private WarehouseView _wareHouseView;
         [SerializeField] private StatsView _statsView;
         [SerializeField] private HudView _hudView;
         [SerializeField] private LevelUpView _levelUpView;
@@ -50,8 +52,9 @@ namespace ShadowFlareRemake.UIManagement
         private HighlightableNameModel _highlightableNameModel;
         private CurserModel _curserModel;
         private DialogModel _dialogModel;
-        private StatsModel _statsModel;
         private InventoryModel _inventoryModel;
+        private WarehouseModel _warehouseModel;
+        private StatsModel _statsModel;
         private HudModel _hudModel;
         private LevelUpModel _levelUpModel;
 
@@ -158,6 +161,9 @@ namespace ShadowFlareRemake.UIManagement
 
             _inventoryModel = new InventoryModel(false);
             _inventoryView.SetModel(_inventoryModel);
+
+            _warehouseModel = new WarehouseModel();
+            _wareHouseView.SetModel(_warehouseModel);
 
             _statsModel = new StatsModel(false);
             _statsView.SetModel(_statsModel);
@@ -433,7 +439,7 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region Stats Panel
+        #region Set Player Stats
 
         private void ToggleStats()
         {
@@ -452,9 +458,6 @@ namespace ShadowFlareRemake.UIManagement
             HandleUiScreenCover();
         }
 
-        #endregion
-
-        #region Set Player Stats
 
         public void InitPlayerFullStats(IUnit unit, IEquippedGearAddedStats addedStats)
         {

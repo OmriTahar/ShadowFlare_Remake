@@ -63,15 +63,15 @@ namespace ShadowFlareRemake.PlayerRestrictedData
 
             if(isMoving)
             {
-                SetIsTalking(false, false);
+                SetIsInteracting(false, false);
             }
 
             Changed();
         }
 
-        public override void SetIsTalking(bool isTalking, bool invokeChanged = true)
+        public override void SetIsInteracting(bool isTalking, bool invokeChanged = true)
         {
-            IsTalking = isTalking;
+            IsInteracting = isTalking;
             Changed();
         }
 

@@ -132,6 +132,9 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnClickedOnNpc += HandlePlayerClickedOnNpc;
                 _playerController.OnTalkingToNpc += HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc += HandlePlayerFinishedTalkingToNpc;
+                _playerController.OnClickedOnInteractable += HandlePlayerClickedOnInteractable;
+                _playerController.OnInteractingWithInteractable += HandlePlayerInteractingWithInteractable;
+                _playerController.OnFinishedInteractingWithInteractable += HandlePlayerFinishedInteracatingWithInteractable;
             }
             else
             {
@@ -141,6 +144,9 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnClickedOnNpc -= HandlePlayerClickedOnNpc;
                 _playerController.OnTalkingToNpc -= HandlePlayerTalkingToNpc;
                 _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishedTalkingToNpc;
+                _playerController.OnClickedOnInteractable -= HandlePlayerClickedOnInteractable;
+                _playerController.OnInteractingWithInteractable -= HandlePlayerInteractingWithInteractable;
+                _playerController.OnFinishedInteractingWithInteractable -= HandlePlayerFinishedInteracatingWithInteractable;
             }
         }
 
@@ -597,6 +603,43 @@ namespace ShadowFlareRemake.GameManagement
             _playerUnit.FullHeal();
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
             PlayHealEffectOnPlayer();
+        }
+
+        #endregion
+
+        #region Interactables
+
+        private void HandlePlayerClickedOnInteractable()
+        {
+            //var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
+
+            //if(currentTalkingNpc != null && _lastNpc.Npc != currentTalkingNpc)
+            //{
+            //    HandlePlayerFinishedInteracatingWithInteractable();
+            //}
+
+            //_uiManager.SetCurrentTalkingNpc(_lastNpc.Npc);
+
+            print("Clicked on interacable!");
+        }
+
+        private void HandlePlayerInteractingWithInteractable()
+        {
+            //var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
+            //currentTalkingNpc.LookAtTransform(_playerController.transform);
+            //_uiManager.HandleDialog(false);
+
+            print("Interacting with interacable!");
+        }
+
+        private void HandlePlayerFinishedInteracatingWithInteractable()
+        {
+            //_uiManager.HandleFinishDialog();
+
+            //if(_lastHighlightable != null)
+            //    _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);
+
+            print("FinishedInteraction");
         }
 
         #endregion
