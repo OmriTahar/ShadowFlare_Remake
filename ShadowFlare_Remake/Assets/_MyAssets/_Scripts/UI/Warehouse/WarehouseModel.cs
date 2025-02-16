@@ -6,7 +6,7 @@ namespace ShadowFlareRemake.UI.Warehouse
     {
         public ItemsGridModel WarehouseItemsGridModel { get; private set; }
         public bool IsWarehouseActive { get; private set; }
-
+        
         public WarehouseModel() { }
     }
 }

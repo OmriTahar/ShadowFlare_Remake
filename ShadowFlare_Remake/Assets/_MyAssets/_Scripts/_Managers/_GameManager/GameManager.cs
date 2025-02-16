@@ -5,6 +5,7 @@ using ShadowFlareRemake.Enemies;
 using ShadowFlareRemake.EnemiesRestrictedData;
 using ShadowFlareRemake.GameManagerRestrictedData;
 using ShadowFlareRemake.InputManagement;
+using ShadowFlareRemake.Interactables;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.LootManagement;
 using ShadowFlareRemake.Npc;
@@ -57,6 +58,7 @@ namespace ShadowFlareRemake.GameManagement
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
         private NpcDataContainer _lastNpc = new();
+        private Interactable _lastInteractable;
         private LootView _lastPickedUpLootView;
 
         private const string _highlightableTag = "Highlightable";
@@ -206,12 +208,30 @@ namespace ShadowFlareRemake.GameManagement
             if(IsValidHighlightableObject(hitCollider))
             {
                 HighlightObject(hitCollider);
-                CacheLastNpc();
+                HandleCacheLatestEntityType();
                 return;
             }
 
             if(_lastHighlightable != null)
                 SetIsHighlighted(false);
+        }
+
+        private void HandleCacheLatestEntityType()
+        {
+
+            switch(_lastHighlightable.EntityType)
+            {
+                case EntityType.Interactable:
+                    CacheLastInteractable();
+                    break;
+
+                case EntityType.Npc:
+                    CacheLastNpc();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private bool IsValidHighlightableObject(Collider hitCollider)
@@ -259,9 +279,6 @@ namespace ShadowFlareRemake.GameManagement
 
         private void CacheLastNpc()
         {
-            if(_lastHighlightable.EntityType != EntityType.Npc)
-                return;
-
             var npc = _lastHighlightable.GetNpcBehaviour();
 
             if(npc == null)
@@ -609,37 +626,31 @@ namespace ShadowFlareRemake.GameManagement
 
         #region Interactables
 
+        private void CacheLastInteractable()
+        {
+            var interactable = _lastHighlightable.GetInteractable();
+
+            if(interactable == null)
+                return;
+
+            _lastInteractable = interactable;
+        }
+
         private void HandlePlayerClickedOnInteractable()
         {
-            //var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
-
-            //if(currentTalkingNpc != null && _lastNpc.Npc != currentTalkingNpc)
-            //{
-            //    HandlePlayerFinishedInteracatingWithInteractable();
-            //}
-
-            //_uiManager.SetCurrentTalkingNpc(_lastNpc.Npc);
-
             print("Clicked on interacable!");
         }
 
         private void HandlePlayerInteractingWithInteractable()
         {
-            //var currentTalkingNpc = _uiManager.GetCurrentTalkingNpc();
-            //currentTalkingNpc.LookAtTransform(_playerController.transform);
-            //_uiManager.HandleDialog(false);
+            _lastInteractable.OnInteract();
 
             print("Interacting with interacable!");
         }
 
         private void HandlePlayerFinishedInteracatingWithInteractable()
         {
-            //_uiManager.HandleFinishDialog();
-
-            //if(_lastHighlightable != null)
-            //    _uiManager.SetIsHighlightableNameActive(_lastHighlightable.IsHighlighted);
-
-            print("FinishedInteraction");
+            print("Finished Interaction");
         }
 
         #endregion

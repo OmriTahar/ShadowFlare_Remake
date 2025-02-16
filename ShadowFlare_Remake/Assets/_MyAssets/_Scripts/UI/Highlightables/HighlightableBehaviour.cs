@@ -1,4 +1,5 @@
 using ShadowFlareRemake.Enemies;
+using ShadowFlareRemake.Interactables;
 using ShadowFlareRemake.Loot;
 using ShadowFlareRemake.Npc;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private const string _highlightableTag = "Highlightable";
 
+        private Interactable _interactable;
         private NpcBehaviour _npcBehaviour;
         private EnemyView _enemyView;
         private LootView _lootView;
@@ -62,6 +64,10 @@ namespace ShadowFlareRemake.UI.Highlightables
         {
             switch(EntityType)
             {
+                case EntityType.Interactable:
+                    _interactable = _entityObject.GetComponent<Interactable>();
+                    break;
+
                 case EntityType.Npc:
                     _npcBehaviour = _entityObject.GetComponent<NpcBehaviour>();
                     break;
@@ -185,6 +191,11 @@ namespace ShadowFlareRemake.UI.Highlightables
         #endregion
 
         #region Getters
+
+        public Interactable GetInteractable()
+        {
+            return _interactable;
+        }
 
         public NpcBehaviour GetNpcBehaviour()
         {

@@ -69,10 +69,17 @@ namespace ShadowFlareRemake.PlayerRestrictedData
             Changed();
         }
 
-        public override void SetIsInteracting(bool isTalking, bool invokeChanged = true)
+        public override void SetIsInteracting(bool isInteracting, bool invokeChanged = true)
         {
-            IsInteracting = isTalking;
-            Changed();
+            if(IsInteracting == isInteracting)
+                return;
+
+            IsInteracting = isInteracting;
+
+            if(invokeChanged)
+            {
+                Changed();
+            }
         }
 
         public override int GetMovementSpeedForMoveLogic()

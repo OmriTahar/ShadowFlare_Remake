@@ -205,7 +205,8 @@ namespace ShadowFlareRemake.Player
                 _model.SetIsInteracting(false);
                 OnFinishTalkingToNpc?.Invoke();
             }
-            else if(!_inputReader.IsCursorOnInteractable)
+
+            if(!_inputReader.IsCursorOnInteractable)
             {
                 _model.SetIsInteracting(false);
                 OnFinishedInteractingWithInteractable?.Invoke();
