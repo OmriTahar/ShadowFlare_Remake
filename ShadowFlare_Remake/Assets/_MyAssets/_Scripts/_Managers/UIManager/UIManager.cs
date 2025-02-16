@@ -733,24 +733,28 @@ namespace ShadowFlareRemake.UIManagement
 
         private void RegisterEvents()
         {
-            RegisterInputManagerEvents(true);
-            RegisterCursorEvents(true);
-            RegisterDialogEvents(true);
-            RegisterHudEvents(true);
-            RegisterInventoryEvents(true);
-            RegisterStatsEvents(true);
-            RegisterLevelUpEvents(true);
+            bool register = true;
+            RegisterInputManagerEvents(register);
+            RegisterCursorEvents(register);
+            RegisterDialogEvents(register);
+            RegisterHudEvents(register);
+            RegisterInventoryEvents(register);
+            RegisterWarehouseEvents(register);
+            RegisterStatsEvents(register);
+            RegisterLevelUpEvents(register);
         }
 
         private void DeregisterEvents()
         {
-            RegisterInputManagerEvents(false);
-            RegisterCursorEvents(false);
-            RegisterDialogEvents(false);
-            RegisterHudEvents(false);
-            RegisterInventoryEvents(false);
-            RegisterStatsEvents(false);
-            RegisterLevelUpEvents(false);
+            bool deregister = false;
+            RegisterInputManagerEvents(deregister);
+            RegisterCursorEvents(deregister);
+            RegisterDialogEvents(deregister);
+            RegisterHudEvents(deregister);
+            RegisterInventoryEvents(deregister);
+            RegisterWarehouseEvents(deregister);
+            RegisterStatsEvents(deregister);
+            RegisterLevelUpEvents(deregister);
         }
 
         private void RegisterInputManagerEvents(bool isRegister)
@@ -892,6 +896,26 @@ namespace ShadowFlareRemake.UIManagement
                 _inventoryView.OnCursorChangedHoverOverGrid -= HandleCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered -= HandleCurrentHoveredTileGrid;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
+            }
+        }
+
+        private void RegisterWarehouseEvents(bool isRegister)
+        {
+            if(isRegister)
+            {
+                _wareHouseView.OnCurserEnterUI += CursorEnteredUI;
+                _wareHouseView.OnCurserLeftUI += CursorLeftUI;
+                _wareHouseView.OnCursorChangedHoverOverGrid += HandleCurrentHoveredItemsGrid;
+                _wareHouseView.OnTileHovered += HandleCurrentHoveredTileGrid;
+                _wareHouseView.OnTileClicked += HandleItemsGridClicked;
+            }
+            else
+            {
+                _wareHouseView.OnCurserEnterUI -= CursorEnteredUI;
+                _wareHouseView.OnCurserLeftUI -= CursorLeftUI;
+                _wareHouseView.OnCursorChangedHoverOverGrid -= HandleCurrentHoveredItemsGrid;
+                _wareHouseView.OnTileHovered -= HandleCurrentHoveredTileGrid;
+                _wareHouseView.OnTileClicked -= HandleItemsGridClicked;
             }
         }
 
