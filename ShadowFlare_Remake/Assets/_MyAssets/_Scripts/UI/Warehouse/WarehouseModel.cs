@@ -8,8 +8,8 @@ namespace ShadowFlareRemake.UI.Warehouse
     {
         public ItemsGridModel WarehouseItemsGridModel { get; private set; }
         public bool IsPanelActive { get; private set; }
-        
-        public WarehouseModel() 
+
+        public WarehouseModel()
         {
             WarehouseItemsGridModel = new ItemsGridModel(ItemsGridType.Carry, 10, 10, new List<LootType>() { LootType.All }, false);
         }
@@ -21,6 +21,14 @@ namespace ShadowFlareRemake.UI.Warehouse
 
             IsPanelActive = isActive;
             Changed();
+        }
+
+        public void PlaceLoot(List<LootModel> lootModels)
+        {
+            foreach(var model in lootModels)
+            {
+                WarehouseItemsGridModel.TryAutoPlace_Loot(model);
+            }
         }
     }
 }

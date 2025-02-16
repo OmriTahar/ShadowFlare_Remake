@@ -441,11 +441,17 @@ namespace ShadowFlareRemake.UIManagement
 
         #region Warehouse
 
+        public void PlaceStartingLootInWarehouse(List<LootModel> startingLoot)
+        {
+            _warehouseModel.PlaceLoot(startingLoot);
+        }
+
         public void ToggleWarehouse(bool isWarehouseActive)
         {
             _warehouseModel.SetIsActive(isWarehouseActive);
             HandleUiScreenCover();
         }
+
 
         #endregion
 

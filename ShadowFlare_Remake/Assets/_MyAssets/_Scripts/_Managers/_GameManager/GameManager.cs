@@ -73,7 +73,7 @@ namespace ShadowFlareRemake.GameManagement
             HandleInitializtion();
             RegisterEvents();
 
-            GivePlayerStartingLoot();
+            HandleStartingLoot();
             _lootManager.HandleTestSpawnLoot();
         }
 
@@ -692,20 +692,40 @@ namespace ShadowFlareRemake.GameManagement
 
         #region Loot
 
+        private void HandleStartingLoot()
+        {
+            GivePlayerStartingLoot();
+            GiveWarehouseStartingLoot();
+        }
+
         private void GivePlayerStartingLoot()
         {
             var startingLootData = _lootManager.GetPlayerStartingLoot();
-            var startingLootModels = new List<LootModel>();
-
-            foreach(var data in startingLootData)
-            {
-                startingLootModels.Add(new LootModel(data));
-            }
+            var startingLootModels = GenerateLootModels(startingLootData);
 
             foreach(var lootModel in startingLootModels)
             {
                 _uiManager.TryPickUpLootFromTheGround(lootModel);
             }
+        }
+
+        private void GiveWarehouseStartingLoot()
+        {
+            var startingLootData = _lootManager.GetWarehouseStartingLoot();
+            var startingLootModels = GenerateLootModels(startingLootData);
+            _uiManager.PlaceStartingLootInWarehouse(startingLootModels);
+        }
+
+        private List<LootModel> GenerateLootModels(List<LootData_ScriptableObject> lootData)
+        {
+            var lootModels = new List<LootModel>();
+
+            foreach(var data in lootData)
+            {
+                lootModels.Add(new LootModel(data));
+            }
+
+            return lootModels;
         }
 
         private Vector3 GetPlayerDroppingLootPos()

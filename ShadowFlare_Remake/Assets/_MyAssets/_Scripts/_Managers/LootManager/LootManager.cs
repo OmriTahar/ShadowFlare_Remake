@@ -10,13 +10,13 @@ namespace ShadowFlareRemake.LootManagement
         [SerializeField] private Transform _lootParent;
         [SerializeField] private GameObject _lootPrefab;
 
-        [Header("--- Player Starting Loot ---")]
+        [Header("Starting Loot")]
         [SerializeField] private List<LootData_ScriptableObject> _playerStartingLoot;
-
-        [Header("--- Enemies Drop ---")]
+        [SerializeField] private List<LootData_ScriptableObject> _warehouseStartingLoot;
+        [Space(10)]
         [SerializeField] private List<LootData_ScriptableObject> _lootDropsData;
 
-        [Header("--- Test ---")]
+        [Header("-------- TEST --------")]
         [SerializeField] private LootData_ScriptableObject _testLootDataToSpawn;
         [SerializeField] private List<LootData_ScriptableObject> _testLootDataToSpawnOnAwake;
 
@@ -28,6 +28,11 @@ namespace ShadowFlareRemake.LootManagement
         public List<LootData_ScriptableObject> GetPlayerStartingLoot()
         {
             return _playerStartingLoot;
+        }
+
+        public List<LootData_ScriptableObject> GetWarehouseStartingLoot()
+        {
+            return _warehouseStartingLoot;
         }
 
         public void HandleLootDrop(int level, int lootDropChance, Vector3 enemyPosition)
