@@ -38,9 +38,9 @@ namespace ShadowFlareRemake.UI.Stats {
 
         protected override void ModelChanged() {
 
-            _statsPanel.SetActive(Model.IsPanelOpen);
+            _statsPanel.SetActive(Model.IsPanelActive);
 
-            if(!Model.IsPanelOpen) {
+            if(!Model.IsPanelActive) {
                 return;
             }
 

@@ -258,7 +258,7 @@ namespace ShadowFlareRemake.UIManagement
 
         public bool TryPickUpLootFromTheGround(LootModel lootModel)
         {
-            if(_inventoryModel.IsInventoryOpen)
+            if(_inventoryModel.IsInventoryActive)
             {
                 _curserModel.PickUpLoot(lootModel);
                 return true;
@@ -404,10 +404,10 @@ namespace ShadowFlareRemake.UIManagement
 
         private void ToggleInventoryLogic()
         {
-            var toggledState = !_inventoryModel.IsInventoryOpen;
-            _inventoryModel.SetIsInventoryOpen(toggledState);
+            var toggledState = !_inventoryModel.IsInventoryActive;
+            _inventoryModel.SetIsInventoryPanelActive(toggledState);
 
-            if(!_inventoryModel.IsInventoryOpen)
+            if(!_inventoryModel.IsInventoryActive)
             {
                 _curserModel.DeactivateInfoTooltip();
             }
@@ -439,7 +439,17 @@ namespace ShadowFlareRemake.UIManagement
 
         #endregion
 
-        #region Set Player Stats
+        #region Warehouse
+
+        public void ToggleWarehouse(bool isWarehouseActive)
+        {
+            _warehouseModel.SetIsActive(isWarehouseActive);
+            HandleUiScreenCover();
+        }
+
+        #endregion
+
+        #region Stats
 
         private void ToggleStats()
         {
@@ -453,11 +463,10 @@ namespace ShadowFlareRemake.UIManagement
 
         private void DoToggleStats()
         {
-            var toggledState = !_statsModel.IsPanelOpen;
-            _statsModel.SetIsStatsOpen(toggledState);
+            var toggledState = !_statsModel.IsPanelActive;
+            _statsModel.SetIsStatsPanelActive(toggledState);
             HandleUiScreenCover();
         }
-
 
         public void InitPlayerFullStats(IUnit unit, IEquippedGearAddedStats addedStats)
         {
@@ -558,25 +567,29 @@ namespace ShadowFlareRemake.UIManagement
 
         private void HandleUiScreenCover()
         {
-            if(_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
+            var isLeftScreenCovered = _statsModel.IsPanelActive || _warehouseModel.IsPanelActive;
+            var isRightScreenCovered = _inventoryModel.IsInventoryActive;
+
+            if(isLeftScreenCovered && isRightScreenCovered)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.FullCover);
                 _hudModel.SetIsCloseButtonActive(true);
                 _hudModel.SetSkillsBarPosition(SkillsBarPosition.None);
 
             }
-            else if(_inventoryModel.IsInventoryOpen && !_statsModel.IsPanelOpen)
-            {
-                OnUIScreenCoverChange?.Invoke(UIScreenCover.RightIsCovered);
-                _hudModel.SetIsCloseButtonActive(true);
-                _hudModel.SetSkillsBarPosition(SkillsBarPosition.Left);
-            }
-            else if(!_inventoryModel.IsInventoryOpen && _statsModel.IsPanelOpen)
+            else if(!isRightScreenCovered && isLeftScreenCovered)
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.LeftIsCovered);
                 _hudModel.SetIsCloseButtonActive(true);
                 _hudModel.SetSkillsBarPosition(SkillsBarPosition.Right);
             }
+            else if(isRightScreenCovered && !isLeftScreenCovered)
+            {
+                OnUIScreenCoverChange?.Invoke(UIScreenCover.RightIsCovered);
+                _hudModel.SetIsCloseButtonActive(true);
+                _hudModel.SetSkillsBarPosition(SkillsBarPosition.Left);
+            }
+           
             else
             {
                 OnUIScreenCoverChange?.Invoke(UIScreenCover.NoCover);
@@ -587,8 +600,9 @@ namespace ShadowFlareRemake.UIManagement
 
         public void CloseClicked() // Called from a UI button clicked event
         {
-            _inventoryModel.SetIsInventoryOpen(false);
-            _statsModel.SetIsStatsOpen(false);
+            _inventoryModel.SetIsInventoryPanelActive(false);
+            _statsModel.SetIsStatsPanelActive(false);
+            _warehouseModel.SetIsActive(false);
             HandleUiScreenCover();
         }
 

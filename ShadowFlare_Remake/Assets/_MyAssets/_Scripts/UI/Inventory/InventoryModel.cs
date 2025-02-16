@@ -17,7 +17,7 @@ namespace ShadowFlareRemake.UI.Inventory
         public ItemsGridModel CarryItemsGridModel { get; private set; }
         public ItemsGridModel QuickItemsGridModel { get; private set; }
 
-        public bool IsInventoryOpen { get; private set; }
+        public bool IsInventoryActive { get; private set; }
         public int Strength { get; private set; }
         public int EquippedWeight { get; private set; }
         public int GoldAmount { get; private set; }
@@ -28,7 +28,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         public InventoryModel(bool isInventoryOpen)
         {
-            SetIsInventoryOpen(isInventoryOpen);
+            SetIsInventoryPanelActive(isInventoryOpen);
             SetItemsGridModels();
         }
 
@@ -48,9 +48,9 @@ namespace ShadowFlareRemake.UI.Inventory
 
         #region Meat & Potatos
 
-        public void SetIsInventoryOpen(bool isInventoryOpen)
+        public void SetIsInventoryPanelActive(bool isInventoryActive)
         {
-            IsInventoryOpen = isInventoryOpen;
+            IsInventoryActive = isInventoryActive;
             Changed();
         }
 

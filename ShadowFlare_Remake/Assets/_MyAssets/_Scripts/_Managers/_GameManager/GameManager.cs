@@ -136,7 +136,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnFinishTalkingToNpc += HandlePlayerFinishedTalkingToNpc;
                 _playerController.OnClickedOnInteractable += HandlePlayerClickedOnInteractable;
                 _playerController.OnInteractingWithInteractable += HandlePlayerInteractingWithInteractable;
-                _playerController.OnFinishedInteractingWithInteractable += HandlePlayerFinishedInteracatingWithInteractable;
+                _playerController.OnFinishedInteractingWithInteractable += HandlePlayerFinishedInteracation;
             }
             else
             {
@@ -148,7 +148,7 @@ namespace ShadowFlareRemake.GameManagement
                 _playerController.OnFinishTalkingToNpc -= HandlePlayerFinishedTalkingToNpc;
                 _playerController.OnClickedOnInteractable -= HandlePlayerClickedOnInteractable;
                 _playerController.OnInteractingWithInteractable -= HandlePlayerInteractingWithInteractable;
-                _playerController.OnFinishedInteractingWithInteractable -= HandlePlayerFinishedInteracatingWithInteractable;
+                _playerController.OnFinishedInteractingWithInteractable -= HandlePlayerFinishedInteracation;
             }
         }
 
@@ -643,14 +643,49 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerInteractingWithInteractable()
         {
-            _lastInteractable.OnInteract();
+            _lastInteractable.Interact();
 
-            print("Interacting with interacable!");
+            switch(_lastInteractable.Type)
+            {
+                case InteractableType.Warehouse:
+                    WarehouseInteraction(false);
+                    break;
+
+                case InteractableType.Temple:
+                    break;
+
+                default:
+                    break;
+            }
         }
 
-        private void HandlePlayerFinishedInteracatingWithInteractable()
+        private void HandlePlayerFinishedInteracation()
         {
-            print("Finished Interaction");
+            _lastInteractable.FinishInteraction();
+
+            switch(_lastInteractable.Type)
+            {
+                case InteractableType.Warehouse:
+                    WarehouseInteraction(true);
+                    break;
+
+                case InteractableType.Temple:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void WarehouseInteraction(bool isFinished)
+        {
+            if(!isFinished)
+            {
+                _uiManager.ToggleWarehouse(true);
+                return;
+            }
+
+            _uiManager.ToggleWarehouse(false);
         }
 
         #endregion

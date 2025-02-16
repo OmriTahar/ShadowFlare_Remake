@@ -84,7 +84,7 @@ namespace ShadowFlareRemake.UI.Highlightables
 
         private void InitTag()
         {
-            if(gameObject.tag != _highlightableTag)
+            if(!gameObject.CompareTag(_highlightableTag))
             {
                 gameObject.tag = _highlightableTag;
             }

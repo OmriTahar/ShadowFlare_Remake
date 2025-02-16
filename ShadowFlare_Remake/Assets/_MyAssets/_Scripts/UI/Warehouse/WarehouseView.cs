@@ -54,7 +54,7 @@ namespace ShadowFlareRemake.UI.Warehouse
 
         private void SetIsActive()
         {
-            _warehousePanel.SetActive(Model.IsWarehouseActive);
+            _warehousePanel.SetActive(Model.IsPanelActive);
         }
 
         #endregion

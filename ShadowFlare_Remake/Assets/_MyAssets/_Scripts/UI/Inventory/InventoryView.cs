@@ -172,7 +172,7 @@ namespace ShadowFlareRemake.UI.Inventory
 
         private void SetIsActive()
         {
-            _inventoryPanel.SetActive(Model.IsInventoryOpen);
+            _inventoryPanel.SetActive(Model.IsInventoryActive);
         }
 
         #endregion

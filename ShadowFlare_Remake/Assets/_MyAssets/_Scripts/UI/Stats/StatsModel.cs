@@ -9,12 +9,12 @@ namespace ShadowFlareRemake.UI.Stats
         public IPlayerUnitStats Stats { get; private set; }
         public IEquippedGearAddedStats EquippedGearAddedStats { get; private set; }
 
-        public bool IsPanelOpen { get; private set; }
+        public bool IsPanelActive { get; private set; }
         public bool IsFullStatsUpdate { get; private set; } = true;
 
         public StatsModel(bool isPanelOpen)
         {
-            IsPanelOpen = isPanelOpen;
+            IsPanelActive = isPanelOpen;
         }
 
         public void InitPlayerFullStats(IUnit unit, IEquippedGearAddedStats addedStats)
@@ -25,9 +25,9 @@ namespace ShadowFlareRemake.UI.Stats
             Changed();
         }
 
-        public void SetIsStatsOpen(bool isPanelOpen)
+        public void SetIsStatsPanelActive(bool isPanelOpen)
         {
-            IsPanelOpen = isPanelOpen;
+            IsPanelActive = isPanelOpen;
             Changed();
         }
 

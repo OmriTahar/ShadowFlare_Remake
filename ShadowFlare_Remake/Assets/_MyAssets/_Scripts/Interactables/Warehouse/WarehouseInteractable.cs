@@ -6,9 +6,14 @@ namespace ShadowFlareRemake.Interactables.Warehouse
     {
         public InteractableType Type => InteractableType.Warehouse;
 
-        public void OnInteract()
+        public void Interact()
         {
             print("Warehouse bitch!");
+        }
+
+        public void FinishInteraction()
+        {
+            print("Finished Warehouse bitch!");
         }
     }
 }
