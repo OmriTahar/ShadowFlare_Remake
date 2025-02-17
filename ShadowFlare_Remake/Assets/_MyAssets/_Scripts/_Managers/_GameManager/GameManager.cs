@@ -41,26 +41,29 @@ namespace ShadowFlareRemake.GameManagement
         [Header("Enemies")]
         [SerializeField] private Transform _enemiesParent;
 
-        [Header("--------------- TESTS: Enemies ---------------")]
+        [Header("Loading")]
+        [SerializeField] private Animator _loadingScreenAnimator;
+        [SerializeField] private bool _showLoadingScreen;
+
+        [Header("--------------- Test ---------------")]
         [SerializeField] private EnemyToSpawn _testEnemyToSpawn;
         [SerializeField] private bool _isEnemyActiveOnSpawn;
-
-        [Header("--------------- TESTS: Player ---------------")]
-        [SerializeField] private int _restoreOrReduceAmount = 5;
-
-        private Dictionary<EnemyController, EnemyConcreteData> _enemiesDict = new();
+        [SerializeField] private int _playerRestoreOrReduceVitalsAmount = 10;
 
         private Unit _playerUnit;
         private PlayerModel _playerModel;
         private PlayerUnitStats _playerUnitStats;
         private EquippedGearAddedStats _playerEquippedGearAddedStats = new();
 
+        private Dictionary<EnemyController, EnemyConcreteData> _enemiesDict = new();
         private GameObject _lastHighlighted_GameObject;
         private HighlightableBehaviour _lastHighlightable;
         private NpcDataContainer _lastNpc = new();
         private Interactable _lastInteractable;
         private LootView _lastPickedUpLootView;
 
+        private readonly int _LoadingFadeOutAnimHash = Animator.StringToHash("FadeOut");
+        private readonly int _LoadingFadeInAnimHash = Animator.StringToHash("FadeIn");
         private const string _highlightableTag = "Highlightable";
         private const int _lootDropHelper = 3;
 
@@ -68,13 +71,19 @@ namespace ShadowFlareRemake.GameManagement
 
         private async void Start()
         {
-            await _inputManager.WaitForInitFinish();
+            var startTime = PrintAndGetLoadingStartTime();
+            _loadingScreenAnimator.gameObject.SetActive(_showLoadingScreen);
 
+            await _inputManager.WaitForInitFinish();
             HandleInitializtion();
             RegisterEvents();
-
             HandleStartingLoot();
             _lootManager.HandleTestSpawnLoot();
+
+            if(_showLoadingScreen)
+                _loadingScreenAnimator.SetTrigger(_LoadingFadeOutAnimHash);
+
+            PrintLoadingEndTime(startTime);
         }
 
         private void Update()
@@ -90,6 +99,21 @@ namespace ShadowFlareRemake.GameManagement
         #endregion
 
         #region Initialization
+
+        private float PrintAndGetLoadingStartTime()
+        {
+            float startTime = Time.realtimeSinceStartup;
+            print("Game Manager: Loading Start Time: " + startTime);
+            return startTime;
+        }
+
+        private void PrintLoadingEndTime(float startTime)
+        {
+            float endTime = Time.realtimeSinceStartup;
+            float loadTime = endTime - startTime;
+            print("Game Manager: Loading End Time: " + endTime);
+            print("Game Manager: Load Time: " + loadTime);
+        }
 
         private void HandleInitializtion()
         {
@@ -742,6 +766,12 @@ namespace ShadowFlareRemake.GameManagement
 
         #endregion
 
+        #region Loading Screen
+
+
+
+        #endregion
+
         #region Tests
 
         public void TestSpawnEnemy()
@@ -752,26 +782,26 @@ namespace ShadowFlareRemake.GameManagement
 
         public void TestReducePlayerHealth()
         {
-            _playerUnit.ReduceHP(_restoreOrReduceAmount);
+            _playerUnit.ReduceHP(_playerRestoreOrReduceVitalsAmount);
             _playerModel.SetIsLastHitWasCritialHit(true);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void TestRestorePlayerHealth()
         {
-            _playerUnit.RestoreHP(_restoreOrReduceAmount);
+            _playerUnit.RestoreHP(_playerRestoreOrReduceVitalsAmount);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void TestReducePlayerMana()
         {
-            _playerUnit.ReduceMP(_restoreOrReduceAmount);
+            _playerUnit.ReduceMP(_playerRestoreOrReduceVitalsAmount);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
         public void TestRestorePlayerMana()
         {
-            _playerUnit.RestoreMP(_restoreOrReduceAmount);
+            _playerUnit.RestoreMP(_playerRestoreOrReduceVitalsAmount);
             _uiManager.SetPlayerVitals(_playerUnit.CurrentHP, _playerUnitStats.MaxHP, _playerUnit.CurrentMP, _playerUnitStats.MaxMP);
         }
 
