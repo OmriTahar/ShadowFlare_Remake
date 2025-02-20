@@ -23,6 +23,11 @@ namespace ShadowFlareRemake.UI.Warehouse
             Changed();
         }
 
+        public bool TryPlaceLoot(LootModel lootModel)
+        {
+            return WarehouseItemsGridModel.TryAutoPlace_Loot(lootModel);
+        }
+
         public void PlaceLoot(List<LootModel> lootModels)
         {
             foreach(var model in lootModels)

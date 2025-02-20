@@ -14,6 +14,7 @@ namespace ShadowFlareRemake.UI.Inventory
         public event Action<LootModel, Vector2Int> OnTileHovered;
         public event Action<ItemsGridModel, Vector2Int, LootModel> OnTileClicked;
         public event Action<ItemsGridModel, bool> OnCursorChangedHoverOverGrid;
+        public event Action OnWarehouseClicked;
 
         [Header("References")]
         [SerializeField] private GameObject _inventoryPanel;
@@ -197,6 +198,16 @@ namespace ShadowFlareRemake.UI.Inventory
                 view.OnTileHovered -= InvokeTileHovered;
                 view.OnTileClicked -= InvokeTileClicked;
             }
+        }
+
+        #endregion
+
+        #region Buttons
+
+        public void WarehouseClicked()
+        {
+            OnWarehouseClicked?.Invoke();
+            print("Warehouse Clicked!");
         }
 
         #endregion

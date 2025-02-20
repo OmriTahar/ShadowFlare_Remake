@@ -437,6 +437,17 @@ namespace ShadowFlareRemake.UIManagement
             }
         }
 
+        private void HandleWarehouseClickedInInventory()
+        {
+            if(!_curserModel.IsHoldingLoot())
+                return;
+
+            if(_warehouseModel.TryPlaceLoot(_curserModel.CurrentHeldLootModel))
+            {
+                _curserModel.DropLoot();
+            }
+        }
+
         #endregion
 
         #region Warehouse
@@ -894,6 +905,7 @@ namespace ShadowFlareRemake.UIManagement
                 _inventoryView.OnCursorChangedHoverOverGrid += HandleCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered += HandleCurrentHoveredTileGrid;
                 _inventoryView.OnTileClicked += HandleItemsGridClicked;
+                _inventoryView.OnWarehouseClicked += HandleWarehouseClickedInInventory;
             }
             else
             {
@@ -902,6 +914,7 @@ namespace ShadowFlareRemake.UIManagement
                 _inventoryView.OnCursorChangedHoverOverGrid -= HandleCurrentHoveredItemsGrid;
                 _inventoryView.OnTileHovered -= HandleCurrentHoveredTileGrid;
                 _inventoryView.OnTileClicked -= HandleItemsGridClicked;
+                _inventoryView.OnWarehouseClicked -= HandleWarehouseClickedInInventory;
             }
         }
 
