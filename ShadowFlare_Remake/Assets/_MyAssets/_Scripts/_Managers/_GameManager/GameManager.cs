@@ -662,17 +662,18 @@ namespace ShadowFlareRemake.GameManagement
 
         private void HandlePlayerClickedOnInteractable()
         {
-            print("Clicked on interacable!");
+
         }
 
         private void HandlePlayerInteractingWithInteractable()
         {
             _lastInteractable.Interact();
+            bool isFinished = false;
 
             switch(_lastInteractable.Type)
             {
                 case InteractableType.Warehouse:
-                    WarehouseInteraction(false);
+                    WarehouseInteraction(isFinished);
                     break;
 
                 case InteractableType.Temple:

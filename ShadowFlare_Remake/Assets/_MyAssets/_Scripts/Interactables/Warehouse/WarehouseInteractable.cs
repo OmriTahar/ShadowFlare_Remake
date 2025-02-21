@@ -8,12 +8,12 @@ namespace ShadowFlareRemake.Interactables.Warehouse
 
         public void Interact()
         {
-            print("Warehouse bitch!");
+           
         }
 
         public void FinishInteraction()
         {
-            print("Finished Warehouse bitch!");
+           
         }
     }
 }
